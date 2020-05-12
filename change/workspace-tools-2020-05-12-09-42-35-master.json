@@ -1,0 +1,8 @@
+{
+  "type": "patch",
+  "comment": "expose depedent map",
+  "packageName": "workspace-tools",
+  "email": "kchau@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-05-12T16:42:35.565Z"
+}
