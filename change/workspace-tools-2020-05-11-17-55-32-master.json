@@ -1,8 +1,0 @@
-{
-  "type": "patch",
-  "comment": "caching graph",
-  "packageName": "workspace-tools",
-  "email": "kchau@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-05-12T00:55:32.046Z"
-}
