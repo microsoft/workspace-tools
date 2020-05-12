@@ -2,6 +2,21 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Tue, 12 May 2020 01:00:31 GMT",
+      "tag": "workspace-tools_v0.2.1",
+      "version": "0.2.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "fix the typing pointer",
+            "author": "kchau@microsoft.com",
+            "commit": "3b71a3622fea0fde8ef3f812648f7bd360e62ad5",
+            "package": "workspace-tools"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 12 May 2020 00:58:34 GMT",
       "tag": "workspace-tools_v0.2.0",
       "version": "0.2.0",
