@@ -1,8 +1,16 @@
 # Change Log - workspace-tools
 
-This log was last generated on Tue, 12 May 2020 01:00:31 GMT and should not be manually modified.
+This log was last generated on Tue, 12 May 2020 01:25:52 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.3.0
+
+Tue, 12 May 2020 01:25:52 GMT
+
+### Minor changes
+
+- includes the scoped packages functions (kchau@microsoft.com)
 
 ## 0.2.1
 
