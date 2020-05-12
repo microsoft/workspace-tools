@@ -2,6 +2,21 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Tue, 12 May 2020 16:43:14 GMT",
+      "tag": "workspace-tools_v0.3.1",
+      "version": "0.3.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "expose depedent map",
+            "author": "kchau@microsoft.com",
+            "commit": "e49bf63aad31a6b1c3e4ce4e08a8f61410c0889d",
+            "package": "workspace-tools"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 12 May 2020 01:25:52 GMT",
       "tag": "workspace-tools_v0.3.0",
       "version": "0.3.0",

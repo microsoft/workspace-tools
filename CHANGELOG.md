@@ -1,8 +1,16 @@
 # Change Log - workspace-tools
 
-This log was last generated on Tue, 12 May 2020 01:25:52 GMT and should not be manually modified.
+This log was last generated on Tue, 12 May 2020 16:43:14 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.3.1
+
+Tue, 12 May 2020 16:43:14 GMT
+
+### Patches
+
+- expose depedent map (kchau@microsoft.com)
 
 ## 0.3.0
 
