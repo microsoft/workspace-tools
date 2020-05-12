@@ -21,36 +21,18 @@ function getPackageGraph(packages: PackageInfos) {
   return edges;
 }
 
-/**
- * @internal resets the graph cache for internal testing purpose only
- */
-export function _resetGraphCache() {
-  graphCache.clear();
-}
-
-export function getTransitiveDependents(
-  scopedPackages: string[],
-  packages: PackageInfos
-) {
+export function getDependentMap(packages: PackageInfos) {
   const graph = getPackageGraph(packages);
-  const pkgQueue: string[] = [...scopedPackages];
-  const visited = new Set<string>();
-
-  while (pkgQueue.length > 0) {
-    const pkg = pkgQueue.shift()!;
-
-    if (!visited.has(pkg)) {
-      visited.add(pkg);
-
-      for (const [from, to] of graph) {
-        if (to === pkg) {
-          pkgQueue.push(from);
-        }
-      }
+  const map = new Map<string, Set<string>>();
+  for (const [from, to] of graph) {
+    if (!map.has(to)) {
+      map.set(to, new Set());
     }
+
+    map.get(to)!.add(from);
   }
 
-  return [...visited].filter((pkg) => !scopedPackages.includes(pkg));
+  return map;
 }
 
 export function getTransitiveDependencies(
