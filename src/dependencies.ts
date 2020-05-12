@@ -4,7 +4,7 @@ const graphCache = new Map<PackageInfos, [string, string][]>();
 
 function getPackageGraph(packages: PackageInfos) {
   if (graphCache.has(packages)) {
-    return graphCache.get(packages);
+    return graphCache.get(packages)!;
   }
 
   const edges: [string, string][] = [];
