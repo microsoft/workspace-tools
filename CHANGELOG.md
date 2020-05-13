@@ -1,8 +1,16 @@
 # Change Log - workspace-tools
 
-This log was last generated on Tue, 12 May 2020 16:43:14 GMT and should not be manually modified.
+This log was last generated on Wed, 13 May 2020 00:52:56 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.3.2
+
+Wed, 13 May 2020 00:52:56 GMT
+
+### Patches
+
+- using matcher instead of multimatch for the scope (kchau@microsoft.com)
 
 ## 0.3.1
 

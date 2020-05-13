@@ -2,6 +2,21 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Wed, 13 May 2020 00:52:56 GMT",
+      "tag": "workspace-tools_v0.3.2",
+      "version": "0.3.2",
+      "comments": {
+        "patch": [
+          {
+            "comment": "using matcher instead of multimatch for the scope",
+            "author": "kchau@microsoft.com",
+            "commit": "56082a19222289fecfa804743b7d3cba2783814c",
+            "package": "workspace-tools"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 12 May 2020 16:43:14 GMT",
       "tag": "workspace-tools_v0.3.1",
       "version": "0.3.1",
