@@ -2,6 +2,21 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Wed, 13 May 2020 00:54:54 GMT",
+      "tag": "workspace-tools_v0.3.3",
+      "version": "0.3.3",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Merge branch 'master' of https://github.com/kenotron/workspace-tools",
+            "author": "kchau@microsoft.com",
+            "commit": "67e06d92a90c207f2ae11527b197753ce57407bd",
+            "package": "workspace-tools"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 13 May 2020 00:52:56 GMT",
       "tag": "workspace-tools_v0.3.2",
       "version": "0.3.2",
