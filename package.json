@@ -13,11 +13,13 @@
   "dependencies": {
     "jju": "^1.4.0",
     "read-yaml": "^1.1.0",
+    "matcher": "^3.0.0",
     "multimatch": "^4.0.0",
     "git-url-parse": "^11.1.2"
   },
   "devDependencies": {
     "@types/glob": "^7.1.1",
+    "@types/matcher": "^2.0.0",
     "@types/multimatch": "^4.0.0",
     "@types/node": ">=12.0.0",
     "typescript": "^3.8.3",

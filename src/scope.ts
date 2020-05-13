@@ -1,6 +1,6 @@
 import { PackageInfos } from "./types/PackageInfo";
-import multimatch from "multimatch";
+import matcher from "matcher";
 
 export function getScopedPackages(scopes: string[], packages: PackageInfos) {
-  return multimatch(Object.keys(packages), scopes);
+  return matcher.isMatch(Object.keys(packages), scopes);
 }
