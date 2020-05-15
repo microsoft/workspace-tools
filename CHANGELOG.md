@@ -1,8 +1,16 @@
 # Change Log - workspace-tools
 
-This log was last generated on Wed, 13 May 2020 00:54:54 GMT and should not be manually modified.
+This log was last generated on Fri, 15 May 2020 18:10:15 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.4.0
+
+Fri, 15 May 2020 18:10:15 GMT
+
+### Minor changes
+
+- Integrating additional workspace utilities from the backfill package (kchau@microsoft.com)
 
 ## 0.3.3
 

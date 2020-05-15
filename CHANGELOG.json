@@ -2,6 +2,21 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Fri, 15 May 2020 18:10:15 GMT",
+      "tag": "workspace-tools_v0.4.0",
+      "version": "0.4.0",
+      "comments": {
+        "minor": [
+          {
+            "comment": "Integrating additional workspace utilities from the backfill package",
+            "author": "kchau@microsoft.com",
+            "commit": "cc636f43a8ae50295a12a5bd6c28a3d66ddcabe9",
+            "package": "workspace-tools"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 13 May 2020 00:54:54 GMT",
       "tag": "workspace-tools_v0.3.3",
       "version": "0.3.3",

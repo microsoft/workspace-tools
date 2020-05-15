@@ -1,8 +1,0 @@
-{
-  "type": "minor",
-  "comment": "Integrating additional workspace utilities from the backfill package",
-  "packageName": "workspace-tools",
-  "email": "kchau@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-05-15T18:06:12.138Z"
-}
