@@ -1,5 +1,6 @@
 import path from "path";
-import { WorkspaceInfo } from "./types/WorkspaceInfo";
+import { WorkspaceInfo } from "../types/WorkspaceInfo";
+import { PackageInfo } from "../types/PackageInfo";
 
 export function getWorkspacePackageInfo(
   workspacePaths: string[]
@@ -9,10 +10,11 @@ export function getWorkspacePackageInfo(
   }
 
   return workspacePaths.reduce<WorkspaceInfo>((returnValue, workspacePath) => {
-    let name: string;
+    let packageJson: PackageInfo;
+    const packageJsonPath = path.join(workspacePath, "package.json");
 
     try {
-      name = require(path.join(workspacePath, "package.json")).name;
+      packageJson = require(packageJsonPath) as PackageInfo;
     } catch {
       return returnValue;
     }
@@ -20,8 +22,12 @@ export function getWorkspacePackageInfo(
     return [
       ...returnValue,
       {
-        name,
+        name: packageJson.name,
         path: workspacePath,
+        packageJson: {
+          ...packageJson,
+          packageJsonPath,
+        },
       },
     ];
   }, []);

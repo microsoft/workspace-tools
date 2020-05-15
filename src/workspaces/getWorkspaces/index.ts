@@ -1,8 +1,9 @@
 import findUp from "find-up";
+
 import { getPnpmWorkspaces } from "./pnpmWorkspaces";
 import { getYarnWorkspaces } from "./yarnWorkspaces";
 import { getRushWorkspaces } from "./rushWorkspaces";
-import { WorkspaceInfo } from "../types/WorkspaceInfo";
+import { WorkspaceInfo } from "../../types/WorkspaceInfo";
 
 export function getWorkspaces(cwd: string): WorkspaceInfo {
   const yarnLockPath = findUp.sync("yarn.lock", { cwd });

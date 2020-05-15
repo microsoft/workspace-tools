@@ -1,4 +1,4 @@
-import { WorkspaceInfo } from "./types/WorkspaceInfo";
+import { WorkspaceInfo } from "../types/WorkspaceInfo";
 
 export function findWorkspacePath(
   workspaces: WorkspaceInfo,

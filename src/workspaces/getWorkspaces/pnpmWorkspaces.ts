@@ -2,8 +2,8 @@ import path from "path";
 import findUp from "find-up";
 import { sync as readYaml } from "read-yaml-file";
 
-import { getPackagePaths } from "../getPackagePaths";
-import { WorkspaceInfo } from "../types/WorkspaceInfo";
+import { getPackagePaths } from "../../getPackagePaths";
+import { WorkspaceInfo } from "../../types/WorkspaceInfo";
 import { getWorkspacePackageInfo } from "../getWorkspacePackageInfo";
 
 type PnpmWorkspaces = {

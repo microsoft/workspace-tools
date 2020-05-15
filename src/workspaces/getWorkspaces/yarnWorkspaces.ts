@@ -1,9 +1,8 @@
 import path from "path";
-
 import findWorkspaceRoot from "find-yarn-workspace-root";
 
-import { getPackagePaths } from "../getPackagePaths";
-import { WorkspaceInfo } from "../types/WorkspaceInfo";
+import { getPackagePaths } from "../../getPackagePaths";
+import { WorkspaceInfo } from "../../types/WorkspaceInfo";
 import { getWorkspacePackageInfo } from "../getWorkspacePackageInfo";
 
 type PackageJsonWorkspaces = {

@@ -5,10 +5,10 @@ export interface PackageInfo {
   dependencies?: { [dep: string]: string };
   devDependencies?: { [dep: string]: string };
   peerDependencies?: { [dep: string]: string };
-  private: boolean;
+  private?: boolean;
   group?: string;
-  pipeline: { [dep: string]: string[] };
-  scripts: { [dep: string]: string };
+  pipeline?: { [dep: string]: string[] };
+  scripts?: { [dep: string]: string };
 }
 
 export interface PackageInfos {

@@ -1,7 +1,8 @@
 import findUp from "find-up";
+import path from "path";
 import { RushConfiguration } from "@microsoft/rush-lib";
 
-import { WorkspaceInfo } from "../types/WorkspaceInfo";
+import { WorkspaceInfo } from "../../types/WorkspaceInfo";
 
 export function getRushWorkspaces(cwd: string): WorkspaceInfo {
   try {
@@ -15,7 +16,14 @@ export function getRushWorkspaces(cwd: string): WorkspaceInfo {
     );
 
     return rushConfig.projects.map((project) => {
-      return { name: project.packageName, path: project.projectFolder };
+      return {
+        name: project.packageName,
+        path: project.projectFolder,
+        packageJson: {
+          ...project.packageJson,
+          packageJsonPath: path.join(project.projectFolder, "package.json"),
+        },
+      };
     });
   } catch {
     return [];

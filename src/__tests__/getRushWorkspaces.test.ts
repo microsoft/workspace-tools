@@ -1,7 +1,7 @@
 import path from "path";
 
 import { setupFixture } from "../helpers/setupFixture";
-import { getRushWorkspaces } from "../getWorkspaces/rushWorkspaces";
+import { getRushWorkspaces } from "../workspaces/getWorkspaces/rushWorkspaces";
 
 describe("getRushWorkspaces()", () => {
   it("gets the name and path of the workspaces", async () => {
@@ -11,7 +11,7 @@ describe("getRushWorkspaces()", () => {
     const packageAPath = path.join(packageRoot, "packages", "package-a");
     const packageBPath = path.join(packageRoot, "packages", "package-b");
 
-    expect(workspacesPackageInfo).toEqual([
+    expect(workspacesPackageInfo).toMatchObject([
       { name: "package-a", path: packageAPath },
       { name: "package-b", path: packageBPath },
     ]);

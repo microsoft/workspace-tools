@@ -3,7 +3,7 @@ import fs from "fs";
 import path from "path";
 import { PackageInfos } from "./types/PackageInfo";
 import { infoFromPackageJson } from "./infoFromPackageJson";
-import { getAllPackageJsonFiles } from "./workspaces";
+import { getAllPackageJsonFiles } from "./workspaces/workspaces";
 
 export function getPackageInfos(cwd: string) {
   const packageJsonFiles = getAllPackageJsonFiles(cwd);
