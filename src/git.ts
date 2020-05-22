@@ -104,7 +104,7 @@ export function getChanges(branch: string, cwd: string) {
   }
 }
 
-export function getStagedChanges(branch: string, cwd: string) {
+export function getStagedChanges(cwd: string) {
   try {
     const results = git(["--no-pager", "diff", "--staged", "--name-only"], {
       cwd,

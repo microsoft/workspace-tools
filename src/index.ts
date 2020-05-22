@@ -12,5 +12,6 @@ export * from "./workspaces/getWorkspaces";
 export * from "./workspaces/getWorkspaces/pnpmWorkspaces";
 export * from "./workspaces/getWorkspaces/rushWorkspaces";
 export * from "./workspaces/getWorkspaces/yarnWorkspaces";
+export * from "./workspaces/getChangedPackages";
 export * from "./workspaces/listOfWorkspacePackageNames";
 export * from "./workspaces/workspaces";
