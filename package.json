@@ -7,6 +7,7 @@
   "scripts": {
     "build": "tsc",
     "change": "beachball change",
+    "checkchange": "beachball check",
     "release": "yarn build && beachball publish -y",
     "start": "tsc -w --preserveWatchOutput",
     "test": "jest"
