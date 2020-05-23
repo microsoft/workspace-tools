@@ -104,7 +104,7 @@ export function getChanges(branch: string, cwd: string) {
   }
 }
 
-export function getStagedChanges(branch: string, cwd: string) {
+export function getStagedChanges(cwd: string) {
   try {
     const results = git(["--no-pager", "diff", "--staged", "--name-only"], {
       cwd,
@@ -223,6 +223,26 @@ export function getFileAddedHash(filename: string, cwd: string) {
   }
 
   return undefined;
+}
+
+export function init(cwd: string, email?: string, username?: string) {
+  git(["init"], { cwd });
+
+  const configLines = git(["config", "--list"], { cwd }).stdout.split("\n");
+
+  if (!configLines.find((line) => line.includes("user.name"))) {
+    if (!username) {
+      throw new Error("must include a username when initializing git repo");
+    }
+    git(["config", "user.name", username], { cwd });
+  }
+
+  if (!configLines.find((line) => line.includes("user.email"))) {
+    if (!email) {
+      throw new Error("must include a email when initializing git repo");
+    }
+    git(["config", "user.email", email], { cwd });
+  }
 }
 
 export function stageAndCommit(
