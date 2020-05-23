@@ -1,4 +1,4 @@
-import { getChanges, getStagedChanges } from "../git";
+import { getBranchChanges, getStagedChanges, getUnstagedChanges } from "../git";
 import { getWorkspaces } from "./getWorkspaces";
 import multimatch from "multimatch";
 import path from "path";
@@ -29,7 +29,8 @@ export function getChangedPackages(
 
   let changes = [
     ...new Set([
-      ...(getChanges(target, cwd) || []),
+      ...(getUnstagedChanges(cwd) || []),
+      ...(getBranchChanges(target, cwd) || []),
       ...(getStagedChanges(cwd) || []),
     ]),
   ];
