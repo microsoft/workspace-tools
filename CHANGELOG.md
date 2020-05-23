@@ -1,8 +1,16 @@
 # Change Log - workspace-tools
 
-This log was last generated on Fri, 15 May 2020 18:10:15 GMT and should not be manually modified.
+This log was last generated on Sat, 23 May 2020 19:39:52 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.6.0
+
+Sat, 23 May 2020 19:39:52 GMT
+
+### Minor changes
+
+- Adding a getChangedPackages() function (#1) (kchau@microsoft.com)
 
 ## 0.4.0
 
