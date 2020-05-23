@@ -24,7 +24,7 @@ jobs:
       - run: yarn
       - run: yarn build
       - run: yarn test
-      - run: git remote set-url origin https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/${GITHUB_REPOSITORY}.git
+      - run: git remote set-url origin https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY.git
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - run: yarn release -y -n $NPM_AUTHTOKEN
