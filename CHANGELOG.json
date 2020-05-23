@@ -2,6 +2,21 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Sat, 23 May 2020 19:57:45 GMT",
+      "tag": "workspace-tools_v0.7.3",
+      "version": "0.7.3",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Adding a getChangedPackages() function (#1)",
+            "author": "kchau@microsoft.com",
+            "commit": "4b3514e04d666fdcd2bd9d3fa959232348e4c12e",
+            "package": "workspace-tools"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 15 May 2020 18:10:15 GMT",
       "tag": "workspace-tools_v0.4.0",
       "version": "0.4.0",
