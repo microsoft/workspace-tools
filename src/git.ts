@@ -81,7 +81,39 @@ export function fetchRemote(remote: string, cwd: string) {
   }
 }
 
-export function getChanges(branch: string, cwd: string) {
+/**
+ * Gets all the changes that have not been staged yet
+ * @param cwd
+ */
+export function getUnstagedChanges(cwd: string) {
+  try {
+    const results = git(["--no-pager", "diff", "--name-only"], {
+      cwd,
+    });
+
+    if (!results.success) {
+      return [];
+    }
+
+    let changes = results.stdout;
+
+    let lines = changes.split(/\n/) || [];
+
+    return lines
+      .filter((line) => line.trim() !== "")
+      .map((line) => line.trim())
+      .filter((line) => !line.includes("node_modules"));
+  } catch (e) {
+    console.error("Cannot gather information about changes: ", e.message);
+  }
+}
+
+/**
+ * Gets all the changes between the branch and the merge-base
+ * @param branch
+ * @param cwd
+ */
+export function getBranchChanges(branch: string, cwd: string) {
   try {
     const results = git(["--no-pager", "diff", "--name-only", branch + "..."], {
       cwd,
@@ -104,6 +136,10 @@ export function getChanges(branch: string, cwd: string) {
   }
 }
 
+/**
+ * Gets all the staged changes (changes inside the index)
+ * @param cwd
+ */
 export function getStagedChanges(cwd: string) {
   try {
     const results = git(["--no-pager", "diff", "--staged", "--name-only"], {
