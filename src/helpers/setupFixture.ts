@@ -2,11 +2,12 @@ import path from "path";
 import findUp from "find-up";
 import fs from "fs-extra";
 import tempy from "tempy";
+import { init, stageAndCommit } from "../git";
 
 async function findFixturePath(cwd: string, fixtureName: string) {
   return await findUp(path.join("__fixtures__", fixtureName), {
     cwd,
-    type: "directory"
+    type: "directory",
   });
 }
 
@@ -27,6 +28,9 @@ export async function setupFixture(fixtureName: string) {
 
   fs.mkdirpSync(cwd);
   fs.copySync(fixturePath, cwd);
+
+  init(cwd, "test@test.email", "test user");
+  stageAndCommit(["."], "test", cwd);
 
   return cwd;
 }
