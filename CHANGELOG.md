@@ -1,8 +1,16 @@
 # Change Log - workspace-tools
 
-This log was last generated on Sat, 23 May 2020 19:57:45 GMT and should not be manually modified.
+This log was last generated on Sat, 23 May 2020 22:54:25 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.7.4
+
+Sat, 23 May 2020 22:54:25 GMT
+
+### Patches
+
+- adding unstaged changes in the changed packges (kchau@microsoft.com)
 
 ## 0.7.3
 
