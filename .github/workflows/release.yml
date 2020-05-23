@@ -27,10 +27,6 @@ jobs:
       - run: |
           git config user.email "kchau@microsoft.com"
           git config user.name "Ken Chau"
-      - run: |
-          echo $GITHUB_REPOSITORY
-          echo $GITHUB_ACTOR
-      - run: git remote set-url origin https://$GITHUB_ACTOR:${{ secrets.GITHUB_TOKEN }}@github.com/microsoft/workspace-tools.git
       - run: yarn release -y -n $NPM_AUTHTOKEN
         env:
           NPM_AUTHTOKEN: ${{ secrets.npm_authtoken }}

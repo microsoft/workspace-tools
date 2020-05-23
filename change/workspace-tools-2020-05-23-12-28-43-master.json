@@ -1,5 +1,5 @@
 {
-  "type": "minor",
+  "type": "patch",
   "comment": "Adding a getChangedPackages() function (#1)",
   "packageName": "workspace-tools",
   "email": "kchau@microsoft.com",
