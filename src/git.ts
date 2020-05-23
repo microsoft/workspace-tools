@@ -230,7 +230,7 @@ export function init(cwd: string, email?: string, username?: string) {
 
   const configLines = git(["config", "--list"], { cwd }).stdout.split("\n");
 
-  if (!configLines.find((line) => line.includes("user.name")) && !email) {
+  if (!configLines.find((line) => line.includes("user.name"))) {
     if (!username) {
       throw new Error("must include a username when initializing git repo");
     }
