@@ -1,6 +1,7 @@
 import findUp from "find-up";
 import path from "path";
-import { RushConfiguration } from "@microsoft/rush-lib";
+import jju from 'jju';
+import fs from 'fs';
 
 import { WorkspaceInfo } from "../../types/WorkspaceInfo";
 
@@ -11,9 +12,7 @@ export function getRushWorkspaces(cwd: string): WorkspaceInfo {
       return [];
     }
 
-    const rushConfig = RushConfiguration.loadFromConfigurationFile(
-      rushJsonPath
-    );
+    const rushConfig = jju.parse(fs.readFileSync(rushJsonPath, 'utf-8'));
 
     return rushConfig.projects.map((project) => {
       return {
