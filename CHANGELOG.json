@@ -2,6 +2,21 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Mon, 25 May 2020 18:15:11 GMT",
+      "tag": "workspace-tools_v0.7.5",
+      "version": "0.7.5",
+      "comments": {
+        "patch": [
+          {
+            "comment": "speeding up getRushWorkspaces by skipping the slow rush config reader by a simple json reader",
+            "author": "kchau@microsoft.com",
+            "commit": "984ae58a49bb0420310b49a163a82fb137234cd3",
+            "package": "workspace-tools"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 23 May 2020 22:54:25 GMT",
       "tag": "workspace-tools_v0.7.4",
       "version": "0.7.4",

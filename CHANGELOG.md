@@ -1,8 +1,16 @@
 # Change Log - workspace-tools
 
-This log was last generated on Sat, 23 May 2020 22:54:25 GMT and should not be manually modified.
+This log was last generated on Mon, 25 May 2020 18:15:11 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.7.5
+
+Mon, 25 May 2020 18:15:11 GMT
+
+### Patches
+
+- speeding up getRushWorkspaces by skipping the slow rush config reader by a simple json reader (kchau@microsoft.com)
 
 ## 0.7.4
 
