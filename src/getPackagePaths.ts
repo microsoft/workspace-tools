@@ -10,7 +10,6 @@ export function getPackagePaths(
       .sync(path.join(glob, "package.json").replace(/\\/g, "/"), {
         cwd: workspacesRoot,
         absolute: true,
-        // expandDirectories: false,
         ignore: ["**/node_modules/**"],
       })
       .map((p) => path.dirname(p));
