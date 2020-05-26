@@ -2,6 +2,21 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Tue, 26 May 2020 16:55:44 GMT",
+      "tag": "workspace-tools_v0.7.6",
+      "version": "0.7.6",
+      "comments": {
+        "patch": [
+          {
+            "comment": "fixes an issue with globby so that workspaces matches are found correctly",
+            "author": "kchau@microsoft.com",
+            "commit": "a310abc8eaddb42b849d71ff43d6cadc75b5bfd4",
+            "package": "workspace-tools"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 25 May 2020 18:15:11 GMT",
       "tag": "workspace-tools_v0.7.5",
       "version": "0.7.5",

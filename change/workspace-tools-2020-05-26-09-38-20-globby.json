@@ -1,8 +1,0 @@
-{
-  "type": "patch",
-  "comment": "fixes an issue with globby so that workspaces matches are found correctly",
-  "packageName": "workspace-tools",
-  "email": "kchau@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2020-05-26T16:38:20.780Z"
-}

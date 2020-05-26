@@ -1,8 +1,16 @@
 # Change Log - workspace-tools
 
-This log was last generated on Mon, 25 May 2020 18:15:11 GMT and should not be manually modified.
+This log was last generated on Tue, 26 May 2020 16:55:44 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.7.6
+
+Tue, 26 May 2020 16:55:44 GMT
+
+### Patches
+
+- fixes an issue with globby so that workspaces matches are found correctly (kchau@microsoft.com)
 
 ## 0.7.5
 
