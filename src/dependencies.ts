@@ -36,7 +36,7 @@ export function getDependentMap(packages: PackageInfos) {
 }
 
 /**
- * for a package graph of a->b->c (where b depends on a), transitive consumers of a are all dependencies of b & c (or what are the consequences of a)
+ * for a package graph of a->b->c (where b depends on a), transitive consumers of a are b & c and their consumers (or what are the consequences of a)
  * @param targets
  * @param packages
  */
@@ -66,7 +66,7 @@ export function getTransitiveConsumers(
 }
 
 /**
- * for a package graph of a->b->c (where b depends on a), transitive providers of c are all dependencies of a & b (or what is needed to satisfy c)
+ * for a package graph of a->b->c (where b depends on a), transitive providers of c are a & b and their providers (or what is needed to satisfy c)
  * @param targets
  * @param packages
  */
