@@ -35,12 +35,17 @@ export function getDependentMap(packages: PackageInfos) {
   return map;
 }
 
-export function getTransitiveDependencies(
-  scopedPackages: string[],
+/**
+ * for a package graph of a->b->c (where b depends on a), transitive consumers of a are all dependencies of b & c (or what are the consequences of a)
+ * @param targets
+ * @param packages
+ */
+export function getTransitiveConsumers(
+  targets: string[],
   packages: PackageInfos
 ) {
   const graph = getPackageGraph(packages);
-  const pkgQueue: string[] = [...scopedPackages];
+  const pkgQueue: string[] = [...targets];
   const visited = new Set<string>();
 
   while (pkgQueue.length > 0) {
@@ -57,8 +62,41 @@ export function getTransitiveDependencies(
     }
   }
 
-  return [...visited].filter((pkg) => !scopedPackages.includes(pkg));
+  return [...visited].filter((pkg) => !targets.includes(pkg));
 }
+
+/**
+ * for a package graph of a->b->c (where b depends on a), transitive providers of c are all dependencies of a & b (or what is needed to satisfy c)
+ * @param targets
+ * @param packages
+ */
+export function getTransitiveProviders(
+  targets: string[],
+  packages: PackageInfos
+) {
+  const graph = getPackageGraph(packages);
+  const pkgQueue: string[] = [...targets];
+  const visited = new Set<string>();
+
+  while (pkgQueue.length > 0) {
+    const pkg = pkgQueue.shift()!;
+
+    if (!visited.has(pkg)) {
+      visited.add(pkg);
+
+      for (const [from, to] of graph) {
+        if (to === pkg) {
+          pkgQueue.push(from);
+        }
+      }
+    }
+  }
+
+  return [...visited].filter((pkg) => !targets.includes(pkg));
+}
+
+/** @deprecated use `getDownstreamDependencies()` instead */
+export const getTransitiveDependencies = getTransitiveConsumers;
 
 export function getInternalDeps(info: PackageInfo, packages: PackageInfos) {
   const deps = Object.keys({ ...info.dependencies, ...info.devDependencies });
