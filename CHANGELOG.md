@@ -1,8 +1,16 @@
 # Change Log - workspace-tools
 
-This log was last generated on Tue, 26 May 2020 16:55:44 GMT and should not be manually modified.
+This log was last generated on Fri, 19 Jun 2020 17:53:56 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.8.0
+
+Fri, 19 Jun 2020 17:53:56 GMT
+
+### Minor changes
+
+- adding getTransitiveProviders and renamed getTransitiveDependencies to getTransitiveConsumers (kchau@microsoft.com)
 
 ## 0.7.6
 
