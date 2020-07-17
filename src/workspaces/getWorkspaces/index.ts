@@ -4,8 +4,22 @@ import { getPnpmWorkspaces } from "./pnpmWorkspaces";
 import { getYarnWorkspaces } from "./yarnWorkspaces";
 import { getRushWorkspaces } from "./rushWorkspaces";
 import { WorkspaceInfo } from "../../types/WorkspaceInfo";
+import { WorkspaceManager } from "../WorkspaceManager";
+
+const workspaceGetter = {
+  yarn: getYarnWorkspaces,
+  pnpm: getPnpmWorkspaces,
+  rush: getRushWorkspaces,
+};
+
+const preferred = process.env
+  .PREFERRED_WORKSPACE_MANAGER as WorkspaceManager | null;
 
 export function getWorkspaces(cwd: string): WorkspaceInfo {
+  if (preferred && workspaceGetter[preferred]) {
+    return workspaceGetter[preferred](cwd);
+  }
+
   const yarnLockPath = findUp.sync("yarn.lock", { cwd });
   if (yarnLockPath) {
     return getYarnWorkspaces(cwd);

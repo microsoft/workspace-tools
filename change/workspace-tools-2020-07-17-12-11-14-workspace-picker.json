@@ -1,0 +1,8 @@
+{
+  "type": "minor",
+  "comment": "Add a new env variable to allow one to pick the preferred workspace manager",
+  "packageName": "workspace-tools",
+  "email": "kchau@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-07-17T19:11:14.566Z"
+}
