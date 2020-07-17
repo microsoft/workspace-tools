@@ -2,6 +2,21 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Fri, 17 Jul 2020 19:16:04 GMT",
+      "tag": "workspace-tools_v0.9.0",
+      "version": "0.9.0",
+      "comments": {
+        "minor": [
+          {
+            "comment": "Add a new env variable to allow one to pick the preferred workspace manager",
+            "author": "kchau@microsoft.com",
+            "commit": "844da12e2501036e36cc5108a340620dabbd3d3a",
+            "package": "workspace-tools"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 19 Jun 2020 17:53:56 GMT",
       "tag": "workspace-tools_v0.8.0",
       "version": "0.8.0",
