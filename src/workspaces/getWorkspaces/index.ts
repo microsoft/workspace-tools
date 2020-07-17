@@ -16,7 +16,7 @@ const preferred = process.env
   .PREFERRED_WORKSPACE_MANAGER as WorkspaceManager | null;
 
 export function getWorkspaces(cwd: string): WorkspaceInfo {
-  if (preferred) {
+  if (preferred && workspaceGetter[preferred]) {
     return workspaceGetter[preferred](cwd);
   }
 
