@@ -1,8 +1,16 @@
 # Change Log - workspace-tools
 
-This log was last generated on Fri, 17 Jul 2020 19:16:04 GMT and should not be manually modified.
+This log was last generated on Sun, 09 Aug 2020 03:46:17 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.9.1
+
+Sun, 09 Aug 2020 03:46:17 GMT
+
+### Patches
+
+- handle nested change detection (kchau@microsoft.com)
 
 ## 0.9.0
 

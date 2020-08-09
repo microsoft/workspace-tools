@@ -2,6 +2,21 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Sun, 09 Aug 2020 03:46:17 GMT",
+      "tag": "workspace-tools_v0.9.1",
+      "version": "0.9.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "handle nested change detection",
+            "author": "kchau@microsoft.com",
+            "commit": "9fc919fca927d9d21f35757f9cdf2b66f9f03637",
+            "package": "workspace-tools"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 17 Jul 2020 19:16:04 GMT",
       "tag": "workspace-tools_v0.9.0",
       "version": "0.9.0",
