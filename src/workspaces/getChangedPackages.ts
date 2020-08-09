@@ -48,12 +48,16 @@ export function getChangedPackages(
   const changeSet = new Set<string>();
 
   for (const change of changes) {
-    const found = workspaceInfo.find(
+    const candidates = workspaceInfo.filter(
       (pkgPath) =>
         change.indexOf(path.relative(cwd, pkgPath.path).replace(/\\/g, "/")) ===
         0
     );
-    if (found) {
+
+    if (candidates && candidates.length > 0) {
+      const found = candidates.reduce((found, item) => {
+        return found.path.length > item.path.length ? found : item;
+      }, candidates[0]);
       changeSet.add(found.name);
     } else {
       return workspaceInfo.map((pkg) => pkg.name);
