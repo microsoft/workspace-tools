@@ -26,9 +26,11 @@ function getPackageGraph(packages: PackageInfos, scope: string[] = []) {
     }
 
     visited.add(pkg);
+
     const info = packages[pkg];
     const deps = getInternalDeps(info, packages);
-    if (deps) {
+
+    if (deps.length > 0) {
       for (const dep of deps) {
         stack.push(dep);
         edges.push([dep, pkg]);
