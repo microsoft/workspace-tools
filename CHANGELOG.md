@@ -1,8 +1,16 @@
 # Change Log - workspace-tools
 
-This log was last generated on Wed, 19 Aug 2020 22:44:02 GMT and should not be manually modified.
+This log was last generated on Wed, 19 Aug 2020 23:27:31 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.9.3
+
+Wed, 19 Aug 2020 23:27:31 GMT
+
+### Patches
+
+- fixes the case where deps with no dependencies are not added the edges in the subgraph calculation (kchau@microsoft.com)
 
 ## 0.9.2
 

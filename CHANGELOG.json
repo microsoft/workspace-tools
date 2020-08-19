@@ -2,6 +2,21 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Wed, 19 Aug 2020 23:27:31 GMT",
+      "tag": "workspace-tools_v0.9.3",
+      "version": "0.9.3",
+      "comments": {
+        "patch": [
+          {
+            "comment": "fixes the case where deps with no dependencies are not added the edges in the subgraph calculation",
+            "author": "kchau@microsoft.com",
+            "commit": "fcb692aefd25bab2f6b9e0cda15566fc8021ef85",
+            "package": "workspace-tools"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 19 Aug 2020 22:44:02 GMT",
       "tag": "workspace-tools_v0.9.2",
       "version": "0.9.2",
