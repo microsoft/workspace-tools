@@ -1,8 +1,16 @@
 # Change Log - workspace-tools
 
-This log was last generated on Sun, 09 Aug 2020 03:46:17 GMT and should not be manually modified.
+This log was last generated on Wed, 19 Aug 2020 22:44:02 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.9.2
+
+Wed, 19 Aug 2020 22:44:02 GMT
+
+### Patches
+
+- adding subgraph support get transitive consumer (kchau@microsoft.com)
 
 ## 0.9.1
 

@@ -2,6 +2,21 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Wed, 19 Aug 2020 22:44:02 GMT",
+      "tag": "workspace-tools_v0.9.2",
+      "version": "0.9.2",
+      "comments": {
+        "patch": [
+          {
+            "comment": "adding subgraph support get transitive consumer",
+            "author": "kchau@microsoft.com",
+            "commit": "26bafd27fc84b52417de895be88e4a48fdc99bcb",
+            "package": "workspace-tools"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sun, 09 Aug 2020 03:46:17 GMT",
       "tag": "workspace-tools_v0.9.1",
       "version": "0.9.1",
