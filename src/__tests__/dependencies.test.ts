@@ -18,6 +18,28 @@ describe("getTransitiveConsumers", () => {
     expect(actual).toContain("b");
   });
 
+  it("can get linear transitive consumers with scope", () => {
+    const allPackages = {
+      grid: stubPackage("grid", ["foo"]),
+      word: stubPackage("word", ["bar"]),
+      foo: stubPackage("foo", ["core"]),
+      bar: stubPackage("bar", ["core"]),
+      core: stubPackage("core"),
+      demo: stubPackage("demo", ["grid", "word"]),
+    };
+
+    const actual = getTransitiveConsumers(["core"], allPackages, [
+      "grid",
+      "word",
+    ]);
+
+    expect(actual).toContain("foo");
+    expect(actual).toContain("bar");
+    expect(actual).toContain("grid");
+    expect(actual).toContain("word");
+    expect(actual).not.toContain("demo");
+  });
+
   it("can get transitive consumer with deps", () => {
     /*
       [b, a]
@@ -102,6 +124,39 @@ describe("getTransitiveProviders", () => {
     expect(actual).not.toContain("b");
     expect(actual).not.toContain("d");
     expect(actual).not.toContain("c");
+  });
+
+  it("can get transitive consumers with deps and scope", () => {
+    /*
+      [b, a]
+      [c, b]
+      [e, c]
+      [f, c]
+      [f, e]
+      [g, f]
+
+      expected: e, f, g
+    */
+
+    const allPackages = {
+      a: stubPackage("a", ["b", "h"]),
+      b: stubPackage("b", ["c"]),
+
+      c: stubPackage("c", ["e", "f"]),
+      d: stubPackage("d"),
+      e: stubPackage("e", ["f"]),
+      f: stubPackage("f", ["g"]),
+      g: stubPackage("g"),
+      h: stubPackage("h", ["i"]),
+      i: stubPackage("i", ["f"]),
+    };
+
+    const actual = getTransitiveConsumers(["f"], allPackages, ["b"]);
+
+    expect(actual).toContain("e");
+    expect(actual).toContain("c");
+    expect(actual).toContain("b");
+    expect(actual).not.toContain("h");
   });
 });
 
