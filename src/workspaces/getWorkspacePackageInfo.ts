@@ -1,4 +1,5 @@
 import path from "path";
+import fs from "fs";
 import { WorkspaceInfo } from "../types/WorkspaceInfo";
 import { PackageInfo } from "../types/PackageInfo";
 
@@ -14,7 +15,9 @@ export function getWorkspacePackageInfo(
     const packageJsonPath = path.join(workspacePath, "package.json");
 
     try {
-      packageJson = require(packageJsonPath) as PackageInfo;
+      packageJson = JSON.parse(
+        fs.readFileSync(packageJsonPath, "utf-8")
+      ) as PackageInfo;
     } catch {
       return returnValue;
     }
