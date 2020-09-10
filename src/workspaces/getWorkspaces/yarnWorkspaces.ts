@@ -1,4 +1,5 @@
 import path from "path";
+import fs from "fs";
 import findWorkspaceRoot from "find-yarn-workspace-root";
 
 import { getPackagePaths } from "../../getPackagePaths";
@@ -25,13 +26,14 @@ function getYarnWorkspaceRoot(cwd: string): string {
 }
 
 function getRootPackageJson(yarnWorkspacesRoot: string) {
-  const packageJson = require(path.join(yarnWorkspacesRoot, "package.json"));
+  const packageJsonFile = path.join(yarnWorkspacesRoot, "package.json");
 
-  if (!packageJson) {
+  try {
+    const packageJson = JSON.parse(fs.readFileSync(packageJsonFile, "utf-8"));
+    return packageJson;
+  } catch (e) {
     throw new Error("Could not load package.json from workspaces root");
   }
-
-  return packageJson;
 }
 
 function getPackages(packageJson: PackageJsonWorkspaces): string[] {
