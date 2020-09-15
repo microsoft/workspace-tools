@@ -39,7 +39,7 @@ export function getScopedPackages(
     }
   }
 
-  return results;
+  return [...results];
 }
 
 function generateBarePackageMap(packageNames: string[]) {
