@@ -1,0 +1,8 @@
+{
+  "type": "patch",
+  "comment": "support scoped package matches to match regardless of scopes",
+  "packageName": "workspace-tools",
+  "email": "kchau@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-09-15T16:45:57.715Z"
+}
