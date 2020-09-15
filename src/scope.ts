@@ -14,16 +14,6 @@ export function getScopedPackages(
     ? packages
     : Object.keys(packages);
 
-  const barePackageMap: { [key: string]: string[] } = {};
-
-  // create a map of bare package name -> list of full package names
-  // NOTE: do not perform barePackageMap lookup if any of the "scopes" arg starts with "@"
-  for (const pkg of packageNames) {
-    const bare = pkg.replace(/^@[^/]+\//, "");
-    barePackageMap[bare] = barePackageMap[bare] || [];
-    barePackageMap[bare].push(pkg);
-  }
-
   const results = new Set<string>();
 
   // perform a package-scoped search (e.g. search is @scope/foo*)
@@ -38,6 +28,9 @@ export function getScopedPackages(
   // perform a package-unscoped search (e.g. search is foo*)
   const unscopedSearch = search.filter((needle) => !needle.startsWith("@"));
   if (unscopedSearch.length > 0) {
+    // only generate the bare package map if there ARE unscoped searches
+    const barePackageMap = generateBarePackageMap(packageNames);
+
     let matched = matcher(Object.keys(barePackageMap), unscopedSearch);
     for (const bare of matched) {
       for (const pkg of barePackageMap[bare]) {
@@ -47,4 +40,18 @@ export function getScopedPackages(
   }
 
   return results;
+}
+
+function generateBarePackageMap(packageNames: string[]) {
+  const barePackageMap: { [key: string]: string[] } = {};
+
+  // create a map of bare package name -> list of full package names
+  // NOTE: do not perform barePackageMap lookup if any of the "scopes" arg starts with "@"
+  for (const pkg of packageNames) {
+    const bare = pkg.replace(/^@[^/]+\//, "");
+    barePackageMap[bare] = barePackageMap[bare] || [];
+    barePackageMap[bare].push(pkg);
+  }
+
+  return barePackageMap;
 }
