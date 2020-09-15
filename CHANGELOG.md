@@ -1,8 +1,16 @@
 # Change Log - workspace-tools
 
-This log was last generated on Thu, 10 Sep 2020 23:43:54 GMT and should not be manually modified.
+This log was last generated on Tue, 15 Sep 2020 17:40:30 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.9.7
+
+Tue, 15 Sep 2020 17:40:30 GMT
+
+### Patches
+
+- support scoped package matches to match regardless of scopes (kchau@microsoft.com)
 
 ## 0.9.6
 

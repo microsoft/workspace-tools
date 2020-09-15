@@ -2,6 +2,21 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Tue, 15 Sep 2020 17:40:30 GMT",
+      "tag": "workspace-tools_v0.9.7",
+      "version": "0.9.7",
+      "comments": {
+        "patch": [
+          {
+            "comment": "support scoped package matches to match regardless of scopes",
+            "author": "kchau@microsoft.com",
+            "commit": "b0fcfc5eada49af5b6e85fd9cf33c6375181041d",
+            "package": "workspace-tools"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 10 Sep 2020 23:43:54 GMT",
       "tag": "workspace-tools_v0.9.6",
       "version": "0.9.6",
