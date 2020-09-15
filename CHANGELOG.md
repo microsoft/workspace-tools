@@ -1,8 +1,16 @@
 # Change Log - workspace-tools
 
-This log was last generated on Tue, 15 Sep 2020 17:40:30 GMT and should not be manually modified.
+This log was last generated on Tue, 15 Sep 2020 17:45:13 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.9.8
+
+Tue, 15 Sep 2020 17:45:13 GMT
+
+### Patches
+
+- added repository information in package.json (david@lannoye.net)
 
 ## 0.9.7
 

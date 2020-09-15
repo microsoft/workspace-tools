@@ -2,6 +2,21 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Tue, 15 Sep 2020 17:45:13 GMT",
+      "tag": "workspace-tools_v0.9.8",
+      "version": "0.9.8",
+      "comments": {
+        "patch": [
+          {
+            "comment": "added repository information in package.json",
+            "author": "david@lannoye.net",
+            "commit": "6a32e39e75c3e12f058c64c03f3d9529138abc77",
+            "package": "workspace-tools"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 15 Sep 2020 17:40:30 GMT",
       "tag": "workspace-tools_v0.9.7",
       "version": "0.9.7",

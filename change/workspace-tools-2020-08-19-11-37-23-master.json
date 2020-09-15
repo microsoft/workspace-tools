@@ -1,8 +1,0 @@
-{
-  "type": "patch",
-  "comment": "added repository information in package.json",
-  "packageName": "workspace-tools",
-  "email": "david@lannoye.net",
-  "dependentChangeType": "patch",
-  "date": "2020-08-19T18:37:23.181Z"
-}
