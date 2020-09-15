@@ -59,4 +59,15 @@ describe("getScopedPackages", () => {
     expect(results).toContain("foo");
     expect(results).not.toContain("baz");
   });
+
+  it("uses the correct package scope when the search pattern starts a @ character", () => {
+    const results = getScopedPackages(
+      ["@yay/foo*"],
+      ["@yay/foo1", "@yay1/foo2", "foo", "baz"]
+    );
+    expect(results).toContain("@yay/foo1");
+    expect(results).not.toContain("@yay1/foo2");
+    expect(results).not.toContain("foo");
+    expect(results).not.toContain("baz");
+  });
 });
