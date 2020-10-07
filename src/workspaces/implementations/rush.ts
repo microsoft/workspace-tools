@@ -5,12 +5,20 @@ import fs from "fs";
 
 import { WorkspaceInfo } from "../../types/WorkspaceInfo";
 
+export function getRushWorkspaceRoot(cwd: string): string {
+  const rushJsonPath = findUp.sync("rush.json", { cwd });
+
+  if (!rushJsonPath) {
+    throw new Error("Could not find rush workspaces root");
+  }
+
+  return path.dirname(rushJsonPath);
+}
+
 export function getRushWorkspaces(cwd: string): WorkspaceInfo {
   try {
-    const rushJsonPath = findUp.sync("rush.json", { cwd });
-    if (!rushJsonPath) {
-      return [];
-    }
+    const rushWorkspaceRoot = getRushWorkspaceRoot(cwd);
+    const rushJsonPath = path.join(rushWorkspaceRoot, "rush.json");
 
     const rushConfig = jju.parse(fs.readFileSync(rushJsonPath, "utf-8"));
     const root = path.dirname(rushJsonPath);
