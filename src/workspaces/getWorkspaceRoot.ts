@@ -1,22 +1,31 @@
-import { getWorkspaceImplementation } from "./implementations";
+import {
+  getWorkspaceImplementation,
+  WorkspaceImplementations,
+} from "./implementations";
 
 import { getPnpmWorkspaceRoot } from "./implementations/pnpm";
 import { getYarnWorkspaceRoot } from "./implementations/yarn";
 import { getRushWorkspaceRoot } from "./implementations/rush";
 
-export function getWorkspaceRoot(cwd: string): string | undefined {
-  const workspaceImplementation = getWorkspaceImplementation(cwd);
+import { WorkspaceManager } from "./WorkspaceManager";
 
-  if (!workspaceImplementation) {
+const workspaceGetter: {
+  [key in WorkspaceImplementations]: (cwd: string) => string;
+} = {
+  yarn: getYarnWorkspaceRoot,
+  pnpm: getPnpmWorkspaceRoot,
+  rush: getRushWorkspaceRoot,
+};
+
+const preferred = process.env
+  .PREFERRED_WORKSPACE_MANAGER as WorkspaceManager | null;
+
+export function getWorkspaceRoot(cwd: string): string | undefined {
+  const workspaceImplementation = preferred || getWorkspaceImplementation(cwd);
+
+  if (!workspaceImplementation || !workspaceGetter[workspaceImplementation]) {
     return;
   }
 
-  switch (workspaceImplementation) {
-    case "yarn":
-      return getYarnWorkspaceRoot(cwd);
-    case "pnpm":
-      return getPnpmWorkspaceRoot(cwd);
-    case "rush":
-      return getRushWorkspaceRoot(cwd);
-  }
+  return workspaceGetter[workspaceImplementation](cwd);
 }
