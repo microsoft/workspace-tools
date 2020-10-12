@@ -10,15 +10,23 @@ type PnpmWorkspaces = {
   packages: string[];
 };
 
+export function getPnpmWorkspaceRoot(cwd: string): string {
+  const pnpmWorkspacesFile = findUp.sync("pnpm-workspace.yaml", { cwd });
+
+  if (!pnpmWorkspacesFile) {
+    throw new Error("Could not find pnpm workspaces root");
+  }
+
+  return path.dirname(pnpmWorkspacesFile);
+}
+
 export function getPnpmWorkspaces(cwd: string): WorkspaceInfo {
   try {
-    const pnpmWorkspacesFile = findUp.sync("pnpm-workspace.yaml", { cwd });
-    if (!pnpmWorkspacesFile) {
-      return [];
-    }
-
-    const pnpmWorkspacesRoot = path.dirname(pnpmWorkspacesFile);
-
+    const pnpmWorkspacesRoot = getPnpmWorkspaceRoot(cwd);
+    const pnpmWorkspacesFile = path.join(
+      pnpmWorkspacesRoot,
+      "pnpm-workspace.yaml"
+    );
     const pnpmWorkspaces = readYaml<PnpmWorkspaces>(pnpmWorkspacesFile);
 
     const packagePaths = getPackagePaths(
