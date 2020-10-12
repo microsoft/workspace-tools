@@ -1,8 +1,16 @@
 # Change Log - workspace-tools
 
-This log was last generated on Tue, 15 Sep 2020 17:45:13 GMT and should not be manually modified.
+This log was last generated on Mon, 12 Oct 2020 16:27:40 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.10.0
+
+Mon, 12 Oct 2020 16:27:40 GMT
+
+### Minor changes
+
+- Introduce getWorkspaceRoot() (bewegger@microsoft.com)
 
 ## 0.9.8
 
