@@ -1,8 +1,16 @@
 # Change Log - workspace-tools
 
-This log was last generated on Mon, 12 Oct 2020 16:27:40 GMT and should not be manually modified.
+This log was last generated on Mon, 19 Oct 2020 20:24:42 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.10.1
+
+Mon, 19 Oct 2020 20:24:42 GMT
+
+### Patches
+
+- replaced matcher with multimatch (kchau@microsoft.com)
 
 ## 0.10.0
 

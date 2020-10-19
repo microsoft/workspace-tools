@@ -2,6 +2,21 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Mon, 19 Oct 2020 20:24:42 GMT",
+      "tag": "workspace-tools_v0.10.1",
+      "version": "0.10.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "replaced matcher with multimatch",
+            "author": "kchau@microsoft.com",
+            "commit": "2f58801ea86d0a4d380dcadd90e7c1786fc1fd96",
+            "package": "workspace-tools"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 12 Oct 2020 16:27:40 GMT",
       "tag": "workspace-tools_v0.10.0",
       "version": "0.10.0",
