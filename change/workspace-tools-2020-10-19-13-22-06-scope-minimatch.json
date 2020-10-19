@@ -1,0 +1,8 @@
+{
+  "type": "patch",
+  "comment": "replaced matcher with multimatch",
+  "packageName": "workspace-tools",
+  "email": "kchau@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2020-10-19T20:22:06.181Z"
+}
