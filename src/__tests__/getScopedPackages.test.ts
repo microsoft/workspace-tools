@@ -70,4 +70,28 @@ describe("getScopedPackages", () => {
     expect(results).not.toContain("foo");
     expect(results).not.toContain("baz");
   });
+
+  it("can deal with brace expansion with scopes", () => {
+    const results = getScopedPackages(
+      ["@yay/foo{1,2}"],
+      ["@yay/foo1", "@yay/foo2", "@yay/foo3", "foo", "baz"]
+    );
+    expect(results).toContain("@yay/foo1");
+    expect(results).toContain("@yay/foo2");
+    expect(results).not.toContain("@yay/foo3");
+    expect(results).not.toContain("foo");
+    expect(results).not.toContain("baz");
+  });
+
+  it("can deal with negated search", () => {
+    const results = getScopedPackages(
+      ["@yay/foo*", "!@yay/foo3"],
+      ["@yay/foo1", "@yay/foo2", "@yay/foo3", "foo", "baz"]
+    );
+    expect(results).toContain("@yay/foo1");
+    expect(results).toContain("@yay/foo2");
+    expect(results).not.toContain("@yay/foo3");
+    expect(results).not.toContain("foo");
+    expect(results).not.toContain("baz");
+  });
 });

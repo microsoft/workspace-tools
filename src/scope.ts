@@ -1,4 +1,4 @@
-import matcher from "matcher";
+import multimatch from "multimatch";
 
 /**
  * Searches all package names based on "scoping" (i.e. "scope" in the sense of inclusion)
@@ -17,21 +17,25 @@ export function getScopedPackages(
   const results = new Set<string>();
 
   // perform a package-scoped search (e.g. search is @scope/foo*)
-  const scopedSearch = search.filter((needle) => needle.startsWith("@"));
+  const scopedSearch = search.filter(
+    (needle) => needle.startsWith("@") || needle.startsWith("!@")
+  );
   if (scopedSearch.length > 0) {
-    const matched = matcher(packageNames, scopedSearch);
+    const matched = multimatch(packageNames, scopedSearch);
     for (const pkg of matched) {
       results.add(pkg);
     }
   }
 
   // perform a package-unscoped search (e.g. search is foo*)
-  const unscopedSearch = search.filter((needle) => !needle.startsWith("@"));
+  const unscopedSearch = search.filter(
+    (needle) => !needle.startsWith("@") && !needle.startsWith("!@")
+  );
   if (unscopedSearch.length > 0) {
     // only generate the bare package map if there ARE unscoped searches
     const barePackageMap = generateBarePackageMap(packageNames);
 
-    let matched = matcher(Object.keys(barePackageMap), unscopedSearch);
+    let matched = multimatch(Object.keys(barePackageMap), unscopedSearch);
     for (const bare of matched) {
       for (const pkg of barePackageMap[bare]) {
         results.add(pkg);
