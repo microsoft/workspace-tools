@@ -17,6 +17,11 @@ const MaxBufferOption = process.env.GIT_MAX_BUFFER ? parseInt(process.env.GIT_MA
 export function git(args: string[], options?: { cwd: string, maxBuffer?: number }) {
   const results = spawnSync("git", args, { maxBuffer: MaxBufferOption, ...options });
 
+  // These errors are caused by the spawning itself
+  if (results.error) {
+    throw new Error(`git command failed: ${args.join(' ')}\n${results.error}`)
+  }
+
   if (results.status === 0) {
     return {
       stderr: results.stderr.toString().trimRight(),
@@ -127,7 +132,7 @@ export function getBranchChanges(branch: string, cwd: string) {
   });
 
   if (!results.success) {
-    throw new Error(`git command failed: ${diffCmd.join(' ')}`)
+    throw new Error(results.stderr)
   }
 
   let changes = results.stdout;
