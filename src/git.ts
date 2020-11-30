@@ -5,10 +5,17 @@ import { findGitRoot } from "./paths";
 import gitUrlParse from "git-url-parse";
 
 /**
+ * A maxBuffer override globally for all git operations
+ * Bumps up the default to 500MB as opposed to the 1MB
+ * Override this value with "GIT_MAX_BUFFER" environment variable
+ */
+const MaxBufferOption = process.env.GIT_MAX_BUFFER ? parseInt(process.env.GIT_MAX_BUFFER) : 500 * 1024 * 1024;
+
+/**
  * Runs git command - use this for read only commands
  */
-export function git(args: string[], options?: { cwd: string }) {
-  const results = spawnSync("git", args, options);
+export function git(args: string[], options?: { cwd: string, maxBuffer?: number }) {
+  const results = spawnSync("git", args, { maxBuffer: MaxBufferOption, ...options });
 
   if (results.status === 0) {
     return {
@@ -28,7 +35,7 @@ export function git(args: string[], options?: { cwd: string }) {
 /**
  * Runs git command - use this for commands that makes changes to the file system
  */
-export function gitFailFast(args: string[], options?: { cwd: string }) {
+export function gitFailFast(args: string[], options?: { cwd: string, maxBuffer: number }) {
   const gitResult = git(args, options);
   if (!gitResult.success) {
     console.error(
@@ -114,26 +121,23 @@ export function getUnstagedChanges(cwd: string) {
  * @param cwd
  */
 export function getBranchChanges(branch: string, cwd: string) {
-  try {
-    const results = git(["--no-pager", "diff", "--name-only", branch + "..."], {
-      cwd,
-    });
+  const diffCmd = ["--no-pager", "diff", "--name-only", branch + "..."];
+  const results = git(diffCmd, {
+    cwd,
+  });
 
-    if (!results.success) {
-      return [];
-    }
-
-    let changes = results.stdout;
-
-    let lines = changes.split(/\n/) || [];
-
-    return lines
-      .filter((line) => line.trim() !== "")
-      .map((line) => line.trim())
-      .filter((line) => !line.includes("node_modules"));
-  } catch (e) {
-    console.error("Cannot gather information about changes: ", e.message);
+  if (!results.success) {
+    throw new Error(`git command failed: ${diffCmd.join(' ')}`)
   }
+
+  let changes = results.stdout;
+
+  let lines = changes.split(/\n/) || [];
+
+  return lines
+    .filter((line) => line.trim() !== "")
+    .map((line) => line.trim())
+    .filter((line) => !line.includes("node_modules"));
 }
 
 /**
