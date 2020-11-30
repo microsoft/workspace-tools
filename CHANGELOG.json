@@ -2,6 +2,21 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Mon, 30 Nov 2020 18:53:38 GMT",
+      "tag": "workspace-tools_v0.10.2",
+      "version": "0.10.2",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Allow a much bigger buffer for getting changed packages",
+            "author": "kchau@microsoft.com",
+            "commit": "809f42d39be01128044de0a369b89d6f6d198a66",
+            "package": "workspace-tools"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 19 Oct 2020 20:24:42 GMT",
       "tag": "workspace-tools_v0.10.1",
       "version": "0.10.1",

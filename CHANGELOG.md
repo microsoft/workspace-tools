@@ -1,8 +1,16 @@
 # Change Log - workspace-tools
 
-This log was last generated on Mon, 19 Oct 2020 20:24:42 GMT and should not be manually modified.
+This log was last generated on Mon, 30 Nov 2020 18:53:38 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.10.2
+
+Mon, 30 Nov 2020 18:53:38 GMT
+
+### Patches
+
+- Allow a much bigger buffer for getting changed packages (kchau@microsoft.com)
 
 ## 0.10.1
 
