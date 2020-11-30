@@ -6,6 +6,18 @@ A collection of tools that are useful in a git-controlled monorepo that is manag
 - yarn workspaces
 - pnpm workspaces
 
+# Environment Variables
+
+## GIT_MAX_BUFFER: git operation maxBuffer
+
+Override this value with "GIT_MAX_BUFFER" environment variable. By default, it is using 500MB (as opposed to the
+default node.js maxBuffer of 1MB)
+
+## PREFERRED_WORKSPACE_MANAGER
+
+Sometimes multiple package manager files are checked in. It is necessary to hint to `workspace-tools` which manager
+is used: `yarn`, `pnpm`, `rush`
+
 # Contributing
 
 This project welcomes contributions and suggestions. Most contributions require you to agree to a
