@@ -1,6 +1,6 @@
 import findUp from "find-up";
 
-export type WorkspaceImplementations = "yarn" | "pnpm" | "rush";
+export type WorkspaceImplementations = "yarn" | "pnpm" | "rush" | "npm";
 
 export function getWorkspaceImplementation(
   cwd: string
@@ -18,5 +18,10 @@ export function getWorkspaceImplementation(
   const rushJsonPath = findUp.sync("rush.json", { cwd });
   if (rushJsonPath) {
     return "rush";
+  }
+
+  const npmLockPath = findUp.sync("package-lock.json", { cwd });
+  if (npmLockPath) {
+    return "npm";
   }
 }
