@@ -65,6 +65,22 @@ describe("getChangedPackages()", () => {
     expect(changedPkgs).toContain("package-a");
   });
 
+  it("can detect changes inside a file that has been committed in a different branch in nested monorepo", async () => {
+    // arrange
+    const root = path.join(await setupFixture("monorepo-nested"), "monorepo");
+
+    const newFile = path.join(root, "packages/package-a/footest.txt");
+    fs.writeFileSync(newFile, "hello foo test");
+    git(["checkout", "-b", "newbranch"], { cwd: root });
+    stageAndCommit(["add", newFile], "test commit", root);
+
+    // act
+    const changedPkgs = getChangedPackages(root, "master");
+
+    // assert
+    expect(changedPkgs).toContain("package-a");
+  });
+
   it("can ignore glob patterns in detecting changes", async () => {
     // arrange
     const root = await setupFixture("monorepo");

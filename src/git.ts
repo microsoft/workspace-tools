@@ -126,7 +126,7 @@ export function getUnstagedChanges(cwd: string) {
  * @param cwd
  */
 export function getBranchChanges(branch: string, cwd: string) {
-  const diffCmd = ["--no-pager", "diff", "--name-only", branch + "..."];
+  const diffCmd = ["--no-pager", "diff", "--name-only", "--relative", branch + "..."];
   const results = git(diffCmd, {
     cwd,
   });
