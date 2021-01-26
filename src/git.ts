@@ -54,7 +54,7 @@ export function gitFailFast(args: string[], options?: { cwd: string, maxBuffer: 
 
 export function getUntrackedChanges(cwd: string) {
   try {
-    const results = git(["status", "-z"], { cwd });
+    const results = git(["status", "--short"], { cwd });
 
     if (!results.success) {
       return [];
@@ -99,7 +99,7 @@ export function fetchRemote(remote: string, cwd: string) {
  */
 export function getUnstagedChanges(cwd: string) {
   try {
-    const results = git(["--no-pager", "diff", "--name-only"], {
+    const results = git(["--no-pager", "diff", "--name-only", "--relative"], {
       cwd,
     });
 
@@ -151,7 +151,7 @@ export function getBranchChanges(branch: string, cwd: string) {
  */
 export function getStagedChanges(cwd: string) {
   try {
-    const results = git(["--no-pager", "diff", "--staged", "--name-only"], {
+    const results = git(["--no-pager", "diff", "--staged", "--name-only", "--relative"], {
       cwd,
     });
 
