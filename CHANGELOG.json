@@ -2,6 +2,21 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Tue, 26 Jan 2021 09:28:35 GMT",
+      "tag": "workspace-tools_v0.10.3",
+      "version": "0.10.3",
+      "comments": {
+        "patch": [
+          {
+            "comment": "fix: Detect changed package(s) in nested monorepo",
+            "author": "oliver.kuruma@gmail.com",
+            "commit": "34f4c2ab31ffd8af1db1a705a9f446386975e4cb",
+            "package": "workspace-tools"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 30 Nov 2020 18:53:38 GMT",
       "tag": "workspace-tools_v0.10.2",
       "version": "0.10.2",

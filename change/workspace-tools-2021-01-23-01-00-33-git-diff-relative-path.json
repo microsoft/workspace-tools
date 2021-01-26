@@ -1,8 +1,0 @@
-{
-  "type": "patch",
-  "comment": "fix: Detect changed package(s) in nested monorepo",
-  "packageName": "workspace-tools",
-  "email": "oliver.kuruma@gmail.com",
-  "dependentChangeType": "patch",
-  "date": "2021-01-23T00:00:33.059Z"
-}

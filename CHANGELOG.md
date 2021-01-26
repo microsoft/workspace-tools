@@ -1,8 +1,16 @@
 # Change Log - workspace-tools
 
-This log was last generated on Mon, 30 Nov 2020 18:53:38 GMT and should not be manually modified.
+This log was last generated on Tue, 26 Jan 2021 09:28:35 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.10.3
+
+Tue, 26 Jan 2021 09:28:35 GMT
+
+### Patches
+
+- fix: Detect changed package(s) in nested monorepo (oliver.kuruma@gmail.com)
 
 ## 0.10.2
 
