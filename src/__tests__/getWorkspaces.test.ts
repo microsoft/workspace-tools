@@ -82,7 +82,7 @@ describe("getNpmWorkspaces()", () => {
 
   it("gets the name and path of the workspaces using the shorthand configuration", async () => {
     const packageRoot = await setupFixture("monorepo-shorthand");
-    const workspacesPackageInfo = getYarnWorkspaces(packageRoot);
+    const workspacesPackageInfo = getNpmWorkspaces(packageRoot);
 
     const packageAPath = path.join(packageRoot, "packages", "package-a");
     const packageBPath = path.join(packageRoot, "packages", "package-b");
