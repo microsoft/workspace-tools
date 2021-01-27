@@ -1,0 +1,8 @@
+{
+  "type": "minor",
+  "comment": "Adding NPM 7 Workspaces implementation.",
+  "packageName": "workspace-tools",
+  "email": "fecamina@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2021-01-22T23:34:39.398Z"
+}
