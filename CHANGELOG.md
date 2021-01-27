@@ -1,8 +1,16 @@
 # Change Log - workspace-tools
 
-This log was last generated on Tue, 26 Jan 2021 09:28:35 GMT and should not be manually modified.
+This log was last generated on Wed, 27 Jan 2021 20:58:49 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.11.0
+
+Wed, 27 Jan 2021 20:58:49 GMT
+
+### Minor changes
+
+- Adding NPM 7 Workspaces implementation. (fecamina@microsoft.com)
 
 ## 0.10.3
 

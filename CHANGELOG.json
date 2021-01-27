@@ -2,6 +2,21 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Wed, 27 Jan 2021 20:58:49 GMT",
+      "tag": "workspace-tools_v0.11.0",
+      "version": "0.11.0",
+      "comments": {
+        "minor": [
+          {
+            "comment": "Adding NPM 7 Workspaces implementation.",
+            "author": "fecamina@microsoft.com",
+            "commit": "e04bbc030ff870b7b22c101f4948ff98c45ccf23",
+            "package": "workspace-tools"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 26 Jan 2021 09:28:35 GMT",
       "tag": "workspace-tools_v0.10.3",
       "version": "0.10.3",
