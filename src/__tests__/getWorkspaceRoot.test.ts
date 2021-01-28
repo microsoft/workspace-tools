@@ -3,6 +3,7 @@ import { getYarnWorkspaceRoot } from "../workspaces/implementations/yarn";
 import { getPnpmWorkspaceRoot } from "../workspaces/implementations/pnpm";
 import { getRushWorkspaceRoot } from "../workspaces/implementations/rush";
 import { getNpmWorkspaceRoot } from "../workspaces/implementations/npm";
+import { getLernaWorkspaceRoot } from "../workspaces/implementations/lerna";
 
 describe("getYarnWorkspaceRoot()", () => {
   it("gets the root of the workspace", async () => {
@@ -35,6 +36,15 @@ describe("getNpmWorkspaceRoot()", () => {
   it("gets the root of the workspace", async () => {
     const repoRoot = await setupFixture("monorepo-npm");
     const workspaceRoot = getNpmWorkspaceRoot(repoRoot);
+
+    expect(workspaceRoot).toBe(repoRoot);
+  });
+});
+
+describe("getLernaWorkspaceRoot()", () => {
+  it("gets the root of the workspace", async () => {
+    const repoRoot = await setupFixture("monorepo-lerna-npm");
+    const workspaceRoot = getLernaWorkspaceRoot(repoRoot);
 
     expect(workspaceRoot).toBe(repoRoot);
   });
