@@ -2,6 +2,21 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Tue, 16 Feb 2021 23:49:29 GMT",
+      "tag": "workspace-tools_v0.12.2",
+      "version": "0.12.2",
+      "comments": {
+        "patch": [
+          {
+            "comment": "fetchRemote() fix to be more specific if branch is provided",
+            "author": "kchau@microsoft.com",
+            "commit": "e9602d255f8e2e7be33c6801df0fdd48473844e8",
+            "package": "workspace-tools"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 16 Feb 2021 23:13:38 GMT",
       "tag": "workspace-tools_v0.12.1",
       "version": "0.12.1",

@@ -1,8 +1,0 @@
-{
-  "type": "patch",
-  "comment": "fetchRemote() fix to be more specific if branch is provided",
-  "packageName": "workspace-tools",
-  "email": "kchau@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2021-02-16T23:43:17.945Z"
-}

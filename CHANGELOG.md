@@ -1,8 +1,16 @@
 # Change Log - workspace-tools
 
-This log was last generated on Tue, 16 Feb 2021 23:13:38 GMT and should not be manually modified.
+This log was last generated on Tue, 16 Feb 2021 23:49:29 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.12.2
+
+Tue, 16 Feb 2021 23:49:29 GMT
+
+### Patches
+
+- fetchRemote() fix to be more specific if branch is provided (kchau@microsoft.com)
 
 ## 0.12.1
 
