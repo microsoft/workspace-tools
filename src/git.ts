@@ -32,8 +32,8 @@ export function addGitObserver(observer: GitObserver) {
 /**
  * Runs git command - use this for read only commands
  */
-export function git(args: string[], options?: { cwd: string }): ProcessOutput {
-  const results = spawnSync("git", args, options);
+export function git(args: string[], options?: { cwd: string; maxBuffer?: number }): ProcessOutput {
+  const results = spawnSync("git", args, { maxBuffer: MaxBufferOption, ...options });
   let output: ProcessOutput;
 
   if (results.status === 0) {
@@ -65,7 +65,7 @@ export function git(args: string[], options?: { cwd: string }): ProcessOutput {
 /**
  * Runs git command - use this for commands that makes changes to the file system
  */
-export function gitFailFast(args: string[], options?: { cwd: string; maxBuffer: number }) {
+export function gitFailFast(args: string[], options?: { cwd: string; maxBuffer?: number }) {
   const gitResult = git(args, options);
   if (!gitResult.success) {
     console.error(`CRITICAL ERROR: running git command: git ${args.join(" ")}!`);
