@@ -136,6 +136,19 @@ export function getChanges(branch: string, cwd: string) {
   }
 }
 
+/**
+ * Gets all the changes between the branch and the merge-base
+ * @param branch
+ * @param cwd
+ */
+export function getBranchChanges(branch: string, cwd: string) {
+  try {
+    return processGitOutput(git(['--no-pager', 'diff', '--name-only', '--relative', branch + '...'], { cwd }));
+  } catch (e) {
+    throw new Error(e.message);
+  }
+}
+
 export function getChangesBetweenRefs(fromRef: string, toRef: string, options: string[], pattern: string, cwd: string) {
   try {
     return processGitOutput(
@@ -148,7 +161,7 @@ export function getChangesBetweenRefs(fromRef: string, toRef: string, options: s
   }
 }
 
-export function getStagedChanges(branch: string, cwd: string) {
+export function getStagedChanges(cwd: string) {
   try {
     return processGitOutput(git(['--no-pager', 'diff', '--relative', '--staged', '--name-only'], { cwd }));
   } catch (e) {
