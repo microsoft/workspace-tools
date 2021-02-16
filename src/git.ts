@@ -1,8 +1,8 @@
-import { spawnSync } from 'child_process';
-import fs from 'fs';
-import path from 'path';
-import { findGitRoot } from './paths';
-import gitUrlParse from 'git-url-parse';
+import { spawnSync } from "child_process";
+import fs from "fs";
+import path from "path";
+import { findGitRoot } from "./paths";
+import gitUrlParse from "git-url-parse";
 
 /**
  * A maxBuffer override globally for all git operations
@@ -33,7 +33,7 @@ export function addGitObserver(observer: GitObserver) {
  * Runs git command - use this for read only commands
  */
 export function git(args: string[], options?: { cwd: string }): ProcessOutput {
-  const results = spawnSync('git', args, options);
+  const results = spawnSync("git", args, options);
   let output: ProcessOutput;
 
   if (results.status === 0) {
@@ -68,7 +68,7 @@ export function git(args: string[], options?: { cwd: string }): ProcessOutput {
 export function gitFailFast(args: string[], options?: { cwd: string; maxBuffer: number }) {
   const gitResult = git(args, options);
   if (!gitResult.success) {
-    console.error(`CRITICAL ERROR: running git command: git ${args.join(' ')}!`);
+    console.error(`CRITICAL ERROR: running git command: git ${args.join(" ")}!`);
     console.error(gitResult.stdout && gitResult.stdout.toString().trimRight());
     console.error(gitResult.stderr && gitResult.stderr.toString().trimRight());
     process.exit(1);
@@ -77,7 +77,7 @@ export function gitFailFast(args: string[], options?: { cwd: string; maxBuffer: 
 
 export function getUntrackedChanges(cwd: string) {
   try {
-    const results = git(['status', '--short'], { cwd });
+    const results = git(["status", "--short"], { cwd });
 
     if (!results.success) {
       return [];
@@ -95,24 +95,24 @@ export function getUntrackedChanges(cwd: string) {
 
     for (let i = 0; i < lines.length; i++) {
       const line = lines[i];
-      if (line[0] === ' ' || line[0] === '?') {
+      if (line[0] === " " || line[0] === "?") {
         untracked.push(line.substr(3));
-      } else if (line[0] === 'R') {
+      } else if (line[0] === "R") {
         i++;
       }
     }
 
     return untracked;
   } catch (e) {
-    console.error('Cannot gather information about changes: ', e.message);
+    console.error("Cannot gather information about changes: ", e.message);
   }
 }
 
 export function fetchRemote(remote: string, cwd: string) {
-  const results = git(['fetch', remote], { cwd });
+  const results = git(["fetch", remote], { cwd });
   if (!results.success) {
     console.error(`Cannot fetch remote: ${remote}`);
-    throw new Error('Cannot fetch');
+    throw new Error("Cannot fetch");
   }
 }
 
@@ -122,17 +122,17 @@ export function fetchRemote(remote: string, cwd: string) {
  */
 export function getUnstagedChanges(cwd: string) {
   try {
-    return processGitOutput(git(['--no-pager', 'diff', '--name-only', '--relative'], { cwd }));
+    return processGitOutput(git(["--no-pager", "diff", "--name-only", "--relative"], { cwd }));
   } catch (e) {
-    console.error('Cannot gather information about changes: ', e.message);
+    console.error("Cannot gather information about changes: ", e.message);
   }
 }
 
 export function getChanges(branch: string, cwd: string) {
   try {
-    return processGitOutput(git(['--no-pager', 'diff', '--relative', '--name-only', branch + '...'], { cwd }));
+    return processGitOutput(git(["--no-pager", "diff", "--relative", "--name-only", branch + "..."], { cwd }));
   } catch (e) {
-    console.error('Cannot gather information about changes: ', e.message);
+    console.error("Cannot gather information about changes: ", e.message);
   }
 }
 
@@ -143,7 +143,7 @@ export function getChanges(branch: string, cwd: string) {
  */
 export function getBranchChanges(branch: string, cwd: string) {
   try {
-    return processGitOutput(git(['--no-pager', 'diff', '--name-only', '--relative', branch + '...'], { cwd }));
+    return processGitOutput(git(["--no-pager", "diff", "--name-only", "--relative", branch + "..."], { cwd }));
   } catch (e) {
     throw new Error(e.message);
   }
@@ -152,26 +152,26 @@ export function getBranchChanges(branch: string, cwd: string) {
 export function getChangesBetweenRefs(fromRef: string, toRef: string, options: string[], pattern: string, cwd: string) {
   try {
     return processGitOutput(
-      git(['--no-pager', 'diff', '--relative', '--name-only', ...options, `${fromRef}...${toRef}`, '--', pattern], {
+      git(["--no-pager", "diff", "--relative", "--name-only", ...options, `${fromRef}...${toRef}`, "--", pattern], {
         cwd,
       })
     );
   } catch (e) {
-    console.error('Cannot gather information about changes: ', e.message);
+    console.error("Cannot gather information about changes: ", e.message);
   }
 }
 
 export function getStagedChanges(cwd: string) {
   try {
-    return processGitOutput(git(['--no-pager', 'diff', '--relative', '--staged', '--name-only'], { cwd }));
+    return processGitOutput(git(["--no-pager", "diff", "--relative", "--staged", "--name-only"], { cwd }));
   } catch (e) {
-    console.error('Cannot gather information about changes: ', e.message);
+    console.error("Cannot gather information about changes: ", e.message);
   }
 }
 
 export function getRecentCommitMessages(branch: string, cwd: string) {
   try {
-    const results = git(['log', '--decorate', '--pretty=format:%s', branch, 'HEAD'], { cwd });
+    const results = git(["log", "--decorate", "--pretty=format:%s", branch, "HEAD"], { cwd });
 
     if (!results.success) {
       return [];
@@ -182,13 +182,13 @@ export function getRecentCommitMessages(branch: string, cwd: string) {
 
     return lines.map((line) => line.trim());
   } catch (e) {
-    console.error('Cannot gather information about recent commits: ', e.message);
+    console.error("Cannot gather information about recent commits: ", e.message);
   }
 }
 
 export function getUserEmail(cwd: string) {
   try {
-    const results = git(['config', 'user.email'], { cwd });
+    const results = git(["config", "user.email"], { cwd });
 
     if (!results.success) {
       return null;
@@ -196,35 +196,35 @@ export function getUserEmail(cwd: string) {
 
     return results.stdout;
   } catch (e) {
-    console.error('Cannot gather information about user.email: ', e.message);
+    console.error("Cannot gather information about user.email: ", e.message);
   }
 }
 
 export function getBranchName(cwd: string) {
   try {
-    const results = git(['rev-parse', '--abbrev-ref', 'HEAD'], { cwd });
+    const results = git(["rev-parse", "--abbrev-ref", "HEAD"], { cwd });
 
     if (results.success) {
       return results.stdout;
     }
   } catch (e) {
-    console.error('Cannot get branch name: ', e.message);
+    console.error("Cannot get branch name: ", e.message);
   }
 
   return null;
 }
 
 export function getFullBranchRef(branch: string, cwd: string) {
-  const showRefResults = git(['show-ref', '--heads', branch], { cwd });
+  const showRefResults = git(["show-ref", "--heads", branch], { cwd });
   if (showRefResults.success) {
-    return showRefResults.stdout.split(' ')[1];
+    return showRefResults.stdout.split(" ")[1];
   }
 
   return null;
 }
 
 export function getShortBranchName(fullBranchRef: string, cwd: string) {
-  const showRefResults = git(['name-rev', '--name-only', fullBranchRef], {
+  const showRefResults = git(["name-rev", "--name-only", fullBranchRef], {
     cwd,
   });
   if (showRefResults.success) {
@@ -236,13 +236,13 @@ export function getShortBranchName(fullBranchRef: string, cwd: string) {
 
 export function getCurrentHash(cwd: string) {
   try {
-    const results = git(['rev-parse', 'HEAD'], { cwd });
+    const results = git(["rev-parse", "HEAD"], { cwd });
 
     if (results.success) {
       return results.stdout;
     }
   } catch (e) {
-    console.error('Cannot get current git hash');
+    console.error("Cannot get current git hash");
   }
 
   return null;
@@ -252,56 +252,56 @@ export function getCurrentHash(cwd: string) {
  * Get the commit hash in which the file was first added.
  */
 export function getFileAddedHash(filename: string, cwd: string) {
-  const results = git(['rev-list', 'HEAD', filename], { cwd });
+  const results = git(["rev-list", "HEAD", filename], { cwd });
 
   if (results.success) {
-    return results.stdout.trim().split('\n').slice(-1)[0];
+    return results.stdout.trim().split("\n").slice(-1)[0];
   }
 
   return undefined;
 }
 
 export function init(cwd: string, email?: string, username?: string) {
-  git(['init'], { cwd });
+  git(["init"], { cwd });
 
-  const configLines = git(['config', '--list'], { cwd }).stdout.split('\n');
+  const configLines = git(["config", "--list"], { cwd }).stdout.split("\n");
 
-  if (!configLines.find((line) => line.includes('user.name'))) {
+  if (!configLines.find((line) => line.includes("user.name"))) {
     if (!username) {
-      throw new Error('must include a username when initializing git repo');
+      throw new Error("must include a username when initializing git repo");
     }
-    git(['config', 'user.name', username], { cwd });
+    git(["config", "user.name", username], { cwd });
   }
 
-  if (!configLines.find((line) => line.includes('user.email'))) {
+  if (!configLines.find((line) => line.includes("user.email"))) {
     if (!email) {
-      throw new Error('must include a email when initializing git repo');
+      throw new Error("must include a email when initializing git repo");
     }
-    git(['config', 'user.email', email], { cwd });
+    git(["config", "user.email", email], { cwd });
   }
 }
 
 export function stage(patterns: string[], cwd: string) {
   try {
     patterns.forEach((pattern) => {
-      git(['add', pattern], { cwd });
+      git(["add", pattern], { cwd });
     });
   } catch (e) {
-    console.error('Cannot stage changes', e.message);
+    console.error("Cannot stage changes", e.message);
   }
 }
 
 export function commit(message: string, cwd: string) {
   try {
-    const commitResults = git(['commit', '-m', message], { cwd });
+    const commitResults = git(["commit", "-m", message], { cwd });
 
     if (!commitResults.success) {
-      console.error('Cannot commit changes');
+      console.error("Cannot commit changes");
       console.log(commitResults.stdout);
       console.error(commitResults.stderr);
     }
   } catch (e) {
-    console.error('Cannot commit changes', e.message);
+    console.error("Cannot commit changes", e.message);
   }
 }
 
@@ -312,8 +312,8 @@ export function stageAndCommit(patterns: string[], message: string, cwd: string)
 
 export function revertLocalChanges(cwd: string) {
   const stash = `beachball_${new Date().getTime()}`;
-  git(['stash', 'push', '-u', '-m', stash], { cwd });
-  const results = git(['stash', 'list']);
+  git(["stash", "push", "-u", "-m", stash], { cwd });
+  const results = git(["stash", "list"]);
   if (results.success) {
     const lines = results.stdout.split(/\n/);
     const foundLine = lines.find((line) => line.includes(stash));
@@ -321,7 +321,7 @@ export function revertLocalChanges(cwd: string) {
     if (foundLine) {
       const matched = foundLine.match(/^[^:]+/);
       if (matched) {
-        git(['stash', 'drop', matched[0]]);
+        git(["stash", "drop", matched[0]]);
         return true;
       }
     }
@@ -333,16 +333,16 @@ export function revertLocalChanges(cwd: string) {
 export function getParentBranch(cwd: string) {
   const branchName = getBranchName(cwd);
 
-  if (!branchName || branchName === 'HEAD') {
+  if (!branchName || branchName === "HEAD") {
     return null;
   }
 
-  const showBranchResult = git(['show-branch', '-a'], { cwd });
+  const showBranchResult = git(["show-branch", "-a"], { cwd });
 
   if (showBranchResult.success) {
     const showBranchLines = showBranchResult.stdout.split(/\n/);
     const parentLine = showBranchLines.find(
-      (line) => line.indexOf('*') > -1 && line.indexOf(branchName) < 0 && line.indexOf('publish_') < 0
+      (line) => line.indexOf("*") > -1 && line.indexOf(branchName) < 0 && line.indexOf("publish_") < 0
     );
 
     if (!parentLine) {
@@ -362,7 +362,7 @@ export function getParentBranch(cwd: string) {
 }
 
 export function getRemoteBranch(branch: string, cwd: string) {
-  const results = git(['rev-parse', '--abbrev-ref', '--symbolic-full-name', `${branch}@\{u\}`], { cwd });
+  const results = git(["rev-parse", "--abbrev-ref", "--symbolic-full-name", `${branch}@\{u\}`], { cwd });
 
   if (results.success) {
     return results.stdout.trim();
@@ -372,7 +372,7 @@ export function getRemoteBranch(branch: string, cwd: string) {
 }
 
 export function parseRemoteBranch(branch: string) {
-  const firstSlashPos = branch.indexOf('/', 0);
+  const firstSlashPos = branch.indexOf("/", 0);
   const remote = branch.substring(0, firstSlashPos);
   const remoteBranch = branch.substring(firstSlashPos + 1);
 
@@ -386,15 +386,15 @@ function normalizeRepoUrl(repositoryUrl: string) {
   try {
     const parsed = gitUrlParse(repositoryUrl);
     return parsed
-      .toString('https')
-      .replace(/\.git$/, '')
+      .toString("https")
+      .replace(/\.git$/, "")
       .toLowerCase();
   } catch (e) {
-    return '';
+    return "";
   }
 }
 
-export function getDefaultRemoteBranch(branch: string = 'master', cwd: string) {
+export function getDefaultRemoteBranch(branch: string = "master", cwd: string) {
   const defaultRemote = getDefaultRemote(cwd);
   return `${defaultRemote}/${branch}`;
 }
@@ -403,28 +403,28 @@ export function getDefaultRemote(cwd: string) {
   let packageJson: any;
 
   try {
-    packageJson = JSON.parse(fs.readFileSync(path.join(findGitRoot(cwd)!, 'package.json')).toString());
+    packageJson = JSON.parse(fs.readFileSync(path.join(findGitRoot(cwd)!, "package.json")).toString());
   } catch (e) {
-    console.log('failed to read package.json');
-    throw new Error('invalid package.json detected');
+    console.log("failed to read package.json");
+    throw new Error("invalid package.json detected");
   }
 
   const { repository } = packageJson;
 
-  let repositoryUrl = '';
+  let repositoryUrl = "";
 
-  if (typeof repository === 'string') {
+  if (typeof repository === "string") {
     repositoryUrl = repository;
   } else if (repository && repository.url) {
     repositoryUrl = repository.url;
   }
 
   const normalizedUrl = normalizeRepoUrl(repositoryUrl);
-  const remotesResult = git(['remote', '-v'], { cwd });
+  const remotesResult = git(["remote", "-v"], { cwd });
 
   if (remotesResult.success) {
     const allRemotes: { [url: string]: string } = {};
-    remotesResult.stdout.split('\n').forEach((line) => {
+    remotesResult.stdout.split("\n").forEach((line) => {
       const parts = line.split(/\s+/);
       allRemotes[normalizeRepoUrl(parts[1])] = parts[0];
     });
@@ -439,12 +439,12 @@ export function getDefaultRemote(cwd: string) {
   }
 
   console.log(`Defaults to "origin"`);
-  return 'origin';
+  return "origin";
 }
 
 export function listAllTrackedFiles(patterns: string[], cwd: string) {
   if (patterns) {
-    const results = git(['ls-files', ...patterns], { cwd });
+    const results = git(["ls-files", ...patterns], { cwd });
     if (results.success) {
       return results.stdout.split(/\n/);
     }
@@ -462,7 +462,7 @@ function processGitOutput(output: ProcessOutput) {
   let lines = stdout.split(/\n/) || [];
 
   return lines
-    .filter((line) => line.trim() !== '')
+    .filter((line) => line.trim() !== "")
     .map((line) => line.trim())
-    .filter((line) => !line.includes('node_modules'));
+    .filter((line) => !line.includes("node_modules"));
 }
