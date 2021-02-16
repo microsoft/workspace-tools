@@ -1,8 +1,16 @@
 # Change Log - workspace-tools
 
-This log was last generated on Tue, 16 Feb 2021 22:41:15 GMT and should not be manually modified.
+This log was last generated on Tue, 16 Feb 2021 23:13:38 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.12.1
+
+Tue, 16 Feb 2021 23:13:38 GMT
+
+### Patches
+
+- adding back the maxbuffer options to git - got lost in translation (kchau@microsoft.com)
 
 ## 0.12.0
 
