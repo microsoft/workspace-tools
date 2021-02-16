@@ -1,8 +1,0 @@
-{
-  "type": "patch",
-  "comment": "adding back the maxbuffer options to git - got lost in translation",
-  "packageName": "workspace-tools",
-  "email": "kchau@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2021-02-16T22:56:07.847Z"
-}
