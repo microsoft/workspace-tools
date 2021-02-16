@@ -115,7 +115,7 @@ export function fetchRemote(remote: string, remoteBranchOrCwd: string, maybeCwd?
 
   if (arguments.length === 2) {
     cwd = remoteBranchOrCwd;
-  } else if (arguments.length === 3 && remoteBranchOrCwd && maybeCwd) {
+  } else if (arguments.length === 3 && maybeCwd) {
     cwd = maybeCwd;
     gitArgs.push(remoteBranchOrCwd);
   } else {
