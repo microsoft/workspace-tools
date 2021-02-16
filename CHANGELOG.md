@@ -1,8 +1,16 @@
 # Change Log - workspace-tools
 
-This log was last generated on Wed, 27 Jan 2021 20:58:49 GMT and should not be manually modified.
+This log was last generated on Tue, 16 Feb 2021 22:41:15 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.12.0
+
+Tue, 16 Feb 2021 22:41:15 GMT
+
+### Minor changes
+
+- adding missing git functions into workspace-tools from beachball repo (kchau@microsoft.com)
 
 ## 0.11.0
 

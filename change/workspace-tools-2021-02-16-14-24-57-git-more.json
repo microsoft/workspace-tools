@@ -1,8 +1,0 @@
-{
-  "type": "minor",
-  "comment": "adding missing git functions into workspace-tools from beachball repo",
-  "packageName": "workspace-tools",
-  "email": "kchau@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2021-02-16T22:24:57.262Z"
-}
