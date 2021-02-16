@@ -108,24 +108,19 @@ export function getUntrackedChanges(cwd: string) {
   }
 }
 
-export function fetchRemote(remote: string, cwd: string);
-export function fetchRemote(remote: string, remoteBranchOrCwd: string, maybeCwd?: string) {
-  let cwd: string;
-  const gitArgs = ["fetch", remote];
-
-  if (arguments.length === 2) {
-    cwd = remoteBranchOrCwd;
-  } else if (arguments.length === 3 && maybeCwd) {
-    cwd = maybeCwd;
-    gitArgs.push(remoteBranchOrCwd);
-  } else {
-    throw new Error("Invalid arguments to fetchRemote()");
-  }
-
-  const results = git(gitArgs, { cwd });
+export function fetchRemote(remote: string, cwd: string) {
+  const results = git(["fetch", remote], { cwd });
 
   if (!results.success) {
     throw new Error(`Cannot fetch remote: ${remote}`);
+  }
+}
+
+export function fetchRemoteBranch(remote: string, remoteBranch: string, cwd: string) {
+  const results = git(["fetch", remote, remoteBranch], { cwd });
+
+  if (!results.success) {
+    throw new Error(`Cannot fetch remote: ${remote} ${remoteBranch}`);
   }
 }
 
