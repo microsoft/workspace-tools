@@ -1,8 +1,0 @@
-{
-  "type": "patch",
-  "comment": "fixing up the rush package detection code",
-  "packageName": "workspace-tools",
-  "email": "kchau@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2021-02-23T19:57:22.437Z"
-}

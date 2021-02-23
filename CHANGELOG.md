@@ -1,8 +1,16 @@
 # Change Log - workspace-tools
 
-This log was last generated on Tue, 16 Feb 2021 23:49:29 GMT and should not be manually modified.
+This log was last generated on Tue, 23 Feb 2021 20:08:54 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.12.3
+
+Tue, 23 Feb 2021 20:08:54 GMT
+
+### Patches
+
+- fixing up the rush package detection code (kchau@microsoft.com)
 
 ## 0.12.2
 
