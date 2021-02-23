@@ -24,7 +24,7 @@ export function getRushWorkspaces(cwd: string): WorkspaceInfo {
     const rushConfig = jju.parse(fs.readFileSync(rushJsonPath, "utf-8"));
     const root = path.dirname(rushJsonPath);
 
-    return getWorkspacePackageInfo(rushConfig.projects.map((project) => project.projectFolder));
+    return getWorkspacePackageInfo(rushConfig.projects.map((project) => path.join(root, project.projectFolder)));
   } catch {
     return [];
   }
