@@ -1,30 +1,37 @@
 import path from "path";
 import findUp from "find-up";
 import fs from "fs-extra";
-import tempy from "tempy";
+import tmp from "tmp";
 import { init, stageAndCommit } from "../git";
 
-async function findFixturePath(cwd: string, fixtureName: string) {
-  return await findUp(path.join("__fixtures__", fixtureName), {
-    cwd,
-    type: "directory",
-  });
-}
+// tmp is supposed to be able to clean up automatically, but this doesn't always work within jest.
+// So we attempt to use its built-in cleanup mechanisms, but tests should ideally do their own cleanup too.
+tmp.setGracefulCleanup();
 
-export async function setupFixture(fixtureName: string) {
-  const fixturePath = await findFixturePath(__dirname, fixtureName);
+let fixturesRoot: string | undefined;
+let tempRoot: tmp.DirResult | undefined;
+let tempNumber = 0;
 
-  if (!fixturePath) {
-    throw new Error(
-      `Couldn't find fixture "${fixtureName}" in "${path.join(
-        __dirname,
-        "__fixtures__"
-      )}"`
-    );
+/**
+ * Create a temp directory containing the given fixture name in a git repo.
+ * Be sure to call `cleanupFixtures()` after all tests to clean up temp directories.
+ */
+export function setupFixture(fixtureName: string) {
+  if (!fixturesRoot) {
+    fixturesRoot = findUp.sync("__fixtures__", { cwd: __dirname, type: "directory" });
   }
 
-  const tempDir = tempy.directory();
-  const cwd = path.join(tempDir, fixtureName);
+  const fixturePath = path.join(fixturesRoot!, fixtureName);
+  if (!fs.existsSync(fixturePath)) {
+    throw new Error(`Couldn't find fixture "${fixtureName}" under "${fixturesRoot}"`);
+  }
+
+  if (!tempRoot) {
+    // Create a shared root temp directory for fixture files
+    tempRoot = tmp.dirSync({ unsafeCleanup: true }); // clean up even if files are left
+  }
+
+  const cwd = path.join(tempRoot.name, String(tempNumber++), fixtureName);
 
   fs.mkdirpSync(cwd);
   fs.copySync(fixturePath, cwd);
@@ -33,4 +40,11 @@ export async function setupFixture(fixtureName: string) {
   stageAndCommit(["."], "test", cwd);
 
   return cwd;
+}
+
+export function cleanupFixtures() {
+  if (tempRoot) {
+    tempRoot.removeCallback();
+    tempRoot = undefined;
+  }
 }
