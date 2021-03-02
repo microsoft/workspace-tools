@@ -67,21 +67,6 @@ describe("getRushWorkspaces()", () => {
   });
 });
 
-describe("getLernaWorkspaces()", () => {
-  it("gets the name and path of the workspaces", async () => {
-    const packageRoot = await setupFixture("monorepo-lerna-npm");
-    const workspacesPackageInfo = getLernaWorkspaces(packageRoot);
-
-    const packageAPath = path.join(packageRoot, "packages", "package-a");
-    const packageBPath = path.join(packageRoot, "packages", "package-b");
-
-    expect(workspacesPackageInfo).toMatchObject([
-      { name: "package-a", path: packageAPath },
-      { name: "package-b", path: packageBPath },
-    ]);
-  });
-});
-
 describe("getNpmWorkspaces()", () => {
   it("gets the name and path of the workspaces", async () => {
     const packageRoot = await setupFixture("monorepo-npm");
