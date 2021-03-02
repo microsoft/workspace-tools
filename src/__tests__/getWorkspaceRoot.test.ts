@@ -1,40 +1,38 @@
-import { setupFixture } from "../helpers/setupFixture";
+import { cleanupFixtures, setupFixture } from "../helpers/setupFixture";
 import { getYarnWorkspaceRoot } from "../workspaces/implementations/yarn";
 import { getPnpmWorkspaceRoot } from "../workspaces/implementations/pnpm";
 import { getRushWorkspaceRoot } from "../workspaces/implementations/rush";
 import { getNpmWorkspaceRoot } from "../workspaces/implementations/npm";
 import { getLernaWorkspaceRoot } from "../workspaces/implementations/lerna";
 
-describe("getYarnWorkspaceRoot()", () => {
-  it("gets the root of the workspace", async () => {
-    const repoRoot = await setupFixture("monorepo");
+describe("getWorkspaceRoot", () => {
+  afterAll(() => {
+    cleanupFixtures();
+  });
+
+  it("handles yarn workspace", () => {
+    const repoRoot = setupFixture("monorepo");
     const workspaceRoot = getYarnWorkspaceRoot(repoRoot);
 
     expect(workspaceRoot).toBe(repoRoot);
   });
-});
 
-describe("getPnpmWorkspaceRoot()", () => {
-  it("gets the root of the workspace", async () => {
-    const repoRoot = await setupFixture("monorepo-pnpm");
+  it("handles pnpm workspace", () => {
+    const repoRoot = setupFixture("monorepo-pnpm");
     const workspaceRoot = getPnpmWorkspaceRoot(repoRoot);
 
     expect(workspaceRoot).toBe(repoRoot);
   });
-});
 
-describe("getRushWorkspaceRoot()", () => {
-  it("gets the root of the workspace", async () => {
-    const repoRoot = await setupFixture("monorepo-rush-pnpm");
+  it("handles rush workspace", () => {
+    const repoRoot = setupFixture("monorepo-rush-pnpm");
     const workspaceRoot = getRushWorkspaceRoot(repoRoot);
 
     expect(workspaceRoot).toBe(repoRoot);
   });
-});
 
-describe("getNpmWorkspaceRoot()", () => {
-  it("gets the root of the workspace", async () => {
-    const repoRoot = await setupFixture("monorepo-npm");
+  it("handles npm workspace", () => {
+    const repoRoot = setupFixture("monorepo-npm");
     const workspaceRoot = getNpmWorkspaceRoot(repoRoot);
 
     expect(workspaceRoot).toBe(repoRoot);

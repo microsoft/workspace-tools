@@ -1,8 +1,40 @@
 # Change Log - workspace-tools
 
-This log was last generated on Wed, 27 Jan 2021 20:58:49 GMT and should not be manually modified.
+This log was last generated on Tue, 23 Feb 2021 20:08:54 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.12.3
+
+Tue, 23 Feb 2021 20:08:54 GMT
+
+### Patches
+
+- fixing up the rush package detection code (kchau@microsoft.com)
+
+## 0.12.2
+
+Tue, 16 Feb 2021 23:49:29 GMT
+
+### Patches
+
+- fetchRemote() fix to be more specific if branch is provided (kchau@microsoft.com)
+
+## 0.12.1
+
+Tue, 16 Feb 2021 23:13:38 GMT
+
+### Patches
+
+- adding back the maxbuffer options to git - got lost in translation (kchau@microsoft.com)
+
+## 0.12.0
+
+Tue, 16 Feb 2021 22:41:15 GMT
+
+### Minor changes
+
+- adding missing git functions into workspace-tools from beachball repo (kchau@microsoft.com)
 
 ## 0.11.0
 

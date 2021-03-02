@@ -11,41 +11,64 @@ import gitUrlParse from "git-url-parse";
  */
 const MaxBufferOption = process.env.GIT_MAX_BUFFER ? parseInt(process.env.GIT_MAX_BUFFER) : 500 * 1024 * 1024;
 
+// Observes the git operations called from git() or gitFailFast()
+type ProcessOutput = {
+  stderr: string;
+  stdout: string;
+  success: boolean;
+};
+type GitObserver = (args: string[], output: ProcessOutput) => void;
+const observers: GitObserver[] = [];
+let observing: boolean;
+
+/**
+ * Adds an observer for the git operations, e.g. for testing
+ * @param observer
+ */
+export function addGitObserver(observer: GitObserver) {
+  observers.push(observer);
+}
+
 /**
  * Runs git command - use this for read only commands
  */
-export function git(args: string[], options?: { cwd: string, maxBuffer?: number }) {
+export function git(args: string[], options?: { cwd: string; maxBuffer?: number }): ProcessOutput {
   const results = spawnSync("git", args, { maxBuffer: MaxBufferOption, ...options });
-
-  // These errors are caused by the spawning itself
-  if (results.error) {
-    throw new Error(`git command failed: ${args.join(' ')}\n${results.error}`)
-  }
+  let output: ProcessOutput;
 
   if (results.status === 0) {
-    return {
+    output = {
       stderr: results.stderr.toString().trimRight(),
       stdout: results.stdout.toString().trimRight(),
       success: true,
     };
   } else {
-    return {
+    output = {
       stderr: results.stderr.toString().trimRight(),
       stdout: results.stdout.toString().trimRight(),
       success: false,
     };
   }
+
+  // notify observers, flipping the observing bit to prevent infinite loops
+  if (!observing) {
+    observing = true;
+    for (const observer of observers) {
+      observer(args, output);
+    }
+    observing = false;
+  }
+
+  return output;
 }
 
 /**
  * Runs git command - use this for commands that makes changes to the file system
  */
-export function gitFailFast(args: string[], options?: { cwd: string, maxBuffer: number }) {
+export function gitFailFast(args: string[], options?: { cwd: string; maxBuffer?: number }) {
   const gitResult = git(args, options);
   if (!gitResult.success) {
-    console.error(
-      `CRITICAL ERROR: running git command: git ${args.join(" ")}!`
-    );
+    console.error(`CRITICAL ERROR: running git command: git ${args.join(" ")}!`);
     console.error(gitResult.stdout && gitResult.stdout.toString().trimRight());
     console.error(gitResult.stderr && gitResult.stderr.toString().trimRight());
     process.exit(1);
@@ -87,9 +110,17 @@ export function getUntrackedChanges(cwd: string) {
 
 export function fetchRemote(remote: string, cwd: string) {
   const results = git(["fetch", remote], { cwd });
+
   if (!results.success) {
-    console.error(`Cannot fetch remote: ${remote}`);
-    throw new Error("Cannot fetch");
+    throw new Error(`Cannot fetch remote: ${remote}`);
+  }
+}
+
+export function fetchRemoteBranch(remote: string, remoteBranch: string, cwd: string) {
+  const results = git(["fetch", remote, remoteBranch], { cwd });
+
+  if (!results.success) {
+    throw new Error(`Cannot fetch remote: ${remote} ${remoteBranch}`);
   }
 }
 
@@ -99,22 +130,15 @@ export function fetchRemote(remote: string, cwd: string) {
  */
 export function getUnstagedChanges(cwd: string) {
   try {
-    const results = git(["--no-pager", "diff", "--name-only", "--relative"], {
-      cwd,
-    });
+    return processGitOutput(git(["--no-pager", "diff", "--name-only", "--relative"], { cwd }));
+  } catch (e) {
+    console.error("Cannot gather information about changes: ", e.message);
+  }
+}
 
-    if (!results.success) {
-      return [];
-    }
-
-    let changes = results.stdout;
-
-    let lines = changes.split(/\n/) || [];
-
-    return lines
-      .filter((line) => line.trim() !== "")
-      .map((line) => line.trim())
-      .filter((line) => !line.includes("node_modules"));
+export function getChanges(branch: string, cwd: string) {
+  try {
+    return processGitOutput(git(["--no-pager", "diff", "--relative", "--name-only", branch + "..."], { cwd }));
   } catch (e) {
     console.error("Cannot gather information about changes: ", e.message);
   }
@@ -126,47 +150,28 @@ export function getUnstagedChanges(cwd: string) {
  * @param cwd
  */
 export function getBranchChanges(branch: string, cwd: string) {
-  const diffCmd = ["--no-pager", "diff", "--name-only", "--relative", branch + "..."];
-  const results = git(diffCmd, {
-    cwd,
-  });
-
-  if (!results.success) {
-    throw new Error(results.stderr)
+  try {
+    return processGitOutput(git(["--no-pager", "diff", "--name-only", "--relative", branch + "..."], { cwd }));
+  } catch (e) {
+    throw new Error(e.message);
   }
-
-  let changes = results.stdout;
-
-  let lines = changes.split(/\n/) || [];
-
-  return lines
-    .filter((line) => line.trim() !== "")
-    .map((line) => line.trim())
-    .filter((line) => !line.includes("node_modules"));
 }
 
-/**
- * Gets all the staged changes (changes inside the index)
- * @param cwd
- */
+export function getChangesBetweenRefs(fromRef: string, toRef: string, options: string[], pattern: string, cwd: string) {
+  try {
+    return processGitOutput(
+      git(["--no-pager", "diff", "--relative", "--name-only", ...options, `${fromRef}...${toRef}`, "--", pattern], {
+        cwd,
+      })
+    );
+  } catch (e) {
+    console.error("Cannot gather information about changes: ", e.message);
+  }
+}
+
 export function getStagedChanges(cwd: string) {
   try {
-    const results = git(["--no-pager", "diff", "--staged", "--name-only", "--relative"], {
-      cwd,
-    });
-
-    if (!results.success) {
-      return [];
-    }
-
-    let changes = results.stdout;
-
-    let lines = changes.split(/\n/) || [];
-
-    return lines
-      .filter((line) => line.trim() !== "")
-      .map((line) => line.trim())
-      .filter((line) => !line.includes("node_modules"));
+    return processGitOutput(git(["--no-pager", "diff", "--relative", "--staged", "--name-only"], { cwd }));
   } catch (e) {
     console.error("Cannot gather information about changes: ", e.message);
   }
@@ -174,10 +179,7 @@ export function getStagedChanges(cwd: string) {
 
 export function getRecentCommitMessages(branch: string, cwd: string) {
   try {
-    const results = git(
-      ["log", "--decorate", "--pretty=format:%s", branch, "HEAD"],
-      { cwd }
-    );
+    const results = git(["log", "--decorate", "--pretty=format:%s", branch, "HEAD"], { cwd });
 
     if (!results.success) {
       return [];
@@ -188,10 +190,7 @@ export function getRecentCommitMessages(branch: string, cwd: string) {
 
     return lines.map((line) => line.trim());
   } catch (e) {
-    console.error(
-      "Cannot gather information about recent commits: ",
-      e.message
-    );
+    console.error("Cannot gather information about recent commits: ", e.message);
   }
 }
 
@@ -290,16 +289,18 @@ export function init(cwd: string, email?: string, username?: string) {
   }
 }
 
-export function stageAndCommit(
-  patterns: string[],
-  message: string,
-  cwd: string
-) {
+export function stage(patterns: string[], cwd: string) {
   try {
     patterns.forEach((pattern) => {
       git(["add", pattern], { cwd });
     });
+  } catch (e) {
+    console.error("Cannot stage changes", e.message);
+  }
+}
 
+export function commit(message: string, cwd: string) {
+  try {
     const commitResults = git(["commit", "-m", message], { cwd });
 
     if (!commitResults.success) {
@@ -308,8 +309,13 @@ export function stageAndCommit(
       console.error(commitResults.stderr);
     }
   } catch (e) {
-    console.error("Cannot stage and commit changes", e.message);
+    console.error("Cannot commit changes", e.message);
   }
+}
+
+export function stageAndCommit(patterns: string[], message: string, cwd: string) {
+  stage(patterns, cwd);
+  commit(message, cwd);
 }
 
 export function revertLocalChanges(cwd: string) {
@@ -344,10 +350,7 @@ export function getParentBranch(cwd: string) {
   if (showBranchResult.success) {
     const showBranchLines = showBranchResult.stdout.split(/\n/);
     const parentLine = showBranchLines.find(
-      (line) =>
-        line.indexOf("*") > -1 &&
-        line.indexOf(branchName) < 0 &&
-        line.indexOf("publish_") < 0
+      (line) => line.indexOf("*") > -1 && line.indexOf(branchName) < 0 && line.indexOf("publish_") < 0
     );
 
     if (!parentLine) {
@@ -367,10 +370,7 @@ export function getParentBranch(cwd: string) {
 }
 
 export function getRemoteBranch(branch: string, cwd: string) {
-  const results = git(
-    ["rev-parse", "--abbrev-ref", "--symbolic-full-name", `${branch}@\{u\}`],
-    { cwd }
-  );
+  const results = git(["rev-parse", "--abbrev-ref", "--symbolic-full-name", `${branch}@\{u\}`], { cwd });
 
   if (results.success) {
     return results.stdout.trim();
@@ -411,9 +411,7 @@ export function getDefaultRemote(cwd: string) {
   let packageJson: any;
 
   try {
-    packageJson = JSON.parse(
-      fs.readFileSync(path.join(findGitRoot(cwd)!, "package.json")).toString()
-    );
+    packageJson = JSON.parse(fs.readFileSync(path.join(findGitRoot(cwd)!, "package.json")).toString());
   } catch (e) {
     console.log("failed to read package.json");
     throw new Error("invalid package.json detected");
@@ -461,4 +459,18 @@ export function listAllTrackedFiles(patterns: string[], cwd: string) {
   }
 
   return [];
+}
+
+function processGitOutput(output: ProcessOutput) {
+  if (!output.success) {
+    return [];
+  }
+
+  let stdout = output.stdout;
+  let lines = stdout.split(/\n/) || [];
+
+  return lines
+    .filter((line) => line.trim() !== "")
+    .map((line) => line.trim())
+    .filter((line) => !line.includes("node_modules"));
 }
