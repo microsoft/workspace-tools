@@ -313,9 +313,9 @@ export function commit(message: string, cwd: string, options:string[] = []) {
   }
 }
 
-export function stageAndCommit(patterns: string[], message: string, cwd: string) {
+export function stageAndCommit(patterns: string[], message: string, cwd: string, commitOptions:string[] = []) {
   stage(patterns, cwd);
-  commit(message, cwd);
+  commit(message, cwd, commitOptions);
 }
 
 export function revertLocalChanges(cwd: string) {
