@@ -2,7 +2,7 @@
   "type": "minor",
   "comment": "Add support for more commit command options",
   "packageName": "workspace-tools",
-  "email": "email not defined",
+  "email": "nickykalu@microsoft.com",
   "dependentChangeType": "patch",
   "date": "2021-04-10T12:34:18.740Z"
 }
