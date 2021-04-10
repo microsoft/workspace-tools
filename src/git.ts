@@ -299,9 +299,9 @@ export function stage(patterns: string[], cwd: string) {
   }
 }
 
-export function commit(message: string, cwd: string) {
+export function commit(message: string, cwd: string, options:string[] = []) {
   try {
-    const commitResults = git(["commit", "-m", message], { cwd });
+    const commitResults = git(["commit", "-m", message, ...options], { cwd });
 
     if (!commitResults.success) {
       console.error("Cannot commit changes");
@@ -313,9 +313,9 @@ export function commit(message: string, cwd: string) {
   }
 }
 
-export function stageAndCommit(patterns: string[], message: string, cwd: string) {
+export function stageAndCommit(patterns: string[], message: string, cwd: string, commitOptions:string[] = []) {
   stage(patterns, cwd);
-  commit(message, cwd);
+  commit(message, cwd, commitOptions);
 }
 
 export function revertLocalChanges(cwd: string) {
