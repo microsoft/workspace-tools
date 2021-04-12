@@ -2,6 +2,21 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Mon, 12 Apr 2021 16:25:24 GMT",
+      "tag": "workspace-tools_v0.14.0",
+      "version": "0.14.0",
+      "comments": {
+        "minor": [
+          {
+            "comment": "feat: Only include HEAD commits in 'recent commits'",
+            "author": "asgramme@microsoft.com",
+            "commit": "c5061a51ce33dae309cf798ebae7c8174de2f98b",
+            "package": "workspace-tools"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 12 Apr 2021 05:59:38 GMT",
       "tag": "workspace-tools_v0.13.0",
       "version": "0.13.0",

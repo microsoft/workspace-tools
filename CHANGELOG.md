@@ -1,8 +1,16 @@
 # Change Log - workspace-tools
 
-This log was last generated on Mon, 12 Apr 2021 05:59:38 GMT and should not be manually modified.
+This log was last generated on Mon, 12 Apr 2021 16:25:24 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.14.0
+
+Mon, 12 Apr 2021 16:25:24 GMT
+
+### Minor changes
+
+- feat: Only include HEAD commits in 'recent commits' (asgramme@microsoft.com)
 
 ## 0.13.0
 
