@@ -1,8 +1,16 @@
 # Change Log - workspace-tools
 
-This log was last generated on Tue, 23 Feb 2021 20:08:54 GMT and should not be manually modified.
+This log was last generated on Mon, 12 Apr 2021 05:59:38 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.13.0
+
+Mon, 12 Apr 2021 05:59:38 GMT
+
+### Minor changes
+
+- Add support for more commit command options (nickykalu@microsoft.com)
 
 ## 0.12.3
 

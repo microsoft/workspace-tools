@@ -2,6 +2,21 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Mon, 12 Apr 2021 05:59:38 GMT",
+      "tag": "workspace-tools_v0.13.0",
+      "version": "0.13.0",
+      "comments": {
+        "minor": [
+          {
+            "comment": "Add support for more commit command options",
+            "author": "nickykalu@microsoft.com",
+            "commit": "14076d5d8c1b181d4c04077971b6ecdf3f76d0ce",
+            "package": "workspace-tools"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 01 Mar 2021 23:39:49 GMT",
       "tag": "workspace-tools_v0.12.3",
       "version": "0.12.3",
