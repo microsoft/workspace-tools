@@ -2,6 +2,7 @@
 	"name": "basic-pnpm",
 	"version": "0.1.0",
 	"license": "MIT",
+  "private": true,
   "description": "derived from sveltejs/kit",
 	"devDependencies": {
 		"@changesets/cli": "^2.14.1",
