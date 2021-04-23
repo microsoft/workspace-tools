@@ -1,8 +1,0 @@
-{
-  "type": "patch",
-  "comment": "move lockfile implementations behind a lazy load in lockfile.ts",
-  "packageName": "workspace-tools",
-  "email": "kchau@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2021-04-23T22:59:01.714Z"
-}

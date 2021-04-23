@@ -2,6 +2,21 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Fri, 23 Apr 2021 23:03:54 GMT",
+      "tag": "workspace-tools_v0.14.1",
+      "version": "0.14.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "move lockfile implementations behind a lazy load in lockfile.ts",
+            "author": "kchau@microsoft.com",
+            "commit": "63f590a1227dec6a45a6e8d3624e766ec08c3b89",
+            "package": "workspace-tools"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 12 Apr 2021 16:25:24 GMT",
       "tag": "workspace-tools_v0.14.0",
       "version": "0.14.0",
