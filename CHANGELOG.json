@@ -2,6 +2,21 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Fri, 23 Apr 2021 23:35:26 GMT",
+      "tag": "workspace-tools_v0.15.0",
+      "version": "0.15.0",
+      "comments": {
+        "minor": [
+          {
+            "comment": "fixes the checkchange command; support lerna (previous checkin)",
+            "author": "kchau@microsoft.com",
+            "commit": "695b9dceb4f29d77e02899fe35e2183e47cee46e",
+            "package": "workspace-tools"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 23 Apr 2021 23:03:54 GMT",
       "tag": "workspace-tools_v0.14.1",
       "version": "0.14.1",

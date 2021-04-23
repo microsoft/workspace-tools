@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "fixes the checkchange command; support lerna (previous checkin)",
-  "packageName": "workspace-tools",
-  "email": "kchau@microsoft.com",
-  "dependentChangeType": "patch"
-}
