@@ -5,6 +5,7 @@ import { getYarnWorkspaces } from "../workspaces/implementations/yarn";
 import { getPnpmWorkspaces } from "../workspaces/implementations/pnpm";
 import { getRushWorkspaces } from "../workspaces/implementations/rush";
 import { getNpmWorkspaces } from "../workspaces/implementations/npm";
+import { getLernaWorkspaces } from "../workspaces/implementations/lerna";
 
 describe("getWorkspaces", () => {
   afterAll(() => {
@@ -97,6 +98,21 @@ describe("getWorkspaces", () => {
         { name: "package-a", path: packageAPath },
         { name: "package-b", path: packageBPath },
         { name: "individual", path: individualPath },
+      ]);
+    });
+  });
+  
+  describe("lerna", () => {
+    it("gets the name and path of the workspaces", async () => {
+      const packageRoot = await setupFixture("monorepo-lerna-npm");
+      const workspacesPackageInfo = getLernaWorkspaces(packageRoot);
+
+      const packageAPath = path.join(packageRoot, "packages", "package-a");
+      const packageBPath = path.join(packageRoot, "packages", "package-b");
+
+      expect(workspacesPackageInfo).toMatchObject([
+        { name: "package-a", path: packageAPath },
+        { name: "package-b", path: packageBPath },
       ]);
     });
   });

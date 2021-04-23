@@ -1,1 +1,1 @@
-export type WorkspaceManager = "yarn" | "pnpm" | "rush" | "npm";
+export type WorkspaceManager = "yarn" | "pnpm" | "rush" | "npm" | "lerna";
