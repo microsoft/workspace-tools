@@ -5,6 +5,7 @@ A collection of tools that are useful in a git-controlled monorepo that is manag
 - rush
 - yarn workspaces
 - pnpm workspaces
+- lerna
 
 # Environment Variables
 
@@ -16,7 +17,7 @@ default node.js maxBuffer of 1MB)
 ## PREFERRED_WORKSPACE_MANAGER
 
 Sometimes multiple package manager files are checked in. It is necessary to hint to `workspace-tools` which manager
-is used: `yarn`, `pnpm`, `rush`
+is used: `yarn`, `pnpm`, `rush`, or `lerna`
 
 # Contributing
 

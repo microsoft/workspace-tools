@@ -9,6 +9,7 @@ import { getRushWorkspaceRoot } from "./implementations/rush";
 
 import { WorkspaceManager } from "./WorkspaceManager";
 import { getNpmWorkspaceRoot } from "./implementations/npm";
+import { getLernaWorkspaceRoot } from "./implementations/lerna";
 
 const workspaceGetter: {
   [key in WorkspaceImplementations]: (cwd: string) => string;
@@ -17,6 +18,7 @@ const workspaceGetter: {
   pnpm: getPnpmWorkspaceRoot,
   rush: getRushWorkspaceRoot,
   npm: getNpmWorkspaceRoot,
+  lerna: getLernaWorkspaceRoot,
 };
 
 const preferred = process.env
