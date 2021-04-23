@@ -24,7 +24,6 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: yarn
-      - run: /usr/bin/git --no-pager diff --relative --name-only origin/master...
       - run: yarn checkchange
       - run: yarn build
       - run: yarn test
