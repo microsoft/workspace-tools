@@ -1,8 +1,16 @@
 # Change Log - workspace-tools
 
-This log was last generated on Fri, 23 Apr 2021 23:35:26 GMT and should not be manually modified.
+This log was last generated on Wed, 19 May 2021 21:05:10 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.15.1
+
+Wed, 19 May 2021 21:05:10 GMT
+
+### Patches
+
+- slimming down pnpm lockfile parsing (kchau@microsoft.com)
 
 ## 0.15.0
 

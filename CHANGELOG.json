@@ -2,6 +2,21 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Wed, 19 May 2021 21:05:10 GMT",
+      "tag": "workspace-tools_v0.15.1",
+      "version": "0.15.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "slimming down pnpm lockfile parsing",
+            "author": "kchau@microsoft.com",
+            "commit": "a768227e27e547a5804435aa2237dfbc8c7453bd",
+            "package": "workspace-tools"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 23 Apr 2021 23:35:26 GMT",
       "tag": "workspace-tools_v0.15.0",
       "version": "0.15.0",
