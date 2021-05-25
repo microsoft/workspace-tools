@@ -1,5 +1,6 @@
 import {
   getBranchChanges,
+  getDefaultRemoteBranch,
   getStagedChanges,
   getUnstagedChanges,
   getUntrackedChanges,
@@ -27,10 +28,12 @@ import path from "path";
  */
 export function getChangedPackages(
   cwd: string,
-  target: string = "origin/master",
+  target: string | undefined,
   ignoreGlobs: string[] = []
 ) {
   const workspaceInfo = getWorkspaces(cwd);
+
+  target = target || getDefaultRemoteBranch(undefined, cwd);
 
   let changes = [
     ...new Set([

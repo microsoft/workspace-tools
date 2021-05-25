@@ -1,8 +1,9 @@
 import path from "path";
 import findUp from "find-up";
 import fs from "fs-extra";
+import fsExtra from "fs-extra";
 import tmp from "tmp";
-import { init, stageAndCommit } from "../git";
+import { init, stageAndCommit, gitFailFast } from "../git";
 
 // tmp is supposed to be able to clean up automatically, but this doesn't always work within jest.
 // So we attempt to use its built-in cleanup mechanisms, but tests should ideally do their own cleanup too.
@@ -37,8 +38,16 @@ export function setupFixture(fixtureName: string) {
   fs.copySync(fixturePath, cwd);
 
   init(cwd, "test@test.email", "test user");
-  stageAndCommit(["."], "test", cwd);
 
+  // Make the 'main' branch the default in the test repo
+  // ensure that the configuration for this repo does not collide
+  // with any global configuration the user had made, so we have
+  // a 'fixed' value for our tests, regardless of user configuration
+  gitFailFast(['symbolic-ref', 'HEAD', 'refs/heads/main'], {cwd} );
+  gitFailFast(['config', 'init.defaultBranch', 'main'], {cwd} );
+
+  stageAndCommit(["."], "test", cwd);
+  
   return cwd;
 }
 
@@ -47,4 +56,21 @@ export function cleanupFixtures() {
     tempRoot.removeCallback();
     tempRoot = undefined;
   }
+}
+
+export function setupLocalRemote(cwd: string, remoteName: string, fixtureName: string) {
+  // Create a seperate repo and configure it as a remote
+  const remoteCwd = setupFixture(fixtureName);
+  const remoteUrl = remoteCwd.replace(/\\/g, "/");
+  gitFailFast(["remote", "add", remoteName, remoteUrl], {cwd} );
+  // Configure url in package.json
+  const pkgJsonPath = path.join(cwd, "package.json");
+  const pkgJson = fsExtra.readJSONSync(pkgJsonPath);
+  fsExtra.writeJSONSync(pkgJsonPath,
+    {
+    ...pkgJson,
+    repository: {
+      url: remoteUrl
+    }
+  });
 }
