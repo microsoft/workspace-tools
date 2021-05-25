@@ -1,8 +1,16 @@
 # Change Log - workspace-tools
 
-This log was last generated on Wed, 19 May 2021 21:05:10 GMT and should not be manually modified.
+This log was last generated on Tue, 25 May 2021 21:47:27 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.16.0
+
+Tue, 25 May 2021 21:47:27 GMT
+
+### Minor changes
+
+- Fix #24: Add support for different upstream branches (dannyvv@microsoft.com)
 
 ## 0.15.1
 

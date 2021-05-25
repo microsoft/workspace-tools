@@ -2,6 +2,21 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Tue, 25 May 2021 21:47:27 GMT",
+      "tag": "workspace-tools_v0.16.0",
+      "version": "0.16.0",
+      "comments": {
+        "minor": [
+          {
+            "comment": "Fix #24: Add support for different upstream branches",
+            "author": "dannyvv@microsoft.com",
+            "commit": "83546ce7c0ff54f588ad1fca54f2620d8f071708",
+            "package": "workspace-tools"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 19 May 2021 21:05:10 GMT",
       "tag": "workspace-tools_v0.15.1",
       "version": "0.15.1",

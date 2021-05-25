@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "Fix #24: Add support for different upstream branches",
-  "packageName": "workspace-tools",
-  "email": "dannyvv@microsoft.com",
-  "dependentChangeType": "patch"
-}
