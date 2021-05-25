@@ -402,9 +402,22 @@ function normalizeRepoUrl(repositoryUrl: string) {
   }
 }
 
-export function getDefaultRemoteBranch(branch: string = "master", cwd: string) {
+export function getDefaultRemoteBranch(branch: string | undefined, cwd: string) {
   const defaultRemote = getDefaultRemote(cwd);
+  branch = branch || getDefaultBranch(cwd);
+
   return `${defaultRemote}/${branch}`;
+}
+
+export function getDefaultBranch(cwd: string) {
+  const result = git(["config", "init.defaultBranch"], {cwd});
+  
+  if (!result.success) {
+    // Default to the legacy 'master' for backwards compat and old git clients
+    return "master"
+  }
+
+  return result.stdout.trim();
 }
 
 export function getDefaultRemote(cwd: string) {
