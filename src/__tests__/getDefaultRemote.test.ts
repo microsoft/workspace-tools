@@ -23,7 +23,6 @@ describe("getDefaultRemote()", () => {
     const cwd = setupFixture("basic");
     setupLocalRemote(cwd, "myRemote", "basic");
 
-    console.log(cwd);
     // act
     const remote = getDefaultRemote(cwd);
 

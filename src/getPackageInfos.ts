@@ -10,19 +10,11 @@ export function getPackageInfos(cwd: string) {
   if (packageJsonFiles && packageJsonFiles.length > 0) {
     packageJsonFiles.forEach((packageJsonPath: string) => {
       try {
-        const packageJson = JSON.parse(
-          fs.readFileSync(packageJsonPath, "utf-8")
-        );
-        packageInfos[packageJson.name] = infoFromPackageJson(
-          packageJson,
-          packageJsonPath
-        );
+        const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, "utf-8"));
+        packageInfos[packageJson.name] = infoFromPackageJson(packageJson, packageJsonPath);
       } catch (e) {
         // Pass, the package.json is invalid
-        console.warn(
-          `Invalid package.json file detected ${packageJsonPath}: `,
-          e
-        );
+        throw new Error(`Invalid package.json file detected ${packageJsonPath}: ${e.message}`);
       }
     });
     return packageInfos;
