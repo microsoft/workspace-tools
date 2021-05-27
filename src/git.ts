@@ -68,10 +68,10 @@ export function git(args: string[], options?: { cwd: string; maxBuffer?: number 
 export function gitFailFast(args: string[], options?: { cwd: string; maxBuffer?: number }) {
   const gitResult = git(args, options);
   if (!gitResult.success) {
-    console.error(`CRITICAL ERROR: running git command: git ${args.join(" ")}!`);
-    console.error(gitResult.stdout && gitResult.stdout.toString().trimRight());
-    console.error(gitResult.stderr && gitResult.stderr.toString().trimRight());
-    process.exit(1);
+    process.exitCode = 1;
+    throw new Error(`CRITICAL ERROR: running git command: git ${args.join(" ")}!
+${gitResult.stdout && gitResult.stdout.toString().trimRight()}
+${gitResult.stderr && gitResult.stderr.toString().trimRight()}`);
   }
 }
 
@@ -104,7 +104,7 @@ export function getUntrackedChanges(cwd: string) {
 
     return untracked;
   } catch (e) {
-    console.error("Cannot gather information about changes: ", e.message);
+    throw new Error(`Cannot gather information about untracked changes: ${e.message}`);
   }
 }
 
@@ -132,7 +132,7 @@ export function getUnstagedChanges(cwd: string) {
   try {
     return processGitOutput(git(["--no-pager", "diff", "--name-only", "--relative"], { cwd }));
   } catch (e) {
-    console.error("Cannot gather information about changes: ", e.message);
+    throw new Error(`Cannot gather information about unstaged changes: ${e.message}`);
   }
 }
 
@@ -140,7 +140,7 @@ export function getChanges(branch: string, cwd: string) {
   try {
     return processGitOutput(git(["--no-pager", "diff", "--relative", "--name-only", branch + "..."], { cwd }));
   } catch (e) {
-    console.error("Cannot gather information about changes: ", e.message);
+    throw new Error(`Cannot gather information about changes: ${e.message}`);
   }
 }
 
@@ -153,7 +153,7 @@ export function getBranchChanges(branch: string, cwd: string) {
   try {
     return processGitOutput(git(["--no-pager", "diff", "--name-only", "--relative", branch + "..."], { cwd }));
   } catch (e) {
-    throw new Error(e.message);
+    throw new Error(`Cannot gather information about branch changes: ${e.message}`);
   }
 }
 
@@ -165,7 +165,7 @@ export function getChangesBetweenRefs(fromRef: string, toRef: string, options: s
       })
     );
   } catch (e) {
-    console.error("Cannot gather information about changes: ", e.message);
+    throw new Error(`Cannot gather information about change between refs changes (${fromRef} to ${toRef}): ${e.message}`);
   }
 }
 
@@ -173,7 +173,7 @@ export function getStagedChanges(cwd: string) {
   try {
     return processGitOutput(git(["--no-pager", "diff", "--relative", "--staged", "--name-only"], { cwd }));
   } catch (e) {
-    console.error("Cannot gather information about changes: ", e.message);
+    throw new Error(`Cannot gather information about staged changes: ${e.message}`);
   }
 }
 
@@ -190,7 +190,7 @@ export function getRecentCommitMessages(branch: string, cwd: string) {
 
     return lines.map((line) => line.trim());
   } catch (e) {
-    console.error("Cannot gather information about recent commits: ", e.message);
+    throw new Error(`Cannot gather information about recent commits: ${e.message}`);
   }
 }
 
@@ -204,7 +204,7 @@ export function getUserEmail(cwd: string) {
 
     return results.stdout;
   } catch (e) {
-    console.error("Cannot gather information about user.email: ", e.message);
+    throw new Error(`Cannot gather information about user.email: ${e.message}`);
   }
 }
 
@@ -216,7 +216,7 @@ export function getBranchName(cwd: string) {
       return results.stdout;
     }
   } catch (e) {
-    console.error("Cannot get branch name: ", e.message);
+    throw new Error(`Cannot get branch name: ${e.message}`);
   }
 
   return null;
@@ -250,7 +250,7 @@ export function getCurrentHash(cwd: string) {
       return results.stdout;
     }
   } catch (e) {
-    console.error("Cannot get current git hash");
+    throw new Error(`Cannot get current git hash: ${e.message}`);
   }
 
   return null;
@@ -295,7 +295,7 @@ export function stage(patterns: string[], cwd: string) {
       git(["add", pattern], { cwd });
     });
   } catch (e) {
-    console.error("Cannot stage changes", e.message);
+    throw new Error(`Cannot stage changes: ${e.message}`);
   }
 }
 
@@ -304,12 +304,10 @@ export function commit(message: string, cwd: string, options:string[] = []) {
     const commitResults = git(["commit", "-m", message, ...options], { cwd });
 
     if (!commitResults.success) {
-      console.error("Cannot commit changes");
-      console.log(commitResults.stdout);
-      console.error(commitResults.stderr);
+      throw new Error(`Cannot commit changes: ${commitResults.stdout} ${commitResults.stderr}`);
     }
   } catch (e) {
-    console.error("Cannot commit changes", e.message);
+    throw new Error(`Cannot commit changes: ${e.message}`);
   }
 }
 
@@ -426,7 +424,6 @@ export function getDefaultRemote(cwd: string) {
   try {
     packageJson = JSON.parse(fs.readFileSync(path.join(findGitRoot(cwd)!, "package.json")).toString());
   } catch (e) {
-    console.log("failed to read package.json");
     throw new Error("invalid package.json detected");
   }
 
@@ -459,7 +456,6 @@ export function getDefaultRemote(cwd: string) {
     }
   }
 
-  console.log(`Defaults to "origin"`);
   return "origin";
 }
 
