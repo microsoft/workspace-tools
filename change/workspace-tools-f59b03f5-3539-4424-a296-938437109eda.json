@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "getting rid of console logs from the library",
-  "packageName": "workspace-tools",
-  "email": "kchau@microsoft.com",
-  "dependentChangeType": "patch"
-}

@@ -2,6 +2,21 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Thu, 27 May 2021 20:04:05 GMT",
+      "tag": "workspace-tools_v0.16.1",
+      "version": "0.16.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "getting rid of console logs from the library",
+            "author": "kchau@microsoft.com",
+            "commit": "7f47e421c14b9122d19f848f8039ae266c55e692",
+            "package": "workspace-tools"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 25 May 2021 21:47:27 GMT",
       "tag": "workspace-tools_v0.16.0",
       "version": "0.16.0",

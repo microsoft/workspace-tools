@@ -1,8 +1,16 @@
 # Change Log - workspace-tools
 
-This log was last generated on Tue, 25 May 2021 21:47:27 GMT and should not be manually modified.
+This log was last generated on Thu, 27 May 2021 20:04:05 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.16.1
+
+Thu, 27 May 2021 20:04:05 GMT
+
+### Patches
+
+- getting rid of console logs from the library (kchau@microsoft.com)
 
 ## 0.16.0
 
