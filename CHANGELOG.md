@@ -1,8 +1,16 @@
 # Change Log - workspace-tools
 
-This log was last generated on Thu, 27 May 2021 20:04:05 GMT and should not be manually modified.
+This log was last generated on Thu, 03 Jun 2021 20:23:22 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.16.2
+
+Thu, 03 Jun 2021 20:23:22 GMT
+
+### Patches
+
+- get the right default remote branch (kchau@microsoft.com)
 
 ## 0.16.1
 

@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "get the right default remote branch",
-  "packageName": "workspace-tools",
-  "email": "kchau@microsoft.com",
-  "dependentChangeType": "patch"
-}

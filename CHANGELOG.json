@@ -2,6 +2,21 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Thu, 03 Jun 2021 20:23:22 GMT",
+      "tag": "workspace-tools_v0.16.2",
+      "version": "0.16.2",
+      "comments": {
+        "patch": [
+          {
+            "comment": "get the right default remote branch",
+            "author": "kchau@microsoft.com",
+            "commit": "cb3c26d432f838805190f9afb65181f682c0145a",
+            "package": "workspace-tools"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 27 May 2021 20:04:05 GMT",
       "tag": "workspace-tools_v0.16.1",
       "version": "0.16.1",
