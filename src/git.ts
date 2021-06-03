@@ -402,7 +402,26 @@ function normalizeRepoUrl(repositoryUrl: string) {
 
 export function getDefaultRemoteBranch(branch: string | undefined, cwd: string) {
   const defaultRemote = getDefaultRemote(cwd);
-  branch = branch || getDefaultBranch(cwd);
+
+  const showRemote = git(["remote", "show", defaultRemote], {cwd});
+
+  /**
+   * The `showRemote` returns something like this in stdout:
+   * 
+   * * remote origin
+   *   Fetch URL: ../monorepo-upstream/
+   *   Push  URL: ../monorepo-upstream/
+   *   HEAD branch: main
+   * 
+   */
+  const headBranchLine = showRemote.stdout.split(/\n/).find(line => line.includes('HEAD branch'));
+  let remoteDefaultBranch: string | undefined;
+
+  if (headBranchLine) {
+    remoteDefaultBranch = headBranchLine.replace(/^\s*HEAD branch:\s+/, '');
+  }
+
+  branch = branch || remoteDefaultBranch || getDefaultBranch(cwd);
 
   return `${defaultRemote}/${branch}`;
 }
