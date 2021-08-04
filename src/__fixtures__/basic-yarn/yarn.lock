@@ -10899,9 +10899,9 @@ tar-stream@^2.0.1:
     readable-stream "^3.1.1"
 
 tar@^6.0.1, tar@^6.0.2:
-  version "6.0.5"
-  resolved "https://registry.yarnpkg.com/tar/-/tar-6.0.5.tgz#bde815086e10b39f1dcd298e89d596e1535e200f"
-  integrity sha512-0b4HOimQHj9nXNEAA7zWwMM91Zhhba3pspja6sQbgTpynOJf+bkjBnfybNYzbpLbnwXnbyB4LOREvlyXLkCHSg==
+  version "6.1.5"
+  resolved "https://registry.yarnpkg.com/tar/-/tar-6.1.5.tgz#6e25bee1cfda94317aedc3f5d49290ae68361d73"
+  integrity sha512-FiK6MQyyaqd5vHuUjbg/NpO8BuEGeSXcmlH7Pt/JkugWS8s0w8nKybWjHDJiwzCAIKZ66uof4ghm4tBADjcqRA==
   dependencies:
     chownr "^2.0.0"
     fs-minipass "^2.0.0"
@@ -12113,10 +12113,10 @@ worker-farm@^1.7.0:
   dependencies:
     errno "~0.1.7"
 
-workspace-tools@^0.10.3:
-  version "0.10.3"
-  resolved "https://registry.yarnpkg.com/workspace-tools/-/workspace-tools-0.10.3.tgz#1517ecd97bc4f34c586be6a160da6d8a3a6c3c87"
-  integrity sha512-5DV0C38UBwDRQ9GDINatw2UELbaK/IeBgEpvERpf7vNIfiG0GHInrNhm0jXfiS8sLOpp340m64+tF4L3UHpVrw==
+workspace-tools@^0.14.1:
+  version "0.14.1"
+  resolved "https://registry.yarnpkg.com/workspace-tools/-/workspace-tools-0.14.1.tgz#db65c5e01d93021520634a0f4501b95457a9a436"
+  integrity sha512-39eUegRij7gXmlxo9S/x8p1Bv5MDjCJmj/1ERwD8epQM5DM3kWZFJhpuq9m5kcL1qT6ny02GgRbIyr4whsX+kQ==
   dependencies:
     "@pnpm/lockfile-file" "^3.0.7"
     "@pnpm/logger" "^3.2.2"
