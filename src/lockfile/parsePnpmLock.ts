@@ -16,6 +16,7 @@ export function parsePnpmLock(yaml: PnpmLockFile): ParsedLock {
       object[nameAtVersion(name, version)] = {
         version,
         dependencies: snapshot.dependencies,
+        optionalDependencies: snapshot.optionalDependencies,
       };
     }
   }
