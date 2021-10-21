@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Update beachball and add ignorePatterns",
+  "packageName": "workspace-tools",
+  "email": "elcraig@microsoft.com",
+  "dependentChangeType": "none"
+}
