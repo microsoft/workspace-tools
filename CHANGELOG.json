@@ -2,6 +2,21 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Thu, 21 Oct 2021 20:01:33 GMT",
+      "tag": "workspace-tools_v0.16.2",
+      "version": "0.16.2",
+      "comments": {
+        "none": [
+          {
+            "author": "elcraig@microsoft.com",
+            "package": "workspace-tools",
+            "comment": "Update beachball and add ignorePatterns",
+            "commit": "1aca866df2443581ce221c08b8e783a7054fcd7d"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 03 Jun 2021 20:23:22 GMT",
       "tag": "workspace-tools_v0.16.2",
       "version": "0.16.2",
