@@ -6,6 +6,7 @@ import { ParsedLock, PnpmLockFile } from "./types";
 import readYamlFile from "read-yaml-file";
 import { nameAtVersion } from "./nameAtVersion";
 import { parsePnpmLock } from "./parsePnpmLock";
+import { parseNpmLock } from "./parseNpmLock";
 
 const memoization: { [path: string]: ParsedLock } = {};
 
@@ -41,8 +42,26 @@ export async function parseLockFile(packageRoot: string): Promise<ParsedLock> {
 
     return memoization[pnpmLockPath];
   }
+  
+  // Third, try for npm workspaces
+  let npmLockPath = await findUp(["package-lock.json"], { cwd: packageRoot });
 
-  throw new Error("You do not have either yarn.lock nor pnpm-lock.yaml. Please use one of these package managers");
+  if (npmLockPath) {
+    if (memoization[npmLockPath]) {
+      return memoization[npmLockPath];
+    }
+
+    const npmLock = JSON.parse(npmLockPath)
+
+    if (npmLock.version < 2) {
+      throw new Error(`Your package-lock.json version is not supported: ${npmLock.version}. You need npm v7 or above and package-lock v2 or above. Please, upgrade or choose a different package manager.`);
+    }
+  
+    memoization[npmLockPath] = parseNpmLock(npmLock);
+    return memoization[npmLockPath];
+  }
+
+  throw new Error("You do not have yarn.lock, pnpm-lock.yaml or package-lock.json. Please use one of these package managers.");
 }
 
 export { nameAtVersion };
