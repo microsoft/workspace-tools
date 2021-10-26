@@ -54,7 +54,7 @@ export async function parseLockFile(packageRoot: string): Promise<ParsedLock> {
     const npmLock = JSON.parse(npmLockPath) as NpmLockFile;
 
     if (!npmLock.lockfileVersion || npmLock.lockfileVersion < 2) {
-      throw new Error(`Your package-lock.json version is not supported: ${npmLock.lockfileVersion}. You need npm v7 or above and package-lock v2 or above. Please, upgrade or choose a different package manager.`);
+      throw new Error(`Your package-lock.json version is not supported: ${npmLock.lockfileVersion}. You need npm v7 or above and package-lock v2 or above. Please, upgrade npm or choose a different package manager.`);
     }
   
     memoization[npmLockPath] = parseNpmLock(npmLock);
