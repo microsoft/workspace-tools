@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "Add yarn2.lock",
+  "packageName": "workspace-tools",
+  "email": "mhuan13@gmail.com",
+  "dependentChangeType": "patch"
+}
