@@ -104,7 +104,7 @@ export function getUntrackedChanges(cwd: string) {
 
     return untracked;
   } catch (e) {
-    throw new Error(`Cannot gather information about untracked changes: ${e.message}`);
+    throw new Error(`Cannot gather information about untracked changes: ${(e as Error).message}`);
   }
 }
 
@@ -132,7 +132,7 @@ export function getUnstagedChanges(cwd: string) {
   try {
     return processGitOutput(git(["--no-pager", "diff", "--name-only", "--relative"], { cwd }));
   } catch (e) {
-    throw new Error(`Cannot gather information about unstaged changes: ${e.message}`);
+    throw new Error(`Cannot gather information about unstaged changes: ${(e as Error).message}`);
   }
 }
 
@@ -140,7 +140,7 @@ export function getChanges(branch: string, cwd: string) {
   try {
     return processGitOutput(git(["--no-pager", "diff", "--relative", "--name-only", branch + "..."], { cwd }));
   } catch (e) {
-    throw new Error(`Cannot gather information about changes: ${e.message}`);
+    throw new Error(`Cannot gather information about changes: ${(e as Error).message}`);
   }
 }
 
@@ -153,7 +153,7 @@ export function getBranchChanges(branch: string, cwd: string) {
   try {
     return processGitOutput(git(["--no-pager", "diff", "--name-only", "--relative", branch + "..."], { cwd }));
   } catch (e) {
-    throw new Error(`Cannot gather information about branch changes: ${e.message}`);
+    throw new Error(`Cannot gather information about branch changes: ${(e as Error).message}`);
   }
 }
 
@@ -165,7 +165,7 @@ export function getChangesBetweenRefs(fromRef: string, toRef: string, options: s
       })
     );
   } catch (e) {
-    throw new Error(`Cannot gather information about change between refs changes (${fromRef} to ${toRef}): ${e.message}`);
+    throw new Error(`Cannot gather information about change between refs changes (${fromRef} to ${toRef}): ${(e as Error).message}`);
   }
 }
 
@@ -173,7 +173,7 @@ export function getStagedChanges(cwd: string) {
   try {
     return processGitOutput(git(["--no-pager", "diff", "--relative", "--staged", "--name-only"], { cwd }));
   } catch (e) {
-    throw new Error(`Cannot gather information about staged changes: ${e.message}`);
+    throw new Error(`Cannot gather information about staged changes: ${(e as Error).message}`);
   }
 }
 
@@ -190,7 +190,7 @@ export function getRecentCommitMessages(branch: string, cwd: string) {
 
     return lines.map((line) => line.trim());
   } catch (e) {
-    throw new Error(`Cannot gather information about recent commits: ${e.message}`);
+    throw new Error(`Cannot gather information about recent commits: ${(e as Error).message}`);
   }
 }
 
@@ -204,7 +204,7 @@ export function getUserEmail(cwd: string) {
 
     return results.stdout;
   } catch (e) {
-    throw new Error(`Cannot gather information about user.email: ${e.message}`);
+    throw new Error(`Cannot gather information about user.email: ${(e as Error).message}`);
   }
 }
 
@@ -216,7 +216,7 @@ export function getBranchName(cwd: string) {
       return results.stdout;
     }
   } catch (e) {
-    throw new Error(`Cannot get branch name: ${e.message}`);
+    throw new Error(`Cannot get branch name: ${(e as Error).message}`);
   }
 
   return null;
@@ -250,7 +250,7 @@ export function getCurrentHash(cwd: string) {
       return results.stdout;
     }
   } catch (e) {
-    throw new Error(`Cannot get current git hash: ${e.message}`);
+    throw new Error(`Cannot get current git hash: ${(e as Error).message}`);
   }
 
   return null;
@@ -295,7 +295,7 @@ export function stage(patterns: string[], cwd: string) {
       git(["add", pattern], { cwd });
     });
   } catch (e) {
-    throw new Error(`Cannot stage changes: ${e.message}`);
+    throw new Error(`Cannot stage changes: ${(e as Error).message}`);
   }
 }
 
@@ -307,7 +307,7 @@ export function commit(message: string, cwd: string, options:string[] = []) {
       throw new Error(`Cannot commit changes: ${commitResults.stdout} ${commitResults.stderr}`);
     }
   } catch (e) {
-    throw new Error(`Cannot commit changes: ${e.message}`);
+    throw new Error(`Cannot commit changes: ${(e as Error).message}`);
   }
 }
 

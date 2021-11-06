@@ -14,7 +14,7 @@ export function getPackageInfos(cwd: string) {
         packageInfos[packageJson.name] = infoFromPackageJson(packageJson, packageJsonPath);
       } catch (e) {
         // Pass, the package.json is invalid
-        throw new Error(`Invalid package.json file detected ${packageJsonPath}: ${e.message}`);
+        throw new Error(`Invalid package.json file detected ${packageJsonPath}: ${(e as Error).message}`);
       }
     });
     return packageInfos;
