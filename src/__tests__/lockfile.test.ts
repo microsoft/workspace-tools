@@ -45,7 +45,7 @@ describe("parseLockFile()", () => {
     it("parses version strings in yarn2 yarn.lock", async () => {
     const packageRoot = await setupFixture("basic-yarn2");
     const parsedLockeFile = await parseLockFile(packageRoot);
-    expect(parsedLockeFile.object["strip-json-comments@npm:^3.1.1"].version).toBe(
+    expect(parsedLockeFile.object["strip-json-comments@^3.1.1"].version).toBe(
       "3.1.1"
     );
   });
@@ -53,8 +53,8 @@ describe("parseLockFile()", () => {
   it("parses combined ranges in yarn2 yarn.lock", async () => {
     const packageRoot = await setupFixture("basic-yarn2");
     const parsedLockeFile = await parseLockFile(packageRoot);
-    expect(parsedLockeFile.object["strip-json-comments@npm:^3.1.0"].version).toBe(
-      parsedLockeFile.object["strip-json-comments@npm:^3.1.1"].version
+    expect(parsedLockeFile.object["strip-json-comments@^3.1.0"].version).toBe(
+      parsedLockeFile.object["strip-json-comments@^3.1.1"].version
     );
   });
 

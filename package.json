@@ -17,6 +17,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "@yarnpkg/core": "^3.2.0-rc.2",
     "@yarnpkg/lockfile": "^1.1.0",
     "find-up": "^4.1.0",
     "find-yarn-workspace-root": "^1.2.1",
@@ -25,7 +26,8 @@
     "globby": "^11.0.0",
     "jju": "^1.4.0",
     "multimatch": "^4.0.0",
-    "read-yaml-file": "^2.0.0"
+    "read-yaml-file": "^2.0.0",
+    "yaml": "^1.10.2"
   },
   "devDependencies": {
     "@types/fs-extra": "^8.1.0",
