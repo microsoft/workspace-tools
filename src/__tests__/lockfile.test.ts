@@ -8,6 +8,13 @@ describe("parseLockFile()", () => {
 
     expect(parsedLockeFile).toHaveProperty("type", "success");
   });
+  
+  it("parses yarn2 yarn.lock file when it is found", async () => {
+    const packageRoot = await setupFixture("basic-yarn2");
+    const parsedLockeFile = await parseLockFile(packageRoot);
+
+    expect(parsedLockeFile).toHaveProperty("type", "success");
+  });
 
   it("throws if it cannot find a yarn.lock file", async () => {
     const packageRoot = await setupFixture("basic-without-lock-file");
@@ -17,12 +24,37 @@ describe("parseLockFile()", () => {
     );
   });
 
+  it("parses version strings in yarn.lock", async () => {
+    const packageRoot = await setupFixture("basic-yarn");
+    const parsedLockeFile = await parseLockFile(packageRoot);
+
+    expect(parsedLockeFile.object["@babel/code-frame@^7.0.0"].version).toBe(
+      '7.8.3'
+    );
+  });
+
   it("parses combined ranges in yarn.lock", async () => {
     const packageRoot = await setupFixture("basic-yarn");
     const parsedLockeFile = await parseLockFile(packageRoot);
 
     expect(parsedLockeFile.object["@babel/code-frame@^7.0.0"].version).toBe(
       parsedLockeFile.object["@babel/code-frame@^7.8.3"].version
+    );
+  });
+
+    it("parses version strings in yarn2 yarn.lock", async () => {
+    const packageRoot = await setupFixture("basic-yarn2");
+    const parsedLockeFile = await parseLockFile(packageRoot);
+    expect(parsedLockeFile.object["strip-json-comments@npm:^3.1.1"].version).toBe(
+      "3.1.1"
+    );
+  });
+
+  it("parses combined ranges in yarn2 yarn.lock", async () => {
+    const packageRoot = await setupFixture("basic-yarn2");
+    const parsedLockeFile = await parseLockFile(packageRoot);
+    expect(parsedLockeFile.object["strip-json-comments@npm:^3.1.0"].version).toBe(
+      parsedLockeFile.object["strip-json-comments@npm:^3.1.1"].version
     );
   });
 

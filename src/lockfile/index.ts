@@ -6,6 +6,7 @@ import { ParsedLock, PnpmLockFile } from "./types";
 import readYamlFile from "read-yaml-file";
 import { nameAtVersion } from "./nameAtVersion";
 import { parsePnpmLock } from "./parsePnpmLock";
+import { parseYarn2Lock } from "./parseYarn2Lock";
 
 const memoization: { [path: string]: ParsedLock } = {};
 
@@ -18,9 +19,22 @@ export async function parseLockFile(packageRoot: string): Promise<ParsedLock> {
       return memoization[yarnLockPath];
     }
 
-    const parseYarnLock = (await import("@yarnpkg/lockfile")).parse;
-    const yarnLock = fs.readFileSync(yarnLockPath).toString();
-    const parsed = parseYarnLock(yarnLock);
+    const yarnLockString = fs.readFileSync(yarnLockPath).toString();
+    const isYarnLockV2 = (yarnLockString.includes('__metadata') || fs.existsSync(
+      path.resolve(path.join(yarnLockPath, '..', '.yarnrc.yml'),
+    )))
+    let parsed:  {
+      type: 'success' | 'merge' | 'conflict';
+      object: any;
+    };
+      if (!isYarnLockV2) {
+        // yarn v1
+        const parseYarnLock = (await import("@yarnpkg/lockfile")).parse;
+        parsed = parseYarnLock(yarnLockString);
+      } else {
+        // yarn v2
+        parsed = await parseYarn2Lock(yarnLockString)
+      }
 
     memoization[yarnLockPath] = parsed;
 
