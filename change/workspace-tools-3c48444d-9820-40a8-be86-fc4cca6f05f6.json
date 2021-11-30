@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "Adds npm 7 package-lock.json parcer",
+  "packageName": "workspace-tools",
+  "email": "riacarmin@microsoft.com",
+  "dependentChangeType": "patch"
+}
