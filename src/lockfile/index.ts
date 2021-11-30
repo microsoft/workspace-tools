@@ -61,7 +61,7 @@ export async function parseLockFile(packageRoot: string): Promise<ParsedLock> {
 
     if (!npmLock?.lockfileVersion || npmLock.lockfileVersion < 2) {
       throw new Error(
-        `Your package-lock.json version is not supported: ${npmLock.lockfileVersion}. You need npm v7 or above and package-lock v2 or above. Please, upgrade npm or choose a different package manager.`
+        `Your package-lock.json version is not supported: lockfileVersion is ${npmLock.lockfileVersion}. You need npm version 7 or above and package-lock version 2 or above. Please, upgrade npm or choose a different package manager.`
       );
     }
 
