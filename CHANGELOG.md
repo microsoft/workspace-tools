@@ -1,8 +1,16 @@
 # Change Log - workspace-tools
 
-This log was last generated on Thu, 03 Jun 2021 20:23:22 GMT and should not be manually modified.
+This log was last generated on Thu, 02 Dec 2021 17:11:12 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.17.0
+
+Thu, 02 Dec 2021 17:11:12 GMT
+
+### Minor changes
+
+- Implements NPM workspaces support to parseLockFile utility. (riacarmin@microsoft.com)
 
 ## 0.16.2
 

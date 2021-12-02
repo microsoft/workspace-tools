@@ -2,6 +2,21 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Thu, 02 Dec 2021 17:11:12 GMT",
+      "tag": "workspace-tools_v0.17.0",
+      "version": "0.17.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "riacarmin@microsoft.com",
+            "package": "workspace-tools",
+            "comment": "Implements NPM workspaces support to parseLockFile utility.",
+            "commit": "0d9b3bd5c091e238d302f4a6912692e2eda95385"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 21 Oct 2021 20:01:33 GMT",
       "tag": "workspace-tools_v0.16.2",
       "version": "0.16.2",
