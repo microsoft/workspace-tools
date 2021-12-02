@@ -3,14 +3,14 @@ import {
   WorkspaceImplementations,
 } from "./implementations";
 
+import { getLernaWorkspaces } from "./implementations/lerna";
+import { getNpmWorkspaces } from "./implementations/npm";
 import { getPnpmWorkspaces } from "./implementations/pnpm";
-import { getYarnWorkspaces } from "./implementations/yarn";
 import { getRushWorkspaces } from "./implementations/rush";
+import { getYarnWorkspaces } from "./implementations/yarn";
 
 import { WorkspaceInfo } from "../types/WorkspaceInfo";
 import { WorkspaceManager } from "./WorkspaceManager";
-import { getNpmWorkspaces } from "./implementations/npm";
-import { getLernaWorkspaces } from "./implementations/lerna";
 
 const workspaceGetter: {
   [key in WorkspaceImplementations]: (cwd: string) => WorkspaceInfo;

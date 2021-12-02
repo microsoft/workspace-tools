@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "Implements NPM workspaces support to parseLockFile utility.",
+  "packageName": "workspace-tools",
+  "email": "riacarmin@microsoft.com",
+  "dependentChangeType": "patch"
+}
