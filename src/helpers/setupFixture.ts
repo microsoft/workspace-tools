@@ -43,11 +43,11 @@ export function setupFixture(fixtureName: string) {
   // ensure that the configuration for this repo does not collide
   // with any global configuration the user had made, so we have
   // a 'fixed' value for our tests, regardless of user configuration
-  gitFailFast(['symbolic-ref', 'HEAD', 'refs/heads/main'], {cwd} );
-  gitFailFast(['config', 'init.defaultBranch', 'main'], {cwd} );
+  gitFailFast(["symbolic-ref", "HEAD", "refs/heads/main"], { cwd });
+  gitFailFast(["config", "init.defaultBranch", "main"], { cwd });
 
   stageAndCommit(["."], "test", cwd);
-  
+
   return cwd;
 }
 
@@ -62,15 +62,21 @@ export function setupLocalRemote(cwd: string, remoteName: string, fixtureName: s
   // Create a seperate repo and configure it as a remote
   const remoteCwd = setupFixture(fixtureName);
   const remoteUrl = remoteCwd.replace(/\\/g, "/");
-  gitFailFast(["remote", "add", remoteName, remoteUrl], {cwd} );
+  gitFailFast(["remote", "add", remoteName, remoteUrl], { cwd });
   // Configure url in package.json
   const pkgJsonPath = path.join(cwd, "package.json");
-  const pkgJson = fsExtra.readJSONSync(pkgJsonPath);
-  fsExtra.writeJSONSync(pkgJsonPath,
-    {
-    ...pkgJson,
-    repository: {
-      url: remoteUrl
-    }
-  });
+  const pkgJson = JSON.parse(fs.readFileSync(pkgJsonPath, "utf-8"));
+  fs.writeFileSync(
+    pkgJsonPath,
+    JSON.stringify(
+      {
+        ...pkgJson,
+        repository: {
+          url: remoteUrl,
+        },
+      },
+      null,
+      2
+    )
+  );
 }

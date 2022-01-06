@@ -19,8 +19,6 @@
   "dependencies": {
     "@yarnpkg/lockfile": "^1.1.0",
     "find-up": "^4.1.0",
-    "find-yarn-workspace-root": "^1.2.1",
-    "fs-extra": "^9.0.0",
     "git-url-parse": "^11.1.2",
     "globby": "^11.0.0",
     "jju": "^1.4.0",
@@ -28,7 +26,6 @@
     "read-yaml-file": "^2.0.0"
   },
   "devDependencies": {
-    "@types/fs-extra": "^8.1.0",
     "@types/git-url-parse": "^9.0.0",
     "@types/glob": "^7.1.1",
     "@types/jest": "^25.2.2",
