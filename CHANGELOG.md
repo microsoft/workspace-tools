@@ -1,8 +1,16 @@
 # Change Log - workspace-tools
 
-This log was last generated on Fri, 07 Jan 2022 17:07:22 GMT and should not be manually modified.
+This log was last generated on Fri, 07 Jan 2022 18:15:36 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.18.2
+
+Fri, 07 Jan 2022 18:15:36 GMT
+
+### Patches
+
+- Makes the output of parseLockFile for npm v7+ lock file compatible with queryLockFile. (riacarmin@microsoft.com)
 
 ## 0.18.1
 

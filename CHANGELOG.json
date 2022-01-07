@@ -2,6 +2,21 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Fri, 07 Jan 2022 18:15:36 GMT",
+      "tag": "workspace-tools_v0.18.2",
+      "version": "0.18.2",
+      "comments": {
+        "patch": [
+          {
+            "author": "riacarmin@microsoft.com",
+            "package": "workspace-tools",
+            "comment": "Makes the output of parseLockFile for npm v7+ lock file compatible with queryLockFile.",
+            "commit": "caf984c0c569579a316c4cec9808a63a744abb09"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 07 Jan 2022 17:07:22 GMT",
       "tag": "workspace-tools_v0.18.1",
       "version": "0.18.1",
