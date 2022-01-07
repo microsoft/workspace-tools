@@ -1,6 +1,6 @@
 {
   "type": "patch",
-  "comment": "Makes parseLockFile and queryLockFile compatible",
+  "comment": "Makes the output of parseLockFile for npm v7+ lock file compatible with queryLockFile.",
   "packageName": "workspace-tools",
   "email": "riacarmin@microsoft.com",
   "dependentChangeType": "patch"
