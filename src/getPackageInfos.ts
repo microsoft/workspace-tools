@@ -13,8 +13,12 @@ export function getPackageInfos(cwd: string) {
         const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, "utf-8"));
         packageInfos[packageJson.name] = infoFromPackageJson(packageJson, packageJsonPath);
       } catch (e) {
-        // Pass, the package.json is invalid
-        throw new Error(`Invalid package.json file detected ${packageJsonPath}: ${e.message}`);
+        if (e instanceof Error) {
+          // Pass, the package.json is invalid
+          throw new Error(`Invalid package.json file detected ${packageJsonPath}: ${e.message}`);
+        } else {
+          throw e;
+        }
       }
     });
     return packageInfos;
