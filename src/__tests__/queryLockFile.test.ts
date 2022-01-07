@@ -1,6 +1,17 @@
 import { setupFixture } from "../helpers/setupFixture";
 import { parseLockFile, queryLockFile } from "..";
 
+/**
+ * These tests rely on the "@microsoft/task-scheduler" package and its version as defined in package.json in
+ * fixtures:
+ * - monorepo-npm
+ * - basic-yarn
+ * - monorepo-pnpm
+ * 
+ * If making any changes to those fixtures and "@microsoft/task-scheduler" dependency, update the `packageName` and
+ * `packageVersion` constants.
+ */
+
 const packageName = "@microsoft/task-scheduler";
 const packageVersion = "2.7.1";
 
