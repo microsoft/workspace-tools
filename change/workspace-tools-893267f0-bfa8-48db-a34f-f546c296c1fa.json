@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Makes parseLockFile and queryLockFile compatible",
+  "packageName": "workspace-tools",
+  "email": "riacarmin@microsoft.com",
+  "dependentChangeType": "patch"
+}
