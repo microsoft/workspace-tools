@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "speed up workspace-tools - reducing weight and adding caches - lazy load pkg mgr helpers",
-  "packageName": "workspace-tools",
-  "email": "kchau@microsoft.com",
-  "dependentChangeType": "patch"
-}

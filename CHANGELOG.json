@@ -2,6 +2,21 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Fri, 07 Jan 2022 00:04:32 GMT",
+      "tag": "workspace-tools_v0.18.0",
+      "version": "0.18.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "kchau@microsoft.com",
+            "package": "workspace-tools",
+            "comment": "speed up workspace-tools - reducing weight and adding caches - lazy load pkg mgr helpers",
+            "commit": "6105a8eb81e4972b9ffbdd18669a137f0f5d9400"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 02 Dec 2021 17:11:12 GMT",
       "tag": "workspace-tools_v0.17.0",
       "version": "0.17.0",
