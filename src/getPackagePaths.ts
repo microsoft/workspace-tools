@@ -1,29 +1,30 @@
 import path from "path";
 import globby from "globby";
 
-export function getPackagePaths(
-  workspacesRoot: string,
-  packages: string[]
-): string[] {
-  const packagePaths = packages.map((glob) => {
-    const globbed = globby
-      .sync(path.join(glob, "package.json").replace(/\\/g, "/"), {
+const packagePathsCache: { [workspacesRoot: string]: string[] } = {};
+
+export function getPackagePaths(workspacesRoot: string, packages: string[]): string[] {
+  if (packagePathsCache[workspacesRoot]) {
+    return packagePathsCache[workspacesRoot];
+  }
+
+  const packagePaths = globby
+    .sync(
+      packages.map((glob) => path.join(glob, "package.json").replace(/\\/g, "/")),
+      {
         cwd: workspacesRoot,
         absolute: true,
         ignore: ["**/node_modules/**"],
-      })
-      .map((p) => path.dirname(p));
+        stats: false,
+      }
+    )
+    .map((p) => path.dirname(p));
 
-    return globbed;
-  });
+  if (path.sep === "/") {
+    packagePathsCache[workspacesRoot] = packagePaths;
+  } else {
+    packagePathsCache[workspacesRoot] = packagePaths.map((p) => p.replace(/\//g, path.sep));
+  }
 
-  /*
-   * fast-glob returns unix style path,
-   * so we use path.join to align the path with the platform.
-   */
-  return packagePaths
-    .reduce((acc, cur) => {
-      return [...acc, ...cur];
-    })
-    .map((p) => path.join(p));
+  return packagePathsCache[workspacesRoot];
 }

@@ -1,34 +1,68 @@
 import findUp from "find-up";
+import path from "path";
 
-export type WorkspaceImplementations = "yarn" | "pnpm" | "rush" | "npm" | 'lerna';
+export type WorkspaceImplementations = "yarn" | "pnpm" | "rush" | "npm" | "lerna";
+export interface ImplementationAndLockFile {
+  implementation: WorkspaceImplementations | undefined;
+  lockFile: string;
+}
+const cache: { [cwd: string]: ImplementationAndLockFile } = {};
 
-export function getWorkspaceImplementation(
+export function getWorkspaceImplementationAndLockFile(
   cwd: string
-): WorkspaceImplementations | undefined {
-  // This needs to come before Yarn and NPM because
-  // lerna can be used with either package manager
-  const lernaJsonPath = findUp.sync("lerna.json", { cwd });
-  if (lernaJsonPath) {
-    return "lerna";
-  }
-  
-  const yarnLockPath = findUp.sync("yarn.lock", { cwd });
-  if (yarnLockPath) {
-    return "yarn";
+): { implementation: WorkspaceImplementations | undefined; lockFile: string } | undefined {
+  if (cache[cwd]) {
+    return cache[cwd];
   }
 
-  const pnpmLockPath = findUp.sync("pnpm-workspace.yaml", { cwd });
-  if (pnpmLockPath) {
-    return "pnpm";
+  const lockFile = findUp.sync(["lerna.json", "yarn.lock", "pnpm-workspace.yaml", "rush.json", "package-lock.json"], {
+    cwd,
+  });
+
+  if (!lockFile) {
+    return;
   }
 
-  const rushJsonPath = findUp.sync("rush.json", { cwd });
-  if (rushJsonPath) {
-    return "rush";
+  switch (path.basename(lockFile)) {
+    case "lerna.json":
+      cache[cwd] = {
+        implementation: "lerna",
+        lockFile,
+      };
+      break;
+
+    case "yarn.lock":
+      cache[cwd] = {
+        implementation: "yarn",
+        lockFile,
+      };
+      break;
+
+    case "pnpm-workspace.yaml":
+      cache[cwd] = {
+        implementation: "pnpm",
+        lockFile,
+      };
+      break;
+
+    case "rush.json":
+      cache[cwd] = {
+        implementation: "rush",
+        lockFile,
+      };
+      break;
+
+    case "package-lock.json":
+      cache[cwd] = {
+        implementation: "npm",
+        lockFile,
+      };
+      break;
   }
 
-  const npmLockPath = findUp.sync("package-lock.json", { cwd });
-  if (npmLockPath) {
-    return "npm";
-  }
+  return cache[cwd];
+}
+
+export function getWorkspaceImplementation(cwd: string): WorkspaceImplementations | undefined {
+  return getWorkspaceImplementationAndLockFile(cwd)?.implementation;
 }

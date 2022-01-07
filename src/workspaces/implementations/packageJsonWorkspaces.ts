@@ -1,21 +1,21 @@
-import findWorkspaceRoot from "find-yarn-workspace-root";
 import fs from "fs";
 import path from "path";
+import { getWorkspaceImplementationAndLockFile } from ".";
 import { getPackagePaths } from "../../getPackagePaths";
 import { getWorkspacePackageInfo } from "../getWorkspacePackageInfo";
 
 type PackageJsonWorkspaces = {
-    workspaces?:
-      | {
-          packages?: string[];
-          nohoist?: string[];
-        }
-      | string[];
-  };  
+  workspaces?:
+    | {
+        packages?: string[];
+        nohoist?: string[];
+      }
+    | string[];
+};
 
 export function getPackageJsonWorkspaceRoot(cwd: string): string | null {
-  const packageJsonWorkspacesRoot = findWorkspaceRoot(cwd);
-
+  const lockFile = getWorkspaceImplementationAndLockFile(cwd)?.lockFile;
+  const packageJsonWorkspacesRoot = lockFile ? path.dirname(lockFile) : cwd;
   return packageJsonWorkspacesRoot;
 }
 

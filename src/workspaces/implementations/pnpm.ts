@@ -1,6 +1,6 @@
 import path from "path";
 import findUp from "find-up";
-import { sync as readYaml } from "read-yaml-file";
+
 
 import { getPackagePaths } from "../../getPackagePaths";
 import { WorkspaceInfo } from "../../types/WorkspaceInfo";
@@ -27,7 +27,9 @@ export function getPnpmWorkspaces(cwd: string): WorkspaceInfo {
       pnpmWorkspacesRoot,
       "pnpm-workspace.yaml"
     );
-    const pnpmWorkspaces = readYaml<PnpmWorkspaces>(pnpmWorkspacesFile);
+
+    const readYaml = require("read-yaml-file").sync;
+    const pnpmWorkspaces = readYaml(pnpmWorkspacesFile) as PnpmWorkspaces;
 
     const packagePaths = getPackagePaths(
       pnpmWorkspacesRoot,

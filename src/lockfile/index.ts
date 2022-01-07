@@ -1,8 +1,7 @@
 // NOTE: never place the import of lockfile implementation here, as it slows down the library as a whole
 import findUp from "find-up";
-import fs from "fs-extra";
+import fs from "fs";
 import { ParsedLock, PnpmLockFile, NpmLockFile } from "./types";
-import readYamlFile from "read-yaml-file";
 import { nameAtVersion } from "./nameAtVersion";
 import { parsePnpmLock } from "./parsePnpmLock";
 import { parseNpmLock } from "./parseNpmLock";
@@ -19,7 +18,7 @@ export async function parseLockFile(packageRoot: string): Promise<ParsedLock> {
     }
 
     const parseYarnLock = (await import("@yarnpkg/lockfile")).parse;
-    const yarnLock = fs.readFileSync(yarnLockPath).toString();
+    const yarnLock = fs.readFileSync(yarnLockPath, 'utf-8');
     const parsed = parseYarnLock(yarnLock);
 
     memoization[yarnLockPath] = parsed;
@@ -35,7 +34,8 @@ export async function parseLockFile(packageRoot: string): Promise<ParsedLock> {
       return memoization[pnpmLockPath];
     }
 
-    const yaml = await readYamlFile<PnpmLockFile>(pnpmLockPath);
+    const readYamlFile = require("read-yaml-file");
+    const yaml = (await readYamlFile(pnpmLockPath)) as PnpmLockFile;
     const parsed = parsePnpmLock(yaml);
     memoization[pnpmLockPath] = parsed;
 
@@ -52,7 +52,7 @@ export async function parseLockFile(packageRoot: string): Promise<ParsedLock> {
 
     let npmLockJson;
     try {
-      npmLockJson = fs.readFileSync(npmLockPath);
+      npmLockJson = fs.readFileSync(npmLockPath, 'utf-8');
     } catch {
       throw new Error("Couldn’t parse package-lock.json.");
     }
