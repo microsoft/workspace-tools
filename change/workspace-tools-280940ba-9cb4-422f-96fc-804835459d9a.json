@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "bump ts to 4.5 and fixed typing issues with caught errors as unknown",
+  "packageName": "workspace-tools",
+  "email": "kchau@microsoft.com",
+  "dependentChangeType": "patch"
+}
