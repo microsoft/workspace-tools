@@ -2,5 +2,11 @@
   "private": true,
   "name": "monorepo-pnpm",
   "license": "MIT",
-  "version": "0.1.0"
+  "version": "0.1.0",
+  "dependencies": {
+    "@microsoft/task-scheduler": "^2.7.0"
+  },
+  "devDependencies": {
+    "typescript": "^3.8.3"
+  }
 }

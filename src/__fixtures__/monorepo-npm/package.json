@@ -6,5 +6,11 @@
     "packages": [
       "packages/*"
     ]
+  },
+  "dependencies": {
+    "@microsoft/task-scheduler": "^2.7.0"
+  },
+  "devDependencies": {
+    "typescript": "^3.8.3"
   }
 }
