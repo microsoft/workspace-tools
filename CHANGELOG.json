@@ -2,6 +2,21 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Fri, 07 Jan 2022 17:07:22 GMT",
+      "tag": "workspace-tools_v0.18.1",
+      "version": "0.18.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "kchau@microsoft.com",
+            "package": "workspace-tools",
+            "comment": "bump ts to 4.5 and fixed typing issues with caught errors as unknown",
+            "commit": "253384a2c94b5bf41189c6a2b4e5d4478daeaa5e"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 07 Jan 2022 00:04:32 GMT",
       "tag": "workspace-tools_v0.18.0",
       "version": "0.18.0",

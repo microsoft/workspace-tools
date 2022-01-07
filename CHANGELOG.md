@@ -1,8 +1,16 @@
 # Change Log - workspace-tools
 
-This log was last generated on Fri, 07 Jan 2022 00:04:32 GMT and should not be manually modified.
+This log was last generated on Fri, 07 Jan 2022 17:07:22 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.18.1
+
+Fri, 07 Jan 2022 17:07:22 GMT
+
+### Patches
+
+- bump ts to 4.5 and fixed typing issues with caught errors as unknown (kchau@microsoft.com)
 
 ## 0.18.0
 
