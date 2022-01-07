@@ -1,22 +1,81 @@
+lockfileVersion: 5.3
+
 importers:
+
   .:
-    specifiers: {}
+    specifiers:
+      '@microsoft/task-scheduler': ^2.7.0
+      typescript: ^3.8.3
+    dependencies:
+      '@microsoft/task-scheduler': 2.7.1
+    devDependencies:
+      typescript: 3.9.10
+
   packages/package-a:
     specifiers: {}
+
   packages/package-b:
-    devDependencies:
-      once: 1.4.0
     specifiers:
       once: 1.4.0
-lockfileVersion: 5.1
+    devDependencies:
+      once: 1.4.0
+
 packages:
+
+  /@microsoft/task-scheduler/2.7.1:
+    resolution: {integrity: sha512-xSmX7xgLTtf3LwVOW5HCEL4qrSWYCmPsVzpJ7PTBayN0KA9acScgsLYaDE6tE26N//DtDEW6mi4RteWU4XSrjA==}
+    dependencies:
+      memory-streams: 0.1.3
+      p-graph: 1.1.2
+    dev: false
+
+  /core-util-is/1.0.3:
+    resolution: {integrity: sha512-ZQBvi1DcpJ4GDqanjucZ2Hj3wEO5pZDS89BWbkcrvdxksJorwUDDZamX9ldFkp9aw2lmBDLgkObEA4DWNJ9FYQ==}
+    dev: false
+
+  /inherits/2.0.4:
+    resolution: {integrity: sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==}
+    dev: false
+
+  /isarray/0.0.1:
+    resolution: {integrity: sha1-ihis/Kmo9Bd+Cav8YDiTmwXR7t8=}
+    dev: false
+
+  /memory-streams/0.1.3:
+    resolution: {integrity: sha512-qVQ/CjkMyMInPaaRMrwWNDvf6boRZXaT/DbQeMYcCWuXPEBf1v8qChOc9OlEVQp2uOvRXa1Qu30fLmKhY6NipA==}
+    dependencies:
+      readable-stream: 1.0.34
+    dev: false
+
   /once/1.4.0:
+    resolution: {integrity: sha1-WDsap3WWHUsROsF9nFC6753Xa9E=}
     dependencies:
       wrappy: 1.0.2
     dev: true
-    resolution:
-      integrity: sha1-WDsap3WWHUsROsF9nFC6753Xa9E=
-  /wrappy/1.0.2:
+
+  /p-graph/1.1.2:
+    resolution: {integrity: sha512-GnEEHrOMozk0hCjXBm011oYb3zpaOolxHgqL2s7Od2niGAJKyk/4FZ2VRUAgjqqqoQnZQtwkF6fjGDJkIQTjDQ==}
+    dev: false
+
+  /readable-stream/1.0.34:
+    resolution: {integrity: sha1-Elgg40vIQtLyqq+v5MKRbuMsFXw=}
+    dependencies:
+      core-util-is: 1.0.3
+      inherits: 2.0.4
+      isarray: 0.0.1
+      string_decoder: 0.10.31
+    dev: false
+
+  /string_decoder/0.10.31:
+    resolution: {integrity: sha1-YuIDvEF2bGwoyfyEMB2rHFMQ+pQ=}
+    dev: false
+
+  /typescript/3.9.10:
+    resolution: {integrity: sha512-w6fIxVE/H1PkLKcCPsFqKE7Kv7QUwhU8qQY2MueZXWx5cPZdwFupLgKK3vntcK98BtNHZtAF4LA/yl2a7k8R6Q==}
+    engines: {node: '>=4.2.0'}
+    hasBin: true
     dev: true
-    resolution:
-      integrity: sha1-tSQ9jz7BqjXxNkYFvA0QNuMKtp8=
+
+  /wrappy/1.0.2:
+    resolution: {integrity: sha1-tSQ9jz7BqjXxNkYFvA0QNuMKtp8=}
+    dev: true

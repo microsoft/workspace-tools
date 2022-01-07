@@ -975,9 +975,9 @@
     markdown-it-front-matter "^0.2.1"
     postcss "^7.0.32"
 
-"@microsoft/task-scheduler@^2.7.0":
-  version "2.7.0"
-  resolved "https://registry.yarnpkg.com/@microsoft/task-scheduler/-/task-scheduler-2.7.0.tgz#ec08645bbf708299a2d13bfd56a1a928189cd33c"
+"@microsoft/task-scheduler@^2.7.1":
+  version "2.7.1"
+  resolved "https://registry.yarnpkg.com/@microsoft/task-scheduler/-/task-scheduler-2.7.1.tgz#ec08645bbf708299a2d13bfd56a1a928189cd33c"
   integrity sha512-8UnOEuq7bmz8kJECSnoJmT987t5jsurSX1kMadtFRe8z6AYMuJQaW0l3pQ2gllgRjOa8LTKujRPLKGRIfJcJcw==
   dependencies:
     memory-streams "^0.1.3"
