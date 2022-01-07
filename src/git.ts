@@ -4,6 +4,14 @@ import path from "path";
 import { findGitRoot } from "./paths";
 import gitUrlParse from "git-url-parse";
 
+function gitError(message: string, e?: unknown) {
+  if (e && e instanceof Error) {
+    return new Error(`${message}: ${e.message}`);
+  }
+
+  return new Error(message);
+}
+
 /**
  * A maxBuffer override globally for all git operations
  * Bumps up the default to 500MB as opposed to the 1MB
@@ -69,9 +77,10 @@ export function gitFailFast(args: string[], options?: { cwd: string; maxBuffer?:
   const gitResult = git(args, options);
   if (!gitResult.success) {
     process.exitCode = 1;
-    throw new Error(`CRITICAL ERROR: running git command: git ${args.join(" ")}!
-${gitResult.stdout && gitResult.stdout.toString().trimRight()}
-${gitResult.stderr && gitResult.stderr.toString().trimRight()}`);
+
+    throw gitError(`CRITICAL ERROR: running git command: git ${args.join(" ")}!
+    ${gitResult.stdout && gitResult.stdout.toString().trimRight()}
+    ${gitResult.stderr && gitResult.stderr.toString().trimRight()}`);
   }
 }
 
@@ -104,7 +113,7 @@ export function getUntrackedChanges(cwd: string) {
 
     return untracked;
   } catch (e) {
-    throw new Error(`Cannot gather information about untracked changes: ${e.message}`);
+    throw gitError(`Cannot gather information about untracked changes`, e);
   }
 }
 
@@ -112,7 +121,7 @@ export function fetchRemote(remote: string, cwd: string) {
   const results = git(["fetch", remote], { cwd });
 
   if (!results.success) {
-    throw new Error(`Cannot fetch remote: ${remote}`);
+    throw gitError(`Cannot fetch remote: ${remote}`);
   }
 }
 
@@ -120,7 +129,7 @@ export function fetchRemoteBranch(remote: string, remoteBranch: string, cwd: str
   const results = git(["fetch", remote, remoteBranch], { cwd });
 
   if (!results.success) {
-    throw new Error(`Cannot fetch remote: ${remote} ${remoteBranch}`);
+    throw gitError(`Cannot fetch remote: ${remote} ${remoteBranch}`);
   }
 }
 
@@ -132,7 +141,7 @@ export function getUnstagedChanges(cwd: string) {
   try {
     return processGitOutput(git(["--no-pager", "diff", "--name-only", "--relative"], { cwd }));
   } catch (e) {
-    throw new Error(`Cannot gather information about unstaged changes: ${e.message}`);
+    throw gitError(`Cannot gather information about unstaged changes`, e);
   }
 }
 
@@ -140,7 +149,7 @@ export function getChanges(branch: string, cwd: string) {
   try {
     return processGitOutput(git(["--no-pager", "diff", "--relative", "--name-only", branch + "..."], { cwd }));
   } catch (e) {
-    throw new Error(`Cannot gather information about changes: ${e.message}`);
+    throw gitError(`Cannot gather information about changes`, e);
   }
 }
 
@@ -153,7 +162,7 @@ export function getBranchChanges(branch: string, cwd: string) {
   try {
     return processGitOutput(git(["--no-pager", "diff", "--name-only", "--relative", branch + "..."], { cwd }));
   } catch (e) {
-    throw new Error(`Cannot gather information about branch changes: ${e.message}`);
+    throw gitError(`Cannot gather information about branch changes`, e);
   }
 }
 
@@ -165,7 +174,7 @@ export function getChangesBetweenRefs(fromRef: string, toRef: string, options: s
       })
     );
   } catch (e) {
-    throw new Error(`Cannot gather information about change between refs changes (${fromRef} to ${toRef}): ${e.message}`);
+    throw gitError(`Cannot gather information about change between refs changes (${fromRef} to ${toRef})`, e);
   }
 }
 
@@ -173,7 +182,7 @@ export function getStagedChanges(cwd: string) {
   try {
     return processGitOutput(git(["--no-pager", "diff", "--relative", "--staged", "--name-only"], { cwd }));
   } catch (e) {
-    throw new Error(`Cannot gather information about staged changes: ${e.message}`);
+    throw gitError(`Cannot gather information about staged changes`, e);
   }
 }
 
@@ -190,7 +199,7 @@ export function getRecentCommitMessages(branch: string, cwd: string) {
 
     return lines.map((line) => line.trim());
   } catch (e) {
-    throw new Error(`Cannot gather information about recent commits: ${e.message}`);
+    throw gitError(`Cannot gather information about recent commits`, e);
   }
 }
 
@@ -204,7 +213,7 @@ export function getUserEmail(cwd: string) {
 
     return results.stdout;
   } catch (e) {
-    throw new Error(`Cannot gather information about user.email: ${e.message}`);
+    throw gitError(`Cannot gather information about user.email`, e);
   }
 }
 
@@ -216,7 +225,7 @@ export function getBranchName(cwd: string) {
       return results.stdout;
     }
   } catch (e) {
-    throw new Error(`Cannot get branch name: ${e.message}`);
+    throw gitError(`Cannot get branch name`, e);
   }
 
   return null;
@@ -250,7 +259,7 @@ export function getCurrentHash(cwd: string) {
       return results.stdout;
     }
   } catch (e) {
-    throw new Error(`Cannot get current git hash: ${e.message}`);
+    throw gitError(`Cannot get current git hash`, e);
   }
 
   return null;
@@ -276,7 +285,7 @@ export function init(cwd: string, email?: string, username?: string) {
 
   if (!configLines.find((line) => line.includes("user.name"))) {
     if (!username) {
-      throw new Error("must include a username when initializing git repo");
+      throw gitError("must include a username when initializing git repo");
     }
     git(["config", "user.name", username], { cwd });
   }
@@ -295,11 +304,11 @@ export function stage(patterns: string[], cwd: string) {
       git(["add", pattern], { cwd });
     });
   } catch (e) {
-    throw new Error(`Cannot stage changes: ${e.message}`);
+    throw gitError(`Cannot stage changes`, e);
   }
 }
 
-export function commit(message: string, cwd: string, options:string[] = []) {
+export function commit(message: string, cwd: string, options: string[] = []) {
   try {
     const commitResults = git(["commit", "-m", message, ...options], { cwd });
 
@@ -307,11 +316,11 @@ export function commit(message: string, cwd: string, options:string[] = []) {
       throw new Error(`Cannot commit changes: ${commitResults.stdout} ${commitResults.stderr}`);
     }
   } catch (e) {
-    throw new Error(`Cannot commit changes: ${e.message}`);
+    throw gitError(`Cannot commit changes`, e);
   }
 }
 
-export function stageAndCommit(patterns: string[], message: string, cwd: string, commitOptions:string[] = []) {
+export function stageAndCommit(patterns: string[], message: string, cwd: string, commitOptions: string[] = []) {
   stage(patterns, cwd);
   commit(message, cwd, commitOptions);
 }
@@ -403,22 +412,22 @@ function normalizeRepoUrl(repositoryUrl: string) {
 export function getDefaultRemoteBranch(branch: string | undefined, cwd: string) {
   const defaultRemote = getDefaultRemote(cwd);
 
-  const showRemote = git(["remote", "show", defaultRemote], {cwd});
+  const showRemote = git(["remote", "show", defaultRemote], { cwd });
 
   /**
    * The `showRemote` returns something like this in stdout:
-   * 
+   *
    * * remote origin
    *   Fetch URL: ../monorepo-upstream/
    *   Push  URL: ../monorepo-upstream/
    *   HEAD branch: main
-   * 
+   *
    */
-  const headBranchLine = showRemote.stdout.split(/\n/).find(line => line.includes('HEAD branch'));
+  const headBranchLine = showRemote.stdout.split(/\n/).find((line) => line.includes("HEAD branch"));
   let remoteDefaultBranch: string | undefined;
 
   if (headBranchLine) {
-    remoteDefaultBranch = headBranchLine.replace(/^\s*HEAD branch:\s+/, '');
+    remoteDefaultBranch = headBranchLine.replace(/^\s*HEAD branch:\s+/, "");
   }
 
   branch = branch || remoteDefaultBranch || getDefaultBranch(cwd);
@@ -427,11 +436,11 @@ export function getDefaultRemoteBranch(branch: string | undefined, cwd: string) 
 }
 
 export function getDefaultBranch(cwd: string) {
-  const result = git(["config", "init.defaultBranch"], {cwd});
-  
+  const result = git(["config", "init.defaultBranch"], { cwd });
+
   if (!result.success) {
     // Default to the legacy 'master' for backwards compat and old git clients
-    return "master"
+    return "master";
   }
 
   return result.stdout.trim();
