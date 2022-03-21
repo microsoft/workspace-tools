@@ -38,6 +38,40 @@ describe("getChangedPackages()", () => {
     expect(changedPkgs).toEqual(["package-a"]);
   });
 
+  it("can detect changes when multiple files are changed", () => {
+    // arrange
+    const root = path.join(setupFixture("monorepo-nested"), "monorepo");
+
+    const readmeFile = path.join(root, "README.md");
+    const lageFile = path.join(root, "lage.config.json");
+    fs.writeFileSync(readmeFile, "hello foo test");
+    fs.writeFileSync(lageFile, "hello foo test");
+
+    // act
+    const changedPkgs = getChangedPackages(root, "main");
+
+    // assert
+    expect(changedPkgs).toEqual(['package-a', 'package-b']);
+  });
+
+  it("can ignore changes when multiple files are changed", () => {
+    // arrange
+    const root = path.join(setupFixture("monorepo-nested"), "monorepo");
+
+    const readmeFile = path.join(root, "README.md");
+    const lageFile = path.join(root, "lage.config.json");
+    fs.writeFileSync(readmeFile, "hello foo test");
+    fs.writeFileSync(lageFile, "hello foo test");
+
+    const ignoreGlobs = ['lage.config.json', 'README.md'];
+
+    // act
+    const changedPkgs = getChangedPackages(root, "main", ignoreGlobs);
+
+    // assert
+    expect(changedPkgs).toEqual([]);
+  });
+
   it("can detect changes inside an unstaged file", () => {
     // arrange
     const root = setupFixture("monorepo");

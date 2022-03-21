@@ -86,32 +86,11 @@ export function gitFailFast(args: string[], options?: { cwd: string; maxBuffer?:
 
 export function getUntrackedChanges(cwd: string) {
   try {
-    const results = git(["status", "--short"], { cwd });
-
-    if (!results.success) {
-      return [];
-    }
-
-    const changes = results.stdout;
-
-    if (changes.length == 0) {
-      return [];
-    }
-
-    const lines = changes.split(/\0/).filter((line) => line) || [];
-
-    const untracked: string[] = [];
-
-    for (let i = 0; i < lines.length; i++) {
-      const line = lines[i];
-      if (line[0] === " " || line[0] === "?") {
-        untracked.push(line.substr(3));
-      } else if (line[0] === "R") {
-        i++;
-      }
-    }
-
-    return untracked;
+    return processGitOutput(
+      git(["ls-files", "--others", "--exclude-standard"], {
+        cwd,
+      })
+    );
   } catch (e) {
     throw gitError(`Cannot gather information about untracked changes`, e);
   }
