@@ -15,7 +15,7 @@ export function getWorkspaceImplementationAndLockFile(
     return cache[cwd];
   }
 
-  const lockFile = findUp.sync(["lerna.json", "yarn.lock", "pnpm-workspace.yaml", "rush.json", "package-lock.json"], {
+  const lockFile = findUp.sync(["lerna.json", "rush.json", "yarn.lock", "pnpm-workspace.yaml", "package-lock.json"], {
     cwd,
   });
 
