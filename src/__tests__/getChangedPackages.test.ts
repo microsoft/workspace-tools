@@ -2,7 +2,7 @@ import path from "path";
 import fs from "fs";
 
 import { cleanupFixtures, setupFixture, setupLocalRemote } from "../helpers/setupFixture";
-import { stageAndCommit, git, gitFailFast } from "../git";
+import { stageAndCommit, git } from "../git";
 import { getChangedPackages } from "../workspaces/getChangedPackages";
 
 describe("getChangedPackages()", () => {
@@ -111,7 +111,7 @@ describe("getChangedPackages()", () => {
     // assert
     expect(changedPkgs).toContain("package-a");
   });
- 
+
   it("can detect changes inside a file that has been committed in a different branch in a nested monorepo", () => {
     // arrange
     const root = path.join(setupFixture("monorepo-nested"), "monorepo");

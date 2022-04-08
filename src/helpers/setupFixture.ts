@@ -1,7 +1,6 @@
 import path from "path";
 import findUp from "find-up";
 import fs from "fs-extra";
-import fsExtra from "fs-extra";
 import tmp from "tmp";
 import { init, stageAndCommit, gitFailFast } from "../git";
 
@@ -38,6 +37,9 @@ export function setupFixture(fixtureName: string) {
   fs.copySync(fixturePath, cwd);
 
   init(cwd, "test@test.email", "test user");
+
+  // Ensure GPG signing doesn't interfere with tests
+  gitFailFast(["config", "commit.gpgsign", "false"], { cwd });
 
   // Make the 'main' branch the default in the test repo
   // ensure that the configuration for this repo does not collide
