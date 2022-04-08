@@ -309,14 +309,24 @@ export function stage(patterns: string[], cwd: string) {
 }
 
 export function commit(message: string, cwd: string, options: string[] = []) {
+  const spawnOptions = { cwd };
+
+  // Ensure GPG signing doesn't interfere with tests
+  const gpgsign = git(["config", "--local", "commit.gpgsign"]).stdout.includes("true");
+  git(["config", "commit.gpgsign", "false"], spawnOptions);
+
   try {
-    const commitResults = git(["commit", "-m", message, ...options], { cwd });
+    const commitResults = git(["commit", "-m", message, ...options], spawnOptions);
 
     if (!commitResults.success) {
       throw new Error(`Cannot commit changes: ${commitResults.stdout} ${commitResults.stderr}`);
     }
   } catch (e) {
     throw gitError(`Cannot commit changes`, e);
+  } finally {
+    // Restore GPG signing config
+    const args = gpgsign ? ["config", "commit.gpgsign", "true"] : ["config", "--unset", "commit.gpgsign"];
+    git(args, spawnOptions);
   }
 }
 
