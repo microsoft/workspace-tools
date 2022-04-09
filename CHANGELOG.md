@@ -1,8 +1,16 @@
 # Change Log - workspace-tools
 
-This log was last generated on Fri, 07 Jan 2022 18:15:36 GMT and should not be manually modified.
+This log was last generated on Sat, 09 Apr 2022 15:51:14 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.18.3
+
+Sat, 09 Apr 2022 15:51:14 GMT
+
+### Patches
+
+- Fix Rush not being detected correctly. When Rush is set up to use Yarn or pnpm, the lock file for the latter are found first. (4123478+tido64@users.noreply.github.com)
 
 ## 0.18.2
 

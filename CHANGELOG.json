@@ -2,6 +2,21 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Sat, 09 Apr 2022 15:51:14 GMT",
+      "tag": "workspace-tools_v0.18.3",
+      "version": "0.18.3",
+      "comments": {
+        "patch": [
+          {
+            "author": "4123478+tido64@users.noreply.github.com",
+            "package": "workspace-tools",
+            "comment": "Fix Rush not being detected correctly. When Rush is set up to use Yarn or pnpm, the lock file for the latter are found first.",
+            "commit": "b99f6f82a6f22da37b67d74b519a204abd631c87"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 07 Jan 2022 18:15:36 GMT",
       "tag": "workspace-tools_v0.18.2",
       "version": "0.18.2",
