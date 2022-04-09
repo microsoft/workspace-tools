@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Fix Rush not being detected correctly. When Rush is set up to use Yarn or pnpm, the lock file for the latter are found first.",
+  "packageName": "workspace-tools",
+  "email": "4123478+tido64@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

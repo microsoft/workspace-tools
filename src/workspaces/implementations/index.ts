@@ -6,16 +6,17 @@ export interface ImplementationAndLockFile {
   implementation: WorkspaceImplementations | undefined;
   lockFile: string;
 }
-const cache: { [cwd: string]: ImplementationAndLockFile } = {};
+const workspaceCache: { [cwd: string]: ImplementationAndLockFile } = {};
 
 export function getWorkspaceImplementationAndLockFile(
-  cwd: string
+  cwd: string,
+  cache = workspaceCache
 ): { implementation: WorkspaceImplementations | undefined; lockFile: string } | undefined {
   if (cache[cwd]) {
     return cache[cwd];
   }
 
-  const lockFile = findUp.sync(["lerna.json", "yarn.lock", "pnpm-workspace.yaml", "rush.json", "package-lock.json"], {
+  const lockFile = findUp.sync(["lerna.json", "rush.json", "yarn.lock", "pnpm-workspace.yaml", "package-lock.json"], {
     cwd,
   });
 
@@ -63,6 +64,6 @@ export function getWorkspaceImplementationAndLockFile(
   return cache[cwd];
 }
 
-export function getWorkspaceImplementation(cwd: string): WorkspaceImplementations | undefined {
-  return getWorkspaceImplementationAndLockFile(cwd)?.implementation;
+export function getWorkspaceImplementation(cwd: string, cache = workspaceCache): WorkspaceImplementations | undefined {
+  return getWorkspaceImplementationAndLockFile(cwd, cache)?.implementation;
 }
