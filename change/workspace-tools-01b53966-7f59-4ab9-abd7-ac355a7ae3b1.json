@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "fixes a potential security issue where fetch --upload-pack can allow for command injection",
-  "packageName": "workspace-tools",
-  "email": "kchau@microsoft.com",
-  "dependentChangeType": "patch"
-}

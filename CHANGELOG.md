@@ -1,8 +1,16 @@
 # Change Log - workspace-tools
 
-This log was last generated on Sat, 09 Apr 2022 15:51:14 GMT and should not be manually modified.
+This log was last generated on Wed, 20 Apr 2022 16:49:02 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.18.4
+
+Wed, 20 Apr 2022 16:49:02 GMT
+
+### Patches
+
+- fixes a potential security issue where fetch --upload-pack can allow for command injection (kchau@microsoft.com)
 
 ## 0.18.3
 

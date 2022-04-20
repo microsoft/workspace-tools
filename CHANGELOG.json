@@ -2,6 +2,21 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Wed, 20 Apr 2022 16:49:02 GMT",
+      "tag": "workspace-tools_v0.18.4",
+      "version": "0.18.4",
+      "comments": {
+        "patch": [
+          {
+            "author": "kchau@microsoft.com",
+            "package": "workspace-tools",
+            "comment": "fixes a potential security issue where fetch --upload-pack can allow for command injection",
+            "commit": "9bc7e65ce497f87e1f363fd47b8f802f3d3cd978"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 09 Apr 2022 15:51:14 GMT",
       "tag": "workspace-tools_v0.18.3",
       "version": "0.18.3",
