@@ -7,7 +7,7 @@ import { getChangedPackages } from "../workspaces/getChangedPackages";
 
 describe("getChangedPackages()", () => {
   afterAll(() => {
-    cleanupFixtures();
+    //cleanupFixtures();
   });
 
   it("can detect changes inside an untracked file", () => {
@@ -96,7 +96,7 @@ describe("getChangedPackages()", () => {
     expect(changedPkgs).toEqual(["package-a"]);
   });
 
-  it("can detect changes inside a file that has been committed in a different branch", () => {
+  it.only("can detect changes inside a file that has been committed in a different branch", () => {
     // arrange
     const root = setupFixture("monorepo");
 

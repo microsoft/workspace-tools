@@ -168,6 +168,9 @@ export function getBranchChanges(branch: string, cwd: string) {
 
 export function getChangesBetweenRefs(fromRef: string, toRef: string, options: string[], pattern: string, cwd: string) {
   try {
+    console.log(["git", "--no-pager", "diff", "--relative", "--name-only", ...options, `${fromRef}...${toRef}`, "--", pattern].join(' '), cwd)
+    console.log(["--no-pager", "diff", "--name-only", "--relative", fromRef + "..."].join(' '), cwd)
+
     return processGitOutput(
       git(["--no-pager", "diff", "--relative", "--name-only", ...options, `${fromRef}...${toRef}`, "--", pattern], {
         cwd,
