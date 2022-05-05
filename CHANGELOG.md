@@ -1,8 +1,16 @@
 # Change Log - workspace-tools
 
-This log was last generated on Wed, 20 Apr 2022 16:49:02 GMT and should not be manually modified.
+This log was last generated on Thu, 05 May 2022 19:40:25 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.19.0
+
+Thu, 05 May 2022 19:40:25 GMT
+
+### Minor changes
+
+- adds a new API to allow retrieving a list of packages affected by files and also by git ref range (kchau@microsoft.com)
 
 ## 0.18.4
 
