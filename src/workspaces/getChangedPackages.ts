@@ -9,6 +9,7 @@ import {
 import { getWorkspaces } from "./getWorkspaces";
 import multimatch from "multimatch";
 import path from "path";
+import { getPackagesByFiles } from "./getPackagesByFiles";
 
 /**
  * Finds all packages that had been changed between two refs in the repo under cwd
@@ -30,11 +31,9 @@ import path from "path";
 export function getChangedPackagesBetweenRefs(
   cwd: string,
   fromRef: string,
-  toRef: string = '',
+  toRef: string = "",
   ignoreGlobs: string[] = []
 ) {
-  const workspaceInfo = getWorkspaces(cwd);
-
   let changes = [
     ...new Set([
       ...(getUntrackedChanges(cwd) || []),
@@ -44,28 +43,7 @@ export function getChangedPackagesBetweenRefs(
     ]),
   ];
 
-  const ignoreSet = new Set(multimatch(changes, ignoreGlobs));
-
-  changes = changes.filter((change) => !ignoreSet.has(change));
-
-  const changeSet = new Set<string>();
-
-  for (const change of changes) {
-    const candidates = workspaceInfo.filter(
-      (pkgPath) => change.indexOf(path.relative(cwd, pkgPath.path).replace(/\\/g, "/")) === 0
-    );
-
-    if (candidates && candidates.length > 0) {
-      const found = candidates.reduce((found, item) => {
-        return found.path.length > item.path.length ? found : item;
-      }, candidates[0]);
-      changeSet.add(found.name);
-    } else {
-      return workspaceInfo.map((pkg) => pkg.name);
-    }
-  }
-
-  return [...changeSet];
+  return getPackagesByFiles(cwd, changes, ignoreGlobs);
 }
 
 /**
@@ -86,6 +64,16 @@ export function getChangedPackagesBetweenRefs(
  * @returns string[] of package names that have changed
  */
 export function getChangedPackages(cwd: string, target: string | undefined, ignoreGlobs: string[] = []) {
-  target = target || getDefaultRemoteBranch(undefined, cwd);
-  return getChangedPackagesBetweenRefs(cwd, target, undefined, ignoreGlobs);
+  const targetBranch = target || getDefaultRemoteBranch(undefined, cwd);
+  let changes = [
+    ...new Set([
+      ...(getUntrackedChanges(cwd) || []),
+      ...(getUnstagedChanges(cwd) || []),
+      ...(getBranchChanges(targetBranch, cwd) || []),
+      ...(getStagedChanges(cwd) || []),
+    ]),
+  ];
+  
+  return getPackagesByFiles(cwd, changes, ignoreGlobs);
 }
+
