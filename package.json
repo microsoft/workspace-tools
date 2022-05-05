@@ -11,7 +11,7 @@
   "scripts": {
     "build": "tsc",
     "build:docs": "typedoc src/index.ts",
-    "release:docs": "typedoc src/indexts && gh-pages",
+    "release:docs": "typedoc src/indexts && gh-pages -d docs",
     "change": "beachball change",
     "checkchange": "beachball check",
     "release": "beachball publish -y",
