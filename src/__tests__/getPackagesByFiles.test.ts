@@ -1,10 +1,10 @@
 import path from "path";
 import fs from "fs";
 
-import { cleanupFixtures, setupFixture, setupLocalRemote } from "../helpers/setupFixture";
+import { cleanupFixtures, setupFixture } from "../helpers/setupFixture";
 import { getPackagesByFiles } from "../workspaces/getPackagesByFiles";
 
-describe("getChangedPackages()", () => {
+describe("getPackagesByFiles()", () => {
   afterAll(() => {
     cleanupFixtures();
   });
