@@ -160,7 +160,7 @@ describe("getChangedPackages()", () => {
     expect(changedPkgs).toEqual([]);
   });
 
-  it.only("can detect changed packages between two refs", () => {
+  it("can detect changed packages between two refs", () => {
     // arrange
     const root = setupFixture("monorepo");
 
