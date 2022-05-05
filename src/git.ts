@@ -159,17 +159,13 @@ export function getChanges(branch: string, cwd: string) {
  * @param cwd
  */
 export function getBranchChanges(branch: string, cwd: string) {
-  try {
-    return processGitOutput(git(["--no-pager", "diff", "--name-only", "--relative", branch + "..."], { cwd }));
-  } catch (e) {
-    throw gitError(`Cannot gather information about branch changes`, e);
-  }
+  return getChangesBetweenRefs(branch, "", [], "", cwd)
 }
 
 export function getChangesBetweenRefs(fromRef: string, toRef: string, options: string[], pattern: string, cwd: string) {
   try {
     return processGitOutput(
-      git(["--no-pager", "diff", "--relative", "--name-only", ...options, `${fromRef}...${toRef}`, "--", pattern], {
+      git(["--no-pager", "diff", "--name-only", "--relative", ...options, `${fromRef}...${toRef}`, ...(pattern ? ["--", pattern]: [])], {
         cwd,
       })
     );
