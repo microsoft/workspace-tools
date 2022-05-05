@@ -7,9 +7,18 @@ import {
   getUntrackedChanges,
 } from "../git";
 import { getWorkspaces } from "./getWorkspaces";
-import multimatch from "multimatch";
-import path from "path";
 import { getPackagesByFiles } from "./getPackagesByFiles";
+
+function getChangedPackagesByFiles(cwd: string, files: string[], ignoreGlobs: string[] = []) {
+  const workspaceInfo = getWorkspaces(cwd);
+  
+  const packages = getPackagesByFiles(cwd, files, ignoreGlobs, workspaceInfo);
+  if (packages.length > 0) {
+    return packages;
+  } 
+
+  return workspaceInfo.map((pkg) => pkg.name);
+}
 
 /**
  * Finds all packages that had been changed between two refs in the repo under cwd
@@ -43,7 +52,7 @@ export function getChangedPackagesBetweenRefs(
     ]),
   ];
 
-  return getPackagesByFiles(cwd, changes, ignoreGlobs);
+  return getChangedPackagesByFiles(cwd, changes, ignoreGlobs);
 }
 
 /**
@@ -74,6 +83,6 @@ export function getChangedPackages(cwd: string, target: string | undefined, igno
     ]),
   ];
   
-  return getPackagesByFiles(cwd, changes, ignoreGlobs);
+  return getChangedPackagesByFiles(cwd, changes, ignoreGlobs);
 }
 
