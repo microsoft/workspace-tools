@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "adds a new API to allow retrieving a list of packages affected by files and also by git ref range",
+  "packageName": "workspace-tools",
+  "email": "kchau@microsoft.com",
+  "dependentChangeType": "patch"
+}
