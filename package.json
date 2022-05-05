@@ -10,6 +10,8 @@
   "types": "lib/index.d.ts",
   "scripts": {
     "build": "tsc",
+    "build:docs": "typedoc src/index.ts",
+    "release:docs": "gh-pages -d docs",
     "change": "beachball change",
     "checkchange": "beachball check",
     "release": "beachball publish -y",
@@ -23,7 +25,8 @@
     "globby": "^11.0.0",
     "jju": "^1.4.0",
     "multimatch": "^4.0.0",
-    "read-yaml-file": "^2.0.0"
+    "read-yaml-file": "^2.0.0",
+    "typedoc": "^0.22.15"
   },
   "devDependencies": {
     "@types/git-url-parse": "^9.0.0",
@@ -38,6 +41,7 @@
     "jest": "^25.0.0",
     "tmp": "^0.2.1",
     "ts-jest": "^25.5.1",
-    "typescript": "^4.5.4"
+    "typescript": "^4.5.4",
+    "gh-pages": "^3.2.3"
   }
 }
