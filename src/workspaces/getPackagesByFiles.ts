@@ -1,6 +1,5 @@
 import multimatch from "multimatch";
 import path from "path";
-import { WorkspaceInfo } from "../types/WorkspaceInfo";
 import { getWorkspaces } from "./getWorkspaces";
 
 /**
@@ -9,15 +8,16 @@ import { getWorkspaces } from "./getWorkspaces";
  * @param workspaceRoot - The root of the workspace
  * @param files - files to search for
  * @param ignoreGlobs - glob patterns to ignore
- * @param workspaceInfo - optional, if not provided, will be fetched from cwd
+ * @param returnAllPackagesOnNoMatch - if true, will return all packages if no matches are found
  * @returns package names that have changed
  */
 export function getPackagesByFiles(
   workspaceRoot: string,
   files: string[],
   ignoreGlobs: string[] = [],
-  workspaceInfo: WorkspaceInfo = getWorkspaces(workspaceRoot)
+  returnAllPackagesOnNoMatch: boolean = false
 ) {
+  const workspaceInfo = getWorkspaces(workspaceRoot);
   const ignoreSet = new Set(multimatch(files, ignoreGlobs));
 
   files = files.filter((change) => !ignoreSet.has(change));
@@ -34,6 +34,8 @@ export function getPackagesByFiles(
         return found.path.length > item.path.length ? found : item;
       }, candidates[0]);
       packages.add(found.name);
+    } else if (returnAllPackagesOnNoMatch) {
+      return workspaceInfo.map((pkg) => pkg.name);
     }
   }
 
