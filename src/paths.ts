@@ -1,5 +1,6 @@
 import path from 'path';
 import fs from 'fs';
+import { git } from './git';
 
 /**
  * Starting from `cwd`, searches up the directory hierarchy for `pathName`
@@ -28,7 +29,12 @@ export function searchUp(pathName: string, cwd: string) {
 }
 
 export function findGitRoot(cwd: string) {
-  return searchUp('.git', cwd);
+  const output = git(['rev-parse', '--show-toplevel'], {cwd});
+  if (!output.success) {
+    throw new Error(`Failed to find git root from ${cwd} : ${output.stderr}`);
+  }
+
+  return output.stdout;
 }
 
 export function findPackageRoot(cwd: string) {
