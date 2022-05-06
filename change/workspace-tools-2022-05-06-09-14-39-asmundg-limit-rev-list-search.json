@@ -1,0 +1,8 @@
+{
+  "type": "minor",
+  "comment": "feat: Support limited search for added file",
+  "packageName": "workspace-tools",
+  "email": "asgramme@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2022-05-06T07:14:39.673Z"
+}
