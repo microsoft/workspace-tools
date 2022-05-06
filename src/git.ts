@@ -264,8 +264,9 @@ export function getCurrentHash(cwd: string) {
 /**
  * Get the commit hash in which the file was first added.
  */
-export function getFileAddedHash(filename: string, cwd: string) {
-  const results = git(["rev-list", "HEAD", filename], { cwd });
+export function getFileAddedHash(filename: string, cwd: string, fromRef?: string, toRef?: string) {
+  const ref = fromRef && toRef ? `${fromRef}..${toRef}` : "HEAD";
+  const results = git(["rev-list", ref, filename], { cwd });
 
   if (results.success) {
     return results.stdout.trim().split("\n").slice(-1)[0];
