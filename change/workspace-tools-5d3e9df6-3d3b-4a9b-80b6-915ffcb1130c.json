@@ -1,5 +1,5 @@
 {
-  "type": "patch",
+  "type": "minor",
   "comment": "Improve detection of git root",
   "packageName": "workspace-tools",
   "email": "dlannoye@microsoft.com",

@@ -34,7 +34,7 @@ export function findGitRoot(cwd: string) {
     throw new Error(`Failed to find git root from ${cwd} : ${output.stderr}`);
   }
 
-  return output.stdout;
+  return path.normalize(output.stdout);
 }
 
 export function findPackageRoot(cwd: string) {
