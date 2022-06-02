@@ -98,7 +98,7 @@ export function getUntrackedChanges(cwd: string) {
       return [];
     }
 
-    const lines = changes.split(/\0/).filter((line) => line) || [];
+    const lines = changes.split(/[\r\n]+/).filter((line) => line) || [];
 
     const untracked: string[] = [];
 
