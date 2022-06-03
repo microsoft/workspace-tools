@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "properly split git status --short output",
-  "packageName": "workspace-tools",
-  "email": "nickykalu@microsoft.com",
-  "dependentChangeType": "patch"
-}

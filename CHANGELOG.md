@@ -1,8 +1,16 @@
 # Change Log - workspace-tools
 
-This log was last generated on Thu, 05 May 2022 19:40:25 GMT and should not be manually modified.
+This log was last generated on Fri, 03 Jun 2022 16:57:07 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.19.1
+
+Fri, 03 Jun 2022 16:57:07 GMT
+
+### Patches
+
+- properly split git status --short output (nickykalu@microsoft.com)
 
 ## 0.19.0
 

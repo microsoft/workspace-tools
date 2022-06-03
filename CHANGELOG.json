@@ -2,6 +2,21 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Fri, 03 Jun 2022 16:57:07 GMT",
+      "tag": "workspace-tools_v0.19.1",
+      "version": "0.19.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "nickykalu@microsoft.com",
+            "package": "workspace-tools",
+            "comment": "properly split git status --short output",
+            "commit": "81c4609bc4eea797637b6e3e977f0cdfd8849d54"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 05 May 2022 19:40:25 GMT",
       "tag": "workspace-tools_v0.19.0",
       "version": "0.19.0",
