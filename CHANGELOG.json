@@ -2,6 +2,21 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Thu, 23 Jun 2022 19:10:04 GMT",
+      "tag": "workspace-tools_v0.19.3",
+      "version": "0.19.3",
+      "comments": {
+        "patch": [
+          {
+            "author": "elcraig@microsoft.com",
+            "package": "workspace-tools",
+            "comment": "Move typedoc to devDependencies",
+            "commit": "8dbb9af66b8e1564734861d23849957b22dbe870"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 23 Jun 2022 18:52:05 GMT",
       "tag": "workspace-tools_v0.19.2",
       "version": "0.19.2",
