@@ -1,8 +1,16 @@
 # Change Log - workspace-tools
 
-This log was last generated on Thu, 23 Jun 2022 19:53:03 GMT and should not be manually modified.
+This log was last generated on Thu, 23 Jun 2022 20:24:15 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.20.0
+
+Thu, 23 Jun 2022 20:24:15 GMT
+
+### Minor changes
+
+- BREAKING: Remove getChangePath because it's specific to beachball and should be defined there (elcraig@microsoft.com)
 
 ## 0.19.4
 

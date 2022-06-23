@@ -2,6 +2,21 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Thu, 23 Jun 2022 20:24:15 GMT",
+      "tag": "workspace-tools_v0.20.0",
+      "version": "0.20.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "elcraig@microsoft.com",
+            "package": "workspace-tools",
+            "comment": "BREAKING: Remove getChangePath because it's specific to beachball and should be defined there",
+            "commit": "bbfc44143e2f2bc0ca17bf5c351bab52fe8c9025"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 23 Jun 2022 19:53:03 GMT",
       "tag": "workspace-tools_v0.19.4",
       "version": "0.19.4",

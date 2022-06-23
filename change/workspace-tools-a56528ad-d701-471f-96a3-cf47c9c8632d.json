@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "BREAKING: Remove getChangePath because it's specific to beachball and should be defined there",
-  "packageName": "workspace-tools",
-  "email": "elcraig@microsoft.com",
-  "dependentChangeType": "patch"
-}
