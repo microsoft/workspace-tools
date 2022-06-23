@@ -53,19 +53,6 @@ export function findProjectRoot(cwd: string) {
   return workspaceRoot || findGitRoot(cwd);
 }
 
-/**
- * Get the folder containing beachball change files.
- */
-export function getChangePath(cwd: string) {
-  const gitRoot = findGitRoot(cwd);
-
-  if (gitRoot) {
-    return path.join(gitRoot, "change");
-  }
-
-  return null;
-}
-
 export function isChildOf(child: string, parent: string) {
   const relativePath = path.relative(child, parent);
   return /^[.\/\\]+$/.test(relativePath);
