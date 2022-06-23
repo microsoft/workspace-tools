@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Allow full spawnSync options for git methods",
+  "packageName": "workspace-tools",
+  "email": "elcraig@microsoft.com",
+  "dependentChangeType": "patch"
+}
