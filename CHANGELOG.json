@@ -2,6 +2,21 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Thu, 23 Jun 2022 19:53:03 GMT",
+      "tag": "workspace-tools_v0.19.4",
+      "version": "0.19.4",
+      "comments": {
+        "patch": [
+          {
+            "author": "elcraig@microsoft.com",
+            "package": "workspace-tools",
+            "comment": "Add findProjectRoot path helper",
+            "commit": "5ad6577811656ad23cf567f0996cf9b70d8c23a0"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 23 Jun 2022 19:10:04 GMT",
       "tag": "workspace-tools_v0.19.3",
       "version": "0.19.3",

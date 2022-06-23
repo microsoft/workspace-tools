@@ -1,8 +1,16 @@
 # Change Log - workspace-tools
 
-This log was last generated on Thu, 23 Jun 2022 19:10:04 GMT and should not be manually modified.
+This log was last generated on Thu, 23 Jun 2022 19:53:03 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.19.4
+
+Thu, 23 Jun 2022 19:53:03 GMT
+
+### Patches
+
+- Add findProjectRoot path helper (elcraig@microsoft.com)
 
 ## 0.19.3
 

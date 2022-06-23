@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Add findProjectRoot path helper",
-  "packageName": "workspace-tools",
-  "email": "elcraig@microsoft.com",
-  "dependentChangeType": "patch"
-}
