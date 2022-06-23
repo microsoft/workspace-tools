@@ -2,6 +2,21 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Thu, 23 Jun 2022 18:52:05 GMT",
+      "tag": "workspace-tools_v0.19.2",
+      "version": "0.19.2",
+      "comments": {
+        "patch": [
+          {
+            "author": "elcraig@microsoft.com",
+            "package": "workspace-tools",
+            "comment": "Allow full spawnSync options for git methods",
+            "commit": "cf0a0d77be58988e411d0349c8a009642770696e"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 03 Jun 2022 16:57:07 GMT",
       "tag": "workspace-tools_v0.19.1",
       "version": "0.19.1",
