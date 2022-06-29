@@ -1,43 +1,28 @@
 import { PackageInfo } from "../types/PackageInfo";
-import {
-  getTransitiveConsumers,
-  getTransitiveProviders,
-} from "../dependencies";
+import { getTransitiveDependants, getTransitiveDependencies } from "../dependencies";
 
-describe("getTransitiveConsumers", () => {
-  it("can get linear transitive consumers", () => {
+function stubPackage(name: string, deps: string[] = []) {
+  return {
+    name,
+    packageJsonPath: `packages/${name}`,
+    version: "1.0",
+    dependencies: deps.reduce((depMap, dep) => ({ ...depMap, [dep]: "*" }), {}),
+    devDependencies: {},
+  } as PackageInfo;
+}
+
+describe("getTransitiveDependants", () => {
+  it("can get linear transitive dependants", () => {
     const allPackages = {
       a: stubPackage("a", ["b"]),
       b: stubPackage("b", ["c"]),
       c: stubPackage("c"),
     };
 
-    const actual = getTransitiveConsumers(["c"], allPackages);
+    const actual = getTransitiveDependants(allPackages, ["c"]);
 
     expect(actual).toContain("a");
     expect(actual).toContain("b");
-  });
-
-  it("can get linear transitive consumers with scope", () => {
-    const allPackages = {
-      grid: stubPackage("grid", ["foo"]),
-      word: stubPackage("word", ["bar"]),
-      foo: stubPackage("foo", ["core"]),
-      bar: stubPackage("bar", ["core"]),
-      core: stubPackage("core"),
-      demo: stubPackage("demo", ["grid", "word"]),
-    };
-
-    const actual = getTransitiveConsumers(["core"], allPackages, [
-      "grid",
-      "word",
-    ]);
-
-    expect(actual).toContain("foo");
-    expect(actual).toContain("bar");
-    expect(actual).toContain("grid");
-    expect(actual).toContain("word");
-    expect(actual).not.toContain("demo");
   });
 
   it("can get transitive consumer with deps", () => {
@@ -48,6 +33,7 @@ describe("getTransitiveConsumers", () => {
       [e, b]
       [f, d]
       [c, g]
+      [null, c]
 
       expected: a, b, g (orignates from c)
     */
@@ -64,7 +50,7 @@ describe("getTransitiveConsumers", () => {
       g: stubPackage("g", ["c"]),
     };
 
-    const actual = getTransitiveConsumers(["c"], allPackages);
+    const actual = getTransitiveDependants(allPackages, ["c"]);
 
     expect(actual).toContain("a");
     expect(actual).toContain("b");
@@ -77,21 +63,21 @@ describe("getTransitiveConsumers", () => {
   });
 });
 
-describe("getTransitiveProviders", () => {
-  it("can get linear transitive providers", () => {
+describe("getTransitiveDependencies", () => {
+  it("can get linear transitive dependencies", () => {
     const allPackages = {
       a: stubPackage("a", ["b"]),
       b: stubPackage("b", ["c"]),
       c: stubPackage("c"),
     };
 
-    const actual = getTransitiveProviders(["a"], allPackages);
+    const actual = getTransitiveDependencies(allPackages, ["a"]);
 
     expect(actual).toContain("b");
     expect(actual).toContain("c");
   });
 
-  it("can get transitive providers with deps", () => {
+  it("can get transitive dependencies with their own deps", () => {
     /*
       [b, a]
       [c, b]
@@ -114,7 +100,7 @@ describe("getTransitiveProviders", () => {
       g: stubPackage("g"),
     };
 
-    const actual = getTransitiveProviders(["c"], allPackages);
+    const actual = getTransitiveDependencies(allPackages, ["c"]);
 
     expect(actual).toContain("e");
     expect(actual).toContain("f");
@@ -125,47 +111,4 @@ describe("getTransitiveProviders", () => {
     expect(actual).not.toContain("d");
     expect(actual).not.toContain("c");
   });
-
-  it("can get transitive consumers with deps and scope", () => {
-    /*
-      [b, a]
-      [c, b]
-      [e, c]
-      [f, c]
-      [f, e]
-      [g, f]
-
-      expected: e, f, g
-    */
-
-    const allPackages = {
-      a: stubPackage("a", ["b", "h"]),
-      b: stubPackage("b", ["c"]),
-
-      c: stubPackage("c", ["e", "f"]),
-      d: stubPackage("d"),
-      e: stubPackage("e", ["f"]),
-      f: stubPackage("f", ["g"]),
-      g: stubPackage("g"),
-      h: stubPackage("h", ["i"]),
-      i: stubPackage("i", ["f"]),
-    };
-
-    const actual = getTransitiveConsumers(["f"], allPackages, ["b"]);
-
-    expect(actual).toContain("e");
-    expect(actual).toContain("c");
-    expect(actual).toContain("b");
-    expect(actual).not.toContain("h");
-  });
 });
-
-function stubPackage(name: string, deps: string[] = []) {
-  return {
-    name,
-    packageJsonPath: `packages/${name}`,
-    version: "1.0",
-    dependencies: deps.reduce((depMap, dep) => ({ ...depMap, [dep]: "*" }), {}),
-    devDependencies: {},
-  } as PackageInfo;
-}
