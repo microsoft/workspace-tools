@@ -38,6 +38,7 @@
     "@types/yarnpkg__lockfile": "^1.1.3",
     "beachball": "^2.17.0",
     "jest": "^25.0.0",
+    "prettier": "^2.7.1",
     "tmp": "^0.2.1",
     "ts-jest": "^25.5.1",
     "typedoc": "^0.22.15",

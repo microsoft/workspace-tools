@@ -62,6 +62,8 @@ export function getDependentMap(packages: PackageInfos) {
 }
 
 /**
+ * @deprecated Do not use
+ * 
  * for a package graph of a->b->c (where b depends on a), transitive consumers of a are b & c and their consumers (or what are the consequences of a)
  * @param targets
  * @param packages
@@ -94,6 +96,8 @@ export function getTransitiveConsumers(
 }
 
 /**
+ * @deprecated Do not use
+ * 
  * for a package graph of a->b->c (where b depends on a), transitive providers of c are a & b and their providers (or what is needed to satisfy c)
  * @param targets
  * @param packages
@@ -123,12 +127,13 @@ export function getTransitiveProviders(
   return [...visited].filter((pkg) => !targets.includes(pkg));
 }
 
-// package dependencies = getting transitive providers
+/** @deprecated Do not use */ 
 export const getTransitiveDependencies = getTransitiveProviders;
 
-// package dependents = getting transitive consumers
+/** @deprecated Do not use */
 export const getTransitiveDependents = getTransitiveConsumers;
 
+/** @deprecated Do not use */
 export function getInternalDeps(info: PackageInfo, packages: PackageInfos) {
   const deps = Object.keys({ ...info.dependencies, ...info.devDependencies });
   return Object.keys(packages).filter((pkg) => deps.includes(pkg));
