@@ -2,6 +2,21 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Fri, 01 Jul 2022 14:56:01 GMT",
+      "tag": "workspace-tools_v0.21.0",
+      "version": "0.21.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "ken@gizzar.com",
+            "package": "workspace-tools",
+            "comment": "adds a package graph implementation",
+            "commit": "28ba85b087e3e3bb8715ea637563793fbb97b069"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 23 Jun 2022 20:24:15 GMT",
       "tag": "workspace-tools_v0.20.0",
       "version": "0.20.0",

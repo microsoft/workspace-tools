@@ -1,8 +1,16 @@
 # Change Log - workspace-tools
 
-This log was last generated on Thu, 23 Jun 2022 20:24:15 GMT and should not be manually modified.
+This log was last generated on Fri, 01 Jul 2022 14:56:01 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.21.0
+
+Fri, 01 Jul 2022 14:56:01 GMT
+
+### Minor changes
+
+- adds a package graph implementation (ken@gizzar.com)
 
 ## 0.20.0
 
