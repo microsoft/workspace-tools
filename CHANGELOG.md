@@ -1,8 +1,48 @@
 # Change Log - workspace-tools
 
-This log was last generated on Thu, 05 May 2022 19:40:25 GMT and should not be manually modified.
+This log was last generated on Thu, 23 Jun 2022 20:24:15 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.20.0
+
+Thu, 23 Jun 2022 20:24:15 GMT
+
+### Minor changes
+
+- BREAKING: Remove getChangePath because it's specific to beachball and should be defined there (elcraig@microsoft.com)
+
+## 0.19.4
+
+Thu, 23 Jun 2022 19:53:03 GMT
+
+### Patches
+
+- Add findProjectRoot path helper (elcraig@microsoft.com)
+
+## 0.19.3
+
+Thu, 23 Jun 2022 19:10:04 GMT
+
+### Patches
+
+- Move typedoc to devDependencies (elcraig@microsoft.com)
+
+## 0.19.2
+
+Thu, 23 Jun 2022 18:52:05 GMT
+
+### Patches
+
+- Allow full spawnSync options for git methods (elcraig@microsoft.com)
+
+## 0.19.1
+
+Fri, 03 Jun 2022 16:57:07 GMT
+
+### Patches
+
+- properly split git status --short output (nickykalu@microsoft.com)
 
 ## 0.19.0
 

@@ -1,4 +1,4 @@
-import { spawnSync } from "child_process";
+import { spawnSync, SpawnSyncOptions } from "child_process";
 import fs from "fs";
 import path from "path";
 import { findGitRoot } from "./paths";
@@ -13,18 +13,18 @@ function gitError(message: string, e?: unknown) {
 }
 
 /**
- * A maxBuffer override globally for all git operations
- * Bumps up the default to 500MB as opposed to the 1MB
- * Override this value with "GIT_MAX_BUFFER" environment variable
+ * A global maxBuffer override for all git operations.
+ * Bumps up the default to 500MB instead of 1MB.
+ * Override this value with the `GIT_MAX_BUFFER` environment variable.
  */
-const MaxBufferOption = process.env.GIT_MAX_BUFFER ? parseInt(process.env.GIT_MAX_BUFFER) : 500 * 1024 * 1024;
+const defaultMaxBuffer = process.env.GIT_MAX_BUFFER ? parseInt(process.env.GIT_MAX_BUFFER) : 500 * 1024 * 1024;
 
-// Observes the git operations called from git() or gitFailFast()
 type ProcessOutput = {
   stderr: string;
   stdout: string;
   success: boolean;
 };
+/** Observes the git operations called from `git()` or `gitFailFast()` */
 type GitObserver = (args: string[], output: ProcessOutput) => void;
 const observers: GitObserver[] = [];
 let observing: boolean;
@@ -38,25 +38,16 @@ export function addGitObserver(observer: GitObserver) {
 }
 
 /**
- * Runs git command - use this for read only commands
+ * Runs git command - use this for read-only commands
  */
-export function git(args: string[], options?: { cwd: string; maxBuffer?: number }): ProcessOutput {
-  const results = spawnSync("git", args, { maxBuffer: MaxBufferOption, ...options });
-  let output: ProcessOutput;
+export function git(args: string[], options?: SpawnSyncOptions): ProcessOutput {
+  const results = spawnSync("git", args, { maxBuffer: defaultMaxBuffer, ...options });
 
-  if (results.status === 0) {
-    output = {
-      stderr: results.stderr.toString().trimRight(),
-      stdout: results.stdout.toString().trimRight(),
-      success: true,
-    };
-  } else {
-    output = {
-      stderr: results.stderr.toString().trimRight(),
-      stdout: results.stdout.toString().trimRight(),
-      success: false,
-    };
-  }
+  const output: ProcessOutput = {
+    stderr: results.stderr.toString().trimRight(),
+    stdout: results.stdout.toString().trimRight(),
+    success: results.status === 0
+  };
 
   // notify observers, flipping the observing bit to prevent infinite loops
   if (!observing) {
@@ -71,9 +62,9 @@ export function git(args: string[], options?: { cwd: string; maxBuffer?: number 
 }
 
 /**
- * Runs git command - use this for commands that makes changes to the file system
+ * Runs git command - use this for commands that make changes to the filesystem
  */
-export function gitFailFast(args: string[], options?: { cwd: string; maxBuffer?: number }) {
+export function gitFailFast(args: string[], options?: SpawnSyncOptions) {
   const gitResult = git(args, options);
   if (!gitResult.success) {
     process.exitCode = 1;
@@ -98,7 +89,7 @@ export function getUntrackedChanges(cwd: string) {
       return [];
     }
 
-    const lines = changes.split(/\0/).filter((line) => line) || [];
+    const lines = changes.split(/[\r\n]+/).filter((line) => line) || [];
 
     const untracked: string[] = [];
 
