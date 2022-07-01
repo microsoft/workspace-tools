@@ -1,44 +1,59 @@
-import { PackageInfo, PackageInfos } from "./types/PackageInfo";
-import { getInternalDeps } from "./getInternalDeps";
-import { PackageGraph } from "./types/PackageGraph";
+import type { PackageInfos } from "./types/PackageInfo";
+import type { DependencyMap } from "./createDependencyMap";
+import type { PackageGraph, PackageGraphVisitor } from "./types/PackageGraph";
 
-const graphCache = new Map<string, PackageGraph>();
+import { createDependencyMap } from "./createDependencyMap";
+import multimatch from "multimatch";
 
-function memoizedKey(packages: PackageInfos, scope: string[] = []) {
-  return JSON.stringify({ packages: Object.keys(packages), scope });
+// Reference: https://github.com/pnpm/pnpm/blob/597047fc056dd25b83638a9ab3df0df1c555ee49/packages/filter-workspace-packages/src/parsePackageSelector.ts
+export interface PackageGraphScope {
+  namePatterns?: string[];
+  includeDependencies?: boolean;
+  includeDependents?: boolean;
 }
 
-export function getPackageGraph(packages: PackageInfos, scope: string[] = []): PackageGraph {
-  const key = memoizedKey(packages, scope);
+export function createPackageGraph(packages: PackageInfos, scope: PackageGraphScope = {}): PackageGraph {
+  const dependencyMap = createDependencyMap(packages);
 
-  if (graphCache.has(key)) {
-    return graphCache.get(key)!;
-  }
+  console.log(dependencyMap)
+  const packageSet = new Set<string>();
+  const edges: PackageGraph["dependencies"] = [];
 
-  const graph: PackageGraph = { packages: [], dependencies: [] };
-  const visitor = (pkg: string, info: PackageInfo, deps: string[]) => {
-    if (deps.length > 0) {
-      for (const dep of deps) {
-        graph.push([pkg, dep]);
+  const visitor: PackageGraphVisitor = (pkg, dependencies, dependents) => {
+    packageSet.add(pkg);
+    
+    if (scope.includeDependencies && dependencies) {
+      for (const dep of dependencies) {
+        edges.push({ name: pkg, dependency: dep });
+        packageSet.add(dep);
       }
-    } else {
-      graph.push([null, pkg]);
+    }
+
+    if (scope.includeDependents && dependents) {
+      for (const dep of dependents) {
+        edges.push({ name: dep, dependency: pkg });
+        packageSet.add(dep);
+      }
     }
   };
 
-  visitPackageGraph(packages, visitor, scope);
-  graphCache.set(key, graph);
+  visitPackageGraph(packages, dependencyMap, visitor, scope);
 
-  return graph;
+  return {packages: [...packageSet], dependencies: edges};
 }
 
-export function visitPackageGraph(
-  graph: PackageGraph,
-  visitor: (pkg: string, info: PackageInfo, deps: string[]) => void,
-  scope: string[] = []
+
+function visitPackageGraph(
+  packages: PackageInfos,
+  dependencyMap: DependencyMap,
+  visitor: PackageGraphVisitor,
+  scope: PackageGraphScope
 ) {
   const visited = new Set<string>();
-  const stack: string[] = scope.length > 0 ? [...scope] : graph.packages;
+  const packageNames = Object.keys(packages);
+
+  const stack: string[] =
+    scope && scope.namePatterns ? multimatch(packageNames, scope.namePatterns) : packageNames;
 
   while (stack.length > 0) {
     const pkg = stack.pop()!;
@@ -47,24 +62,28 @@ export function visitPackageGraph(
       continue;
     }
 
-    const info = packages[pkg];
-    const deps = getInternalDeps(info, packages);
+    const nextPkgs: string[] = [];
+    let dependencies: string[] = [];
+    let dependents: string[] = [];
 
-    visitor(pkg, info, deps);
+    if (scope?.includeDependencies) {
+      dependencies = [...dependencyMap.dependencies.get(pkg) ?? []];
+      nextPkgs.push(...dependencies);
+    }
+
+    if (scope?.includeDependents) {
+      dependents = [...dependencyMap.dependents.get(pkg) ??[]];
+      nextPkgs.push(...dependents);
+    }
+
+    visitor(pkg, dependencies, dependents);
 
     visited.add(pkg);
 
-    if (deps.length > 0) {
-      for (const dep of deps) {
-        stack.push(dep);
+    if (nextPkgs.length > 0) {
+      for (const nextPkg of nextPkgs) {
+        stack.push(nextPkg);
       }
     }
   }
-}
-
-/**
- * @internal resets the graph cache for internal testing purpose only
- */
-export function _resetGraphCache() {
-  graphCache.clear();
 }
