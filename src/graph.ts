@@ -15,7 +15,6 @@ export interface PackageGraphScope {
 export function createPackageGraph(packages: PackageInfos, scope: PackageGraphScope = {}): PackageGraph {
   const dependencyMap = createDependencyMap(packages);
 
-  console.log(dependencyMap)
   const packageSet = new Set<string>();
   const edges: PackageGraph["dependencies"] = [];
 
