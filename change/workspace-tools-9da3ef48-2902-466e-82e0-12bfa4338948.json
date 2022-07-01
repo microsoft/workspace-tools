@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "adds a package graph implementation",
+  "packageName": "workspace-tools",
+  "email": "ken@gizzar.com",
+  "dependentChangeType": "patch"
+}
