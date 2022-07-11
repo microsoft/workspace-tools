@@ -17,20 +17,35 @@ export function createPackageGraph(packages: PackageInfos, scope: PackageGraphSc
 
   const packageSet = new Set<string>();
   const edges: PackageGraph["dependencies"] = [];
+  const edgeKeys: Set<string> = new Set();
+
+ 
 
   const visitor: PackageGraphVisitor = (pkg, dependencies, dependents) => {
     packageSet.add(pkg);
     
     if (scope.includeDependencies && dependencies) {
       for (const dep of dependencies) {
-        edges.push({ name: pkg, dependency: dep });
+        const key = edgeKey(pkg, dep);
+
+        if (!edgeKeys.has(key)) {
+          edgeKeys.add(key);
+          edges.push({ name: pkg, dependency: dep });
+        }
+
         packageSet.add(dep);
       }
     }
 
     if (scope.includeDependents && dependents) {
       for (const dep of dependents) {
-        edges.push({ name: dep, dependency: pkg });
+        const key = edgeKey(dep, pkg);
+
+        if (!edgeKeys.has(key)) {
+          edgeKeys.add(key);
+          edges.push({ name: dep, dependency: pkg });
+        }
+        
         packageSet.add(dep);
       }
     }
@@ -39,6 +54,11 @@ export function createPackageGraph(packages: PackageInfos, scope: PackageGraphSc
   visitPackageGraph(packages, dependencyMap, visitor, scope);
 
   return {packages: [...packageSet], dependencies: edges};
+
+  /** calculates a key, for looking up whether an edge is already added */
+  function edgeKey(name: string, dependency: string) {
+    return `${name}->${dependency}`;
+  }
 }
 
 
@@ -61,25 +81,29 @@ function visitPackageGraph(
       continue;
     }
 
-    const nextPkgs: string[] = [];
+    const nextPkgs: Set<string> = new Set();
     let dependencies: string[] = [];
     let dependents: string[] = [];
 
     if (scope?.includeDependencies) {
       dependencies = [...dependencyMap.dependencies.get(pkg) ?? []];
-      nextPkgs.push(...dependencies);
+      for (const dep of dependencies) {
+        nextPkgs.add(dep);
+      }
     }
 
     if (scope?.includeDependents) {
       dependents = [...dependencyMap.dependents.get(pkg) ??[]];
-      nextPkgs.push(...dependents);
+      for (const dep of dependents) {
+        nextPkgs.add(dep);
+      }
     }
 
     visitor(pkg, dependencies, dependents);
 
     visited.add(pkg);
 
-    if (nextPkgs.length > 0) {
+    if (nextPkgs.size > 0) {
       for (const nextPkg of nextPkgs) {
         stack.push(nextPkg);
       }
