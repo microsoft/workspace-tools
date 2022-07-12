@@ -1,4 +1,5 @@
-import { PackageInfo, PackageInfos } from "./types/PackageInfo";
+import { PackageInfos } from "../types/PackageInfo";
+import { getPackageDependencies } from "../graph/getPackageDependencies";
 
 const graphCache = new Map<string, [string | null, string][]>();
 
@@ -28,7 +29,7 @@ function getPackageGraph(packages: PackageInfos, scope: string[] = []) {
     visited.add(pkg);
 
     const info = packages[pkg];
-    const deps = getInternalDeps(info, packages);
+    const deps = getPackageDependencies(info, packages);
 
     if (deps.length > 0) {
       for (const dep of deps) {
@@ -125,16 +126,4 @@ export function getTransitiveProviders(
   }
 
   return [...visited].filter((pkg) => !targets.includes(pkg));
-}
-
-/** @deprecated Do not use */ 
-export const getTransitiveDependencies = getTransitiveProviders;
-
-/** @deprecated Do not use */
-export const getTransitiveDependents = getTransitiveConsumers;
-
-/** @deprecated Do not use */
-export function getInternalDeps(info: PackageInfo, packages: PackageInfos) {
-  const deps = Object.keys({ ...info.dependencies, ...info.devDependencies });
-  return Object.keys(packages).filter((pkg) => deps.includes(pkg));
 }

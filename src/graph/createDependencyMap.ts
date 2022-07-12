@@ -1,4 +1,5 @@
-import { PackageInfos } from "./types/PackageInfo";
+import { getPackageDependencies, PackageDependenciesOptions } from "./getPackageDependencies";
+import { PackageInfos } from "../types/PackageInfo";
 
 // @internal
 export interface DependencyMap {
@@ -7,14 +8,17 @@ export interface DependencyMap {
 }
 
 // @internal
-export function createDependencyMap(packages: PackageInfos) {
+export function createDependencyMap(
+  packages: PackageInfos,
+  options: PackageDependenciesOptions = { withDevDependencies: true }
+): DependencyMap {
   const map = {
     dependencies: new Map<string, Set<string>>(),
     dependents: new Map<string, Set<string>>(),
   };
 
   for (const [pkg, info] of Object.entries(packages)) {
-    const deps = Object.keys({ ...info.dependencies, ...info.devDependencies });
+    const deps = getPackageDependencies(info, packages, options);
     for (const dep of deps) {
       if (!map.dependencies.has(pkg)) {
         map.dependencies.set(pkg, new Set());
