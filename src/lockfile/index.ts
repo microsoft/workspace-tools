@@ -18,7 +18,7 @@ export async function parseLockFile(packageRoot: string): Promise<ParsedLock> {
     }
 
     const parseYarnLock = (await import("@yarnpkg/lockfile")).parse;
-    const yarnLock = fs.readFileSync(yarnLockPath, 'utf-8');
+    const yarnLock = fs.readFileSync(yarnLockPath, "utf-8");
     const parsed = parseYarnLock(yarnLock);
 
     memoization[yarnLockPath] = parsed;
@@ -52,7 +52,7 @@ export async function parseLockFile(packageRoot: string): Promise<ParsedLock> {
 
     let npmLockJson;
     try {
-      npmLockJson = fs.readFileSync(npmLockPath, 'utf-8');
+      npmLockJson = fs.readFileSync(npmLockPath, "utf-8");
     } catch {
       throw new Error("Couldn’t parse package-lock.json.");
     }

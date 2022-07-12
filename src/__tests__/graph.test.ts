@@ -2,159 +2,126 @@ import { PackageInfo } from "../types/PackageInfo";
 import { createPackageGraph } from "../graph";
 
 describe("createPackageGraph", () => {
-  it("exploring the output for includeDependencies: false, includeDependents: true with empty scope", () => {
+  it("can get dependencies and dependents for multiple name patterns", () => {
     const allPackages = {
-      a: stubPackage("a", ["b"]),
-      b: stubPackage("b", ["c"]),
-      c: stubPackage("c"),
+      a: stubPackage("a", ["d"]),
+      b: stubPackage("b", ["d", "e"]),
+      c: stubPackage("c", ["e"]),
+      d: stubPackage("d", ["f"]),
+      e: stubPackage("e", ["f", "h"]),
+      f: stubPackage("f"),
+      h: stubPackage("h", ["j"]),
+      g: stubPackage("g"),
+      i: stubPackage("i", ["b"]),
+      j: stubPackage("j"),
     };
-
-    const actual = createPackageGraph(allPackages, {includeDependencies: false, includeDependents: true});
-    /* console.log(actual);
-    // {
-    //   packages: [ 'c', 'b', 'a' ],
-    //   dependencies: [ { name: 'b', dependency: 'c' }, { name: 'a', dependency: 'b' } ]
-    // }
-
+    const actual = createPackageGraph(allPackages, {
+      namePatterns: ["a", "e"],
+      includeDependencies: true,
+      includeDependents: true,
+    });
     expect(actual).toMatchInlineSnapshot(`
-    Object {
-      "dependencies": Array [
-        Object {
-          "dependency": "b",
-          "name": "a",
-        },
-      ],
-      "packages": Array [
-        "b",
-        "a",
-      ],
-    }
-  `);
-  */
+      Object {
+        "dependencies": Array [
+          Object {
+            "dependency": "f",
+            "name": "e",
+          },
+          Object {
+            "dependency": "h",
+            "name": "e",
+          },
+          Object {
+            "dependency": "e",
+            "name": "b",
+          },
+          Object {
+            "dependency": "e",
+            "name": "c",
+          },
+          Object {
+            "dependency": "d",
+            "name": "b",
+          },
+          Object {
+            "dependency": "b",
+            "name": "i",
+          },
+          Object {
+            "dependency": "f",
+            "name": "d",
+          },
+          Object {
+            "dependency": "d",
+            "name": "a",
+          },
+          Object {
+            "dependency": "j",
+            "name": "h",
+          },
+        ],
+        "packages": Array [
+          "e",
+          "f",
+          "h",
+          "b",
+          "c",
+          "d",
+          "i",
+          "a",
+          "j",
+        ],
+      }
+    `);
   });
 
-it("can get dependencies and dependents for multiple name patterns", () => {
-  const allPackages = {
-    a: stubPackage("a", ["d"]),
-    b: stubPackage("b", ["d", "e"]),
-    c: stubPackage("c", ["e"]),
-    d: stubPackage("d", ["f"]),
-    e: stubPackage("e", ["f", "h"]),
-    f: stubPackage("f"),
-    h: stubPackage("h", ["j"]),
-    g: stubPackage("g"),
-    i: stubPackage("i", ["b"]),
-    j: stubPackage("j"),
-  };
-  const actual = createPackageGraph(allPackages, { namePatterns: ["a", "e"], includeDependencies: true, includeDependents: true});
-  expect(actual).toMatchInlineSnapshot(`
-  Object {
-    "dependencies": Array [
-      Object {
-        "dependency": "f",
-        "name": "e",
-      },
-      Object {
-        "dependency": "h",
-        "name": "e",
-      },
-      Object {
-        "dependency": "e",
-        "name": "b",
-      },
-      Object {
-        "dependency": "e",
-        "name": "c",
-      },
-      Object {
-        "dependency": "b",
-        "name": "i",
-      },
-      Object {
-        "dependency": "j",
-        "name": "h",
-      },
-      Object {
-        "dependency": "d",
-        "name": "a",
-      },
-      Object {
-        "dependency": "f",
-        "name": "d",
-      },
-    ],
-    "packages": Array [
-      "e",
-      "f",
-      "h",
-      "b",
-      "c",
-      "i",
-      "j",
-      "a",
-      "d",
-    ],
-  }
-`); 
-});
+  it("can get dependencies and dependents for a name pattern", () => {
+    const allPackages = {
+      a: stubPackage("a", ["d"]),
+      b: stubPackage("b", ["d", "e"]),
+      c: stubPackage("c", ["e"]),
+      d: stubPackage("d", ["f"]),
+      e: stubPackage("e", ["f", "h"]),
+      f: stubPackage("f"),
+      h: stubPackage("h", ["j"]),
+      g: stubPackage("g"),
+      i: stubPackage("i", ["b"]),
+      j: stubPackage("j"),
+    };
 
-it.only("can get dependencies and dependents for a name pattern", () => {
-  const allPackages = {
-    a: stubPackage("a", ["d"]),
-    b: stubPackage("b", ["d", "e"]),
-    c: stubPackage("c", ["e"]),
-    d: stubPackage("d", ["f"]),
-    e: stubPackage("e", ["f", "h"]),
-    f: stubPackage("f"),
-    h: stubPackage("h", ["j"]),
-    g: stubPackage("g"),
-    i: stubPackage("i", ["b"]),
-    j: stubPackage("j"),
-  };
+    const actual = createPackageGraph(allPackages, {
+      namePatterns: ["e"],
+      includeDependencies: true,
+      includeDependents: false,
+    });
 
-  const actual = createPackageGraph(allPackages, { namePatterns: ["e"], includeDependencies: true, includeDependents: true});
-  expect(actual).toMatchInlineSnapshot(`
-  Object {
-    "dependencies": Array [
+    expect(actual).toMatchInlineSnapshot(`
       Object {
-        "dependency": "f",
-        "name": "e",
-      },
-      Object {
-        "dependency": "h",
-        "name": "e",
-      },
-      Object {
-        "dependency": "e",
-        "name": "b",
-      },
-      Object {
-        "dependency": "e",
-        "name": "c",
-      },
-      Object {
-        "dependency": "b",
-        "name": "i",
-      },
-      Object {
-        "dependency": "j",
-        "name": "h",
-      },
-    ],
-    "packages": Array [
-      "e",
-      "f",
-      "h",
-      "b",
-      "c",
-      "i",
-      "j",
-    ],
-  }
-`); 
-});
+        "dependencies": Array [
+          Object {
+            "dependency": "f",
+            "name": "e",
+          },
+          Object {
+            "dependency": "h",
+            "name": "e",
+          },
+          Object {
+            "dependency": "j",
+            "name": "h",
+          },
+        ],
+        "packages": Array [
+          "e",
+          "f",
+          "h",
+          "j",
+        ],
+      }
+    `);
+  });
 
-it("can get direct dependencies", () => {
+  it("can get direct dependencies", () => {
     const allPackages = {
       a: stubPackage("a", ["b"]),
       b: stubPackage("b", ["c"]),
@@ -260,7 +227,7 @@ it("can get direct dependencies", () => {
       }
     `);
   });
-  
+
   it("can get dependencies for multiple patterns given", () => {
     const allPackages = {
       a: stubPackage("a", ["c"]),
@@ -271,31 +238,30 @@ it("can get direct dependencies", () => {
 
     const actual = createPackageGraph(allPackages, { namePatterns: ["a", "b"], includeDependencies: true });
     expect(actual).toMatchInlineSnapshot(`
-    Object {
-      "dependencies": Array [
-        Object {
-          "dependency": "c",
-          "name": "b",
-        },
-        Object {
-          "dependency": "d",
-          "name": "b",
-        },
-        Object {
-          "dependency": "c",
-          "name": "a",
-        },
-      ],
-      "packages": Array [
-        "b",
-        "c",
-        "d",
-        "a",
-      ],
-    }
-  `);
+          Object {
+            "dependencies": Array [
+              Object {
+                "dependency": "c",
+                "name": "b",
+              },
+              Object {
+                "dependency": "d",
+                "name": "b",
+              },
+              Object {
+                "dependency": "c",
+                "name": "a",
+              },
+            ],
+            "packages": Array [
+              "b",
+              "c",
+              "d",
+              "a",
+            ],
+          }
+      `);
   });
-
 
   it("can get dependents for multiple patterns given", () => {
     const allPackages = {
@@ -331,7 +297,7 @@ it("can get direct dependencies", () => {
       }
     `);
   });
-  
+
   it("can represent a graph with some nodes with no edges", () => {
     const allPackages = {
       a: stubPackage("a"),
