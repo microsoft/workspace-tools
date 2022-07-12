@@ -2,6 +2,70 @@ import { PackageInfo } from "../types/PackageInfo";
 import { createPackageGraph } from "../graph";
 
 describe("createPackageGraph", () => {
+  it("can get take multiple filters as an UNION of the two filters", () => {
+    const allPackages = {
+      a: stubPackage("a", ["d"]),
+      b: stubPackage("b", ["d", "e"]),
+      c: stubPackage("c", ["e"]),
+      d: stubPackage("d", ["f"]),
+      e: stubPackage("e", ["f", "h"]),
+      f: stubPackage("f"),
+      h: stubPackage("h", ["j"]),
+      g: stubPackage("g"),
+      i: stubPackage("i", ["b"]),
+      j: stubPackage("j"),
+    };
+    const actual = createPackageGraph(allPackages, [
+      {
+        namePatterns: ["e"],
+        includeDependents: true,
+      },
+      {
+        namePatterns: ["e"],
+        includeDependencies: true,
+      },
+    ]);
+    expect(actual).toMatchInlineSnapshot(`
+      Object {
+        "dependencies": Array [
+          Object {
+            "dependency": "e",
+            "name": "b",
+          },
+          Object {
+            "dependency": "e",
+            "name": "c",
+          },
+          Object {
+            "dependency": "b",
+            "name": "i",
+          },
+          Object {
+            "dependency": "f",
+            "name": "e",
+          },
+          Object {
+            "dependency": "h",
+            "name": "e",
+          },
+          Object {
+            "dependency": "j",
+            "name": "h",
+          },
+        ],
+        "packages": Array [
+          "e",
+          "b",
+          "c",
+          "i",
+          "f",
+          "h",
+          "j",
+        ],
+      }
+    `);
+  });
+
   it("can get dependencies and dependents for multiple name patterns", () => {
     const allPackages = {
       a: stubPackage("a", ["d"]),
@@ -310,15 +374,14 @@ describe("createPackageGraph", () => {
       Object {
         "dependencies": Array [],
         "packages": Array [
-          "d",
-          "b",
           "c",
+          "b",
           "a",
         ],
       }
     `);
   });
-  
+
   it("can represent a graph with some nodes with no edges", () => {
     const allPackages = {
       a: stubPackage("a"),
