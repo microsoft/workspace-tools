@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "Update git-url-parse (includes [possible breaking changes](https://github.com/IonicaBizau/git-url-parse/releases/tag/12.0.0))",
+  "packageName": "workspace-tools",
+  "email": "elcraig@microsoft.com",
+  "dependentChangeType": "patch"
+}
