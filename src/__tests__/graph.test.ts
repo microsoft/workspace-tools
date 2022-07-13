@@ -2,6 +2,171 @@ import { PackageInfo } from "../types/PackageInfo";
 import { createPackageGraph } from "../graph";
 
 describe("createPackageGraph", () => {
+  it("namePatterns is an empty array", () => {
+    const allPackages = {
+      a: stubPackage("a", ["b"]),
+      b: stubPackage("b", ["c"]),
+      c: stubPackage("c"),
+    };
+
+    const actual = createPackageGraph(allPackages, {namePatterns: [], includeDependencies: true});
+    /*
+    { packages: [], dependencies: [] }
+    */
+  });
+  
+  it("can exclude peer dependencies", () => {
+    const allPackages = {
+      a: stubPackage("a", ["b"]),
+      b: stubPackage("b", ["c"], ["d"], ["e"]),
+      c: stubPackage("c"),
+      d: stubPackage("d"),
+      e: stubPackage("e")
+    };
+    const actual = createPackageGraph(allPackages, {namePatterns: ["b"], includeDependencies: true, withDevDependencies: true, withPeerDependencies: false});
+    expect(actual).toMatchInlineSnapshot(`
+      Object {
+        "dependencies": Array [
+          Object {
+            "dependency": "c",
+            "name": "b",
+          },
+          Object {
+            "dependency": "d",
+            "name": "b",
+          },
+        ],
+        "packages": Array [
+          "b",
+          "c",
+          "d",
+        ],
+      }
+    `);
+  });
+
+
+  it("can exclude development dependencies", () => {
+    const allPackages = {
+      a: stubPackage("a", ["b"]),
+      b: stubPackage("b", ["c"], ["d"]),
+      c: stubPackage("c"),
+      d: stubPackage("d"),
+    };
+    const actual = createPackageGraph(allPackages, {namePatterns: ["b"], includeDependencies: true, withDevDependencies: false});
+    expect(actual).toMatchInlineSnapshot(`
+      Object {
+        "dependencies": Array [
+          Object {
+            "dependency": "c",
+            "name": "b",
+          },
+        ],
+        "packages": Array [
+          "b",
+          "c",
+        ],
+      }
+    `);
+  });
+
+  it("returns the name patterns when includeDependencies & includeDependents are set to false", () => {
+    const allPackages = {
+      a: stubPackage("a", ["b"]),
+      b: stubPackage("b", ["c"]),
+      c: stubPackage("c"),
+    };
+
+    const actual = createPackageGraph(allPackages, {namePatterns: ["a", "b"]});
+    expect(actual).toMatchInlineSnapshot(`
+      Object {
+        "dependencies": Array [],
+        "packages": Array [
+          "b",
+          "a",
+        ],
+      }
+    `);
+  });
+
+  it("provides the entire graph if scope is not provided", () => {
+    const allPackages = {
+      a: stubPackage("a", ["b"]),
+      b: stubPackage("b", ["c"]),
+      c: stubPackage("c"),
+    };
+
+    const actual = createPackageGraph(allPackages);
+    expect(actual).toMatchInlineSnapshot(`
+      Object {
+        "dependencies": Array [
+          Object {
+            "dependency": "c",
+            "name": "b",
+          },
+          Object {
+            "dependency": "b",
+            "name": "a",
+          },
+        ],
+        "packages": Array [
+          "c",
+          "b",
+          "a",
+        ],
+      }
+    `);
+  });
+
+  it("does not repeat packages & edges when the same filter is provided twice", () => {
+    const allPackages = {
+      a: stubPackage("a", ["d"]),
+      b: stubPackage("b", ["d", "e"]),
+      c: stubPackage("c", ["e"]),
+      d: stubPackage("d", ["f"]),
+      e: stubPackage("e", ["f", "h"]),
+      f: stubPackage("f"),
+      h: stubPackage("h", ["j"]),
+      g: stubPackage("g"),
+      i: stubPackage("i", ["b"]),
+      j: stubPackage("j"),
+    };
+    const actual = createPackageGraph(allPackages, [
+      {
+        namePatterns: ["e"],
+        includeDependents: true,
+      },
+      {
+        namePatterns: ["e"],
+        includeDependents: true,
+      },
+    ]);
+    expect(actual).toMatchInlineSnapshot(`
+      Object {
+        "dependencies": Array [
+          Object {
+            "dependency": "e",
+            "name": "b",
+          },
+          Object {
+            "dependency": "e",
+            "name": "c",
+          },
+          Object {
+            "dependency": "b",
+            "name": "i",
+          },
+        ],
+        "packages": Array [
+          "e",
+          "b",
+          "c",
+          "i",
+        ],
+      }
+    `);
+  });
+
   it("can get take multiple filters as an UNION of the two filters", () => {
     const allPackages = {
       a: stubPackage("a", ["d"]),
@@ -80,13 +245,17 @@ describe("createPackageGraph", () => {
       j: stubPackage("j"),
     };
     const actual = createPackageGraph(allPackages, {
-      namePatterns: ["a", "e"],
+      namePatterns: ["a", "c"],
       includeDependencies: true,
       includeDependents: true,
     });
     expect(actual).toMatchInlineSnapshot(`
       Object {
         "dependencies": Array [
+          Object {
+            "dependency": "e",
+            "name": "c",
+          },
           Object {
             "dependency": "f",
             "name": "e",
@@ -98,10 +267,6 @@ describe("createPackageGraph", () => {
           Object {
             "dependency": "e",
             "name": "b",
-          },
-          Object {
-            "dependency": "e",
-            "name": "c",
           },
           Object {
             "dependency": "d",
@@ -125,11 +290,11 @@ describe("createPackageGraph", () => {
           },
         ],
         "packages": Array [
+          "c",
           "e",
           "f",
           "h",
           "b",
-          "c",
           "d",
           "i",
           "a",
@@ -438,12 +603,13 @@ describe("createPackageGraph", () => {
   });
 });
 
-function stubPackage(name: string, deps: string[] = []) {
+function stubPackage(name: string, deps: string[] = [], devDeps: string[] = [], peerDeps: string [] = []) {
   return {
     name,
     packageJsonPath: `packages/${name}`,
     version: "1.0",
     dependencies: deps.reduce((depMap, dep) => ({ ...depMap, [dep]: "*" }), {}),
-    devDependencies: {},
+    devDependencies: devDeps.reduce((depMap, dep) => ({ ...depMap, [dep]: "*" }), {}),
+    peerDependencies: peerDeps.reduce((depMap, dep) => ({ ...depMap, [dep]: "*" }), {}),
   } as PackageInfo;
 }

@@ -10,7 +10,7 @@ export interface DependencyMap {
 // @internal
 export function createDependencyMap(
   packages: PackageInfos,
-  options: PackageDependenciesOptions = { withDevDependencies: true }
+  options: PackageDependenciesOptions = { withDevDependencies: true, withPeerDependencies: true}
 ): DependencyMap {
   const map = {
     dependencies: new Map<string, Set<string>>(),
@@ -31,6 +31,5 @@ export function createDependencyMap(
       map.dependents.get(dep)!.add(pkg);
     }
   }
-
   return map;
 }
