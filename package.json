@@ -8,6 +8,9 @@
   },
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
+  "files": [
+    "lib/!(__*)"
+  ],
   "scripts": {
     "build": "tsc",
     "build:docs": "typedoc src/index.ts",
@@ -29,7 +32,6 @@
   },
   "devDependencies": {
     "@types/git-url-parse": "^9.0.0",
-    "@types/glob": "^7.1.1",
     "@types/jest": "^25.2.2",
     "@types/jju": "^1.4.1",
     "@types/multimatch": "^4.0.0",
