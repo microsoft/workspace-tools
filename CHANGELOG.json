@@ -2,6 +2,29 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Wed, 13 Jul 2022 20:42:07 GMT",
+      "tag": "workspace-tools_v0.22.0",
+      "version": "0.22.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "elcraig@microsoft.com",
+            "package": "workspace-tools",
+            "comment": "Update git-url-parse (includes [possible breaking changes](https://github.com/IonicaBizau/git-url-parse/releases/tag/12.0.0))",
+            "commit": "beddff28642eecabce2c64fd387bcc922ed7b941"
+          }
+        ],
+        "patch": [
+          {
+            "author": "elcraig@microsoft.com",
+            "package": "workspace-tools",
+            "comment": "Remove unneeded files from published package",
+            "commit": "beddff28642eecabce2c64fd387bcc922ed7b941"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 01 Jul 2022 14:56:01 GMT",
       "tag": "workspace-tools_v0.21.0",
       "version": "0.21.0",

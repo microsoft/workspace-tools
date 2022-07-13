@@ -1,8 +1,20 @@
 # Change Log - workspace-tools
 
-This log was last generated on Fri, 01 Jul 2022 14:56:01 GMT and should not be manually modified.
+This log was last generated on Wed, 13 Jul 2022 20:42:07 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.22.0
+
+Wed, 13 Jul 2022 20:42:07 GMT
+
+### Minor changes
+
+- Update git-url-parse (includes [possible breaking changes](https://github.com/IonicaBizau/git-url-parse/releases/tag/12.0.0)) (elcraig@microsoft.com)
+
+### Patches
+
+- Remove unneeded files from published package (elcraig@microsoft.com)
 
 ## 0.21.0
 
