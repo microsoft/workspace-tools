@@ -1,8 +1,16 @@
 # Change Log - workspace-tools
 
-This log was last generated on Wed, 13 Jul 2022 20:42:07 GMT and should not be manually modified.
+This log was last generated on Thu, 14 Jul 2022 17:22:35 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.23.0
+
+Thu, 14 Jul 2022 17:22:35 GMT
+
+### Minor changes
+
+- refactoring and cleaning up the createPackageGraph API to make it not repeat edges (kchau@microsoft.com)
 
 ## 0.22.0
 

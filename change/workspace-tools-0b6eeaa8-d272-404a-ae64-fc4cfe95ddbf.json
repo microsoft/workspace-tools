@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "refactoring and cleaning up the createPackageGraph API to make it not repeat edges",
-  "packageName": "workspace-tools",
-  "email": "kchau@microsoft.com",
-  "dependentChangeType": "patch"
-}

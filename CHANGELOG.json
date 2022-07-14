@@ -2,6 +2,21 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Thu, 14 Jul 2022 17:22:35 GMT",
+      "tag": "workspace-tools_v0.23.0",
+      "version": "0.23.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "kchau@microsoft.com",
+            "package": "workspace-tools",
+            "comment": "refactoring and cleaning up the createPackageGraph API to make it not repeat edges",
+            "commit": "4cd2ebcdc61bdd3c1bce6d1e09bedd13e739edd5"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 13 Jul 2022 20:42:07 GMT",
       "tag": "workspace-tools_v0.22.0",
       "version": "0.22.0",
