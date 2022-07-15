@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "change the api to be restored to have getDependentMap (actually gets  dependencies)",
+  "packageName": "workspace-tools",
+  "email": "ken@gizzar.com",
+  "dependentChangeType": "patch"
+}
