@@ -2,6 +2,21 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Fri, 15 Jul 2022 03:59:39 GMT",
+      "tag": "workspace-tools_v0.23.1",
+      "version": "0.23.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "ken@gizzar.com",
+            "package": "workspace-tools",
+            "comment": "fixing the missing getDependentMap API that lage uses",
+            "commit": "c37668d313891a5a0acd25f81a8b2476437335e1"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 14 Jul 2022 17:22:35 GMT",
       "tag": "workspace-tools_v0.23.0",
       "version": "0.23.0",

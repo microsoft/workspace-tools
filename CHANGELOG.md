@@ -1,8 +1,16 @@
 # Change Log - workspace-tools
 
-This log was last generated on Thu, 14 Jul 2022 17:22:35 GMT and should not be manually modified.
+This log was last generated on Fri, 15 Jul 2022 03:59:39 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.23.1
+
+Fri, 15 Jul 2022 03:59:39 GMT
+
+### Patches
+
+- fixing the missing getDependentMap API that lage uses (ken@gizzar.com)
 
 ## 0.23.0
 
