@@ -2,6 +2,21 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Fri, 15 Jul 2022 07:09:50 GMT",
+      "tag": "workspace-tools_v0.23.3",
+      "version": "0.23.3",
+      "comments": {
+        "patch": [
+          {
+            "author": "ken@gizzar.com",
+            "package": "workspace-tools",
+            "comment": "change the api to be restored to have getDependentMap (actually gets  dependencies)",
+            "commit": "4228af963584e87f6ba028f6e66abf7c6ae30700"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 15 Jul 2022 05:05:48 GMT",
       "tag": "workspace-tools_v0.23.2",
       "version": "0.23.2",
