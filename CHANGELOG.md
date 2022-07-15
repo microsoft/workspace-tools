@@ -1,8 +1,16 @@
 # Change Log - workspace-tools
 
-This log was last generated on Fri, 15 Jul 2022 03:59:39 GMT and should not be manually modified.
+This log was last generated on Fri, 15 Jul 2022 05:05:48 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.23.2
+
+Fri, 15 Jul 2022 05:05:48 GMT
+
+### Patches
+
+- fixing the dependent map results (ken@gizzar.com)
 
 ## 0.23.1
 

@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "fixing the dependent map results",
-  "packageName": "workspace-tools",
-  "email": "ken@gizzar.com",
-  "dependentChangeType": "patch"
-}
