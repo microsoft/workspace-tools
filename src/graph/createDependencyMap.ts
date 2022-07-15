@@ -10,7 +10,7 @@ export interface DependencyMap {
 // @internal
 export function createDependencyMap(
   packages: PackageInfos,
-  options: PackageDependenciesOptions = { withDevDependencies: true, withPeerDependencies: true}
+  options: PackageDependenciesOptions = { withDevDependencies: true, withPeerDependencies: false }
 ): DependencyMap {
   const map = {
     dependencies: new Map<string, Set<string>>(),
