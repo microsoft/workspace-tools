@@ -1,6 +1,3 @@
-import path from "path";
-import fs from "fs";
-
 import { cleanupFixtures, setupFixture } from "../helpers/setupFixture";
 import { getDefaultBranch, git } from "../git";
 
@@ -9,28 +6,21 @@ describe("getDefaultBranch()", () => {
     cleanupFixtures();
   });
 
-  it("is main in the default test repo", () => {
-    // arrange
-    const cwd = setupFixture("basic");
+  it("is main or master in the default test repo", () => {
+    const cwd = setupFixture();
 
-    // act
     const branch = getDefaultBranch(cwd);
 
-    // assert
-    expect(branch).toBe("main");
+    // avoid dependency on git version or other particulars of test environment
+    expect(branch).toMatch(/^(main|master)$/);
   });
 
-
   it("is myMain when default branch is different", () => {
-    // arrange
-    const cwd = setupFixture("basic");
-    git(['config', 'init.defaultBranch', 'myMain'], {cwd} );
+    const cwd = setupFixture();
+    git(["config", "init.defaultBranch", "myMain"], { cwd });
 
-    // act
     const branch = getDefaultBranch(cwd);
 
-    // assert
     expect(branch).toBe("myMain");
   });
 });
-

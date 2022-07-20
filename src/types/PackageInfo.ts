@@ -7,13 +7,9 @@ export interface PackageInfo {
   peerDependencies?: { [dep: string]: string };
   private?: boolean;
   group?: string;
-  scripts?: { [dep: string]: string };
-  [key: string]:
-    | string
-    | boolean
-    | string[]
-    | { [dep: string]: string }
-    | undefined;
+  scripts?: { [scriptName: string]: string };
+  repository?: string | { type: string; url: string; directory?: string };
+  [key: string]: any;
 }
 
 export interface PackageInfos {
