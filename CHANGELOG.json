@@ -2,6 +2,21 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Wed, 20 Jul 2022 22:31:31 GMT",
+      "tag": "workspace-tools_v0.24.0",
+      "version": "0.24.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "elcraig@microsoft.com",
+            "package": "workspace-tools",
+            "comment": "Make getDefaultRemote properly handle more combinations of URL formats, and add more logging to encourage defining the `repository` property in package.json for more accurate detection",
+            "commit": "4bffdc45ceb49ca49f28ebc788e5c2cbe71e3a9f"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 15 Jul 2022 07:09:50 GMT",
       "tag": "workspace-tools_v0.23.3",
       "version": "0.23.3",

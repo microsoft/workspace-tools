@@ -1,8 +1,16 @@
 # Change Log - workspace-tools
 
-This log was last generated on Fri, 15 Jul 2022 07:09:50 GMT and should not be manually modified.
+This log was last generated on Wed, 20 Jul 2022 22:31:31 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.24.0
+
+Wed, 20 Jul 2022 22:31:31 GMT
+
+### Minor changes
+
+- Make getDefaultRemote properly handle more combinations of URL formats, and add more logging to encourage defining the `repository` property in package.json for more accurate detection (elcraig@microsoft.com)
 
 ## 0.23.3
 
