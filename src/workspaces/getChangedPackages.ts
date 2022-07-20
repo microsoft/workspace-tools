@@ -61,7 +61,7 @@ export function getChangedPackagesBetweenRefs(
  * @returns string[] of package names that have changed
  */
 export function getChangedPackages(cwd: string, target: string | undefined, ignoreGlobs: string[] = []) {
-  const targetBranch = target || getDefaultRemoteBranch(undefined, cwd);
+  const targetBranch = target || getDefaultRemoteBranch({ cwd });
   let changes = [
     ...new Set([
       ...(getUntrackedChanges(cwd) || []),
