@@ -2,6 +2,119 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Wed, 20 Jul 2022 22:31:31 GMT",
+      "tag": "workspace-tools_v0.24.0",
+      "version": "0.24.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "elcraig@microsoft.com",
+            "package": "workspace-tools",
+            "comment": "Make getDefaultRemote properly handle more combinations of URL formats, and add more logging to encourage defining the `repository` property in package.json for more accurate detection",
+            "commit": "4bffdc45ceb49ca49f28ebc788e5c2cbe71e3a9f"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 15 Jul 2022 07:09:50 GMT",
+      "tag": "workspace-tools_v0.23.3",
+      "version": "0.23.3",
+      "comments": {
+        "patch": [
+          {
+            "author": "ken@gizzar.com",
+            "package": "workspace-tools",
+            "comment": "change the api to be restored to have getDependentMap (actually gets  dependencies)",
+            "commit": "4228af963584e87f6ba028f6e66abf7c6ae30700"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 15 Jul 2022 05:05:48 GMT",
+      "tag": "workspace-tools_v0.23.2",
+      "version": "0.23.2",
+      "comments": {
+        "patch": [
+          {
+            "author": "ken@gizzar.com",
+            "package": "workspace-tools",
+            "comment": "fixing the dependent map results",
+            "commit": "6dff4d2ba6fe88ab0a0f60c7c62410393e4596ee"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 15 Jul 2022 03:59:39 GMT",
+      "tag": "workspace-tools_v0.23.1",
+      "version": "0.23.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "ken@gizzar.com",
+            "package": "workspace-tools",
+            "comment": "fixing the missing getDependentMap API that lage uses",
+            "commit": "c37668d313891a5a0acd25f81a8b2476437335e1"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 14 Jul 2022 17:22:35 GMT",
+      "tag": "workspace-tools_v0.23.0",
+      "version": "0.23.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "kchau@microsoft.com",
+            "package": "workspace-tools",
+            "comment": "refactoring and cleaning up the createPackageGraph API to make it not repeat edges",
+            "commit": "4cd2ebcdc61bdd3c1bce6d1e09bedd13e739edd5"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 13 Jul 2022 20:42:07 GMT",
+      "tag": "workspace-tools_v0.22.0",
+      "version": "0.22.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "elcraig@microsoft.com",
+            "package": "workspace-tools",
+            "comment": "Update git-url-parse (includes [possible breaking changes](https://github.com/IonicaBizau/git-url-parse/releases/tag/12.0.0))",
+            "commit": "beddff28642eecabce2c64fd387bcc922ed7b941"
+          }
+        ],
+        "patch": [
+          {
+            "author": "elcraig@microsoft.com",
+            "package": "workspace-tools",
+            "comment": "Remove unneeded files from published package",
+            "commit": "beddff28642eecabce2c64fd387bcc922ed7b941"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 01 Jul 2022 14:56:01 GMT",
+      "tag": "workspace-tools_v0.21.0",
+      "version": "0.21.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "ken@gizzar.com",
+            "package": "workspace-tools",
+            "comment": "adds a package graph implementation",
+            "commit": "28ba85b087e3e3bb8715ea637563793fbb97b069"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 23 Jun 2022 20:24:15 GMT",
       "tag": "workspace-tools_v0.20.0",
       "version": "0.20.0",

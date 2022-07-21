@@ -1,8 +1,68 @@
 # Change Log - workspace-tools
 
-This log was last generated on Thu, 23 Jun 2022 20:24:15 GMT and should not be manually modified.
+This log was last generated on Wed, 20 Jul 2022 22:31:31 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.24.0
+
+Wed, 20 Jul 2022 22:31:31 GMT
+
+### Minor changes
+
+- Make getDefaultRemote properly handle more combinations of URL formats, and add more logging to encourage defining the `repository` property in package.json for more accurate detection (elcraig@microsoft.com)
+
+## 0.23.3
+
+Fri, 15 Jul 2022 07:09:50 GMT
+
+### Patches
+
+- change the api to be restored to have getDependentMap (actually gets  dependencies) (ken@gizzar.com)
+
+## 0.23.2
+
+Fri, 15 Jul 2022 05:05:48 GMT
+
+### Patches
+
+- fixing the dependent map results (ken@gizzar.com)
+
+## 0.23.1
+
+Fri, 15 Jul 2022 03:59:39 GMT
+
+### Patches
+
+- fixing the missing getDependentMap API that lage uses (ken@gizzar.com)
+
+## 0.23.0
+
+Thu, 14 Jul 2022 17:22:35 GMT
+
+### Minor changes
+
+- refactoring and cleaning up the createPackageGraph API to make it not repeat edges (kchau@microsoft.com)
+
+## 0.22.0
+
+Wed, 13 Jul 2022 20:42:07 GMT
+
+### Minor changes
+
+- Update git-url-parse (includes [possible breaking changes](https://github.com/IonicaBizau/git-url-parse/releases/tag/12.0.0)) (elcraig@microsoft.com)
+
+### Patches
+
+- Remove unneeded files from published package (elcraig@microsoft.com)
+
+## 0.21.0
+
+Fri, 01 Jul 2022 14:56:01 GMT
+
+### Minor changes
+
+- adds a package graph implementation (ken@gizzar.com)
 
 ## 0.20.0
 
