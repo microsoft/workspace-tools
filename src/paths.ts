@@ -1,10 +1,9 @@
-import path from 'path';
-import fs from 'fs';
+import path from "path";
+import fs from "fs";
+import { getWorkspaceRoot } from "./workspaces/getWorkspaceRoot";
 
 /**
- * Starting from `cwd`, searches up the directory hierarchy for `pathName`
- * @param pathName
- * @param cwd
+ * Starting from `cwd`, searches up the directory hierarchy for `pathName`.
  */
 export function searchUp(pathName: string, cwd: string) {
   const root = path.parse(cwd).root;
@@ -27,22 +26,31 @@ export function searchUp(pathName: string, cwd: string) {
   return null;
 }
 
+/**
+ * Starting from `cwd`, searches up the directory hierarchy for `.git`.
+ */
 export function findGitRoot(cwd: string) {
-  return searchUp('.git', cwd);
+  return searchUp(".git", cwd);
 }
 
+/**
+ * Starting from `cwd`, searches up the directory hierarchy for `package.json`.
+ */
 export function findPackageRoot(cwd: string) {
-  return searchUp('package.json', cwd);
+  return searchUp("package.json", cwd);
 }
 
-export function getChangePath(cwd: string) {
-  const gitRoot = findGitRoot(cwd);
+/**
+ * Starting from `cwd`, searches up the directory hierarchy for the workspace root,
+ * falling back to the git root if no workspace is detected.
+ */
+export function findProjectRoot(cwd: string) {
+  let workspaceRoot: string | undefined;
+  try {
+    workspaceRoot = getWorkspaceRoot(cwd);
+  } catch {}
 
-  if (gitRoot) {
-    return path.join(gitRoot, 'change');
-  }
-
-  return null;
+  return workspaceRoot || findGitRoot(cwd);
 }
 
 export function isChildOf(child: string, parent: string) {
