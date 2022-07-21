@@ -1,6 +1,6 @@
 {
   "type": "minor",
-  "comment": "Improve detection of git root",
+  "comment": "BREAKING CHANGE: Improve detection of git root and throw if not found",
   "packageName": "workspace-tools",
   "email": "dlannoye@microsoft.com",
   "dependentChangeType": "patch"

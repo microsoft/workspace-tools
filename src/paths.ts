@@ -1,5 +1,6 @@
 import path from "path";
 import fs from "fs";
+import { getWorkspaceRoot } from "./workspaces/getWorkspaceRoot";
 import { git } from "./git";
 
 /**
@@ -27,16 +28,17 @@ export function searchUp(pathName: string, cwd: string) {
 }
 
 /**
- * Starting from `cwd`, searches up the directory hierarchy for `.git`.
+ * Starting from `cwd`, uses `git rev-parse --show-toplevel` to find the root of the git repo.
+ * Throws if `cwd` is not in a Git repository.
  */
 export function findGitRoot(cwd: string) {
-  const output = git(['rev-parse', '--show-toplevel'], {cwd});
+  const output = git(["rev-parse", "--show-toplevel"], { cwd });
   if (!output.success) {
-    throw new Error(`Failed to find git root from ${cwd} : ${output.stderr}`);
+    throw new Error(`Directory "${cwd}" is not in a git repository`);
   }
 
   return path.normalize(output.stdout);
-¸}
+}
 
 /**
  * Starting from `cwd`, searches up the directory hierarchy for `package.json`.
