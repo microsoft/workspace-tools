@@ -31,10 +31,8 @@ describe("getDefaultRemote", () => {
 
   it("throws if not in a git repo", () => {
     // hopefully os.tmpdir() is never under a git repo...?
-    expect(() => getDefaultRemote({ cwd: os.tmpdir() })).toThrow("does not appear to be in a git repository");
-    expect(() => getDefaultRemote({ cwd: os.tmpdir(), strict: true })).toThrow(
-      "does not appear to be in a git repository"
-    );
+    expect(() => getDefaultRemote({ cwd: os.tmpdir() })).toThrow("is not in a git repository");
+    expect(() => getDefaultRemote({ cwd: os.tmpdir(), strict: true })).toThrow("is not in a git repository");
   });
 
   it("throws if package.json not found", () => {
