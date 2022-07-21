@@ -47,9 +47,6 @@ export function getDefaultRemote(cwdOrOptions: string | GetDefaultRemoteOptions)
   };
 
   const gitRoot = findGitRoot(cwd);
-  if (!gitRoot) {
-    throw new Error(`Directory "${cwd}" does not appear to be in a git repository`);
-  }
 
   let packageJson: Partial<PackageInfo> = {};
   const packageJsonPath = path.join(gitRoot, "package.json");
