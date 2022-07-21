@@ -1,8 +1,16 @@
 # Change Log - workspace-tools
 
-This log was last generated on Wed, 20 Jul 2022 22:31:31 GMT and should not be manually modified.
+This log was last generated on Thu, 21 Jul 2022 21:11:11 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.25.0
+
+Thu, 21 Jul 2022 21:11:11 GMT
+
+### Minor changes
+
+- BREAKING CHANGE: Improve detection of git root and throw if not found (dlannoye@microsoft.com)
 
 ## 0.24.0
 

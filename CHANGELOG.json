@@ -2,6 +2,21 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Thu, 21 Jul 2022 21:11:11 GMT",
+      "tag": "workspace-tools_v0.25.0",
+      "version": "0.25.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "dlannoye@microsoft.com",
+            "package": "workspace-tools",
+            "comment": "BREAKING CHANGE: Improve detection of git root and throw if not found",
+            "commit": "5a18b0d43f1a434b8ee7b03f7b5e273e2aee8330"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 20 Jul 2022 22:31:31 GMT",
       "tag": "workspace-tools_v0.24.0",
       "version": "0.24.0",
