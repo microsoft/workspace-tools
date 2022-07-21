@@ -7,26 +7,7 @@ import { git, GitError, GitProcessOutput } from "./git";
 
 export function getUntrackedChanges(cwd: string) {
   try {
-    const results = git(["status", "--short"], { cwd });
-
-    if (!results.success || !results.stdout) {
-      return [];
-    }
-
-    const lines = results.stdout.split(/[\r\n]+/).filter((line) => line);
-
-    const untracked: string[] = [];
-
-    for (let i = 0; i < lines.length; i++) {
-      const line = lines[i];
-      if (line[0] === " " || line[0] === "?") {
-        untracked.push(line.substring(3));
-      } else if (line[0] === "R") {
-        i++;
-      }
-    }
-
-    return untracked;
+    return processGitOutput(git(["ls-files", "--others", "--exclude-standard"], { cwd }));
   } catch (e) {
     throw new GitError(`Cannot gather information about untracked changes`, e);
   }
