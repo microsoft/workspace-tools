@@ -1,8 +1,16 @@
 # Change Log - workspace-tools
 
-This log was last generated on Thu, 21 Jul 2022 21:11:11 GMT and should not be manually modified.
+This log was last generated on Thu, 21 Jul 2022 21:21:48 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.25.1
+
+Thu, 21 Jul 2022 21:21:48 GMT
+
+### Patches
+
+- Use git ls-files for checkUntrackedFiles (dannyfritz@gmail.com)
 
 ## 0.25.0
 

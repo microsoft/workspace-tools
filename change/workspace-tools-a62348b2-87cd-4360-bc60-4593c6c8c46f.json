@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Use git ls-files for checkUntrackedFiles",
-  "packageName": "workspace-tools",
-  "email": "dannyfritz@gmail.com",
-  "dependentChangeType": "patch"
-}

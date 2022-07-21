@@ -2,6 +2,21 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Thu, 21 Jul 2022 21:21:48 GMT",
+      "tag": "workspace-tools_v0.25.1",
+      "version": "0.25.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "dannyfritz@gmail.com",
+            "package": "workspace-tools",
+            "comment": "Use git ls-files for checkUntrackedFiles",
+            "commit": "f19c194e3636c08c2c3367daff9510efc07559da"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 21 Jul 2022 21:11:11 GMT",
       "tag": "workspace-tools_v0.25.0",
       "version": "0.25.0",
