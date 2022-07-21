@@ -1,0 +1,15 @@
+{
+  "trailingComma": "es5",
+  "tabWidth": 2,
+  "singleQuote": false,
+  "printWidth": 120,
+  "overrides": [
+    {
+      // format .json5 files as jsonc for VS Code support
+      "files": ["*.json5"],
+      "options": {
+        "parser": "json"
+      }
+    }
+  ]
+}
