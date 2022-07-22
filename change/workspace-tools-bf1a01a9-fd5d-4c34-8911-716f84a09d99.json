@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Pin dependencies",
+  "packageName": "workspace-tools",
+  "email": "email not defined",
+  "dependentChangeType": "patch"
+}
