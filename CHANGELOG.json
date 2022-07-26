@@ -2,6 +2,21 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Tue, 26 Jul 2022 01:37:45 GMT",
+      "tag": "workspace-tools_v0.25.1",
+      "version": "0.25.1",
+      "comments": {
+        "none": [
+          {
+            "author": "renovate@whitesourcesoftware.com",
+            "package": "workspace-tools",
+            "comment": "Update devDependency @types/jju to v1.4.2",
+            "commit": "f5b7af07f4bcbecb5db1d47589ac7e66f4bae21f"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 26 Jul 2022 01:37:23 GMT",
       "tag": "workspace-tools_v0.25.1",
       "version": "0.25.1",
