@@ -2,6 +2,27 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Tue, 26 Jul 2022 01:37:23 GMT",
+      "tag": "workspace-tools_v0.25.1",
+      "version": "0.25.1",
+      "comments": {
+        "none": [
+          {
+            "author": "renovate@whitesourcesoftware.com",
+            "package": "workspace-tools",
+            "comment": "Update devDependency @types/jju to v1.4.2",
+            "commit": "763800ee9cdb0f39e9748e601cd6fdc8997de64b"
+          },
+          {
+            "author": "email not defined",
+            "package": "workspace-tools",
+            "comment": "Update devDependency @types/git-url-parse to v9.0.1",
+            "commit": "763800ee9cdb0f39e9748e601cd6fdc8997de64b"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 26 Jul 2022 01:36:52 GMT",
       "tag": "workspace-tools_v0.25.1",
       "version": "0.25.1",
