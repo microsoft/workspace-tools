@@ -7,120 +7,21 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
 
-  // Available presets (see also other pages in the same section): https://docs.renovatebot.com/presets-default/
-  // Preset definitions: https://github.com/renovatebot/renovate/tree/main/lib/config/presets/internal
-  // Note that there's a `config:base` which we don't use because it tends to pin too many
-  // types of deps. (Pinning non-dev dependencies often undesirable, particularly for UI
-  // libraries, because it can create a lot of duplicates in the consuming repo.
-  // This causes bundle bloat and sometimes even runtime problems.)
-  // More info: https://docs.renovatebot.com/dependency-pinning/
   "extends": [
-    // Ignore node_modules and anything under common test/fixture directory names
-    ":ignoreModulesAndTests",
-    // During the Renovate pipeline run, rebase any existing Renovate PRs if the base
-    // branch has been updated
-    ":rebaseStalePrs",
-    // Group known monorepo packages together
-    "group:monorepos",
-    // Other known groupings (mostly not relevant for node) https://docs.renovatebot.com/presets-group/#grouprecommended
-    "group:recommended",
-    // Workarounds for known problems with packages https://docs.renovatebot.com/presets-workarounds/#workaroundsall
-    "workarounds:all",
-    // Make a PR when a vulnerability alert is detected (GitHub only)
-    ":enableVulnerabilityAlerts"
+    // Basic recommended config + generate change files
+    "github>ecraig12345/renovate-config:beachballLibraryRecommended",
+    // Dedupe after updates, and periodically re-create the entire lock file so all deps are updated to latest
+    "github>ecraig12345/renovate-config:keepFresh"
   ],
 
   // Use this label on all PRs
   "labels": ["renovate"],
 
-  // Periodically re-create the entire lock file so all deps are updated to latest.
-  "lockFileMaintenance": {
-    "enabled": true
-  },
-
-  // Dedupe after upgrades
-  "postUpdateOptions": ["yarnDedupeHighest"],
-
   // Limit 5 PRs per hour (could be changed later based on preference)
   "prHourlyLimit": 5,
 
-  // Always create a new issue if there's a config problem, to ensure it gets on people's radar
-  "configWarningReuseIssue": false,
-
-  // Set the git author for Beachball purposes
-  "gitAuthor": "Renovate Bot <renovate@whitesourcesoftware.com>",
-
-  // Generate change files after upgrade
-  "postUpgradeTasks": {
-    "commands": [
-      "git add --all",
-      "npx beachball change --no-fetch --no-commit --type patch --message '{{{commitMessage}}}'",
-      "git reset"
-    ],
-    "fileFilters": ["**/*"],
-    // Run the post-upgrade tasks once per branch, not once per "upgrade"
-    // (Renovate defines an "upgrade" as an update to an individual dependency of an
-    // individual package)
-    "executionMode": "branch"
-  },
-
-  // Require dependency dashboard approval for major upgrades
-  "major": {
-    "dependencyDashboardApproval": true
-  },
-
-  // By default (see overrides for dev and peer deps later), replace the semver range
-  // with a newer one if the new version falls outside it, and update nothing otherwise
-  // https://docs.renovatebot.com/configuration-options/#rangestrategy
-  "rangeStrategy": "replace",
-
-  // Config and overrides for pinning
-  // https://docs.renovatebot.com/configuration-options/#pin
-  "pin": {
-    "group": {
-      // Pinning is only used for devDependencies, so make the message reflect that
-      "commitMessageTopic": "devDependencies",
-      // Use change type none
-      "postUpgradeTasks": {
-        "commands": [
-          "git add --all",
-          "npx beachball change --no-fetch --no-commit --type none --message '{{{commitMessage}}}'",
-          "git reset"
-        ],
-        "fileFilters": ["**/*"],
-        "executionMode": "branch"
-      }
-    }
-  },
-
   // https://docs.renovatebot.com/configuration-options/#packagerules
   "packageRules": [
-    // Overrides for changes only affecting devDependencies
-    {
-      "matchDepTypes": ["devDependencies"],
-      // Make it clear in the commit message and PR title that this only affects dev deps
-      "commitMessageTopic": "devDependency {{{depName}}}",
-      // Pin devDependencies
-      "rangeStrategy": "pin",
-      // Use change type none
-      "postUpgradeTasks": {
-        "commands": [
-          "git add --all",
-          "npx beachball change --no-fetch --no-commit --type none --message '{{{commitMessage}}}'",
-          "git reset"
-        ],
-        "fileFilters": ["**/*"],
-        "executionMode": "branch"
-      }
-    },
-
-    // Overrides for changes only affecting peerDependencies
-    {
-      "matchDepTypes": ["peerDependencies"],
-      // Widen the range with newer one, e.g. ^1.0.0 -> ^1.0.0 || ^2.0.0
-      "rangeStrategy": "widen"
-    },
-
     // Auto-merge PRs only affecting @types devDependencies
     {
       "matchPackagePrefixes": ["@types/"],
