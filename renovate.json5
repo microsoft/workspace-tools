@@ -54,9 +54,7 @@
   "postUpgradeTasks": {
     "commands": [
       "git add --all",
-      "npx beachball change --no-commit --type patch --message '{{{commitMessage}}}'",
-      // After server config change:
-      // "npx beachball change --no-fetch --no-commit --type patch --message '{{{commitMessage}}}'",
+      "npx beachball change --no-fetch --no-commit --type patch --message '{{{commitMessage}}}'",
       "git reset"
     ],
     "fileFilters": ["**/*"],
@@ -77,7 +75,17 @@
   // https://docs.renovatebot.com/configuration-options/#pin
   "pin": {
     // Pinning is only used for devDependencies, so make the commit message more specific
-    "commitMessageTopic": "devDependencies"
+    "commitMessageTopic": "devDependencies",
+    // Use change type none
+    "postUpgradeTasks": {
+      "commands": [
+        "git add --all",
+        "npx beachball change --no-fetch --no-commit --type none --message '{{{commitMessage}}}'",
+        "git reset"
+      ],
+      "fileFilters": ["**/*"],
+      "executionMode": "branch"
+    }
   },
 
   "packageRules": [
@@ -85,19 +93,19 @@
     {
       "matchDepTypes": ["devDependencies"],
       // Make it clear in the commit message and PR title that this only affects dev deps
-      "commitMessageTopic": "devDependency {{depName}}",
+      "commitMessageTopic": "devDependency {{{depName}}}",
       // Pin devDependencies
       "rangeStrategy": "pin"
-      // // Use change type none (requires server config update)
-      // "postUpgradeTasks": {
-      //   "commands": [
-      //     "git add --all",
-      //     "beachball change --no-fetch --no-commit --type none --message '{{{commitMessage}}}'",
-      //     "git reset"
-      //   ],
-      //   "fileFilters": ["**/*"],
-      //   "executionMode": "branch"
-      // }
+      // Use change type none
+      "postUpgradeTasks": {
+        "commands": [
+          "git add --all",
+          "npx beachball change --no-fetch --no-commit --type none --message '{{{commitMessage}}}'",
+          "git reset"
+        ],
+        "fileFilters": ["**/*"],
+        "executionMode": "branch"
+      }
     },
 
     // Overrides for changes only affecting peerDependencies
