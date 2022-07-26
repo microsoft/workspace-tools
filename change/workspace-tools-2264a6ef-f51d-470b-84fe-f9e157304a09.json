@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Update devDependency @types/git-url-parse to v9.0.1",
-  "packageName": "workspace-tools",
-  "email": "email not defined",
-  "dependentChangeType": "none"
-}

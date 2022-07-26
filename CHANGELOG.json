@@ -2,6 +2,21 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Tue, 26 Jul 2022 01:36:52 GMT",
+      "tag": "workspace-tools_v0.25.1",
+      "version": "0.25.1",
+      "comments": {
+        "none": [
+          {
+            "author": "email not defined",
+            "package": "workspace-tools",
+            "comment": "Update devDependency @types/git-url-parse to v9.0.1",
+            "commit": "51be1586f27bd2029028e9c2f035d809f3ce07cb"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 26 Jul 2022 01:31:27 GMT",
       "tag": "workspace-tools_v0.25.1",
       "version": "0.25.1",
