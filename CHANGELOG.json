@@ -2,6 +2,21 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Tue, 26 Jul 2022 02:16:55 GMT",
+      "tag": "workspace-tools_v0.25.1",
+      "version": "0.25.1",
+      "comments": {
+        "none": [
+          {
+            "author": "email not defined",
+            "package": "workspace-tools",
+            "comment": "Update devDependency @types/jest to v25.2.3",
+            "commit": "a4ea3510cab1d33efa55e2644cec7e0d543a6ef2"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 26 Jul 2022 01:37:45 GMT",
       "tag": "workspace-tools_v0.25.1",
       "version": "0.25.1",
