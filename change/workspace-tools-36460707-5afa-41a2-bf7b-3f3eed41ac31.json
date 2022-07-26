@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Update devDependency @types/yarnpkg__lockfile to v1.1.5",
-  "packageName": "workspace-tools",
-  "email": "renovate@whitesourcesoftware.com",
-  "dependentChangeType": "none"
-}
