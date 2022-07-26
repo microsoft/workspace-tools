@@ -126,7 +126,9 @@
       "matchPackagePrefixes": ["@types/"],
       "matchDepTypes": ["devDependencies"],
       "matchUpdateTypes": ["minor", "patch"],
-      "automerge": true
+      "automerge": true,
+      // use github's native automerge functionality
+      "platformAutomerge": true
     }
   ]
 }
