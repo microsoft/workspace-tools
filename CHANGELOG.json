@@ -2,6 +2,21 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Tue, 26 Jul 2022 01:31:27 GMT",
+      "tag": "workspace-tools_v0.25.1",
+      "version": "0.25.1",
+      "comments": {
+        "none": [
+          {
+            "author": "email not defined",
+            "package": "workspace-tools",
+            "comment": "Pin devDependencies",
+            "commit": "fd4e4d468c26f7ea6003b590cdabf0eac1acec9a"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 21 Jul 2022 21:21:48 GMT",
       "tag": "workspace-tools_v0.25.1",
       "version": "0.25.1",
