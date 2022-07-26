@@ -58,6 +58,9 @@
       "git reset"
     ],
     "fileFilters": ["**/*"],
+    // Run the post-upgrade tasks once per branch, not once per "upgrade"
+    // (Renovate defines an "upgrade" as an update to an individual dependency of an
+    // individual package)
     "executionMode": "branch"
   },
 
@@ -74,20 +77,23 @@
   // Config and overrides for pinning
   // https://docs.renovatebot.com/configuration-options/#pin
   "pin": {
-    // Pinning is only used for devDependencies, so make the commit message more specific
-    "commitMessageTopic": "devDependencies",
-    // Use change type none
-    "postUpgradeTasks": {
-      "commands": [
-        "git add --all",
-        "npx beachball change --no-fetch --no-commit --type none --message '{{{commitMessage}}}'",
-        "git reset"
-      ],
-      "fileFilters": ["**/*"],
-      "executionMode": "branch"
+    "group": {
+      // Pinning is only used for devDependencies, so make the message reflect that
+      "commitMessageTopic": "devDependencies",
+      // Use change type none
+      "postUpgradeTasks": {
+        "commands": [
+          "git add --all",
+          "npx beachball change --no-fetch --no-commit --type none --message '{{{commitMessage}}}'",
+          "git reset"
+        ],
+        "fileFilters": ["**/*"],
+        "executionMode": "branch"
+      }
     }
   },
 
+  // https://docs.renovatebot.com/configuration-options/#packagerules
   "packageRules": [
     // Overrides for changes only affecting devDependencies
     {
