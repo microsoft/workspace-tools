@@ -36,7 +36,7 @@
     "@types/jju": "1.4.2",
     "@types/multimatch": "4.0.0",
     "@types/node": "13.13.5",
-    "@types/tmp": "0.2.0",
+    "@types/tmp": "0.2.3",
     "@types/yarnpkg__lockfile": "1.1.5",
     "beachball": "2.26.0",
     "jest": "28.1.3",
