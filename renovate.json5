@@ -95,7 +95,7 @@
       // Make it clear in the commit message and PR title that this only affects dev deps
       "commitMessageTopic": "devDependency {{{depName}}}",
       // Pin devDependencies
-      "rangeStrategy": "pin"
+      "rangeStrategy": "pin",
       // Use change type none
       "postUpgradeTasks": {
         "commands": [
