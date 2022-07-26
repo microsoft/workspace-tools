@@ -3,7 +3,7 @@ import type { DependencyMap } from "./createDependencyMap";
 import type { PackageGraph, PackageGraphVisitor } from "../types/PackageGraph";
 
 import { createDependencyMap } from "./createDependencyMap";
-import multimatch from "multimatch";
+import micromatch from "micromatch";
 
 // Reference: https://github.com/pnpm/pnpm/blob/597047fc056dd25b83638a9ab3df0df1c555ee49/packages/filter-workspace-packages/src/parsePackageSelector.ts
 export interface PackageGraphFilter {
@@ -139,7 +139,7 @@ function visitPackageGraph(
   const visited = new Set<string>();
   const packageNames = Object.keys(packages);
 
-  const stack: string[] = filter ? multimatch(packageNames, filter.namePatterns) : packageNames;
+  const stack: string[] = filter ? micromatch(packageNames, filter.namePatterns) : packageNames;
 
   while (stack.length > 0) {
     const pkg = stack.pop()!;

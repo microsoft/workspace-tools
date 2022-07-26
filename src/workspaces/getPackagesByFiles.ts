@@ -1,4 +1,4 @@
-import multimatch from "multimatch";
+import micromatch from "micromatch";
 import path from "path";
 import { getWorkspaces } from "./getWorkspaces";
 
@@ -18,7 +18,7 @@ export function getPackagesByFiles(
   returnAllPackagesOnNoMatch: boolean = false
 ) {
   const workspaceInfo = getWorkspaces(workspaceRoot);
-  const ignoreSet = new Set(multimatch(files, ignoreGlobs));
+  const ignoreSet = new Set(micromatch(files, ignoreGlobs));
 
   files = files.filter((change) => !ignoreSet.has(change));
 
