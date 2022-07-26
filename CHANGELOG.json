@@ -2,6 +2,21 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Tue, 26 Jul 2022 02:20:08 GMT",
+      "tag": "workspace-tools_v0.25.1",
+      "version": "0.25.1",
+      "comments": {
+        "none": [
+          {
+            "author": "renovate@whitesourcesoftware.com",
+            "package": "workspace-tools",
+            "commit": "beb806b17f64ce3d5babf13621e6e3b63bd16f90",
+            "comment": "Update devDependency beachball to v2.26.0"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 26 Jul 2022 02:16:55 GMT",
       "tag": "workspace-tools_v0.25.1",
       "version": "0.25.1",

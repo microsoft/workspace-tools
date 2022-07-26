@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Update devDependency beachball to v2.26.0",
-  "packageName": "workspace-tools",
-  "email": "renovate@whitesourcesoftware.com",
-  "dependentChangeType": "none"
-}
