@@ -119,6 +119,14 @@
       "matchDepTypes": ["peerDependencies"],
       // Widen the range with newer one, e.g. ^1.0.0 -> ^1.0.0 || ^2.0.0
       "rangeStrategy": "widen"
+    },
+
+    // Auto-merge PRs only affecting @types devDependencies
+    {
+      "matchPackagePrefixes": ["@types/"],
+      "matchDepTypes": ["devDependencies"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "automerge": true
     }
   ]
 }
