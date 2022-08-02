@@ -35,7 +35,11 @@ describe("getPackagesByFiles()", () => {
     fs.writeFileSync(newFileB, "hello foo test");
 
     // act
-    const packages = getPackagesByFiles(root, ["packages/package-a/footest.txt", "packages/package-b/footest.txt"], ["packages/package-b/**"]);
+    const packages = getPackagesByFiles(
+      root,
+      ["packages/package-a/footest.txt", "packages/package-b/footest.txt"],
+      ["packages/package-b/**"]
+    );
 
     // assert
     expect(packages).toContain("package-a");

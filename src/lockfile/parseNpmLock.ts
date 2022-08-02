@@ -2,11 +2,11 @@ import { nameAtVersion } from "./nameAtVersion";
 import { ParsedLock, NpmLockFile, LockDependency } from "./types";
 
 type FormatNpmLock = (
-  previousValue: { },
+  previousValue: {},
   currentValue: [string, LockDependency],
   currentIndex: number,
   array: [string, LockDependency][]
-) => { [x: string]: LockDependency; };
+) => { [x: string]: LockDependency };
 
 /**
  * formatNpmLock reformats the dependencies object, so the key includes the version, similarly to yarn.lock. For

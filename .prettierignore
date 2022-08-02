@@ -1,0 +1,12 @@
+docs/
+lib/
+node_modules/
+
+yarn.lock
+pnpm-lock.yml
+package-lock.json
+
+change
+CHANGELOG.json
+CHANGELOG.md
+SECURITY.md

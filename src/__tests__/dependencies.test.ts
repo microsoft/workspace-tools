@@ -1,8 +1,5 @@
 import { PackageInfo } from "../types/PackageInfo";
-import {
-  getTransitiveConsumers,
-  getTransitiveProviders,
-} from "../dependencies/index";
+import { getTransitiveConsumers, getTransitiveProviders } from "../dependencies/index";
 
 describe("getTransitiveConsumers", () => {
   it("can get linear transitive consumers", () => {
@@ -28,10 +25,7 @@ describe("getTransitiveConsumers", () => {
       demo: stubPackage("demo", ["grid", "word"]),
     };
 
-    const actual = getTransitiveConsumers(["core"], allPackages, [
-      "grid",
-      "word",
-    ]);
+    const actual = getTransitiveConsumers(["core"], allPackages, ["grid", "word"]);
 
     expect(actual).toContain("foo");
     expect(actual).toContain("bar");

@@ -99,22 +99,34 @@ export function createPackageGraph(
     }
 
     if (filter.withDevDependencies && filter.withPeerDependencies && !dependencyMapWithPeerDevDeps) {
-      dependencyMapWithPeerDevDeps = createDependencyMap(packages, { withDevDependencies: true, withPeerDependencies: true});
+      dependencyMapWithPeerDevDeps = createDependencyMap(packages, {
+        withDevDependencies: true,
+        withPeerDependencies: true,
+      });
+    } else if (filter.withDevDependencies && !filter.withPeerDependencies && !dependencyMapWithDevDeps) {
+      dependencyMapWithDevDeps = createDependencyMap(packages, {
+        withDevDependencies: true,
+        withPeerDependencies: false,
+      });
+    } else if (!filter.withDevDependencies && filter.withPeerDependencies && !dependencyMapWithPeerDeps) {
+      dependencyMapWithPeerDeps = createDependencyMap(packages, {
+        withDevDependencies: false,
+        withPeerDependencies: true,
+      });
+    } else {
+      dependencyMapWithoutPeerDevDeps = createDependencyMap(packages, {
+        withDevDependencies: false,
+        withPeerDependencies: false,
+      });
     }
 
-    else if (filter.withDevDependencies && !filter.withPeerDependencies && !dependencyMapWithDevDeps) {
-      dependencyMapWithDevDeps = createDependencyMap(packages, { withDevDependencies: true, withPeerDependencies: false});
-    }
-
-    else if (!filter.withDevDependencies && filter.withPeerDependencies && !dependencyMapWithPeerDeps) {
-      dependencyMapWithPeerDeps = createDependencyMap(packages, { withDevDependencies: false, withPeerDependencies: true});
-    }
-
-    else {
-      dependencyMapWithoutPeerDevDeps = createDependencyMap(packages, { withDevDependencies: false, withPeerDependencies: false});
-    }
-
-    return ((filter.withDevDependencies && filter.withPeerDependencies) ? dependencyMapWithPeerDevDeps! : (filter.withDevDependencies ? dependencyMapWithDevDeps! : (filter.withPeerDependencies ? dependencyMapWithPeerDeps! : dependencyMapWithoutPeerDevDeps!)));
+    return filter.withDevDependencies && filter.withPeerDependencies
+      ? dependencyMapWithPeerDevDeps!
+      : filter.withDevDependencies
+      ? dependencyMapWithDevDeps!
+      : filter.withPeerDependencies
+      ? dependencyMapWithPeerDeps!
+      : dependencyMapWithoutPeerDevDeps!;
   }
 }
 
