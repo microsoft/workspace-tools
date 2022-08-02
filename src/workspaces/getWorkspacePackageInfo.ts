@@ -3,7 +3,9 @@ import fs from "fs";
 import { WorkspaceInfo } from "../types/WorkspaceInfo";
 import { PackageInfo } from "../types/PackageInfo";
 
-export function getWorkspacePackageInfo(workspacePaths: string[]): WorkspaceInfo {
+export function getWorkspacePackageInfo(
+  workspacePaths: string[]
+): WorkspaceInfo {
   if (!workspacePaths) {
     return [];
   }
@@ -13,7 +15,9 @@ export function getWorkspacePackageInfo(workspacePaths: string[]): WorkspaceInfo
     const packageJsonPath = path.join(workspacePath, "package.json");
 
     try {
-      packageJson = JSON.parse(fs.readFileSync(packageJsonPath, "utf-8")) as PackageInfo;
+      packageJson = JSON.parse(
+        fs.readFileSync(packageJsonPath, "utf-8")
+      ) as PackageInfo;
     } catch {
       return returnValue;
     }

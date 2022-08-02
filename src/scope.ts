@@ -6,13 +6,20 @@ import multimatch from "multimatch";
  * @param search
  * @param packages
  */
-export function getScopedPackages(search: string[], packages: { [pkg: string]: unknown } | string[]) {
-  const packageNames = Array.isArray(packages) ? packages : Object.keys(packages);
+export function getScopedPackages(
+  search: string[],
+  packages: { [pkg: string]: unknown } | string[]
+) {
+  const packageNames = Array.isArray(packages)
+    ? packages
+    : Object.keys(packages);
 
   const results = new Set<string>();
 
   // perform a package-scoped search (e.g. search is @scope/foo*)
-  const scopedSearch = search.filter((needle) => needle.startsWith("@") || needle.startsWith("!@"));
+  const scopedSearch = search.filter(
+    (needle) => needle.startsWith("@") || needle.startsWith("!@")
+  );
   if (scopedSearch.length > 0) {
     const matched = multimatch(packageNames, scopedSearch);
     for (const pkg of matched) {
@@ -21,7 +28,9 @@ export function getScopedPackages(search: string[], packages: { [pkg: string]: u
   }
 
   // perform a package-unscoped search (e.g. search is foo*)
-  const unscopedSearch = search.filter((needle) => !needle.startsWith("@") && !needle.startsWith("!@"));
+  const unscopedSearch = search.filter(
+    (needle) => !needle.startsWith("@") && !needle.startsWith("!@")
+  );
   if (unscopedSearch.length > 0) {
     // only generate the bare package map if there ARE unscoped searches
     const barePackageMap = generateBarePackageMap(packageNames);

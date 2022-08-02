@@ -138,7 +138,7 @@ describe("getWorkspaces", () => {
       ]);
     });
   });
-
+  
   describe("lerna", () => {
     it("gets the name and path of the workspaces", async () => {
       const packageRoot = setupFixture("monorepo-lerna-npm");

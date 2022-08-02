@@ -5,24 +5,16 @@ import { git } from "./git";
 
 /**
  * Starting from `cwd`, searches up the directory hierarchy for `pathName`.
- * @param pathName Path to look for
- * @param cwd Directory to start from
- * @param type If specified, look for only files or only directories. Otherwise accept either.
  */
-export function searchUp(pathName: string, cwd: string, type?: "file" | "directory") {
+export function searchUp(pathName: string, cwd: string) {
   const root = path.parse(cwd).root;
 
   let found = false;
 
   while (!found && cwd !== root) {
-    const current = path.join(cwd, pathName);
-    if (fs.existsSync(current)) {
-      const isDir = fs.statSync(current).isDirectory();
-
-      if (!((type === "file" && isDir) || (type === "directory" && !isDir))) {
-        found = true;
-        break;
-      }
+    if (fs.existsSync(path.join(cwd, pathName))) {
+      found = true;
+      break;
     }
 
     cwd = path.dirname(cwd);

@@ -2,7 +2,7 @@
 export interface PackageDependency {
   name: string;
   dependency: string;
-}
+};
 
 /** The graph is defined by as a list of package names as nodes, and a list of PackageDependency as edges*/
 export interface PackageGraph {

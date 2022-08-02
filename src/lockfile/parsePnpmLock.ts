@@ -22,6 +22,6 @@ export function parsePnpmLock(yaml: PnpmLockFile): ParsedLock {
 
   return {
     object,
-    type: "success",
+    type: "success" 
   };
 }

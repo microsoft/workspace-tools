@@ -6,6 +6,7 @@ import { getPackagePaths } from "../../getPackagePaths";
 import { WorkspaceInfo } from "../../types/WorkspaceInfo";
 import { getWorkspacePackageInfo } from "../getWorkspacePackageInfo";
 
+
 export function getLernaWorkspaceRoot(cwd: string): string {
   const lernaJsonPath = findUp.sync("lerna.json", { cwd });
 
@@ -23,7 +24,10 @@ export function getLernaWorkspaces(cwd: string): WorkspaceInfo {
 
     const lernaConfig = jju.parse(fs.readFileSync(lernaJsonPath, "utf-8"));
 
-    const packagePaths = getPackagePaths(lernaWorkspaceRoot, lernaConfig.packages);
+    const packagePaths = getPackagePaths(
+      lernaWorkspaceRoot,
+      lernaConfig.packages
+    );
     const workspaceInfo = getWorkspacePackageInfo(packagePaths);
     return workspaceInfo;
   } catch {

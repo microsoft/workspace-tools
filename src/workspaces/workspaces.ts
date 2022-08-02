@@ -12,7 +12,9 @@ export function getAllPackageJsonFiles(cwd: string) {
   }
 
   const workspaces = getWorkspaces(cwd);
-  const packageJsonFiles = workspaces.map((workspace) => workspace.packageJson.packageJsonPath);
+  const packageJsonFiles = workspaces.map(
+    (workspace) => workspace.packageJson.packageJsonPath
+  );
 
   cache.set(cwd, packageJsonFiles);
 

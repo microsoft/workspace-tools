@@ -7,7 +7,7 @@ import { parseLockFile, queryLockFile } from "..";
  * - monorepo-npm
  * - basic-yarn
  * - monorepo-pnpm
- *
+ * 
  * If making any changes to those fixtures and "@microsoft/task-scheduler" dependency, update the `packageName` and
  * `packageVersion` constants.
  */
@@ -42,7 +42,7 @@ describe("queryLockFile()", () => {
     const packageRoot = await setupFixture("monorepo-pnpm");
     const parsedLockFile = await parseLockFile(packageRoot);
     const result = queryLockFile(packageName, packageVersion, parsedLockFile);
-
+  
     expect(result).toBeDefined();
     expect(result.version).toBe(packageVersion);
   });

@@ -64,13 +64,17 @@ export function getDependentMap(packages: PackageInfos) {
 
 /**
  * @deprecated Do not use
- *
+ * 
  * for a package graph of a->b->c (where b depends on a), transitive consumers of a are b & c and their consumers (or what are the consequences of a)
  * @param targets
  * @param packages
  * @param scope
  */
-export function getTransitiveConsumers(targets: string[], packages: PackageInfos, scope: string[] = []) {
+export function getTransitiveConsumers(
+  targets: string[],
+  packages: PackageInfos,
+  scope: string[] = []
+) {
   const graph = getPackageGraph(packages, scope);
   const pkgQueue: string[] = [...targets];
   const visited = new Set<string>();
@@ -94,12 +98,15 @@ export function getTransitiveConsumers(targets: string[], packages: PackageInfos
 
 /**
  * @deprecated Do not use
- *
+ * 
  * for a package graph of a->b->c (where b depends on a), transitive providers of c are a & b and their providers (or what is needed to satisfy c)
  * @param targets
  * @param packages
  */
-export function getTransitiveProviders(targets: string[], packages: PackageInfos) {
+export function getTransitiveProviders(
+  targets: string[],
+  packages: PackageInfos
+) {
   const graph = getPackageGraph(packages);
   const pkgQueue: string[] = [...targets];
   const visited = new Set<string>();
