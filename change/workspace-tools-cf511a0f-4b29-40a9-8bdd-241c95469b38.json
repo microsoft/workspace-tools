@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Add fs-extra to devDependencies and remove non-dev usage",
+  "packageName": "workspace-tools",
+  "email": "elcraig@microsoft.com",
+  "dependentChangeType": "patch"
+}
