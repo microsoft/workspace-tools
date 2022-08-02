@@ -10,6 +10,8 @@
   "extends": [
     // Basic recommended config + generate change files
     "github>ecraig12345/renovate-config:beachballLibraryRecommended",
+    // Auto-merge PRs only affecting @types devDependencies
+    "github>ecraig12345/renovate-config:autoUpdateTypes",
     // Dedupe after updates, and periodically re-create the entire lock file so all deps are updated to latest
     "github>ecraig12345/renovate-config:keepFresh"
   ],
@@ -18,18 +20,5 @@
   "labels": ["renovate"],
 
   // Limit 5 PRs per hour (could be changed later based on preference)
-  "prHourlyLimit": 5,
-
-  // https://docs.renovatebot.com/configuration-options/#packagerules
-  "packageRules": [
-    // Auto-merge PRs only affecting @types devDependencies
-    {
-      "matchPackagePrefixes": ["@types/"],
-      "matchDepTypes": ["devDependencies"],
-      "matchUpdateTypes": ["minor", "patch"],
-      "automerge": true,
-      // use github's native automerge functionality
-      "platformAutomerge": true
-    }
-  ]
+  "prHourlyLimit": 5
 }
