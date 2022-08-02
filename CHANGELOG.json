@@ -2,6 +2,21 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Tue, 02 Aug 2022 23:03:14 GMT",
+      "tag": "workspace-tools_v0.25.2",
+      "version": "0.25.2",
+      "comments": {
+        "patch": [
+          {
+            "author": "elcraig@microsoft.com",
+            "package": "workspace-tools",
+            "commit": "476b210fe32e5ebfc5ab6ac0fc3c209e17767f0b",
+            "comment": "Add fs-extra to devDependencies and remove non-dev usage"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 26 Jul 2022 05:21:19 GMT",
       "tag": "workspace-tools_v0.25.1",
       "version": "0.25.1",
