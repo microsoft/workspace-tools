@@ -17,6 +17,7 @@
     "release:docs": "typedoc src/index.ts && gh-pages -d docs",
     "change": "beachball change",
     "checkchange": "beachball check",
+    "format": "prettier --write .",
     "release": "beachball publish -y",
     "start": "tsc -w --preserveWatchOutput",
     "test": "jest"

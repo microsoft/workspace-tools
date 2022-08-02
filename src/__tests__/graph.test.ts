@@ -9,21 +9,26 @@ describe("createPackageGraph", () => {
       c: stubPackage("c"),
     };
 
-    const actual = createPackageGraph(allPackages, {namePatterns: [], includeDependencies: true});
+    const actual = createPackageGraph(allPackages, { namePatterns: [], includeDependencies: true });
     /*
     { packages: [], dependencies: [] }
     */
   });
-  
+
   it("can exclude peer dependencies", () => {
     const allPackages = {
       a: stubPackage("a", ["b"]),
       b: stubPackage("b", ["c"], ["d"], ["e"]),
       c: stubPackage("c"),
       d: stubPackage("d"),
-      e: stubPackage("e")
+      e: stubPackage("e"),
     };
-    const actual = createPackageGraph(allPackages, {namePatterns: ["b"], includeDependencies: true, withDevDependencies: true, withPeerDependencies: false});
+    const actual = createPackageGraph(allPackages, {
+      namePatterns: ["b"],
+      includeDependencies: true,
+      withDevDependencies: true,
+      withPeerDependencies: false,
+    });
     expect(actual).toMatchInlineSnapshot(`
       Object {
         "dependencies": Array [
@@ -45,7 +50,6 @@ describe("createPackageGraph", () => {
     `);
   });
 
-
   it("can exclude development dependencies", () => {
     const allPackages = {
       a: stubPackage("a", ["b"]),
@@ -53,7 +57,11 @@ describe("createPackageGraph", () => {
       c: stubPackage("c"),
       d: stubPackage("d"),
     };
-    const actual = createPackageGraph(allPackages, {namePatterns: ["b"], includeDependencies: true, withDevDependencies: false});
+    const actual = createPackageGraph(allPackages, {
+      namePatterns: ["b"],
+      includeDependencies: true,
+      withDevDependencies: false,
+    });
     expect(actual).toMatchInlineSnapshot(`
       Object {
         "dependencies": Array [
@@ -77,7 +85,7 @@ describe("createPackageGraph", () => {
       c: stubPackage("c"),
     };
 
-    const actual = createPackageGraph(allPackages, {namePatterns: ["a", "b"]});
+    const actual = createPackageGraph(allPackages, { namePatterns: ["a", "b"] });
     expect(actual).toMatchInlineSnapshot(`
       Object {
         "dependencies": Array [],
@@ -603,7 +611,7 @@ describe("createPackageGraph", () => {
   });
 });
 
-function stubPackage(name: string, deps: string[] = [], devDeps: string[] = [], peerDeps: string [] = []) {
+function stubPackage(name: string, deps: string[] = [], devDeps: string[] = [], peerDeps: string[] = []) {
   return {
     name,
     packageJsonPath: `packages/${name}`,

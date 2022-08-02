@@ -6,6 +6,8 @@ name: PR
 on:
   pull_request:
     branches: [master]
+  push:
+    branches: ["renovate/*"]
 
 jobs:
   build:
