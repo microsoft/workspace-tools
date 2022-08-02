@@ -16,6 +16,19 @@
     "github>ecraig12345/renovate-config:keepFresh"
   ],
 
+  // Ignore modules and tests (like https://docs.renovatebot.com/presets-default/#ignoremodulesandtests)
+  // but don't ignore fixtures, so "vulnerability" fixes will also be made for fixtures
+  "ignorePresets": [":ignoreModulesAndTests"],
+  "ignorePaths": [
+    "**/node_modules/**",
+    "**/bower_components/**",
+    "**/vendor/**",
+    "**/examples/**",
+    "**/__tests__/**",
+    "**/test/**",
+    "**/tests/**"
+  ],
+
   // Use this label on all PRs
   "labels": ["renovate"],
 
@@ -26,12 +39,11 @@
     {
       // Group all updates of fixture dependencies and automerge them if the build passes
       "groupName": "fixture dependencies",
-      "ignorePresets": [":ignoreModulesAndTests", "github>ecraig12345/renovate-config:beachballLibraryRecommended"],
-      "schedule": ["before 5am"],
+      // "schedule": ["before 5am"],
       "matchPaths": ["src/__fixtures__/*/package.json"],
       "matchPackageNames": [".*"],
-      "matchDepTypes": ["dependencies", "devDependencies", "peerDependencies"],
-      "matchUpdateTypes": ["major", "minor", "patch", "pin", "pinDigest", "digest", "rollback", "bump"],
+      // "matchDepTypes": ["dependencies", "devDependencies", "peerDependencies"],
+      // "matchUpdateTypes": ["major", "minor", "patch", "pin", "pinDigest", "digest", "rollback", "bump"],
       "commitMessagePrefix": "[fixtures]",
       "commitMessageExtra": ""
       // "automerge": true,
