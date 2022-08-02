@@ -18,10 +18,10 @@ export function createPackageGraph(
   packages: PackageInfos,
   filters?: PackageGraphFilter[] | PackageGraphFilter
 ): PackageGraph {
-  /** packageSet is the set of packages being accumulated as the graph is filtered */
+  /** set of packages being accumulated as the graph is filtered */
   const packageSet = new Set<string>();
 
-  /** edges is the array of package names & its dependency being accumulated as the graph is filtered */
+  /** array of package names & its dependency being accumulated as the graph is filtered */
   const edges: PackageGraph["dependencies"] = [];
 
   const edgeKeys: Set<string> = new Set();
@@ -30,7 +30,6 @@ export function createPackageGraph(
   let dependencyMapWithDevDeps: DependencyMap | undefined = undefined;
   let dependencyMapWithoutPeerDevDeps: DependencyMap | undefined = undefined;
 
-  /** a visitor for a single filter,  */
   function visitorForFilter(
     filter: PackageGraphFilter | undefined,
     pkg: string,
@@ -67,16 +66,10 @@ export function createPackageGraph(
   }
 
   if (filters) {
-    if (Array.isArray(filters)) {
-      for (const filter of filters) {
-        const dependencyMap = getDependencyMapForFilter(packages, filter);
-        const visitor = visitorForFilter.bind(undefined, filter);
-        visitPackageGraph(packages, dependencyMap, visitor, filter);
-      }
-    } else {
-      const filter = filters as PackageGraphFilter;
-      const dependencyMap = getDependencyMapForFilter(packages, filter);
+    filters = Array.isArray(filters) ? filters : [filters];
+    for (const filter of filters) {
       const visitor = visitorForFilter.bind(undefined, filter);
+      const dependencyMap = getDependencyMapForFilter(packages, filter);
       visitPackageGraph(packages, dependencyMap, visitor, filter);
     }
   } else {
@@ -97,36 +90,20 @@ export function createPackageGraph(
     if (!filter) {
       return createDependencyMap(packages);
     }
-
-    if (filter.withDevDependencies && filter.withPeerDependencies && !dependencyMapWithPeerDevDeps) {
-      dependencyMapWithPeerDevDeps = createDependencyMap(packages, {
-        withDevDependencies: true,
-        withPeerDependencies: true,
-      });
-    } else if (filter.withDevDependencies && !filter.withPeerDependencies && !dependencyMapWithDevDeps) {
-      dependencyMapWithDevDeps = createDependencyMap(packages, {
-        withDevDependencies: true,
-        withPeerDependencies: false,
-      });
-    } else if (!filter.withDevDependencies && filter.withPeerDependencies && !dependencyMapWithPeerDeps) {
-      dependencyMapWithPeerDeps = createDependencyMap(packages, {
-        withDevDependencies: false,
-        withPeerDependencies: true,
-      });
-    } else {
-      dependencyMapWithoutPeerDevDeps = createDependencyMap(packages, {
-        withDevDependencies: false,
-        withPeerDependencies: false,
-      });
+    if (filter.withDevDependencies && filter.withPeerDependencies) {
+      dependencyMapWithPeerDevDeps ??= createDependencyMap(packages, filter);
+      return dependencyMapWithPeerDevDeps;
     }
-
-    return filter.withDevDependencies && filter.withPeerDependencies
-      ? dependencyMapWithPeerDevDeps!
-      : filter.withDevDependencies
-      ? dependencyMapWithDevDeps!
-      : filter.withPeerDependencies
-      ? dependencyMapWithPeerDeps!
-      : dependencyMapWithoutPeerDevDeps!;
+    if (filter.withDevDependencies && !filter.withPeerDependencies) {
+      dependencyMapWithDevDeps ??= createDependencyMap(packages, filter);
+      return dependencyMapWithDevDeps;
+    }
+    if (!filter.withDevDependencies && filter.withPeerDependencies) {
+      dependencyMapWithPeerDeps ??= createDependencyMap(packages, filter);
+      return dependencyMapWithPeerDeps;
+    }
+    dependencyMapWithoutPeerDevDeps ??= createDependencyMap(packages, filter);
+    return dependencyMapWithoutPeerDevDeps;
   }
 }
 

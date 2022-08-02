@@ -10,15 +10,10 @@ export function getPackageDependencies(
   packages: PackageInfos,
   options: PackageDependenciesOptions = { withDevDependencies: true }
 ): string[] {
-  let deps: string[] = [];
-  if (options.withDevDependencies && options.withPeerDependencies) {
-    deps = Object.keys({ ...info.dependencies, ...info.devDependencies, ...info.peerDependencies });
-  } else if (options.withDevDependencies) {
-    deps = Object.keys({ ...info.dependencies, ...info.devDependencies });
-  } else if (options.withPeerDependencies) {
-    deps = Object.keys({ ...info.dependencies, ...info.peerDependencies });
-  } else {
-    deps = Object.keys({ ...info.dependencies });
-  }
-  return Object.keys(packages).filter((pkg) => deps.includes(pkg));
+  const deps = {
+    ...info.dependencies,
+    ...(options.withDevDependencies && info.devDependencies),
+    ...(options.withPeerDependencies && info.peerDependencies),
+  };
+  return Object.keys(packages).filter((pkg) => !!deps[pkg]);
 }
