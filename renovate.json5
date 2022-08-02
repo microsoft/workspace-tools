@@ -8,26 +8,19 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
 
   "extends": [
-    // Basic recommended config + generate change files
-    "github>ecraig12345/renovate-config:beachballLibraryRecommended",
-    // Auto-merge PRs only affecting @types devDependencies
-    "github>ecraig12345/renovate-config:autoUpdateTypes",
-    // Dedupe after updates, and periodically re-create the entire lock file so all deps are updated to latest
-    "github>ecraig12345/renovate-config:keepFresh"
+    "github>ecraig12345/renovate-config"
+    // // Basic recommended config + generate change files
+    // "github>ecraig12345/renovate-config:beachballLibraryRecommended",
+    // // Auto-merge PRs only affecting @types devDependencies
+    // "github>ecraig12345/renovate-config:autoUpdateTypes",
+    // // Dedupe after updates, and periodically re-create the entire lock file so all deps are updated to latest
+    // "github>ecraig12345/renovate-config:keepFresh"
   ],
 
-  // Ignore modules and tests (like https://docs.renovatebot.com/presets-default/#ignoremodulesandtests)
+  // Ignore node_modules (like https://docs.renovatebot.com/presets-default/#ignoremodulesandtests)
   // but don't ignore fixtures, so "vulnerability" fixes will also be made for fixtures
   "ignorePresets": [":ignoreModulesAndTests"],
-  "ignorePaths": [
-    "**/node_modules/**",
-    "**/bower_components/**",
-    "**/vendor/**",
-    "**/examples/**",
-    "**/__tests__/**",
-    "**/test/**",
-    "**/tests/**"
-  ],
+  "ignorePaths": ["**/node_modules/**"],
 
   // Use this label on all PRs
   "labels": ["renovate"],
