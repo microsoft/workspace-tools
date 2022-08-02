@@ -1,4 +1,4 @@
-import fs from "fs-extra";
+import fs from "fs";
 import path from "path";
 import { findGitRoot } from "../paths";
 import { PackageInfo } from "../types/PackageInfo";
@@ -51,7 +51,7 @@ export function getDefaultRemote(cwdOrOptions: string | GetDefaultRemoteOptions)
   let packageJson: Partial<PackageInfo> = {};
   const packageJsonPath = path.join(gitRoot, "package.json");
   try {
-    packageJson = fs.readJSONSync(packageJsonPath);
+    packageJson = JSON.parse(fs.readFileSync(packageJsonPath, "utf8").trim());
   } catch (e) {
     throw new Error(`Could not read "${packageJsonPath}"`);
   }
