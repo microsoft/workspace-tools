@@ -5,7 +5,7 @@
   "private": true,
   "description": "derived from microsoft/lage",
   "resolutions": {
-    "mermaid": "8.6.4",
+    "mermaid": "9.1.2",
     "watchpack": "1.6.1"
   },
   "dependencies": {
