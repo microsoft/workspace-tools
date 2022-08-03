@@ -44,6 +44,12 @@
       "groupName": "fixture dependencies",
       "matchUpdateTypes": ["major"],
       "dependencyDashboardApproval": false
-    }
+    },
+    // Limit upgrades of packages that were converted to ESM in newer versions
+    // (the repo and in particular jest isn't set up for ESM yet)
+    { "matchPackageNames": ["find-up"], "allowedVersions": "<6.0.0" },
+    { "matchPackageNames": ["globby"], "allowedVersions": "<12.0.0" },
+    // For @types/node we're intentionally staying on 14
+    { "matchPackageNames": ["@types/node"], "allowedVersions": "<15.0.0" }
   ]
 }
