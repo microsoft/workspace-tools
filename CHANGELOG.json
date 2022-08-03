@@ -2,6 +2,35 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Wed, 03 Aug 2022 08:01:34 GMT",
+      "tag": "workspace-tools_v0.25.3",
+      "version": "0.25.3",
+      "comments": {
+        "none": [
+          {
+            "author": "renovate@whitesourcesoftware.com",
+            "package": "workspace-tools",
+            "commit": "c51bca9b331ae106b22ed260b5c045936dd3b723",
+            "comment": "Update devDependency gh-pages to v4"
+          }
+        ],
+        "patch": [
+          {
+            "author": "elcraig@microsoft.com",
+            "package": "workspace-tools",
+            "commit": "ae076192e9010c32fc90a7cb2a6d1488d382cec6",
+            "comment": "Simplify createPackageGraph and getPackageDependencies"
+          },
+          {
+            "author": "elcraig@microsoft.com",
+            "package": "workspace-tools",
+            "commit": "f81a7c1f61ec402febbc1cc1927343dadefbcdd5",
+            "comment": "Update find-up to v5"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 02 Aug 2022 23:03:14 GMT",
       "tag": "workspace-tools_v0.25.2",
       "version": "0.25.2",

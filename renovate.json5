@@ -16,6 +16,10 @@
     "github>ecraig12345/renovate-config:keepFresh"
   ],
 
+  // Don't ignore fixtures so that "vulnerability" fixes will also be made there
+  // (Renovate will still ignore node_modules by default)
+  "ignorePresets": [":ignoreModulesAndTests"],
+
   // Use this label on all PRs
   "labels": ["renovate"],
 
@@ -24,18 +28,28 @@
 
   "packageRules": [
     {
-      // Group all updates of fixture dependencies and automerge them if the build passes
+      // Group updates of fixture dependencies and automerge them if the build passes
+      // (note: this will still make separate PRs for major and non-major updates
+      // unless separateMajorMinor is set to false)
       "groupName": "fixture dependencies",
-      "ignorePresets": [":ignoreModulesAndTests", "github>ecraig12345/renovate-config:beachballLibraryRecommended"],
       "schedule": ["before 5am"],
       "matchPaths": ["src/__fixtures__/*/package.json"],
-      "matchPackageNames": [".*"],
-      "matchDepTypes": ["dependencies", "devDependencies", "peerDependencies"],
-      "matchUpdateTypes": ["major", "minor", "patch", "pin", "pinDigest", "digest", "rollback", "bump"],
+      "matchPackagePatterns": ["*"],
+      "matchDepTypes": ["dependencies", "devDependencies", "peerDependencies", "resolutions"],
+      "major": {
+        "dependencyDashboardApproval": false
+      },
+      "rangeStrategy": "replace",
       "commitMessagePrefix": "[fixtures]",
-      "commitMessageExtra": ""
-      // "automerge": true,
-      // "platformAutomerge": true
-    }
+      "commitMessageExtra": "",
+      "automerge": true,
+      "platformAutomerge": true
+    },
+    // Limit upgrades of packages that were converted to ESM in newer versions
+    // (the repo and in particular jest isn't set up for ESM yet)
+    { "matchPackageNames": ["find-up"], "allowedVersions": "<6.0.0" },
+    { "matchPackageNames": ["globby"], "allowedVersions": "<12.0.0" },
+    // For @types/node we're intentionally staying on 14
+    { "matchPackageNames": ["@types/node"], "allowedVersions": "<15.0.0" }
   ]
 }
