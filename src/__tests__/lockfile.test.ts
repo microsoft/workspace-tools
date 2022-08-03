@@ -41,9 +41,17 @@ describe("parseLockFile()", () => {
     const packageRoot = setupFixture("basic-yarn");
     const parsedLockFile = await parseLockFile(packageRoot);
 
-    expect(parsedLockFile.object["@babel/code-frame@^7.0.0"].version).toBe(
-      parsedLockFile.object["@babel/code-frame@^7.8.3"].version
+    // This test becomes somewhat brittle with regular dep and lock file updates.
+    // To make this a bit better, expectedSpec is a broad version which is included in the
+    // fixture's direct deps, and the test checks for any spec (not another specific version)
+    // which resolved to the same final version.
+    const expectedSpec = "@babel/core@^7.0.0";
+    expect(parsedLockFile.object[expectedSpec]).toBeTruthy();
+    const otherSpecs = Object.entries(parsedLockFile.object).filter(
+      ([spec]) => /^@babel\/core@/.test(spec) && spec !== expectedSpec
     );
+    expect(otherSpecs.length).toBeGreaterThanOrEqual(1);
+    expect(otherSpecs).toContainEqual([expect.anything(), parsedLockFile.object[expectedSpec]]);
   });
 
   // PNPM
