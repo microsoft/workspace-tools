@@ -17,10 +17,9 @@
     // "github>ecraig12345/renovate-config:keepFresh"
   ],
 
-  // Ignore node_modules (like https://docs.renovatebot.com/presets-default/#ignoremodulesandtests)
-  // but don't ignore fixtures, so "vulnerability" fixes will also be made for fixtures
+  // Don't ignore fixtures so that "vulnerability" fixes will also be made there
+  // (Renovate will still ignore node_modules by default)
   "ignorePresets": [":ignoreModulesAndTests"],
-  "ignorePaths": ["**/node_modules/**"],
 
   // Use this label on all PRs
   "labels": ["renovate"],
@@ -34,7 +33,7 @@
       "groupName": "fixture dependencies",
       // "schedule": ["before 5am"],
       "matchPaths": ["src/__fixtures__/*/package.json"],
-      "matchPackageNames": [".*"],
+      "matchPackagePatterns": ["*"],
       // "matchDepTypes": ["dependencies", "devDependencies", "peerDependencies"],
       // "matchUpdateTypes": ["major", "minor", "patch", "pin", "pinDigest", "digest", "rollback", "bump"],
       "commitMessagePrefix": "[fixtures]",
