@@ -1,2 +1,7 @@
-**/node_modules/**
-lib
+node_modules/
+lib/
+temp/
+.rush/
+**/common/scripts/
+.DS_Store
+*.log*
