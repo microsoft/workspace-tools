@@ -34,7 +34,10 @@
       "matchPaths": ["src/__fixtures__/*/package.json"],
       "matchPackagePatterns": ["*"],
       "matchDepTypes": ["dependencies", "devDependencies", "peerDependencies"],
-      "matchUpdateTypes": ["major", "minor", "patch", "pin", "pinDigest", "digest", "rollback", "bump"],
+      "major": {
+        "dependencyDashboardApproval": false
+      },
+      "rangeStrategy": "replace",
       "commitMessagePrefix": "[fixtures]",
       "commitMessageExtra": ""
       // "automerge": true,
