@@ -8,13 +8,12 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
 
   "extends": [
-    "github>ecraig12345/renovate-config"
-    // // Basic recommended config + generate change files
-    // "github>ecraig12345/renovate-config:beachballLibraryRecommended",
-    // // Auto-merge PRs only affecting @types devDependencies
-    // "github>ecraig12345/renovate-config:autoUpdateTypes",
-    // // Dedupe after updates, and periodically re-create the entire lock file so all deps are updated to latest
-    // "github>ecraig12345/renovate-config:keepFresh"
+    // Basic recommended config + generate change files
+    "github>ecraig12345/renovate-config:beachballLibraryRecommended",
+    // Auto-merge PRs only affecting @types devDependencies
+    "github>ecraig12345/renovate-config:autoUpdateTypes",
+    // Dedupe after updates, and periodically re-create the entire lock file so all deps are updated to latest
+    "github>ecraig12345/renovate-config:keepFresh"
   ],
 
   // Don't ignore fixtures so that "vulnerability" fixes will also be made there
