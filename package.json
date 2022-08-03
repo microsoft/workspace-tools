@@ -47,6 +47,6 @@
     "ts-jest": "28.0.7",
     "typedoc": "0.22.15",
     "typescript": "4.5.4",
-    "gh-pages": "3.2.3"
+    "gh-pages": "4.0.0"
   }
 }
