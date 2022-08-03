@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Switch from multimatch to micromatch",
+  "packageName": "workspace-tools",
+  "email": "elcraig@microsoft.com",
+  "dependentChangeType": "patch"
+}

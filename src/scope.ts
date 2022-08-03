@@ -1,10 +1,8 @@
-import multimatch from "multimatch";
+import micromatch from "micromatch";
 
 /**
- * Searches all package names based on "scoping" (i.e. "scope" in the sense of inclusion)
- * NOTE: scoping is different than package scopes (@scope/package)
- * @param search
- * @param packages
+ * Searches all package names based on "scoping" (i.e. "scope" in the sense of inclusion).
+ * NOTE: this is not the same as package scopes (`@scope/package`).
  */
 export function getScopedPackages(search: string[], packages: { [pkg: string]: unknown } | string[]) {
   const packageNames = Array.isArray(packages) ? packages : Object.keys(packages);
@@ -14,7 +12,7 @@ export function getScopedPackages(search: string[], packages: { [pkg: string]: u
   // perform a package-scoped search (e.g. search is @scope/foo*)
   const scopedSearch = search.filter((needle) => needle.startsWith("@") || needle.startsWith("!@"));
   if (scopedSearch.length > 0) {
-    const matched = multimatch(packageNames, scopedSearch);
+    const matched = micromatch(packageNames, scopedSearch);
     for (const pkg of matched) {
       results.add(pkg);
     }
@@ -26,7 +24,7 @@ export function getScopedPackages(search: string[], packages: { [pkg: string]: u
     // only generate the bare package map if there ARE unscoped searches
     const barePackageMap = generateBarePackageMap(packageNames);
 
-    let matched = multimatch(Object.keys(barePackageMap), unscopedSearch);
+    let matched = micromatch(Object.keys(barePackageMap), unscopedSearch);
     for (const bare of matched) {
       for (const pkg of barePackageMap[bare]) {
         results.add(pkg);
