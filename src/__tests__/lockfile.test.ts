@@ -1,5 +1,8 @@
+import fs from "fs-extra";
+import path from "path";
 import { setupFixture } from "../helpers/setupFixture";
 import { parseLockFile } from "../lockfile";
+import { PackageInfo } from "../types/PackageInfo";
 
 const ERROR_MESSAGES = {
   NO_LOCK: "You do not have yarn.lock, pnpm-lock.yaml or package-lock.json. Please use one of these package managers.",
@@ -39,16 +42,21 @@ describe("parseLockFile()", () => {
 
   it("parses combined ranges in yarn.lock", async () => {
     const packageRoot = setupFixture("basic-yarn");
-    const parsedLockFile = await parseLockFile(packageRoot);
 
-    // This test becomes somewhat brittle with regular dep and lock file updates.
-    // To make this a bit better, expectedSpec is a broad version which is included in the
-    // fixture's direct deps, and the test checks for any spec (not another specific version)
-    // which resolved to the same final version.
-    const expectedSpec = "@babel/core@^7.0.0";
+    // Verify that __fixtures__/basic-yarn still follows these assumptions:
+    // - "execa" is listed as a dep in package.json
+    // - "@types/execa" is also listed as a dep, and internally has a dep on "execa@*"
+    const packageName = "execa";
+    const packageInfo = fs.readJSONSync(path.join(packageRoot, "package.json")) as PackageInfo;
+    expect(packageInfo.dependencies?.[packageName]).toBeTruthy();
+    expect(packageInfo.devDependencies?.[`@types/${packageName}`]).toBeTruthy();
+
+    // The actual test: execa@* resolves to the same thing as execa@<specific version from package.json>
+    const expectedSpec = `${packageName}@*`;
+    const parsedLockFile = await parseLockFile(packageRoot);
     expect(parsedLockFile.object[expectedSpec]).toBeTruthy();
     const otherSpecs = Object.entries(parsedLockFile.object).filter(
-      ([spec]) => /^@babel\/core@/.test(spec) && spec !== expectedSpec
+      ([spec]) => spec.startsWith(`${packageName}@`) && spec !== expectedSpec
     );
     expect(otherSpecs.length).toBeGreaterThanOrEqual(1);
     expect(otherSpecs).toContainEqual([expect.anything(), parsedLockFile.object[expectedSpec]]);

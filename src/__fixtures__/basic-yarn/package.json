@@ -6,32 +6,12 @@
   "description": "derived from microsoft/lage",
   "dependencies": {
     "@microsoft/task-scheduler": "^2.7.1",
-    "abort-controller": "^3.0.0",
-    "chalk": "^5.0.0",
-    "cosmiconfig": "^7.0.0",
-    "execa": "^6.0.0",
-    "fast-glob": "^3.2.2",
-    "npmlog": "^6.0.0",
-    "p-profiler": "^0.2.1",
-    "yargs-parser": "^21.0.0"
+    "execa": "^6.0.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.0.0",
-    "@marp-team/marp-cli": "^2.0.0",
-    "@types/chalk": "^2.2.0",
-    "@types/cosmiconfig": "^6.0.0",
     "@types/execa": "^2.0.0",
-    "@types/jasmine": "^4.0.0",
     "@types/node": "^14.0.0",
-    "@types/npmlog": "4.1.4",
-    "@types/p-queue": "^3.2.1",
-    "@types/yargs-parser": "^21.0.0",
-    "gh-pages": "^4.0.0",
-    "jasmine": "^4.0.0",
     "ts-node": "^10.0.0",
-    "typedoc": "^0.23.0",
-    "typedoc-plugin-markdown": "^3.0.0",
-    "typescript": "^4.0.0",
-    "vuepress": "^1.5.3"
+    "typescript": "^4.0.0"
   }
 }
