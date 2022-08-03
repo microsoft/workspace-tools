@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Update find-up to v5",
-  "packageName": "workspace-tools",
-  "email": "elcraig@microsoft.com",
-  "dependentChangeType": "patch"
-}

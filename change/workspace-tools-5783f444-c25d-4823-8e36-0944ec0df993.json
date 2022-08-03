@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Simplify createPackageGraph and getPackageDependencies",
-  "packageName": "workspace-tools",
-  "email": "elcraig@microsoft.com",
-  "dependentChangeType": "patch"
-}

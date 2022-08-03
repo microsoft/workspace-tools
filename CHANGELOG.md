@@ -1,8 +1,17 @@
 # Change Log - workspace-tools
 
-This log was last generated on Tue, 02 Aug 2022 23:03:14 GMT and should not be manually modified.
+This log was last generated on Wed, 03 Aug 2022 08:01:34 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.25.3
+
+Wed, 03 Aug 2022 08:01:34 GMT
+
+### Patches
+
+- Simplify createPackageGraph and getPackageDependencies (elcraig@microsoft.com)
+- Update find-up to v5 (elcraig@microsoft.com)
 
 ## 0.25.2
 
