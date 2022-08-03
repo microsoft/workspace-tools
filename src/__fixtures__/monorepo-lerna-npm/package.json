@@ -5,5 +5,8 @@
   "private": true,
   "devDependencies": {
     "lerna": "^5.0.0"
+  },
+  "engines": {
+    "npm": "8.x"
   }
 }

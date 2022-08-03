@@ -1,5 +1,5 @@
 {
-  "name": "monorepo-npm",
+  "name": "monorepo-npm-unsupported",
   "license": "MIT",
   "version": "0.1.0",
   "private": true,
@@ -7,5 +7,8 @@
     "packages": [
       "packages/*"
     ]
+  },
+  "engines": {
+    "npm": "6.x"
   }
 }
