@@ -10,47 +10,51 @@ const ERROR_MESSAGES = {
 describe("parseLockFile()", () => {
   // General
   it("throws if it cannot find lock file", async () => {
-    const packageRoot = await setupFixture("basic-without-lock-file");
+    const packageRoot = setupFixture("basic-without-lock-file");
 
     await expect(parseLockFile(packageRoot)).rejects.toThrow(ERROR_MESSAGES.NO_LOCK);
   });
 
   // NPM
   it("parses package-lock.json file when it is found", async () => {
-    const packageRoot = await setupFixture("monorepo-npm");
-    const parsedLockeFile = await parseLockFile(packageRoot);
+    const packageRoot = setupFixture("monorepo-npm");
+    const parsedLockFile = await parseLockFile(packageRoot);
 
-    expect(parsedLockeFile).toHaveProperty("type", "success");
+    expect(parsedLockFile).toHaveProperty("type", "success");
   });
 
   it("throws if npm version is unsupported", async () => {
-    const packageRoot = await setupFixture("monorepo-npm-unsupported");
+    const packageRoot = setupFixture("monorepo-npm-unsupported");
 
     await expect(parseLockFile(packageRoot)).rejects.toThrow(ERROR_MESSAGES.UNSUPPORTED);
   });
 
   // Yarn
   it("parses yarn.lock file when it is found", async () => {
-    const packageRoot = await setupFixture("basic");
-    const parsedLockeFile = await parseLockFile(packageRoot);
+    const packageRoot = setupFixture("basic");
+    const parsedLockFile = await parseLockFile(packageRoot);
 
-    expect(parsedLockeFile).toHaveProperty("type", "success");
+    expect(parsedLockFile).toHaveProperty("type", "success");
   });
 
   it("parses combined ranges in yarn.lock", async () => {
-    const packageRoot = await setupFixture("basic-yarn");
-    const parsedLockeFile = await parseLockFile(packageRoot);
+    const packageRoot = setupFixture("basic-yarn");
+    const parsedLockFile = await parseLockFile(packageRoot);
 
-    expect(parsedLockeFile.object["@babel/code-frame@^7.0.0"].version).toBe(
-      parsedLockeFile.object["@babel/code-frame@^7.8.3"].version
+    expect(parsedLockFile.object["@babel/code-frame@^7.0.0"].version).toBe(
+      parsedLockFile.object["@babel/code-frame@^7.8.3"].version
     );
   });
 
   // PNPM
   it("parses pnpm-lock.yaml file when it is found", async () => {
-    const packageRoot = await setupFixture("basic-pnpm");
-    const parsedLockeFile = await parseLockFile(packageRoot);
+    const packageRoot = setupFixture("basic-pnpm");
+    const parsedLockFile = await parseLockFile(packageRoot);
 
-    expect(Object.keys(parsedLockeFile.object["yargs@16.2.0"].dependencies!)).toContain("cliui");
+    const yargs = Object.keys(parsedLockFile.object).find((key) => /^yargs@/.test(key));
+    // if either of these fails, check the actual lock file to verify the deps didn't change
+    // with renovate updates or something
+    expect(yargs).toBeTruthy();
+    expect(parsedLockFile.object[yargs!].dependencies?.["cliui"]).toBeTruthy();
   });
 });
