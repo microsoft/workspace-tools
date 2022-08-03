@@ -33,15 +33,17 @@
       // "schedule": ["before 5am"],
       "matchPaths": ["src/__fixtures__/*/package.json"],
       "matchPackagePatterns": ["*"],
-      "matchDepTypes": ["dependencies", "devDependencies", "peerDependencies"],
-      "major": {
-        "dependencyDashboardApproval": false
-      },
+      "matchDepTypes": ["dependencies", "devDependencies", "peerDependencies", "resolutions"],
       "rangeStrategy": "replace",
       "commitMessagePrefix": "[fixtures]",
       "commitMessageExtra": ""
       // "automerge": true,
       // "platformAutomerge": true
+    },
+    {
+      "groupName": "fixture dependencies",
+      "matchUpdateTypes": ["major"],
+      "dependencyDashboardApproval": false
     }
   ]
 }
