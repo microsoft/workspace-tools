@@ -6,7 +6,7 @@
   "description": "derived from microsoft/lage",
   "resolutions": {
     "mermaid": "8.6.4",
-    "watchpack": "1.6.1"
+    "watchpack": "1.7.5"
   },
   "dependencies": {
     "@microsoft/task-scheduler": "^2.7.1",
