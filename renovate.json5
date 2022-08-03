@@ -34,8 +34,8 @@
       // "schedule": ["before 5am"],
       "matchPaths": ["src/__fixtures__/*/package.json"],
       "matchPackagePatterns": ["*"],
-      // "matchDepTypes": ["dependencies", "devDependencies", "peerDependencies"],
-      // "matchUpdateTypes": ["major", "minor", "patch", "pin", "pinDigest", "digest", "rollback", "bump"],
+      "matchDepTypes": ["dependencies", "devDependencies", "peerDependencies"],
+      "matchUpdateTypes": ["major", "minor", "patch", "pin", "pinDigest", "digest", "rollback", "bump"],
       "commitMessagePrefix": "[fixtures]",
       "commitMessageExtra": ""
       // "automerge": true,
