@@ -34,16 +34,14 @@
       "matchPaths": ["src/__fixtures__/*/package.json"],
       "matchPackagePatterns": ["*"],
       "matchDepTypes": ["dependencies", "devDependencies", "peerDependencies", "resolutions"],
+      "major": {
+        "dependencyDashboardApproval": false
+      },
       "rangeStrategy": "replace",
       "commitMessagePrefix": "[fixtures]",
       "commitMessageExtra": ""
       // "automerge": true,
       // "platformAutomerge": true
-    },
-    {
-      "groupName": "fixture dependencies",
-      "matchUpdateTypes": ["major"],
-      "dependencyDashboardApproval": false
     },
     // Limit upgrades of packages that were converted to ESM in newer versions
     // (the repo and in particular jest isn't set up for ESM yet)
