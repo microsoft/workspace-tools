@@ -1,7 +1,0 @@
-{
-  "comment": "Use Node 14 in repo and types",
-  "type": "none",
-  "packageName": "workspace-tools",
-  "email": "elcraig@microsoft.com",
-  "dependentChangeType": "none"
-}

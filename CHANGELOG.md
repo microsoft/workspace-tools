@@ -1,8 +1,20 @@
 # Change Log - workspace-tools
 
-This log was last generated on Thu, 04 Aug 2022 08:01:48 GMT and should not be manually modified.
+This log was last generated on Thu, 04 Aug 2022 21:47:46 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.26.0
+
+Thu, 04 Aug 2022 21:47:46 GMT
+
+### Minor changes
+
+- Use ES2019 output (compatible with Node 14) (elcraig@microsoft.com)
+
+### Patches
+
+- Gracefully handle not having a package.json at git root (boabdelm@microsoft.com)
 
 ## 0.25.4
 

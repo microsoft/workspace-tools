@@ -2,6 +2,43 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Thu, 04 Aug 2022 21:47:46 GMT",
+      "tag": "workspace-tools_v0.26.0",
+      "version": "0.26.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "elcraig@microsoft.com",
+            "package": "workspace-tools",
+            "commit": "e74753a50e613d41f62c1e917ceafc2185791e2a",
+            "comment": "Use ES2019 output (compatible with Node 14)"
+          }
+        ],
+        "none": [
+          {
+            "author": "elcraig@microsoft.com",
+            "package": "workspace-tools",
+            "commit": "286b02b981a5bc532560ee17433ef0501f9414ea",
+            "comment": "Use Node 14 in repo and types"
+          },
+          {
+            "author": "renovate@whitesourcesoftware.com",
+            "package": "workspace-tools",
+            "commit": "5cba374fac27ef530d5f80530d3b925577f7e193",
+            "comment": "Lock file maintenance"
+          }
+        ],
+        "patch": [
+          {
+            "author": "boabdelm@microsoft.com",
+            "package": "workspace-tools",
+            "commit": "5577a58d537fe41ca2dd8f74ea243da700ca0840",
+            "comment": "Gracefully handle not having a package.json at git root"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 04 Aug 2022 08:01:48 GMT",
       "tag": "workspace-tools_v0.25.4",
       "version": "0.25.4",
