@@ -90,7 +90,7 @@ describe("getChangedPackages()", () => {
     // arrange
     const root = path.join(setupFixture("monorepo-nested"), "monorepo");
 
-    const newFile = path.join(root, "packages/package-a/src/index.ts");
+    const newFile = path.join(root, "packages/package-a/index.ts");
     fs.writeFileSync(newFile, "hello foo test");
 
     // act

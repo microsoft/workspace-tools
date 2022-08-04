@@ -1,12 +1,18 @@
 docs/
 lib/
 node_modules/
+temp/
+.rush/
+**/common/scripts/
 
 yarn.lock
-pnpm-lock.yml
+pnpm-lock.*
 package-lock.json
 
 change
 CHANGELOG.json
 CHANGELOG.md
 SECURITY.md
+
+.DS_Store
+*.log*

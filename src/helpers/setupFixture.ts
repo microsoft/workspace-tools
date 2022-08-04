@@ -54,7 +54,7 @@ export function setupFixture(fixtureName?: string) {
 
   // Copy and commit the fixture if requested
   if (fixturePath) {
-    fs.copySync(fixturePath, cwd);
+    fs.copySync(fixturePath, cwd, { filter: (src) => !/[/\\](node_modules|temp|.rush)([/\\]|$)/.test(src) });
     stageAndCommit(["."], "test", cwd);
   }
 

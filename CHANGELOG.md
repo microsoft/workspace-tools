@@ -1,8 +1,16 @@
 # Change Log - workspace-tools
 
-This log was last generated on Wed, 03 Aug 2022 08:01:34 GMT and should not be manually modified.
+This log was last generated on Thu, 04 Aug 2022 08:01:48 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.25.4
+
+Thu, 04 Aug 2022 08:01:48 GMT
+
+### Patches
+
+- Switch from multimatch to micromatch (elcraig@microsoft.com)
 
 ## 0.25.3
 

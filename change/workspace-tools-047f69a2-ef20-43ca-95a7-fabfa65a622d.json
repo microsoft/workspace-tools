@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "Use ES2019 output (compatible with Node 14)",
+  "packageName": "workspace-tools",
+  "email": "elcraig@microsoft.com",
+  "dependentChangeType": "patch"
+}

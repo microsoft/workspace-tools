@@ -39,12 +39,12 @@ describe("getWorkspaces", () => {
 
       const packageAPath = path.join(packageRoot, "packages", "package-a");
       const packageBPath = path.join(packageRoot, "packages", "package-b");
-      const individualPath = path.join(packageRoot, "packages", "individual");
+      const individualPath = path.join(packageRoot, "individual");
 
       expect(workspacesPackageInfo).toMatchObject([
-        { name: "individual", path: individualPath },
         { name: "package-a", path: packageAPath },
         { name: "package-b", path: packageBPath },
+        { name: "individual", path: individualPath },
       ]);
     });
   });

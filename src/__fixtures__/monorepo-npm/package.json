@@ -13,5 +13,8 @@
   },
   "devDependencies": {
     "typescript": "^4.0.0"
+  },
+  "engines": {
+    "npm": "8.x"
   }
 }
