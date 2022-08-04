@@ -2,6 +2,29 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Thu, 04 Aug 2022 08:01:48 GMT",
+      "tag": "workspace-tools_v0.25.4",
+      "version": "0.25.4",
+      "comments": {
+        "none": [
+          {
+            "author": "email not defined",
+            "package": "workspace-tools",
+            "commit": "32e204ebc47d7e619b6b16e6b34873e6b1c7a96f",
+            "comment": "Pin devDependency @types/micromatch to 4.0.2"
+          }
+        ],
+        "patch": [
+          {
+            "author": "elcraig@microsoft.com",
+            "package": "workspace-tools",
+            "commit": "95ad5f346a1ce0c6e4c1b2d5bb173ceeac136aa2",
+            "comment": "Switch from multimatch to micromatch"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 03 Aug 2022 08:01:34 GMT",
       "tag": "workspace-tools_v0.25.3",
       "version": "0.25.3",

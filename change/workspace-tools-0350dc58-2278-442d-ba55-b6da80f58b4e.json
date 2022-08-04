@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Pin devDependency @types/micromatch to 4.0.2",
-  "packageName": "workspace-tools",
-  "email": "email not defined",
-  "dependentChangeType": "none"
-}
