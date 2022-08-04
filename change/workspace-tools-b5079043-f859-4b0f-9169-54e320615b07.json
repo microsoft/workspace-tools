@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Gracefully handle not having a package.json at git root",
+  "packageName": "workspace-tools",
+  "email": "boabdelm@microsoft.com",
+  "dependentChangeType": "patch"
+}
