@@ -36,7 +36,7 @@
     "@types/git-url-parse": "9.0.1",
     "@types/jest": "28.1.6",
     "@types/jju": "1.4.2",
-    "@types/micromatch": "^4.0.2",
+    "@types/micromatch": "4.0.2",
     "@types/node": "13.13.5",
     "@types/tmp": "0.2.3",
     "@types/yarnpkg__lockfile": "1.1.5",
