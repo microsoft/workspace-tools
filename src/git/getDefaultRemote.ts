@@ -53,7 +53,7 @@ export function getDefaultRemote(cwdOrOptions: string | GetDefaultRemoteOptions)
   try {
     packageJson = JSON.parse(fs.readFileSync(packageJsonPath, "utf8").trim());
   } catch (e) {
-    throw new Error(`Could not read "${packageJsonPath}"`);
+    logOrThrow(`Could not read "${packageJsonPath}"`);
   }
 
   const { repository } = packageJson;

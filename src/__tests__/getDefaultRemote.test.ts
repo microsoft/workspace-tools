@@ -11,7 +11,7 @@ describe("getDefaultRemote", () => {
     gitFailFast(["remote", ...args], { cwd, noExitCode: true });
   }
 
-  function expectConsole(n: number, message: string) {
+  function expectConsole(n: number, message: string | RegExp) {
     expect(consoleMock.mock.calls.length).toBeGreaterThanOrEqual(n);
     expect(consoleMock.mock.calls[n - 1].join(" ")).toMatch(message);
   }
@@ -35,9 +35,11 @@ describe("getDefaultRemote", () => {
     expect(() => getDefaultRemote({ cwd: os.tmpdir(), strict: true })).toThrow("is not in a git repository");
   });
 
-  it("throws if package.json not found", () => {
+  it("handles no package.json at git root", () => {
     cwd = setupFixture();
-    expect(() => getDefaultRemote({ cwd })).toThrow(/Could not read .*package\.json/);
+    expect(getDefaultRemote({ cwd, verbose: true })).toBe("origin");
+    expectConsole(1, /Could not read .*package\.json/);
+
     expect(() => getDefaultRemote({ cwd, strict: true })).toThrow(/Could not read .*package\.json/);
   });
 
