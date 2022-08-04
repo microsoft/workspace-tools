@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Update devDependency typescript to v4.7.4",
+  "packageName": "workspace-tools",
+  "email": "renovate@whitesourcesoftware.com",
+  "dependentChangeType": "none"
+}
