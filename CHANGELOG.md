@@ -1,8 +1,16 @@
 # Change Log - workspace-tools
 
-This log was last generated on Thu, 04 Aug 2022 21:47:46 GMT and should not be manually modified.
+This log was last generated on Mon, 08 Aug 2022 22:44:02 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.26.1
+
+Mon, 08 Aug 2022 22:44:02 GMT
+
+### Patches
+
+- Add missing type exports (elcraig@microsoft.com)
 
 ## 0.26.0
 

@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Add missing type exports",
-  "packageName": "workspace-tools",
-  "email": "elcraig@microsoft.com",
-  "dependentChangeType": "patch"
-}

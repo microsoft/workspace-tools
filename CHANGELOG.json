@@ -2,6 +2,41 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Mon, 08 Aug 2022 22:44:02 GMT",
+      "tag": "workspace-tools_v0.26.1",
+      "version": "0.26.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "elcraig@microsoft.com",
+            "package": "workspace-tools",
+            "commit": "fa0d932a0a0ae63ebf16357b9a5ca42412405e95",
+            "comment": "Add missing type exports"
+          }
+        ],
+        "none": [
+          {
+            "author": "email not defined",
+            "package": "workspace-tools",
+            "commit": "05c206e967548245798da2f8b41ded7415e757e9",
+            "comment": "Update devDependency beachball to v2.26.1"
+          },
+          {
+            "author": "email not defined",
+            "package": "workspace-tools",
+            "commit": "9349737ca68eb1a10bc56c19911a08027fce9f48",
+            "comment": "Update devDependency gh-pages to v4"
+          },
+          {
+            "author": "email not defined",
+            "package": "workspace-tools",
+            "commit": "dbd019cf7c1cafb1b9a503461cc49acce936278f",
+            "comment": "Lock file maintenance"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 04 Aug 2022 21:47:46 GMT",
       "tag": "workspace-tools_v0.26.0",
       "version": "0.26.0",
