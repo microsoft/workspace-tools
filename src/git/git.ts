@@ -29,7 +29,7 @@ export type GitProcessOutput = {
   success: boolean;
 };
 /** Observes the git operations called from `git()` or `gitFailFast()` */
-type GitObserver = (args: string[], output: GitProcessOutput) => void;
+export type GitObserver = (args: string[], output: GitProcessOutput) => void;
 const observers: GitObserver[] = [];
 let observing: boolean;
 

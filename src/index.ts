@@ -5,6 +5,7 @@ export * from "./graph/index";
 export * from "./lockfile";
 export * from "./paths";
 export * from "./scope";
+export * from "./types/PackageGraph";
 export * from "./types/PackageInfo";
 export * from "./types/WorkspaceInfo";
 export * from "./workspaces/findWorkspacePath";

@@ -12,8 +12,3 @@ export interface PackageGraph {
   // Edges
   dependencies: PackageDependency[];
 }
-
-/** Package graph visitor is called as it visits every package in dependency order */
-export interface PackageGraphVisitor {
-  (pkg: string, dependencies: string[], dependents: string[]): void;
-}

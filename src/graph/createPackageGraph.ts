@@ -1,6 +1,6 @@
 import type { PackageInfos } from "../types/PackageInfo";
 import type { DependencyMap } from "./createDependencyMap";
-import type { PackageGraph, PackageGraphVisitor } from "../types/PackageGraph";
+import type { PackageGraph } from "../types/PackageGraph";
 
 import { createDependencyMap } from "./createDependencyMap";
 import micromatch from "micromatch";
@@ -12,6 +12,11 @@ export interface PackageGraphFilter {
   includeDependents?: boolean;
   withDevDependencies?: boolean;
   withPeerDependencies?: boolean;
+}
+
+/** Package graph visitor is called as it visits every package in dependency order */
+interface PackageGraphVisitor {
+  (pkg: string, dependencies: string[], dependents: string[]): void;
 }
 
 export function createPackageGraph(
