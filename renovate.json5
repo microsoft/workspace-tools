@@ -30,6 +30,9 @@
   // Limit 5 PRs per hour (could be changed later based on preference)
   "prHourlyLimit": 5,
 
+  "reviewers": ["ecraig12345", "kenotron"],
+  "reviewersSampleSize": 1,
+
   "packageRules": [
     // Limit upgrades of packages that were converted to ESM in newer versions
     // (the repo and in particular jest isn't set up for ESM yet)
