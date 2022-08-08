@@ -46,3 +46,4 @@ jobs:
           yarn release:docs
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_DEBUG: gh-pages
