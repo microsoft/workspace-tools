@@ -882,10 +882,10 @@ balanced-match@^1.0.0:
   resolved "https://registry.yarnpkg.com/balanced-match/-/balanced-match-1.0.2.tgz#e83e3a7e3f300b34cb9d87f615fa0cbf357690ee"
   integrity sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==
 
-beachball@2.26.0:
-  version "2.26.0"
-  resolved "https://registry.yarnpkg.com/beachball/-/beachball-2.26.0.tgz#2bb1ed4d4fcd7f9ae2e9ed1dea7f02e888d8a33f"
-  integrity sha512-jgnGejN0GERtaJGcCnOpyyMs2Hl6WDZenBty6d6Q+6/vNlolaTEqyGfczT1ox9jcS9XTNKHMzhZZHB7doullkQ==
+beachball@2.26.1:
+  version "2.26.1"
+  resolved "https://registry.yarnpkg.com/beachball/-/beachball-2.26.1.tgz#ea21c2019a986bf6f8878499debe8c619adc0d07"
+  integrity sha512-cBfx1A+vuOKERSBKXNRgVbmo6JBR+msZCnI4IQDcfKem5LOvXkuvMWHjVTAc4qHC+fT39oQjWcgMldW3LjBpyA==
   dependencies:
     cosmiconfig "^6.0.0"
     execa "^4.0.3"
