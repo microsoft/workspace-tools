@@ -20,17 +20,29 @@ jobs:
         with:
           token: ${{ secrets.repo_pat }}
           fetch-depth: 0
+
       - name: Install Node.js
         uses: actions/setup-node@v3
         with:
           node-version-file: .nvmrc
+
       - run: yarn --frozen-lockfile
-      - run: yarn checkchange
+
       - run: yarn build
+
       - run: yarn test
-      - run: |
+
+      - name: Publish package
+        run: |
           git config user.email "kchau@microsoft.com"
           git config user.name "Ken Chau"
-      - run: yarn release -y -n $NPM_AUTHTOKEN
+          yarn release -y -n $NPM_AUTHTOKEN
         env:
           NPM_AUTHTOKEN: ${{ secrets.npm_authtoken }}
+
+      - Name:
+        run: |
+          git remote set-url origin https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY.git
+          yarn release:docs
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

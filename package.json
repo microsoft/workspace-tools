@@ -14,7 +14,7 @@
   "scripts": {
     "build": "tsc",
     "build:docs": "typedoc src/index.ts",
-    "release:docs": "typedoc src/index.ts && gh-pages -d docs",
+    "release:docs": "yarn build:docs && gh-pages -d docs",
     "change": "beachball change",
     "checkchange": "beachball check",
     "format": "prettier --write .",
