@@ -35,10 +35,24 @@ let observing: boolean;
 
 /**
  * Adds an observer for the git operations, e.g. for testing
- * @param observer
+ * @returns a function to remove the observer
  */
 export function addGitObserver(observer: GitObserver) {
   observers.push(observer);
+  return () => removeGitObserver(observer);
+}
+
+/** Clear all git observers */
+export function clearGitObservers() {
+  observers.splice(0, observers.length);
+}
+
+/** Remove a git observer */
+function removeGitObserver(observer: GitObserver) {
+  const index = observers.indexOf(observer);
+  if (index > -1) {
+    observers.splice(index, 1);
+  }
 }
 
 /**
