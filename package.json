@@ -40,7 +40,7 @@
     "@types/node": "14.18.23",
     "@types/tmp": "0.2.3",
     "@types/yarnpkg__lockfile": "1.1.5",
-    "beachball": "2.26.1",
+    "beachball": "2.30.0",
     "fs-extra": "10.1.0",
     "gh-pages": "4.0.0",
     "jest": "28.1.3",
