@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Fix listAllTrackedFiles if there are no tracked files'",
-  "packageName": "workspace-tools",
-  "email": "elcraig@microsoft.com",
-  "dependentChangeType": "patch"
-}

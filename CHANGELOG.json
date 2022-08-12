@@ -2,6 +2,29 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Fri, 12 Aug 2022 05:32:10 GMT",
+      "tag": "workspace-tools_v0.26.3",
+      "version": "0.26.3",
+      "comments": {
+        "none": [
+          {
+            "author": "email not defined",
+            "package": "workspace-tools",
+            "commit": "addac47344c01ba294f18bee28735c7133a00e82",
+            "comment": "Update devDependency beachball to v2.30.0"
+          }
+        ],
+        "patch": [
+          {
+            "author": "elcraig@microsoft.com",
+            "package": "workspace-tools",
+            "commit": "8fed2362e2531c996d800a8c2aba02ec97508aa2",
+            "comment": "Fix listAllTrackedFiles if there are no tracked files'"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 12 Aug 2022 01:57:26 GMT",
       "tag": "workspace-tools_v0.26.2",
       "version": "0.26.2",
