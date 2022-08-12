@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Add cleanup functions for addGitObserver",
-  "packageName": "workspace-tools",
-  "email": "elcraig@microsoft.com",
-  "dependentChangeType": "patch"
-}

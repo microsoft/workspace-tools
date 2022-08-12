@@ -1,8 +1,16 @@
 # Change Log - workspace-tools
 
-This log was last generated on Mon, 08 Aug 2022 22:44:02 GMT and should not be manually modified.
+This log was last generated on Fri, 12 Aug 2022 01:57:26 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.26.2
+
+Fri, 12 Aug 2022 01:57:26 GMT
+
+### Patches
+
+- Add cleanup functions for addGitObserver (elcraig@microsoft.com)
 
 ## 0.26.1
 
