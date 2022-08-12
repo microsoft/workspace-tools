@@ -279,7 +279,7 @@ export function getDefaultBranch(cwd: string) {
 export function listAllTrackedFiles(patterns: string[], cwd: string) {
   const results = git(["ls-files", ...patterns], { cwd });
 
-  return results.success ? results.stdout.split(/\n/) : [];
+  return results.success && results.stdout.trim() ? results.stdout.trim().split(/\n/) : [];
 }
 
 function processGitOutput(output: GitProcessOutput) {
