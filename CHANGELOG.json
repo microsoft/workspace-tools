@@ -2,6 +2,39 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Tue, 16 Aug 2022 08:01:18 GMT",
+      "tag": "workspace-tools_v0.26.3",
+      "version": "0.26.3",
+      "comments": {
+        "none": [
+          {
+            "author": "renovate@whitesourcesoftware.com",
+            "package": "workspace-tools",
+            "commit": "7a3fcf0a603c07969990955adae47c2d78a25258",
+            "comment": "Update devDependency @types/node to v14.18.24"
+          },
+          {
+            "author": "email not defined",
+            "package": "workspace-tools",
+            "commit": "f6db3147dffb607f03bf601bc738f80367ab4e70",
+            "comment": "Update devDependency @types/jest to v28.1.7"
+          },
+          {
+            "author": "email not defined",
+            "package": "workspace-tools",
+            "commit": "3a5e63573913c0d4c8d89c1509e4fd08dc7cb41f",
+            "comment": "Lock file maintenance"
+          },
+          {
+            "author": "email not defined",
+            "package": "workspace-tools",
+            "commit": "00e6b048ef70209ed465c5f69c4836d137a250c7",
+            "comment": "Update devDependency ts-jest to v28.0.8"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 12 Aug 2022 05:32:10 GMT",
       "tag": "workspace-tools_v0.26.3",
       "version": "0.26.3",
