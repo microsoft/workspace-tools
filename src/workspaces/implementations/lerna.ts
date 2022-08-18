@@ -16,14 +16,14 @@ export function getLernaWorkspaceRoot(cwd: string): string {
   return path.dirname(lernaJsonPath);
 }
 
-export function getLernaWorkspaces(cwd: string): WorkspaceInfo {
+export function getLernaWorkspaces(cwd: string, ignorePatterns?: string[]): WorkspaceInfo {
   try {
     const lernaWorkspaceRoot = getLernaWorkspaceRoot(cwd);
     const lernaJsonPath = path.join(lernaWorkspaceRoot, "lerna.json");
 
     const lernaConfig = jju.parse(fs.readFileSync(lernaJsonPath, "utf-8"));
 
-    const packagePaths = getPackagePaths(lernaWorkspaceRoot, lernaConfig.packages);
+    const packagePaths = getPackagePaths(lernaWorkspaceRoot, lernaConfig.packages, ignorePatterns);
     const workspaceInfo = getWorkspacePackageInfo(packagePaths);
     return workspaceInfo;
   } catch {

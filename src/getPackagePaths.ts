@@ -3,7 +3,7 @@ import globby from "globby";
 
 const packagePathsCache: { [workspacesRoot: string]: string[] } = {};
 
-export function getPackagePaths(workspacesRoot: string, packages: string[]): string[] {
+export function getPackagePaths(workspacesRoot: string, packages: string[], ignorePatterns?: string[]): string[] {
   if (packagePathsCache[workspacesRoot]) {
     return packagePathsCache[workspacesRoot];
   }
@@ -14,7 +14,7 @@ export function getPackagePaths(workspacesRoot: string, packages: string[]): str
       {
         cwd: workspacesRoot,
         absolute: true,
-        ignore: ["**/node_modules/**"],
+        ignore: ["**/node_modules/**", "**/__fixtures__/**"],
         stats: false,
       }
     )
