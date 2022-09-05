@@ -1,4 +1,5 @@
 export * from "./createPackageGraph";
+export * from "./createDependencyMap";
 import { PackageInfos } from "../types/PackageInfo";
 import { createDependencyMap } from "./createDependencyMap";
 
