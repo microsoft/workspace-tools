@@ -3,6 +3,7 @@ export type Dependencies = { [key in string]: string };
 export type LockDependency = {
   version: string;
   dependencies?: Dependencies;
+  optionalDependencies?: Dependencies;
 };
 
 export type ParsedLock = {
