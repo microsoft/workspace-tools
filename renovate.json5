@@ -12,10 +12,16 @@
     "github>microsoft/m365-renovate-config:beachballLibraryRecommended",
     // Auto-merge PRs only affecting @types devDependencies
     "github>microsoft/m365-renovate-config:autoUpdateTypes",
+    // Disable updating to package versions that are converted to ESM
+    "github>microsoft/m365-renovate-config:disableEsmVersions",
     // Dedupe after updates, and periodically re-create the entire lock file so all deps are updated to latest
     "github>microsoft/m365-renovate-config:keepFresh",
-    // Group, schedule, and auto-merge all dependency updates in __fixtures__
-    "github>microsoft/m365-renovate-config:groupFixtureUpdates"
+    // Group various related updates
+    "github>microsoft/m365-renovate-config:groupMore",
+    // Group @types updates
+    "github>microsoft/m365-renovate-config:groupTypes",
+    // Don't update beyond Node 14
+    "github>microsoft/m365-renovate-config:restrictNode(14)"
   ],
 
   "ignorePaths": [
@@ -31,14 +37,5 @@
   "prHourlyLimit": 5,
 
   "reviewers": ["ecraig12345", "kenotron"],
-  "reviewersSampleSize": 1,
-
-  "packageRules": [
-    // Limit upgrades of packages that were converted to ESM in newer versions
-    // (the repo and in particular jest isn't set up for ESM yet)
-    { "matchPackageNames": ["find-up"], "allowedVersions": "<6.0.0" },
-    { "matchPackageNames": ["globby"], "allowedVersions": "<12.0.0" },
-    // For @types/node we're intentionally staying on 14
-    { "matchPackageNames": ["@types/node"], "allowedVersions": "<15.0.0" }
-  ]
+  "reviewersSampleSize": 1
 }
