@@ -11,7 +11,7 @@
     // Basic recommended config + generate change files
     "github>microsoft/m365-renovate-config:beachballLibraryRecommended",
     // Auto-merge PRs only affecting @types devDependencies
-    "github>microsoft/m365-renovate-config:autoUpdateTypes",
+    "github>microsoft/m365-renovate-config:automergeTypes",
     // Disable updating to package versions that are converted to ESM
     "github>microsoft/m365-renovate-config:disableEsmVersions",
     // Dedupe after updates, and periodically re-create the entire lock file so all deps are updated to latest
