@@ -4,12 +4,11 @@
     "lib": ["ES2019"],
     "module": "commonjs",
     "declaration": true,
+    "sourceMap": true,
     "strict": true,
     "allowJs": true,
     "esModuleInterop": true,
-    "outDir": "./lib",
     "forceConsistentCasingInFileNames": true,
     "types": ["node", "jest"]
-  },
-  "include": ["src"]
+  }
 }

@@ -1,0 +1,31 @@
+{
+  "name": "workspace-tools",
+  "version": "0.26.3",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/microsoft/workspace-tools"
+  },
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib/!(helpers|__*)"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "start": "tsc -w --preserveWatchOutput",
+    "test": "jest"
+  },
+  "dependencies": {
+    "@yarnpkg/lockfile": "^1.1.0",
+    "find-up": "^5.0.0",
+    "git-url-parse": "^12.0.0",
+    "globby": "^11.0.0",
+    "jju": "^1.4.0",
+    "micromatch": "^4.0.0",
+    "read-yaml-file": "^2.0.0"
+  },
+  "devDependencies": {
+    "workspace-tools-scripts": "*"
+  }
+}
