@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Exclude test helpers from published package",
+  "packageName": "workspace-tools",
+  "email": "elcraig@microsoft.com",
+  "dependentChangeType": "patch"
+}
