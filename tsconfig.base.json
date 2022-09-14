@@ -7,9 +7,7 @@
     "strict": true,
     "allowJs": true,
     "esModuleInterop": true,
-    "outDir": "./lib",
     "forceConsistentCasingInFileNames": true,
     "types": ["node", "jest"]
-  },
-  "include": ["src"]
+  }
 }
