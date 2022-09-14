@@ -8,11 +8,12 @@
     "url": "https://github.com/microsoft/workspace-tools"
   },
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "scripts"
   ],
   "scripts": {
     "build": "lage build",
-    "build:docs": "typedoc src/index.ts",
+    "build:docs": "typedoc",
     "release:docs": "yarn build:docs && gh-pages -d docs",
     "change": "beachball change",
     "checkchange": "beachball check",

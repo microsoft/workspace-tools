@@ -1,5 +1,5 @@
 {
-  "extends": "../../tsconfig.base.json",
+  "extends": "workspace-tools-scripts/tsconfig.base.json",
   "compilerOptions": {
     "outDir": "lib"
   },

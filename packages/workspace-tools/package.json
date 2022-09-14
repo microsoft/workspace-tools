@@ -24,5 +24,8 @@
     "jju": "^1.4.0",
     "micromatch": "^4.0.0",
     "read-yaml-file": "^2.0.0"
+  },
+  "devDependencies": {
+    "workspace-tools-scripts": "*"
   }
 }

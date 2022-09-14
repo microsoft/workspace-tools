@@ -4,6 +4,7 @@
     "lib": ["ES2019"],
     "module": "commonjs",
     "declaration": true,
+    "sourceMap": true,
     "strict": true,
     "allowJs": true,
     "esModuleInterop": true,
