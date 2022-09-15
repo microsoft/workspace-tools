@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Update dependency git-url-parse to v13",
-  "packageName": "workspace-tools",
-  "email": "email not defined",
-  "dependentChangeType": "patch"
-}

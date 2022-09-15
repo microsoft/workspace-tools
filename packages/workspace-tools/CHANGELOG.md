@@ -1,8 +1,16 @@
 # Change Log - workspace-tools
 
-This log was last generated on Thu, 15 Sep 2022 08:01:32 GMT and should not be manually modified.
+This log was last generated on Thu, 15 Sep 2022 23:30:21 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.26.5
+
+Thu, 15 Sep 2022 23:30:21 GMT
+
+### Patches
+
+- Update dependency git-url-parse to v13 (email not defined)
 
 ## 0.26.4
 

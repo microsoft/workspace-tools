@@ -2,6 +2,29 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Thu, 15 Sep 2022 23:30:21 GMT",
+      "tag": "workspace-tools_v0.26.5",
+      "version": "0.26.5",
+      "comments": {
+        "patch": [
+          {
+            "author": "email not defined",
+            "package": "workspace-tools",
+            "commit": "2b48bb4ecf12f796804d47b65639795a1ec280c7",
+            "comment": "Update dependency git-url-parse to v13"
+          }
+        ],
+        "none": [
+          {
+            "author": "renovate@whitesourcesoftware.com",
+            "package": "workspace-tools",
+            "commit": "9faa8f02eaffb072df4100834b0be54dc01e9f91",
+            "comment": "Update jest monorepo to v29"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 15 Sep 2022 08:01:32 GMT",
       "tag": "workspace-tools_v0.26.4",
       "version": "0.26.4",
