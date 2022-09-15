@@ -2,6 +2,35 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Thu, 15 Sep 2022 08:01:32 GMT",
+      "tag": "workspace-tools_v0.26.4",
+      "version": "0.26.4",
+      "comments": {
+        "patch": [
+          {
+            "author": "elcraig@microsoft.com",
+            "package": "workspace-tools",
+            "commit": "848174c2221da9c5b707835bd04e42c70a8a4537",
+            "comment": "Exclude test helpers from published package"
+          }
+        ],
+        "none": [
+          {
+            "author": "email not defined",
+            "package": "workspace-tools",
+            "commit": "40b1a517db95334fc0399c6a19e7672fecbbc653",
+            "comment": "Update devDependency @types/jest to v28.1.8"
+          },
+          {
+            "author": "renovate@whitesourcesoftware.com",
+            "package": "workspace-tools",
+            "commit": "baaf3cadd1c6a4b4800636888e45e75dc403568d",
+            "comment": "Update devDependency @types/node to v14.18.29"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 16 Aug 2022 08:01:18 GMT",
       "tag": "workspace-tools_v0.26.3",
       "version": "0.26.3",
