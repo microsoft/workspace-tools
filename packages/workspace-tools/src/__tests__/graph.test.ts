@@ -10,9 +10,12 @@ describe("createPackageGraph", () => {
     };
 
     const actual = createPackageGraph(allPackages, { namePatterns: [], includeDependencies: true });
-    /*
-    { packages: [], dependencies: [] }
-    */
+    expect(actual).toMatchInlineSnapshot(`
+      {
+        "dependencies": [],
+        "packages": [],
+      }
+    `);
   });
 
   it("can exclude peer dependencies", () => {
