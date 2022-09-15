@@ -1,9 +1,7 @@
 export * from "./dependencies/index";
 export * from "./getPackageInfos";
-export * from "./git";
 export * from "./graph/index";
 export * from "./lockfile";
-export * from "./paths";
 export * from "./scope";
 export * from "./types/PackageGraph";
 export * from "./types/PackageInfo";
@@ -18,3 +16,6 @@ export * from "./workspaces/getChangedPackages";
 export * from "./workspaces/getPackagesByFiles";
 export * from "./workspaces/listOfWorkspacePackageNames";
 export * from "./workspaces/workspaces";
+
+export * from "workspace-tools-git";
+export * from "workspace-tools-paths";

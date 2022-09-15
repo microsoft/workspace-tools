@@ -2,7 +2,7 @@ import fs from "fs";
 import jju from "jju";
 import path from "path";
 import { getPackagePaths } from "../../getPackagePaths";
-import { searchUp } from "../../paths";
+import { searchUp } from "workspace-tools-paths";
 import { WorkspaceInfo } from "../../types/WorkspaceInfo";
 import { getWorkspacePackageInfo } from "../getWorkspacePackageInfo";
 

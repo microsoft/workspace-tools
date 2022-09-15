@@ -4,7 +4,7 @@ import { getPackagePaths } from "../../getPackagePaths";
 import { WorkspaceInfo } from "../../types/WorkspaceInfo";
 import { getWorkspacePackageInfo } from "../getWorkspacePackageInfo";
 import { readYaml } from "../../lockfile/readYaml";
-import { searchUp } from "../../paths";
+import { searchUp } from "workspace-tools-paths";
 
 type PnpmWorkspaces = {
   packages: string[];

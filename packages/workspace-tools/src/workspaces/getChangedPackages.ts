@@ -5,7 +5,7 @@ import {
   getStagedChanges,
   getUnstagedChanges,
   getUntrackedChanges,
-} from "../git";
+} from "workspace-tools-git";
 
 import { getPackagesByFiles } from "./getPackagesByFiles";
 /**

@@ -2,7 +2,7 @@ import path from "path";
 import fs from "fs";
 
 import { cleanupFixtures, setupFixture, setupLocalRemote } from "workspace-tools-scripts/jest/setupFixture";
-import { stageAndCommit, git } from "../git";
+import { stageAndCommit, git } from "workspace-tools-git";
 import { getChangedPackages, getChangedPackagesBetweenRefs } from "../workspaces/getChangedPackages";
 
 describe("getChangedPackages()", () => {

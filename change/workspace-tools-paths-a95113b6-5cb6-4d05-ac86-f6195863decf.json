@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Create package",
+  "packageName": "workspace-tools-paths",
+  "email": "elcraig@microsoft.com",
+  "dependentChangeType": "patch"
+}

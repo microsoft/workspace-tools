@@ -1,5 +1,5 @@
 import path from "path";
-import { searchUp } from "../../paths";
+import { searchUp } from "workspace-tools-paths";
 
 export type WorkspaceImplementations = "yarn" | "pnpm" | "rush" | "npm" | "lerna";
 export interface ImplementationAndLockFile {

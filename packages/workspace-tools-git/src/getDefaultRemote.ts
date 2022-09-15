@@ -1,7 +1,6 @@
 import fs from "fs";
 import path from "path";
-import { findGitRoot } from "../paths";
-import { PackageInfo } from "../types/PackageInfo";
+import { findGitRoot } from "workspace-tools-paths";
 import { getRepositoryName } from "./getRepositoryName";
 import { git } from "./git";
 
@@ -48,7 +47,7 @@ export function getDefaultRemote(cwdOrOptions: string | GetDefaultRemoteOptions)
 
   const gitRoot = findGitRoot(cwd);
 
-  let packageJson: Partial<PackageInfo> = {};
+  let packageJson: { repository?: string | { url?: string } } = {};
   const packageJsonPath = path.join(gitRoot, "package.json");
   try {
     packageJson = JSON.parse(fs.readFileSync(packageJsonPath, "utf8").trim());

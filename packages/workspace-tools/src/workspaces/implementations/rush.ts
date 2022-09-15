@@ -4,7 +4,7 @@ import fs from "fs";
 
 import { WorkspaceInfo } from "../../types/WorkspaceInfo";
 import { getWorkspacePackageInfo } from "../getWorkspacePackageInfo";
-import { searchUp } from "../../paths";
+import { searchUp } from "workspace-tools-paths";
 
 export function getRushWorkspaceRoot(cwd: string): string {
   const rushJsonPath = searchUp("rush.json", cwd);

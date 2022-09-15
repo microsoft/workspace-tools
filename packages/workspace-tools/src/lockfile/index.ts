@@ -2,7 +2,7 @@
 import fs from "fs";
 import { ParsedLock, PnpmLockFile, NpmLockFile } from "./types";
 import { nameAtVersion } from "./nameAtVersion";
-import { searchUp } from "../paths";
+import { searchUp } from "workspace-tools-paths";
 import { parsePnpmLock } from "./parsePnpmLock";
 import { parseNpmLock } from "./parseNpmLock";
 import { readYaml } from "./readYaml";

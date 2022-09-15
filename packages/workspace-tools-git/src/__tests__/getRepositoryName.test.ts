@@ -1,4 +1,4 @@
-import { getRepositoryName } from "../git/getRepositoryName";
+import { getRepositoryName } from "../getRepositoryName";
 
 // This mostly uses gitUrlParse internally, so only test a couple basic github cases plus the
 // the special cases we added to handle the annoyingly large variety of equivalent VSTS/ADO URLs
