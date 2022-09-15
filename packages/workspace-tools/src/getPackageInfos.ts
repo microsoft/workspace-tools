@@ -1,7 +1,7 @@
 import fs from "fs";
 import { PackageInfos } from "./types/PackageInfo";
 import { infoFromPackageJson } from "./infoFromPackageJson";
-import { getAllPackageJsonFiles } from "./workspaces/workspaces";
+import { getAllPackageJsonFiles } from "./workspaces/getAllPackageJsonFiles";
 
 export function getPackageInfos(cwd: string) {
   const packageJsonFiles = getAllPackageJsonFiles(cwd);

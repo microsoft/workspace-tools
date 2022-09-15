@@ -1,6 +1,6 @@
 import micromatch from "micromatch";
 import path from "path";
-import { getWorkspaces } from "./getWorkspaces";
+import { getWorkspacePackages } from "./getWorkspacePackages";
 
 /**
  * Given a list of files, finds all packages names that contain those files
@@ -17,7 +17,10 @@ export function getPackagesByFiles(
   ignoreGlobs: string[] = [],
   returnAllPackagesOnNoMatch: boolean = false
 ) {
-  const workspaceInfo = getWorkspaces(workspaceRoot);
+  const workspacePackages = Object.values(getWorkspacePackages(workspaceRoot)).map((pkg) => ({
+    name: pkg.name,
+    path: path.dirname(pkg.packageJsonPath),
+  }));
   const ignoreSet = new Set(micromatch(files, ignoreGlobs));
 
   files = files.filter((change) => !ignoreSet.has(change));
@@ -25,17 +28,17 @@ export function getPackagesByFiles(
   const packages = new Set<string>();
 
   for (const file of files) {
-    const candidates = workspaceInfo.filter(
-      (pkgPath) => file.indexOf(path.relative(workspaceRoot, pkgPath.path).replace(/\\/g, "/")) === 0
+    const candidates = workspacePackages.filter((pkg) =>
+      file.startsWith(path.relative(workspaceRoot, pkg.path).replace(/\\/g, "/"))
     );
 
-    if (candidates && candidates.length > 0) {
+    if (candidates.length > 0) {
       const found = candidates.reduce((found, item) => {
         return found.path.length > item.path.length ? found : item;
       }, candidates[0]);
       packages.add(found.name);
     } else if (returnAllPackagesOnNoMatch) {
-      return workspaceInfo.map((pkg) => pkg.name);
+      return workspacePackages.map((pkg) => pkg.name);
     }
   }
 

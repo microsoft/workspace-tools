@@ -1,8 +1,8 @@
 import fs from "fs";
 import path from "path";
 import { getPackagePaths } from "../../getPackagePaths";
-import { PackageJson } from "../../types/PackageInfo";
-import { getWorkspacePackageInfo } from "../getWorkspacePackageInfo";
+import { PackageInfos, PackageJson } from "../../types/PackageInfo";
+import { getPackageInfosFromPaths } from "../getPackageInfosFromPaths";
 
 function getRootPackageJson(packageJsonWorkspacesRoot: string) {
   const packageJsonFile = path.join(packageJsonWorkspacesRoot, "package.json");
@@ -29,14 +29,13 @@ function getPackages(packageJson: PackageJson): string[] {
   return workspaces.packages;
 }
 
-export function getWorkspaceInfoFromWorkspaceRoot(packageJsonWorkspacesRoot: string) {
+export function getNpmWorkspacePackages(npmWorkspaceRoot: string): PackageInfos {
   try {
-    const rootPackageJson = getRootPackageJson(packageJsonWorkspacesRoot);
+    const rootPackageJson = getRootPackageJson(npmWorkspaceRoot);
     const packages = getPackages(rootPackageJson);
-    const packagePaths = getPackagePaths(packageJsonWorkspacesRoot, packages);
-    const workspaceInfo = getWorkspacePackageInfo(packagePaths);
-    return workspaceInfo;
+    const packagePaths = getPackagePaths(npmWorkspaceRoot, packages);
+    return getPackageInfosFromPaths(packagePaths);
   } catch {
-    return [];
+    return {};
   }
 }

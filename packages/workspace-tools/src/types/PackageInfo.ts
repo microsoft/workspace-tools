@@ -22,6 +22,7 @@ export interface PackageInfo extends PackageJson {
   packageJsonPath: string;
 }
 
+/** Mapping from package name to package info */
 export interface PackageInfos {
   [pkgName: string]: PackageInfo;
 }
