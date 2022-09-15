@@ -30,18 +30,18 @@ describe("createPackageGraph", () => {
       withPeerDependencies: false,
     });
     expect(actual).toMatchInlineSnapshot(`
-      Object {
-        "dependencies": Array [
-          Object {
+      {
+        "dependencies": [
+          {
             "dependency": "c",
             "name": "b",
           },
-          Object {
+          {
             "dependency": "d",
             "name": "b",
           },
         ],
-        "packages": Array [
+        "packages": [
           "b",
           "c",
           "d",
@@ -63,14 +63,14 @@ describe("createPackageGraph", () => {
       withDevDependencies: false,
     });
     expect(actual).toMatchInlineSnapshot(`
-      Object {
-        "dependencies": Array [
-          Object {
+      {
+        "dependencies": [
+          {
             "dependency": "c",
             "name": "b",
           },
         ],
-        "packages": Array [
+        "packages": [
           "b",
           "c",
         ],
@@ -87,9 +87,9 @@ describe("createPackageGraph", () => {
 
     const actual = createPackageGraph(allPackages, { namePatterns: ["a", "b"] });
     expect(actual).toMatchInlineSnapshot(`
-      Object {
-        "dependencies": Array [],
-        "packages": Array [
+      {
+        "dependencies": [],
+        "packages": [
           "b",
           "a",
         ],
@@ -106,18 +106,18 @@ describe("createPackageGraph", () => {
 
     const actual = createPackageGraph(allPackages);
     expect(actual).toMatchInlineSnapshot(`
-      Object {
-        "dependencies": Array [
-          Object {
+      {
+        "dependencies": [
+          {
             "dependency": "c",
             "name": "b",
           },
-          Object {
+          {
             "dependency": "b",
             "name": "a",
           },
         ],
-        "packages": Array [
+        "packages": [
           "c",
           "b",
           "a",
@@ -150,22 +150,22 @@ describe("createPackageGraph", () => {
       },
     ]);
     expect(actual).toMatchInlineSnapshot(`
-      Object {
-        "dependencies": Array [
-          Object {
+      {
+        "dependencies": [
+          {
             "dependency": "e",
             "name": "b",
           },
-          Object {
+          {
             "dependency": "e",
             "name": "c",
           },
-          Object {
+          {
             "dependency": "b",
             "name": "i",
           },
         ],
-        "packages": Array [
+        "packages": [
           "e",
           "b",
           "c",
@@ -199,34 +199,34 @@ describe("createPackageGraph", () => {
       },
     ]);
     expect(actual).toMatchInlineSnapshot(`
-      Object {
-        "dependencies": Array [
-          Object {
+      {
+        "dependencies": [
+          {
             "dependency": "e",
             "name": "b",
           },
-          Object {
+          {
             "dependency": "e",
             "name": "c",
           },
-          Object {
+          {
             "dependency": "b",
             "name": "i",
           },
-          Object {
+          {
             "dependency": "f",
             "name": "e",
           },
-          Object {
+          {
             "dependency": "h",
             "name": "e",
           },
-          Object {
+          {
             "dependency": "j",
             "name": "h",
           },
         ],
-        "packages": Array [
+        "packages": [
           "e",
           "b",
           "c",
@@ -258,46 +258,46 @@ describe("createPackageGraph", () => {
       includeDependents: true,
     });
     expect(actual).toMatchInlineSnapshot(`
-      Object {
-        "dependencies": Array [
-          Object {
+      {
+        "dependencies": [
+          {
             "dependency": "e",
             "name": "c",
           },
-          Object {
+          {
             "dependency": "f",
             "name": "e",
           },
-          Object {
+          {
             "dependency": "h",
             "name": "e",
           },
-          Object {
+          {
             "dependency": "e",
             "name": "b",
           },
-          Object {
+          {
             "dependency": "d",
             "name": "b",
           },
-          Object {
+          {
             "dependency": "b",
             "name": "i",
           },
-          Object {
+          {
             "dependency": "f",
             "name": "d",
           },
-          Object {
+          {
             "dependency": "d",
             "name": "a",
           },
-          Object {
+          {
             "dependency": "j",
             "name": "h",
           },
         ],
-        "packages": Array [
+        "packages": [
           "c",
           "e",
           "f",
@@ -333,22 +333,22 @@ describe("createPackageGraph", () => {
     });
 
     expect(actual).toMatchInlineSnapshot(`
-      Object {
-        "dependencies": Array [
-          Object {
+      {
+        "dependencies": [
+          {
             "dependency": "f",
             "name": "e",
           },
-          Object {
+          {
             "dependency": "h",
             "name": "e",
           },
-          Object {
+          {
             "dependency": "j",
             "name": "h",
           },
         ],
-        "packages": Array [
+        "packages": [
           "e",
           "f",
           "h",
@@ -367,14 +367,14 @@ describe("createPackageGraph", () => {
 
     const actual = createPackageGraph(allPackages, { namePatterns: ["b"], includeDependencies: true });
     expect(actual).toMatchInlineSnapshot(`
-      Object {
-        "dependencies": Array [
-          Object {
+      {
+        "dependencies": [
+          {
             "dependency": "c",
             "name": "b",
           },
         ],
-        "packages": Array [
+        "packages": [
           "b",
           "c",
         ],
@@ -391,14 +391,14 @@ describe("createPackageGraph", () => {
 
     const actual = createPackageGraph(allPackages, { namePatterns: ["b"], includeDependents: true });
     expect(actual).toMatchInlineSnapshot(`
-      Object {
-        "dependencies": Array [
-          Object {
+      {
+        "dependencies": [
+          {
             "dependency": "b",
             "name": "a",
           },
         ],
-        "packages": Array [
+        "packages": [
           "b",
           "a",
         ],
@@ -415,18 +415,18 @@ describe("createPackageGraph", () => {
 
     const actual = createPackageGraph(allPackages, { namePatterns: ["a"], includeDependencies: true });
     expect(actual).toMatchInlineSnapshot(`
-      Object {
-        "dependencies": Array [
-          Object {
+      {
+        "dependencies": [
+          {
             "dependency": "b",
             "name": "a",
           },
-          Object {
+          {
             "dependency": "c",
             "name": "b",
           },
         ],
-        "packages": Array [
+        "packages": [
           "a",
           "b",
           "c",
@@ -445,18 +445,18 @@ describe("createPackageGraph", () => {
     const actual = createPackageGraph(allPackages, { namePatterns: ["c"], includeDependents: true });
 
     expect(actual).toMatchInlineSnapshot(`
-      Object {
-        "dependencies": Array [
-          Object {
+      {
+        "dependencies": [
+          {
             "dependency": "c",
             "name": "b",
           },
-          Object {
+          {
             "dependency": "b",
             "name": "a",
           },
         ],
-        "packages": Array [
+        "packages": [
           "c",
           "b",
           "a",
@@ -474,29 +474,29 @@ describe("createPackageGraph", () => {
 
     const actual = createPackageGraph(allPackages, { namePatterns: ["a", "b"], includeDependencies: true });
     expect(actual).toMatchInlineSnapshot(`
-          Object {
-            "dependencies": Array [
-              Object {
-                "dependency": "c",
-                "name": "b",
-              },
-              Object {
-                "dependency": "d",
-                "name": "b",
-              },
-              Object {
-                "dependency": "c",
-                "name": "a",
-              },
-            ],
-            "packages": Array [
-              "b",
-              "c",
-              "d",
-              "a",
-            ],
-          }
-      `);
+      {
+        "dependencies": [
+          {
+            "dependency": "c",
+            "name": "b",
+          },
+          {
+            "dependency": "d",
+            "name": "b",
+          },
+          {
+            "dependency": "c",
+            "name": "a",
+          },
+        ],
+        "packages": [
+          "b",
+          "c",
+          "d",
+          "a",
+        ],
+      }
+    `);
   });
 
   it("can get dependents for multiple patterns given", () => {
@@ -509,22 +509,22 @@ describe("createPackageGraph", () => {
 
     const actual = createPackageGraph(allPackages, { namePatterns: ["c", "d"], includeDependents: true });
     expect(actual).toMatchInlineSnapshot(`
-      Object {
-        "dependencies": Array [
-          Object {
+      {
+        "dependencies": [
+          {
             "dependency": "d",
             "name": "b",
           },
-          Object {
+          {
             "dependency": "c",
             "name": "a",
           },
-          Object {
+          {
             "dependency": "c",
             "name": "b",
           },
         ],
-        "packages": Array [
+        "packages": [
           "d",
           "b",
           "c",
@@ -544,9 +544,9 @@ describe("createPackageGraph", () => {
     const actual = createPackageGraph(allPackages);
 
     expect(actual).toMatchInlineSnapshot(`
-      Object {
-        "dependencies": Array [],
-        "packages": Array [
+      {
+        "dependencies": [],
+        "packages": [
           "c",
           "b",
           "a",
@@ -565,9 +565,9 @@ describe("createPackageGraph", () => {
     const actual = createPackageGraph(allPackages);
 
     expect(actual).toMatchInlineSnapshot(`
-      Object {
-        "dependencies": Array [],
-        "packages": Array [
+      {
+        "dependencies": [],
+        "packages": [
           "c",
           "b",
           "a",
@@ -586,22 +586,22 @@ describe("createPackageGraph", () => {
     const actual = createPackageGraph(allPackages, { namePatterns: ["a"], includeDependencies: true });
 
     expect(actual).toMatchInlineSnapshot(`
-      Object {
-        "dependencies": Array [
-          Object {
+      {
+        "dependencies": [
+          {
             "dependency": "b",
             "name": "a",
           },
-          Object {
+          {
             "dependency": "c",
             "name": "b",
           },
-          Object {
+          {
             "dependency": "a",
             "name": "c",
           },
         ],
-        "packages": Array [
+        "packages": [
           "a",
           "b",
           "c",
