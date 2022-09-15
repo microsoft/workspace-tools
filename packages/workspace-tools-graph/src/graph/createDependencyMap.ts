@@ -1,5 +1,5 @@
 import { getPackageDependencies, PackageDependenciesOptions } from "./getPackageDependencies";
-import { PackageInfos } from "../types/PackageInfo";
+import { PackageInfos } from "workspace-tools-types";
 
 /** @internal */
 export interface DependencyMap {

@@ -1,4 +1,4 @@
-import { PackageInfo, PackageInfos } from "../types/PackageInfo";
+import { PackageInfo, PackageInfos } from "workspace-tools-types";
 
 export interface PackageDependenciesOptions {
   withDevDependencies?: boolean;

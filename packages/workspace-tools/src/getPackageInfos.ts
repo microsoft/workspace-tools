@@ -1,5 +1,5 @@
 import fs from "fs";
-import { PackageInfos } from "./types/PackageInfo";
+import { PackageInfos } from "workspace-tools-types";
 import { infoFromPackageJson } from "./infoFromPackageJson";
 import { getAllPackageJsonFiles } from "./workspaces/workspaces";
 

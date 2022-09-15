@@ -1,4 +1,4 @@
-import { PackageInfo } from "./types/PackageInfo";
+import { PackageInfo } from "workspace-tools-types";
 
 export function infoFromPackageJson(
   packageJson: {

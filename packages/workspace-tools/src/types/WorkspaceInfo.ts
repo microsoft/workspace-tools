@@ -1,4 +1,4 @@
-import { PackageInfo } from "./PackageInfo";
+import { PackageInfo } from "workspace-tools-types";
 
 export type WorkspaceInfo = {
   name: string;

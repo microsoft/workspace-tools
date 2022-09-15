@@ -2,7 +2,7 @@ import fs from "fs-extra";
 import path from "path";
 import { setupFixture } from "workspace-tools-scripts/jest/setupFixture";
 import { parseLockFile } from "../lockfile";
-import { PackageInfo } from "../types/PackageInfo";
+import { PackageInfo } from "workspace-tools-types";
 
 const ERROR_MESSAGES = {
   NO_LOCK: "You do not have yarn.lock, pnpm-lock.yaml or package-lock.json. Please use one of these package managers.",

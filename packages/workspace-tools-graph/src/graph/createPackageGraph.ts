@@ -1,4 +1,4 @@
-import type { PackageInfos } from "../types/PackageInfo";
+import type { PackageInfos } from "workspace-tools-types";
 import type { DependencyMap } from "./createDependencyMap";
 import type { PackageGraph } from "../types/PackageGraph";
 

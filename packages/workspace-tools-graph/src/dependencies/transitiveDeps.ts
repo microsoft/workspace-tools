@@ -1,4 +1,4 @@
-import { PackageInfos } from "../types/PackageInfo";
+import { PackageInfos } from "workspace-tools-types";
 import { getPackageDependencies } from "../graph/getPackageDependencies";
 
 const graphCache = new Map<string, [string | null, string][]>();

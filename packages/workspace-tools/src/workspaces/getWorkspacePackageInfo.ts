@@ -1,7 +1,7 @@
 import path from "path";
 import fs from "fs";
 import { WorkspaceInfo } from "../types/WorkspaceInfo";
-import { PackageInfo } from "../types/PackageInfo";
+import { PackageInfo } from "workspace-tools-types";
 
 export function getWorkspacePackageInfo(workspacePaths: string[]): WorkspaceInfo {
   if (!workspacePaths) {

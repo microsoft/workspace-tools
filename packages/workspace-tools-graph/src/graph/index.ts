@@ -1,5 +1,5 @@
 export * from "./createPackageGraph";
-import { PackageInfos } from "../types/PackageInfo";
+import { PackageInfos } from "workspace-tools-types";
 import { createDependencyMap } from "./createDependencyMap";
 
 /**
