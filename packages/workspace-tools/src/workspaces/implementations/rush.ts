@@ -1,13 +1,13 @@
-import findUp from "find-up";
 import path from "path";
 import jju from "jju";
 import fs from "fs";
 
 import { WorkspaceInfo } from "../../types/WorkspaceInfo";
 import { getWorkspacePackageInfo } from "../getWorkspacePackageInfo";
+import { searchUp } from "../../paths";
 
 export function getRushWorkspaceRoot(cwd: string): string {
-  const rushJsonPath = findUp.sync("rush.json", { cwd });
+  const rushJsonPath = searchUp("rush.json", cwd);
 
   if (!rushJsonPath) {
     throw new Error("Could not find rush workspaces root");

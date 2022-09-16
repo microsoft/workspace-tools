@@ -1,5 +1,4 @@
 import path from "path";
-import findUp from "find-up";
 import fs from "fs-extra";
 import tmp from "tmp";
 import { init, stageAndCommit, gitFailFast } from "../git";
@@ -9,7 +8,7 @@ import { PackageInfo } from "../types/PackageInfo";
 // So we attempt to use its built-in cleanup mechanisms, but tests should ideally do their own cleanup too.
 tmp.setGracefulCleanup();
 
-let fixturesRoot: string | undefined;
+const fixturesRoot = path.resolve(__dirname, "../__fixtures__");
 // Temp directories are created under tempRoot.name with incrementing numeric sub-directories
 let tempRoot: tmp.DirResult | undefined;
 let tempNumber = 0;
@@ -21,10 +20,6 @@ let tempNumber = 0;
 export function setupFixture(fixtureName?: string) {
   let fixturePath: string | undefined;
   if (fixtureName) {
-    if (!fixturesRoot) {
-      fixturesRoot = findUp.sync("__fixtures__", { cwd: __dirname, type: "directory" });
-    }
-
     fixturePath = path.join(fixturesRoot!, fixtureName);
     if (!fs.existsSync(fixturePath)) {
       throw new Error(`Couldn't find fixture "${fixtureName}" under "${fixturesRoot}"`);

@@ -1,5 +1,5 @@
-import findUp from "find-up";
 import path from "path";
+import { searchUp } from "../../paths";
 
 export type WorkspaceImplementations = "yarn" | "pnpm" | "rush" | "npm" | "lerna";
 export interface ImplementationAndLockFile {
@@ -16,9 +16,7 @@ export function getWorkspaceImplementationAndLockFile(
     return cache[cwd];
   }
 
-  const lockFile = findUp.sync(["lerna.json", "rush.json", "yarn.lock", "pnpm-workspace.yaml", "package-lock.json"], {
-    cwd,
-  });
+  const lockFile = searchUp(["lerna.json", "rush.json", "yarn.lock", "pnpm-workspace.yaml", "package-lock.json"], cwd);
 
   if (!lockFile) {
     return;

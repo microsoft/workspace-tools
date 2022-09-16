@@ -4,27 +4,26 @@ import { getWorkspaceRoot } from "./workspaces/getWorkspaceRoot";
 import { git } from "./git";
 
 /**
- * Starting from `cwd`, searches up the directory hierarchy for `pathName`.
+ * Starting from `cwd`, searches up the directory hierarchy for `filePath`.
+ * If multiple strings are given, searches each directory level for any of them.
+ * @returns Full path to the item found, or undefined if not found.
  */
-export function searchUp(pathName: string, cwd: string) {
+export function searchUp(filePath: string | string[], cwd: string) {
+  const paths = typeof filePath === "string" ? [filePath] : filePath;
   const root = path.parse(cwd).root;
 
-  let found = false;
+  let foundPath: string | undefined;
 
-  while (!found && cwd !== root) {
-    if (fs.existsSync(path.join(cwd, pathName))) {
-      found = true;
+  while (!foundPath && cwd !== root) {
+    foundPath = paths.find((p) => fs.existsSync(path.join(cwd, p)));
+    if (foundPath) {
       break;
     }
 
     cwd = path.dirname(cwd);
   }
 
-  if (found) {
-    return cwd;
-  }
-
-  return null;
+  return foundPath ? path.join(cwd, foundPath) : undefined;
 }
 
 /**
@@ -44,7 +43,8 @@ export function findGitRoot(cwd: string) {
  * Starting from `cwd`, searches up the directory hierarchy for `package.json`.
  */
 export function findPackageRoot(cwd: string) {
-  return searchUp("package.json", cwd);
+  const jsonPath = searchUp("package.json", cwd);
+  return jsonPath && path.dirname(jsonPath);
 }
 
 /**
