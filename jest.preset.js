@@ -7,5 +7,5 @@ module.exports = {
   moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
   modulePathIgnorePatterns: ["<rootDir>/src/__fixtures__"],
   preset: "ts-jest",
-  setupFilesAfterEnv: [require.resolve("./src/helpers/setupTests.ts")],
+  setupFilesAfterEnv: [require.resolve("./scripts/jest/setupTests.ts")],
 };

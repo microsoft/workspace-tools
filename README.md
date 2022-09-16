@@ -1,26 +1,8 @@
-# workspace-tools
+# workspace-tools monorepo
 
-A collection of tools that are useful in a git-controlled monorepo that is managed by one of these software:
+Please see the [`workspace-tools` README](./packages/workspace-tools/README.md) for more information.
 
-- lerna
-- npm workspaces
-- pnpm workspaces
-- rush
-- yarn workspaces
-
-# Environment Variables
-
-## GIT_MAX_BUFFER: git operation maxBuffer
-
-Override this value with "GIT_MAX_BUFFER" environment variable. By default, it is using 500MB (as opposed to the
-default node.js maxBuffer of 1MB)
-
-## PREFERRED_WORKSPACE_MANAGER
-
-Sometimes multiple package manager files are checked in. It is necessary to hint to `workspace-tools` which manager
-is used: `npm`, `yarn`, `pnpm`, `rush`, or `lerna`
-
-# Contributing
+## Contributing
 
 This project welcomes contributions and suggestions. Most contributions require you to agree to a
 Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us
