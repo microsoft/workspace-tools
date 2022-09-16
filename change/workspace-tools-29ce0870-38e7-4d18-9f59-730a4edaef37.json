@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "BREAKING CHANGE: `searchUp` now returns the full path to the item, not its parent directory. This only affects consumers that are directly using `searchUp`.",
-  "packageName": "workspace-tools",
-  "email": "elcraig@microsoft.com",
-  "dependentChangeType": "patch"
-}
