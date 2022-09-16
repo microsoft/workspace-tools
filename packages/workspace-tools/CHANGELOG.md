@@ -1,8 +1,16 @@
 # Change Log - workspace-tools
 
-This log was last generated on Thu, 15 Sep 2022 23:30:21 GMT and should not be manually modified.
+This log was last generated on Fri, 16 Sep 2022 23:00:36 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.26.6
+
+Fri, 16 Sep 2022 23:00:36 GMT
+
+### Patches
+
+- Replace read-yaml-file with js-yaml (elcraig@microsoft.com)
 
 ## 0.26.5
 
