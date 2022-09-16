@@ -5,6 +5,7 @@ import { ParsedLock, PnpmLockFile, NpmLockFile } from "./types";
 import { nameAtVersion } from "./nameAtVersion";
 import { parsePnpmLock } from "./parsePnpmLock";
 import { parseNpmLock } from "./parseNpmLock";
+import { readYaml } from "./readYaml";
 
 const memoization: { [path: string]: ParsedLock } = {};
 
@@ -34,8 +35,7 @@ export async function parseLockFile(packageRoot: string): Promise<ParsedLock> {
       return memoization[pnpmLockPath];
     }
 
-    const readYamlFile = require("read-yaml-file");
-    const yaml = (await readYamlFile(pnpmLockPath)) as PnpmLockFile;
+    const yaml = readYaml<PnpmLockFile>(pnpmLockPath);
     const parsed = parsePnpmLock(yaml);
     memoization[pnpmLockPath] = parsed;
 
