@@ -1,6 +1,6 @@
 import fs from "fs-extra";
 import path from "path";
-import { setupFixture } from "../helpers/setupFixture";
+import { setupFixture } from "workspace-tools-scripts/jest/setupFixture";
 import { parseLockFile } from "../lockfile";
 import { PackageInfo } from "../types/PackageInfo";
 
