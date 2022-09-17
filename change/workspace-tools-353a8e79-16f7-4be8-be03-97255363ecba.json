@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "BREAKING CHANGE: Removed `isChildOf`",
+  "packageName": "workspace-tools",
+  "email": "elcraig@microsoft.com",
+  "dependentChangeType": "patch"
+}

@@ -1,6 +1,5 @@
-export interface PackageInfo {
+export interface PackageJson {
   name: string;
-  packageJsonPath: string;
   version: string;
   dependencies?: { [dep: string]: string };
   devDependencies?: { [dep: string]: string };
@@ -9,7 +8,18 @@ export interface PackageInfo {
   group?: string;
   scripts?: { [scriptName: string]: string };
   repository?: string | { type: string; url: string; directory?: string };
+  /** Only allowed in the workspace root package.json */
+  workspaces?:
+    | {
+        packages?: string[];
+        nohoist?: string[];
+      }
+    | string[];
   [key: string]: any;
+}
+
+export interface PackageInfo extends PackageJson {
+  packageJsonPath: string;
 }
 
 export interface PackageInfos {

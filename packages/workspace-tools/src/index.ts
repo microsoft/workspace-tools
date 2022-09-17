@@ -8,7 +8,6 @@ export * from "./types/PackageInfo";
 export * from "./types/WorkspaceInfo";
 export * from "./workspaces/findWorkspacePath";
 export * from "./workspaces/getWorkspaces";
-export * from "./workspaces/getWorkspaceRoot";
 export * from "./workspaces/implementations/pnpm";
 export * from "./workspaces/implementations/rush";
 export * from "./workspaces/implementations/yarn";

@@ -13,11 +13,23 @@ let tempNumber = 0;
 
 const fixturesRoot = path.join(__dirname, "__fixtures__");
 
+export interface FixtureOptions {
+  /** If provided, copy the fixtures files from `__fixtures__/${fixtureName}`. */
+  fixtureName?: string;
+  /** If true, skip the git initialization steps (to speed up tests which don't need git). */
+  skipGit?: boolean;
+}
+
 /**
- * Create a git repo in a temp directory, optionally containing the fixture files from `fixtureName`.
- * Be sure to call `cleanupFixtures()` after all tests to clean up temp directories.
+ * Initialize a fixture in a temp directory.
+ * @returns The path to the temp directory.
  */
-export function setupFixture(fixtureName?: string) {
+export function setupFixture(options?: FixtureOptions): string;
+export function setupFixture(fixtureName?: string): string;
+export function setupFixture(optionsOrName?: FixtureOptions | string): string {
+  const options = typeof optionsOrName === "string" ? { fixtureName: optionsOrName } : optionsOrName;
+  const { fixtureName, skipGit } = options || {};
+
   let fixturePath: string | undefined;
   if (fixtureName) {
     fixturePath = path.join(fixturesRoot, fixtureName);
@@ -31,29 +43,35 @@ export function setupFixture(fixtureName?: string) {
     tempRoot = tmp.dirSync({ unsafeCleanup: true }); // clean up even if files are left
   }
 
-  // Make the directory and git init
+  // Make the directory
   const cwd = path.join(tempRoot.name, String(tempNumber++), fixturePath ? path.basename(fixturePath) : "");
 
   fs.mkdirpSync(cwd);
-  basicGit(["init"], { cwd });
-  basicGit(["config", "user.name", "test user"], { cwd });
-  basicGit(["config", "user.email", "test@test.email"], { cwd });
 
-  // Ensure GPG signing doesn't interfere with tests
-  basicGit(["config", "commit.gpgsign", "false"], { cwd });
+  // Git init if requested
+  if (!skipGit) {
+    basicGit(["init"], { cwd });
+    basicGit(["config", "user.name", "test user"], { cwd });
+    basicGit(["config", "user.email", "test@test.email"], { cwd });
 
-  // Make the 'main' branch the default in the test repo
-  // ensure that the configuration for this repo does not collide
-  // with any global configuration the user had made, so we have
-  // a 'fixed' value for our tests, regardless of user configuration
-  basicGit(["symbolic-ref", "HEAD", "refs/heads/main"], { cwd });
-  basicGit(["config", "init.defaultBranch", "main"], { cwd });
+    // Ensure GPG signing doesn't interfere with tests
+    basicGit(["config", "commit.gpgsign", "false"], { cwd });
+
+    // Make the 'main' branch the default in the test repo
+    // ensure that the configuration for this repo does not collide
+    // with any global configuration the user had made, so we have
+    // a 'fixed' value for our tests, regardless of user configuration
+    basicGit(["symbolic-ref", "HEAD", "refs/heads/main"], { cwd });
+    basicGit(["config", "init.defaultBranch", "main"], { cwd });
+  }
 
   // Copy and commit the fixture if requested
   if (fixturePath) {
     fs.copySync(fixturePath, cwd, { filter: (src) => !/[/\\](node_modules|temp|.rush)([/\\]|$)/.test(src) });
-    basicGit(["add", "."], { cwd });
-    basicGit(["commit", "-m", "test"], { cwd });
+    if (!skipGit) {
+      basicGit(["add", "."], { cwd });
+      basicGit(["commit", "-m", "test"], { cwd });
+    }
   }
 
   return cwd;

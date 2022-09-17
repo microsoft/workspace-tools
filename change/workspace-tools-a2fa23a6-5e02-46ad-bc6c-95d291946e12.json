@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "BREAKING CHANGE: `getWorkspaceImplementationAndLockFile`, `getWorkspaceImplementation`, `WorkspaceImplementations`, and `ImplementationAndLockFile` are removed. Use `getWorkspaceRoot` for the functions, and `WorkspaceType` and `WorkspaceRootInfo` for the types.",
+  "packageName": "workspace-tools",
+  "email": "elcraig@microsoft.com",
+  "dependentChangeType": "patch"
+}

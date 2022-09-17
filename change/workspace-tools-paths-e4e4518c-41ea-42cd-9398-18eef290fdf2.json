@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Add workspace helpers: getWorkspaceRootInfo, findWorkspaceRoot, WorkspaceManager",
+  "packageName": "workspace-tools-paths",
+  "email": "elcraig@microsoft.com",
+  "dependentChangeType": "patch"
+}

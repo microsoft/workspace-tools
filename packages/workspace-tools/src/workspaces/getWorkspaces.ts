@@ -1,18 +1,16 @@
-import { getWorkspaceImplementation } from "./implementations";
-
+import { getWorkspaceRootInfo } from "workspace-tools-paths";
 import { WorkspaceInfo } from "../types/WorkspaceInfo";
-import { WorkspaceManager } from "./WorkspaceManager";
-
-const preferred = process.env.PREFERRED_WORKSPACE_MANAGER as WorkspaceManager | null;
 
 export function getWorkspaces(cwd: string): WorkspaceInfo {
-  const workspaceImplementation = preferred || getWorkspaceImplementation(cwd);
+  const rootInfo = getWorkspaceRootInfo(cwd);
 
-  if (!workspaceImplementation) {
+  if (!rootInfo) {
     return [];
   }
 
-  switch (workspaceImplementation) {
+  // TODO: update signatures of these functions to take WorkspaceRootInfo to avoid redundant call
+  // to search function (it will be cached, but it's still redundant)
+  switch (rootInfo.manager) {
     case "yarn":
       return require(`./implementations/yarn`).getYarnWorkspaces(cwd);
 

@@ -1,8 +1,9 @@
+import { getWorkspaceRootInfo } from "workspace-tools-paths";
 import { WorkspaceInfo } from "../../types/WorkspaceInfo";
-import { getPackageJsonWorkspaceRoot, getWorkspaceInfoFromWorkspaceRoot } from "./packageJsonWorkspaces";
+import { getWorkspaceInfoFromWorkspaceRoot } from "./packageJsonWorkspaces";
 
 export function getNpmWorkspaceRoot(cwd: string): string {
-  const npmWorkspacesRoot = getPackageJsonWorkspaceRoot(cwd);
+  const npmWorkspacesRoot = getWorkspaceRootInfo(cwd, "npm")?.root;
 
   if (!npmWorkspacesRoot) {
     throw new Error("Could not find NPM workspaces root");

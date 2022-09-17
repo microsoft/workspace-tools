@@ -1,19 +1,19 @@
 import fs from "fs";
 import jju from "jju";
 import path from "path";
+import { getWorkspaceRootInfo } from "workspace-tools-paths";
 import { getPackagePaths } from "../../getPackagePaths";
-import { searchUp } from "workspace-tools-paths";
 import { WorkspaceInfo } from "../../types/WorkspaceInfo";
 import { getWorkspacePackageInfo } from "../getWorkspacePackageInfo";
 
 export function getLernaWorkspaceRoot(cwd: string): string {
-  const lernaJsonPath = searchUp("lerna.json", cwd);
+  const lernaRoot = getWorkspaceRootInfo(cwd, "lerna")?.root;
 
-  if (!lernaJsonPath) {
+  if (!lernaRoot) {
     throw new Error("Could not find lerna workspace root");
   }
 
-  return path.dirname(lernaJsonPath);
+  return lernaRoot;
 }
 
 export function getLernaWorkspaces(cwd: string, ignorePatterns?: string[]): WorkspaceInfo {

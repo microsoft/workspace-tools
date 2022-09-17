@@ -1,23 +1,8 @@
 import fs from "fs";
 import path from "path";
-import { getWorkspaceImplementationAndLockFile } from ".";
 import { getPackagePaths } from "../../getPackagePaths";
+import { PackageJson } from "../../types/PackageInfo";
 import { getWorkspacePackageInfo } from "../getWorkspacePackageInfo";
-
-type PackageJsonWorkspaces = {
-  workspaces?:
-    | {
-        packages?: string[];
-        nohoist?: string[];
-      }
-    | string[];
-};
-
-export function getPackageJsonWorkspaceRoot(cwd: string): string | null {
-  const lockFile = getWorkspaceImplementationAndLockFile(cwd)?.lockFile;
-  const packageJsonWorkspacesRoot = lockFile ? path.dirname(lockFile) : cwd;
-  return packageJsonWorkspacesRoot;
-}
 
 function getRootPackageJson(packageJsonWorkspacesRoot: string) {
   const packageJsonFile = path.join(packageJsonWorkspacesRoot, "package.json");
@@ -30,7 +15,7 @@ function getRootPackageJson(packageJsonWorkspacesRoot: string) {
   }
 }
 
-function getPackages(packageJson: PackageJsonWorkspaces): string[] {
+function getPackages(packageJson: PackageJson): string[] {
   const { workspaces } = packageJson;
 
   if (workspaces && Array.isArray(workspaces)) {

@@ -4,16 +4,16 @@ import fs from "fs";
 
 import { WorkspaceInfo } from "../../types/WorkspaceInfo";
 import { getWorkspacePackageInfo } from "../getWorkspacePackageInfo";
-import { searchUp } from "workspace-tools-paths";
+import { getWorkspaceRootInfo } from "workspace-tools-paths";
 
 export function getRushWorkspaceRoot(cwd: string): string {
-  const rushJsonPath = searchUp("rush.json", cwd);
+  const rushWorkspaceRoot = getWorkspaceRootInfo(cwd, "rush")?.root;
 
-  if (!rushJsonPath) {
+  if (!rushWorkspaceRoot) {
     throw new Error("Could not find rush workspaces root");
   }
 
-  return path.dirname(rushJsonPath);
+  return rushWorkspaceRoot;
 }
 
 export function getRushWorkspaces(cwd: string): WorkspaceInfo {

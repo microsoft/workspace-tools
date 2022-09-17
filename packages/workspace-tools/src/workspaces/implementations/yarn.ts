@@ -1,8 +1,9 @@
+import { getWorkspaceRootInfo } from "workspace-tools-paths";
 import { WorkspaceInfo } from "../../types/WorkspaceInfo";
-import { getPackageJsonWorkspaceRoot, getWorkspaceInfoFromWorkspaceRoot } from "./packageJsonWorkspaces";
+import { getWorkspaceInfoFromWorkspaceRoot } from "./packageJsonWorkspaces";
 
 export function getYarnWorkspaceRoot(cwd: string): string {
-  const yarnWorkspacesRoot = getPackageJsonWorkspaceRoot(cwd);
+  const yarnWorkspacesRoot = getWorkspaceRootInfo(cwd, "yarn")?.root;
 
   if (!yarnWorkspacesRoot) {
     throw new Error("Could not find yarn workspaces root");
