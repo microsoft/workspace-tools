@@ -6,9 +6,9 @@
     "declaration": true,
     "sourceMap": true,
     "strict": true,
-    "allowJs": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
+    "pretty": true,
     "types": ["node", "jest"]
   }
 }

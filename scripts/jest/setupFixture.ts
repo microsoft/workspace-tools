@@ -1,26 +1,26 @@
 import path from "path";
 import fs from "fs-extra";
 import tmp from "tmp";
-import { init, stageAndCommit, gitFailFast } from "../git";
-import { PackageInfo } from "../types/PackageInfo";
+import { spawnSync, SpawnSyncOptions } from "child_process";
 
 // tmp is supposed to be able to clean up automatically, but this doesn't always work within jest.
 // So we attempt to use its built-in cleanup mechanisms, but tests should ideally do their own cleanup too.
 tmp.setGracefulCleanup();
 
-const fixturesRoot = path.resolve(__dirname, "../__fixtures__");
 // Temp directories are created under tempRoot.name with incrementing numeric sub-directories
 let tempRoot: tmp.DirResult | undefined;
 let tempNumber = 0;
 
+const fixturesRoot = path.join(__dirname, "__fixtures__");
+
 /**
- * Create a temp directory containing the given fixture name in a git repo.
+ * Create a git repo in a temp directory, optionally containing the fixture files from `fixtureName`.
  * Be sure to call `cleanupFixtures()` after all tests to clean up temp directories.
  */
 export function setupFixture(fixtureName?: string) {
   let fixturePath: string | undefined;
   if (fixtureName) {
-    fixturePath = path.join(fixturesRoot!, fixtureName);
+    fixturePath = path.join(fixturesRoot, fixtureName);
     if (!fs.existsSync(fixturePath)) {
       throw new Error(`Couldn't find fixture "${fixtureName}" under "${fixturesRoot}"`);
     }
@@ -32,25 +32,28 @@ export function setupFixture(fixtureName?: string) {
   }
 
   // Make the directory and git init
-  const cwd = path.join(tempRoot.name, String(tempNumber++), fixtureName || "");
+  const cwd = path.join(tempRoot.name, String(tempNumber++), fixturePath ? path.basename(fixturePath) : "");
 
   fs.mkdirpSync(cwd);
-  init(cwd, "test@test.email", "test user");
+  basicGit(["init"], { cwd });
+  basicGit(["config", "user.name", "test user"], { cwd });
+  basicGit(["config", "user.email", "test@test.email"], { cwd });
 
   // Ensure GPG signing doesn't interfere with tests
-  gitFailFast(["config", "commit.gpgsign", "false"], { cwd });
+  basicGit(["config", "commit.gpgsign", "false"], { cwd });
 
   // Make the 'main' branch the default in the test repo
   // ensure that the configuration for this repo does not collide
   // with any global configuration the user had made, so we have
   // a 'fixed' value for our tests, regardless of user configuration
-  gitFailFast(["symbolic-ref", "HEAD", "refs/heads/main"], { cwd });
-  gitFailFast(["config", "init.defaultBranch", "main"], { cwd });
+  basicGit(["symbolic-ref", "HEAD", "refs/heads/main"], { cwd });
+  basicGit(["config", "init.defaultBranch", "main"], { cwd });
 
   // Copy and commit the fixture if requested
   if (fixturePath) {
     fs.copySync(fixturePath, cwd, { filter: (src) => !/[/\\](node_modules|temp|.rush)([/\\]|$)/.test(src) });
-    stageAndCommit(["."], "test", cwd);
+    basicGit(["add", "."], { cwd });
+    basicGit(["commit", "-m", "test"], { cwd });
   }
 
   return cwd;
@@ -67,9 +70,9 @@ export function cleanupFixtures() {
   }
 }
 
-export function setupPackageJson(cwd: string, packageJson: Partial<PackageInfo> = {}) {
+export function setupPackageJson(cwd: string, packageJson: Record<string, any> = {}) {
   const pkgJsonPath = path.join(cwd, "package.json");
-  let oldPackageJson: Partial<PackageInfo> | undefined;
+  let oldPackageJson: Record<string, any> | undefined;
   if (fs.existsSync(pkgJsonPath)) {
     oldPackageJson = JSON.parse(fs.readFileSync(pkgJsonPath, "utf-8"));
   }
@@ -80,7 +83,18 @@ export function setupLocalRemote(cwd: string, remoteName: string, fixtureName?: 
   // Create a seperate repo and configure it as a remote
   const remoteCwd = setupFixture(fixtureName);
   const remoteUrl = remoteCwd.replace(/\\/g, "/");
-  gitFailFast(["remote", "add", remoteName, remoteUrl], { cwd });
+  basicGit(["remote", "add", remoteName, remoteUrl], { cwd });
   // Configure url in package.json
   setupPackageJson(cwd, { repository: { url: remoteUrl, type: "git" } });
+}
+
+/**
+ * Very basic git wrapper that throws on error.
+ * (Can't use the helper methods from `workspace-tools-git` to avoid a circular dependency.)
+ */
+function basicGit(args: string[], options: { cwd: string } & SpawnSyncOptions) {
+  const result = spawnSync("git", args, options);
+  if (result.status !== 0) {
+    throw new Error(`git ${args.join(" ")} failed with ${result.status}\n\n${result.stderr.toString()}`);
+  }
 }

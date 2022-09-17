@@ -1,3 +1,4 @@
+/** @type {import('@jest/types').Config.InitialOptions} */
 module.exports = {
   roots: ["<rootDir>/src"],
   transform: {
@@ -6,6 +7,7 @@ module.exports = {
   testRegex: "(/__tests__/.*(\\.|/)(test|spec))\\.tsx?$",
   moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
   modulePathIgnorePatterns: ["<rootDir>/src/__fixtures__"],
+  passWithNoTests: true,
   preset: "ts-jest",
-  setupFilesAfterEnv: [require.resolve("./scripts/jest/setupTests.ts")],
+  setupFilesAfterEnv: [require.resolve("./setupTests.ts")],
 };
