@@ -3486,7 +3486,7 @@ wide-align@^1.1.0:
   dependencies:
     string-width "^1.0.2 || 2 || 3 || 4"
 
-workspace-tools@^0.26.0, workspace-tools@^0.26.3, "workspace-tools@npm:workspace-tools@0.26.3":
+workspace-tools@^0.26.0:
   version "0.26.3"
   resolved "https://registry.yarnpkg.com/workspace-tools/-/workspace-tools-0.26.3.tgz#521ff930e889873eab5d223289d7136d1e9a1b42"
   integrity sha512-aNnxt0rBh8CwQ6DfYn/CU1xNTKu+dwoNjZ9oddEAOogvIOMQGJ57OQ3XI7+iRZu1XfO+HK2xsQLMbZGjmAJ8UA==
@@ -3498,6 +3498,18 @@ workspace-tools@^0.26.0, workspace-tools@^0.26.3, "workspace-tools@npm:workspace
     jju "^1.4.0"
     micromatch "^4.0.0"
     read-yaml-file "^2.0.0"
+
+workspace-tools@^0.26.3, "workspace-tools@npm:workspace-tools@0.27.0":
+  version "0.27.0"
+  resolved "https://registry.yarnpkg.com/workspace-tools/-/workspace-tools-0.27.0.tgz#11e8f1ec2cb4c80d1cefcf92da2d0154dc001aa8"
+  integrity sha512-5mtE5Vy0Se4brAUJXKfXNtaS9jcUcH+IGF4LNU1xJr4bW1o5bK2gV0pykodB+n6V84nRtaD/4I/9w98aujm7LA==
+  dependencies:
+    "@yarnpkg/lockfile" "^1.1.0"
+    git-url-parse "^13.0.0"
+    globby "^11.0.0"
+    jju "^1.4.0"
+    js-yaml "^4.1.0"
+    micromatch "^4.0.0"
 
 wrap-ansi@^7.0.0:
   version "7.0.0"
