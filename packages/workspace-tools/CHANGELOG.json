@@ -2,6 +2,21 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Sat, 17 Sep 2022 08:01:36 GMT",
+      "tag": "workspace-tools_v0.27.0",
+      "version": "0.27.0",
+      "comments": {
+        "none": [
+          {
+            "author": "elcraig@microsoft.com",
+            "package": "workspace-tools",
+            "commit": "d6124fc7350f870e5c44819ba4e038ac089264df",
+            "comment": "Move fixture files"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 16 Sep 2022 23:24:41 GMT",
       "tag": "workspace-tools_v0.27.0",
       "version": "0.27.0",
