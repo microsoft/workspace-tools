@@ -1,6 +1,6 @@
 import path from "path";
 
-import { cleanupFixtures, setupFixture } from "../helpers/setupFixture";
+import { cleanupFixtures, setupFixture } from "workspace-tools-scripts/jest/setupFixture";
 import { getWorkspaceImplementation } from "../workspaces/implementations";
 import { getYarnWorkspaces } from "../workspaces/implementations/yarn";
 import { getPnpmWorkspaces } from "../workspaces/implementations/pnpm";

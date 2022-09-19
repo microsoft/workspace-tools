@@ -1,7 +1,6 @@
 import os from "os";
-import { gitFailFast } from "../git";
-import { getDefaultRemote } from "../git";
-import { cleanupFixtures, setupFixture, setupPackageJson } from "../helpers/setupFixture";
+import { gitFailFast, getDefaultRemote } from "../git";
+import { cleanupFixtures, setupFixture, setupPackageJson } from "workspace-tools-scripts/jest/setupFixture";
 
 describe("getDefaultRemote", () => {
   let cwd: string;

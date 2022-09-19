@@ -37,5 +37,24 @@
   "prHourlyLimit": 5,
 
   "reviewers": ["ecraig12345", "kenotron"],
-  "reviewersSampleSize": 1
+  "reviewersSampleSize": 1,
+
+  "regexManagers": [
+    {
+      "fileMatch": ["^package.json$"],
+      "matchStrings": [
+        "(?<depName>\\*\\*/.*?workspace-tools)\": \"npm:workspace-tools@(?<currentValue>[~^]?\\d+\\.\\d+\\.\\d+)"
+      ],
+      "packageNameTemplate": "workspace-tools",
+      "datasourceTemplate": "npm",
+      "depTypeTemplate": "devDependencies"
+    }
+  ],
+
+  "packageRules": [
+    {
+      "groupName": "workspace-tools resolutions",
+      "matchPackagePatterns": [".*lage.*workspace-tools$"]
+    }
+  ]
 }

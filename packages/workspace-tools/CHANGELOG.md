@@ -1,8 +1,16 @@
 # Change Log - workspace-tools
 
-This log was last generated on Fri, 16 Sep 2022 23:00:36 GMT and should not be manually modified.
+This log was last generated on Fri, 16 Sep 2022 23:24:41 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.27.0
+
+Fri, 16 Sep 2022 23:24:41 GMT
+
+### Minor changes
+
+- BREAKING CHANGE: `searchUp` now returns the full path to the item, not its parent directory. This only affects consumers that are directly using `searchUp`. (elcraig@microsoft.com)
 
 ## 0.26.6
 

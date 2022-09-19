@@ -1,4 +1,4 @@
-import { cleanupFixtures, setupFixture } from "../helpers/setupFixture";
+import { cleanupFixtures, setupFixture } from "workspace-tools-scripts/jest/setupFixture";
 import { getYarnWorkspaceRoot } from "../workspaces/implementations/yarn";
 import { getPnpmWorkspaceRoot } from "../workspaces/implementations/pnpm";
 import { getRushWorkspaceRoot } from "../workspaces/implementations/rush";

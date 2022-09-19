@@ -1,6 +1,6 @@
 {
   "name": "workspace-tools",
-  "version": "0.26.6",
+  "version": "0.27.0",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -9,7 +9,7 @@
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
-    "lib/!(helpers|__*)"
+    "lib/!(__*)"
   ],
   "scripts": {
     "build": "tsc",
@@ -18,7 +18,6 @@
   },
   "dependencies": {
     "@yarnpkg/lockfile": "^1.1.0",
-    "find-up": "^5.0.0",
     "git-url-parse": "^13.0.0",
     "globby": "^11.0.0",
     "jju": "^1.4.0",

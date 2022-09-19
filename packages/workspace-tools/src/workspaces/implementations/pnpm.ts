@@ -1,17 +1,17 @@
 import path from "path";
-import findUp from "find-up";
 
 import { getPackagePaths } from "../../getPackagePaths";
 import { WorkspaceInfo } from "../../types/WorkspaceInfo";
 import { getWorkspacePackageInfo } from "../getWorkspacePackageInfo";
 import { readYaml } from "../../lockfile/readYaml";
+import { searchUp } from "../../paths";
 
 type PnpmWorkspaces = {
   packages: string[];
 };
 
 export function getPnpmWorkspaceRoot(cwd: string): string {
-  const pnpmWorkspacesFile = findUp.sync("pnpm-workspace.yaml", { cwd });
+  const pnpmWorkspacesFile = searchUp("pnpm-workspace.yaml", cwd);
 
   if (!pnpmWorkspacesFile) {
     throw new Error("Could not find pnpm workspaces root");
