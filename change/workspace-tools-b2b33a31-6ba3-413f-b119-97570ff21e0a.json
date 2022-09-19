@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Make createDependencyMap available to the outside",
-  "packageName": "workspace-tools",
-  "email": "email not defined",
-  "dependentChangeType": "none"
-}

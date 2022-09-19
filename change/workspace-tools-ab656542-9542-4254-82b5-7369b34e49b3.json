@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "Expose createDependencyMap",
+  "packageName": "workspace-tools",
+  "email": "email not defined",
+  "dependentChangeType": "patch"
+}
