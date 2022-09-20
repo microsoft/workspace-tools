@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Add GIT_DEBUG environment variable",
+  "packageName": "workspace-tools",
+  "email": "elcraig@microsoft.com",
+  "dependentChangeType": "patch"
+}
