@@ -13,11 +13,28 @@ let tempNumber = 0;
 
 const fixturesRoot = path.join(__dirname, "__fixtures__");
 
+export interface FixtureOptions {
+  /** If provided, copy the fixtures files from `__fixtures__/${fixtureName}`. */
+  fixtureName?: string;
+  /** If provided, clone from this remote path (mutually exclusive with `fixtureName`) */
+  cloneFrom?: string;
+}
+
 /**
  * Create a git repo in a temp directory, optionally containing the fixture files from `fixtureName`.
  * Be sure to call `cleanupFixtures()` after all tests to clean up temp directories.
  */
-export function setupFixture(fixtureName?: string) {
+export function setupFixture(options?: FixtureOptions): string;
+/** @deprecated use object params version */
+export function setupFixture(fixtureName?: string): string;
+export function setupFixture(nameOrOptions: FixtureOptions | string = {}) {
+  const options: FixtureOptions = typeof nameOrOptions === "string" ? { fixtureName: nameOrOptions } : nameOrOptions;
+  const { fixtureName, cloneFrom } = options;
+
+  if (fixtureName && cloneFrom) {
+    throw new Error('Cannot specify both "fixtureName" and "cloneFrom"');
+  }
+
   let fixturePath: string | undefined;
   if (fixtureName) {
     fixturePath = path.join(fixturesRoot, fixtureName);
@@ -28,14 +45,21 @@ export function setupFixture(fixtureName?: string) {
 
   if (!tempRoot) {
     // Create a shared root temp directory for fixture files
-    tempRoot = tmp.dirSync({ unsafeCleanup: true }); // clean up even if files are left
+    tempRoot = tmp.dirSync({ prefix: "workspace-tools", unsafeCleanup: true }); // clean up even if files are left
   }
 
-  // Make the directory and git init
-  const cwd = path.join(tempRoot.name, String(tempNumber++), fixturePath ? path.basename(fixturePath) : "");
-
+  // Make the directory and git clone or init
+  let cwd = path.join(tempRoot.name, String(tempNumber++), fixturePath ? path.basename(fixturePath) : "");
   fs.mkdirpSync(cwd);
-  basicGit(["init"], { cwd });
+
+  if (cloneFrom) {
+    const clonePath = "cloned";
+    basicGit(["clone", cloneFrom, clonePath], { cwd });
+    cwd = path.join(cwd, clonePath);
+  } else {
+    basicGit(["init"], { cwd });
+  }
+
   basicGit(["config", "user.name", "test user"], { cwd });
   basicGit(["config", "user.email", "test@test.email"], { cwd });
 
@@ -79,14 +103,20 @@ export function setupPackageJson(cwd: string, packageJson: Record<string, any> =
   fs.writeFileSync(pkgJsonPath, JSON.stringify({ ...oldPackageJson, ...packageJson }, null, 2));
 }
 
-export function setupLocalRemote(cwd: string, remoteName: string, fixtureName?: string) {
-  // Create a seperate repo and configure it as a remote
-  const remoteCwd = setupFixture(fixtureName);
-  const remoteUrl = remoteCwd.replace(/\\/g, "/");
-  basicGit(["remote", "add", remoteName, remoteUrl], { cwd });
-  // Configure url in package.json
-  setupPackageJson(cwd, { repository: { url: remoteUrl, type: "git" } });
-}
+// export function setupLocalRemote(cwd: string, remoteName: string, fixtureName?: string) {
+//   // Create a separate repo to use as the remote
+//   const remoteCwd = setupFixture(fixtureName);
+//   const remoteUrl = remoteCwd.replace(/\\/g, "/");
+//   const branchName = basicGit(["rev-parse", "--abbrev-ref", "HEAD"], { cwd: remoteCwd }).stdout.toString().trim();
+
+//   // Set up the remote in a realistic manner
+//   basicGit(["remote", "add", remoteName, remoteUrl], { cwd });
+//   basicGit(["fetch", remoteName], { cwd });
+//   basicGit(["branch", "-u", `${remoteName}/${branchName}`], { cwd });
+
+//   // Configure url in package.json
+//   setupPackageJson(cwd, { repository: { url: remoteUrl, type: "git" } });
+// }
 
 /**
  * Very basic git wrapper that throws on error.
@@ -97,4 +127,5 @@ function basicGit(args: string[], options: { cwd: string } & SpawnSyncOptions) {
   if (result.status !== 0) {
     throw new Error(`git ${args.join(" ")} failed with ${result.status}\n\n${result.stderr.toString()}`);
   }
+  return result;
 }

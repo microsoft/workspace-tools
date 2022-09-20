@@ -1,7 +1,7 @@
 import path from "path";
 import fs from "fs";
 
-import { cleanupFixtures, setupFixture, setupLocalRemote } from "workspace-tools-scripts/jest/setupFixture";
+import { cleanupFixtures, setupFixture, setupPackageJson } from "workspace-tools-scripts/jest/setupFixture";
 import { stageAndCommit, git } from "../git";
 import { getChangedPackages, getChangedPackagesBetweenRefs } from "../workspaces/getChangedPackages";
 
@@ -137,7 +137,7 @@ describe("getChangedPackages()", () => {
     const newFile = path.join(root, "packages/package-a/footest.txt");
     fs.writeFileSync(newFile, "hello foo test");
     git(["checkout", "-b", "newbranch"], { cwd: root });
-    stageAndCommit(["add", newFile], "test commit", root);
+    stageAndCommit([newFile], "test commit", root);
 
     // act
     const changedPkgs = getChangedPackages(root, "main");
@@ -153,7 +153,7 @@ describe("getChangedPackages()", () => {
     const newFile = path.join(root, "packages/package-a/footest.txt");
     fs.writeFileSync(newFile, "hello foo test");
     git(["checkout", "-b", "newbranch"], { cwd: root });
-    stageAndCommit(["add", newFile], "test commit", root);
+    stageAndCommit([newFile], "test commit", root);
 
     // act
     const changedPkgs = getChangedPackages(root, "main");
@@ -163,19 +163,21 @@ describe("getChangedPackages()", () => {
   });
 
   it("can detect changes inside a file that has been committed in a different branch using default remote", () => {
-    // arrange
-    const root = setupFixture("monorepo");
-    setupLocalRemote(root, "origin", "basic");
+    // Create a separate repo to use as the remote
+    const remoteCwd = setupFixture({ fixtureName: "monorepo" });
+    const remoteUrl = remoteCwd.replace(/\\/g, "/");
+    // Clone the repo to run tests (ensures all the remote tracking is set up correctly)
+    const root = setupFixture({ cloneFrom: remoteUrl });
+    // Configure repository URL in package.json
+    setupPackageJson(root, { repository: { url: remoteUrl, type: "git" } });
 
     const newFile = path.join(root, "packages/package-a/footest.txt");
     fs.writeFileSync(newFile, "hello foo test");
     git(["checkout", "-b", "newbranch"], { cwd: root });
-    stageAndCommit(["add", newFile], "test commit", root);
+    stageAndCommit([newFile], "test commit", root);
 
-    // act
     const changedPkgs = getChangedPackages(root, undefined);
 
-    // assert
     expect(changedPkgs).toContain("package-a");
   });
 

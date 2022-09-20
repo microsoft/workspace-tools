@@ -33,10 +33,10 @@ export function getChangedPackagesBetweenRefs(
 ) {
   let changes = [
     ...new Set([
-      ...(getUntrackedChanges(cwd) || []),
-      ...(getUnstagedChanges(cwd) || []),
-      ...(getChangesBetweenRefs(fromRef, toRef, [], "", cwd) || []),
-      ...(getStagedChanges(cwd) || []),
+      ...getUntrackedChanges(cwd),
+      ...getUnstagedChanges(cwd),
+      ...getChangesBetweenRefs({ fromRef, toRef, cwd }),
+      ...getStagedChanges(cwd),
     ]),
   ];
 
@@ -64,10 +64,10 @@ export function getChangedPackages(cwd: string, target: string | undefined, igno
   const targetBranch = target || getDefaultRemoteBranch({ cwd });
   let changes = [
     ...new Set([
-      ...(getUntrackedChanges(cwd) || []),
-      ...(getUnstagedChanges(cwd) || []),
-      ...(getBranchChanges(targetBranch, cwd) || []),
-      ...(getStagedChanges(cwd) || []),
+      ...getUntrackedChanges(cwd),
+      ...getUnstagedChanges(cwd),
+      ...getBranchChanges(targetBranch, cwd),
+      ...getStagedChanges(cwd),
     ]),
   ];
 

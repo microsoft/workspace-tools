@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "BREAKING CHANGE: most git helpers now throw if the git command fails (previously, the silent failures hid bugs in consuming tools). If you have a use case where one of the helpers needs an option to *not* throw, please open an issue.",
+  "packageName": "workspace-tools",
+  "email": "elcraig@microsoft.com",
+  "dependentChangeType": "patch"
+}

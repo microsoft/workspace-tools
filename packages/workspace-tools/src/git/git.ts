@@ -5,14 +5,21 @@
 import { spawnSync, SpawnSyncOptions } from "child_process";
 
 export class GitError extends Error {
-  public originalError: unknown;
-  constructor(message: string, originalError?: unknown) {
-    if (originalError instanceof Error) {
-      super(`${message}: ${originalError.message}`);
+  public originalError?: unknown;
+
+  constructor(gitResult: GitProcessOutput);
+  constructor(message: string, originalError?: unknown);
+  constructor(param0: GitProcessOutput | string, originalError?: unknown) {
+    if (typeof param0 === "string") {
+      if (originalError instanceof Error) {
+        super(`${param0}: ${originalError.message}`);
+      } else {
+        super(param0);
+      }
+      this.originalError = originalError;
     } else {
-      super(message);
+      super(`Error running ${param0.command}\nstdout:\n${param0.stdout}\nstderr:\n${param0.stderr}`);
     }
-    this.originalError = originalError;
   }
 }
 
@@ -26,6 +33,7 @@ const defaultMaxBuffer = process.env.GIT_MAX_BUFFER ? parseInt(process.env.GIT_M
 const isDebug = !!process.env.GIT_DEBUG;
 
 export type GitProcessOutput = {
+  command: string;
   stderr: string;
   stdout: string;
   success: boolean;
@@ -57,14 +65,21 @@ function removeGitObserver(observer: GitObserver) {
   }
 }
 
+export interface GitOptions extends SpawnSyncOptions {
+  /** If true, throw an error if the git process exits non-0 */
+  throwOnError?: boolean;
+}
+
 /**
  * Runs git command - use this for read-only commands
  */
-export function git(args: string[], options?: SpawnSyncOptions): GitProcessOutput {
+export function git(args: string[], options?: GitOptions): GitProcessOutput {
   isDebug && console.log(`git ${args.join(" ")}`);
-  const results = spawnSync("git", args, { maxBuffer: defaultMaxBuffer, ...options });
+  const { throwOnError, ...spawnOptions } = options || {};
+  const results = spawnSync("git", args, { maxBuffer: defaultMaxBuffer, ...spawnOptions });
 
   const output: GitProcessOutput = {
+    command: `git ${args.join(" ")}`,
     stderr: results.stderr.toString().trimRight(),
     stdout: results.stdout.toString().trimRight(),
     success: results.status === 0,
@@ -73,7 +88,7 @@ export function git(args: string[], options?: SpawnSyncOptions): GitProcessOutpu
   if (isDebug) {
     console.log("exited with code " + results.status);
     output.stdout && console.log("git stdout:\n", output.stdout);
-    output.stderr && console.warn("git stderr:\n", output.stderr);
+    output.stderr && console.log("git stderr:\n", output.stderr);
   }
 
   // notify observers, flipping the observing bit to prevent infinite loops
@@ -85,20 +100,26 @@ export function git(args: string[], options?: SpawnSyncOptions): GitProcessOutpu
     observing = false;
   }
 
+  if (throwOnError && !output.success) {
+    throw new GitError(output);
+  }
+
   return output;
 }
 
 /**
- * Runs git command - use this for commands that make changes to the filesystem
+ * Runs git command - use this for commands that make changes to the filesystem.
+ * Throws on error, and sets `process.exitCode` unless `options.noExitCode` is true.
  */
 export function gitFailFast(args: string[], options?: SpawnSyncOptions & { noExitCode?: boolean }) {
-  const gitResult = git(args, options);
+  const { noExitCode, ...spawnOptions } = options || {};
+  const gitResult = git(args, spawnOptions);
   if (!gitResult.success) {
     if (!options?.noExitCode) {
       process.exitCode = 1;
     }
 
-    throw new GitError(`CRITICAL ERROR: running git command: git ${args.join(" ")}!
+    throw new GitError(`CRITICAL ERROR: running git command: ${gitResult.command}}!
     ${gitResult.stdout?.toString().trimRight()}
     ${gitResult.stderr?.toString().trimRight()}`);
   }
