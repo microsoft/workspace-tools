@@ -1546,7 +1546,7 @@ events@^3.0.0:
   resolved "https://registry.yarnpkg.com/events/-/events-3.3.0.tgz#31a95ad0a924e2d2c419a813aeb2c4e878ea7400"
   integrity sha512-mQw+2fkQbALzQ7V0MY0IqdnXNOeTtP4r0lN9z7AAawCXgqea7bDii20AYrIBrFd/Hx0M2Ocz6S111CaFkUcb0Q==
 
-execa@^4.0.0, execa@^4.0.3:
+execa@^4.0.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/execa/-/execa-4.1.0.tgz#4e5491ad1572f2f17a77d388c6c857135b22847a"
   integrity sha512-j5W0//W7f8UxAn8hXVnwG8tLwdiUy4FJLcSupCg6maBYZDpyBvTApK7KyuI4bKj8KOh1r2YH+6ucuYtJv1bTZA==
@@ -2488,10 +2488,10 @@ kleur@^3.0.3:
   resolved "https://registry.yarnpkg.com/kleur/-/kleur-3.0.3.tgz#a79c9ecc86ee1ce3fa6206d1216c501f147fc07e"
   integrity sha512-eTIzlVOSUR+JxdDFepEYcBMtZ9Qqdef+rnzWdRZuMbOywu5tO2w2N7rqjoANZ5k9vywhL6Br1VRjUIgTQx4E8w==
 
-lage@1.8.5:
-  version "1.8.5"
-  resolved "https://registry.yarnpkg.com/lage/-/lage-1.8.5.tgz#0afaf74d855d76cdf177205d03eb9256e2158279"
-  integrity sha512-Md3OT19v6hImIr+7gHhOfZB1Z8x9xvcgZ1EJ9q6n3taxW0HTy0mPHNKp1RxHi8eb522L/MfRSK2J2G598BWb0A==
+lage@1.8.8:
+  version "1.8.8"
+  resolved "https://registry.yarnpkg.com/lage/-/lage-1.8.8.tgz#0bc9e36b49b6144b78d6613e47b25bd74230b1c5"
+  integrity sha512-rMXedlK1lvC69P+bVir6r9EaGqy/NZm1Rg4vE7LD1vlDzNLYkCnvD1JkMxxQHkbMjhKXBLwcB6JnAti79GdLgA==
   dependencies:
     "@lage-run/logger" "*"
     "@xmldom/xmldom" "^0.8.0"
@@ -2502,7 +2502,7 @@ lage@1.8.5:
     backfill-logger "^5.1.3"
     chalk "^4.0.0"
     cosmiconfig "^7.0.0"
-    execa "^4.0.3"
+    execa "^5.0.0"
     fast-glob "^3.2.2"
     npmlog "^4.1.2"
     p-graph "^1.1.1"
