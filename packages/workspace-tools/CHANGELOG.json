@@ -2,6 +2,21 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Tue, 20 Sep 2022 18:54:59 GMT",
+      "tag": "workspace-tools_v0.28.1",
+      "version": "0.28.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "elcraig@microsoft.com",
+            "package": "workspace-tools",
+            "commit": "b7e08492aaa4241833469d77c2df24ecfa9651a2",
+            "comment": "Add GIT_DEBUG environment variable"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 20 Sep 2022 08:01:43 GMT",
       "tag": "workspace-tools_v0.28.0",
       "version": "0.28.0",

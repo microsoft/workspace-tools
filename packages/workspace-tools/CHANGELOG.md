@@ -1,8 +1,16 @@
 # Change Log - workspace-tools
 
-This log was last generated on Tue, 20 Sep 2022 08:01:43 GMT and should not be manually modified.
+This log was last generated on Tue, 20 Sep 2022 18:54:59 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.28.1
+
+Tue, 20 Sep 2022 18:54:59 GMT
+
+### Patches
+
+- Add GIT_DEBUG environment variable (elcraig@microsoft.com)
 
 ## 0.28.0
 
