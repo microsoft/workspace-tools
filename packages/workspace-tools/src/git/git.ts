@@ -23,6 +23,8 @@ export class GitError extends Error {
  */
 const defaultMaxBuffer = process.env.GIT_MAX_BUFFER ? parseInt(process.env.GIT_MAX_BUFFER) : 500 * 1024 * 1024;
 
+const isDebug = !!process.env.GIT_DEBUG;
+
 export type GitProcessOutput = {
   stderr: string;
   stdout: string;
@@ -59,6 +61,7 @@ function removeGitObserver(observer: GitObserver) {
  * Runs git command - use this for read-only commands
  */
 export function git(args: string[], options?: SpawnSyncOptions): GitProcessOutput {
+  isDebug && console.log(`git ${args.join(" ")}`);
   const results = spawnSync("git", args, { maxBuffer: defaultMaxBuffer, ...options });
 
   const output: GitProcessOutput = {
@@ -66,6 +69,12 @@ export function git(args: string[], options?: SpawnSyncOptions): GitProcessOutpu
     stdout: results.stdout.toString().trimRight(),
     success: results.status === 0,
   };
+
+  if (isDebug) {
+    console.log("exited with code " + results.status);
+    output.stdout && console.log("git stdout:\n", output.stdout);
+    output.stderr && console.warn("git stderr:\n", output.stderr);
+  }
 
   // notify observers, flipping the observing bit to prevent infinite loops
   if (!observing) {
