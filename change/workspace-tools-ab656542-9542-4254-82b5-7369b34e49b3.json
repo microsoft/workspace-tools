@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "Expose createDependencyMap",
-  "packageName": "workspace-tools",
-  "email": "erenmurat@microsoft.com",
-  "dependentChangeType": "patch"
-}

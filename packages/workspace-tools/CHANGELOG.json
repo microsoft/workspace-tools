@@ -2,6 +2,21 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Tue, 20 Sep 2022 08:01:43 GMT",
+      "tag": "workspace-tools_v0.28.0",
+      "version": "0.28.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "erenmurat@microsoft.com",
+            "package": "workspace-tools",
+            "commit": "3a21c5ee55d349e17dc1bbd128e638eab6fb1de1",
+            "comment": "Expose createDependencyMap"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 17 Sep 2022 08:01:36 GMT",
       "tag": "workspace-tools_v0.27.0",
       "version": "0.27.0",
