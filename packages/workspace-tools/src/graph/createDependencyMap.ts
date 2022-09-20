@@ -1,13 +1,11 @@
 import { getPackageDependencies, PackageDependenciesOptions } from "./getPackageDependencies";
 import { PackageInfos } from "../types/PackageInfo";
 
-/** @internal */
 export interface DependencyMap {
   dependencies: Map<string, Set<string>>;
   dependents: Map<string, Set<string>>;
 }
 
-/** @internal */
 export function createDependencyMap(
   packages: PackageInfos,
   options: PackageDependenciesOptions = { withDevDependencies: true, withPeerDependencies: false }
