@@ -1,13 +1,13 @@
-import findUp from "find-up";
 import fs from "fs";
 import jju from "jju";
 import path from "path";
 import { getPackagePaths } from "../../getPackagePaths";
+import { searchUp } from "../../paths";
 import { WorkspaceInfo } from "../../types/WorkspaceInfo";
 import { getWorkspacePackageInfo } from "../getWorkspacePackageInfo";
 
 export function getLernaWorkspaceRoot(cwd: string): string {
-  const lernaJsonPath = findUp.sync("lerna.json", { cwd });
+  const lernaJsonPath = searchUp("lerna.json", cwd);
 
   if (!lernaJsonPath) {
     throw new Error("Could not find lerna workspace root");

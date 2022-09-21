@@ -1,8 +1,32 @@
 # Change Log - workspace-tools
 
-This log was last generated on Fri, 16 Sep 2022 23:00:36 GMT and should not be manually modified.
+This log was last generated on Tue, 20 Sep 2022 18:54:59 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.28.1
+
+Tue, 20 Sep 2022 18:54:59 GMT
+
+### Patches
+
+- Add GIT_DEBUG environment variable (elcraig@microsoft.com)
+
+## 0.28.0
+
+Tue, 20 Sep 2022 08:01:43 GMT
+
+### Minor changes
+
+- Expose createDependencyMap (erenmurat@microsoft.com)
+
+## 0.27.0
+
+Fri, 16 Sep 2022 23:24:41 GMT
+
+### Minor changes
+
+- BREAKING CHANGE: `searchUp` now returns the full path to the item, not its parent directory. This only affects consumers that are directly using `searchUp`. (elcraig@microsoft.com)
 
 ## 0.26.6
 

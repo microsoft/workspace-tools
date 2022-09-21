@@ -1,8 +1,8 @@
 // NOTE: never place the import of lockfile implementation here, as it slows down the library as a whole
-import findUp from "find-up";
 import fs from "fs";
 import { ParsedLock, PnpmLockFile, NpmLockFile } from "./types";
 import { nameAtVersion } from "./nameAtVersion";
+import { searchUp } from "../paths";
 import { parsePnpmLock } from "./parsePnpmLock";
 import { parseNpmLock } from "./parseNpmLock";
 import { readYaml } from "./readYaml";
@@ -10,7 +10,7 @@ import { readYaml } from "./readYaml";
 const memoization: { [path: string]: ParsedLock } = {};
 
 export async function parseLockFile(packageRoot: string): Promise<ParsedLock> {
-  const yarnLockPath = await findUp(["yarn.lock", "common/config/rush/yarn.lock"], { cwd: packageRoot });
+  const yarnLockPath = searchUp(["yarn.lock", "common/config/rush/yarn.lock"], packageRoot);
 
   // First, test out whether this works for yarn
   if (yarnLockPath) {
@@ -28,7 +28,7 @@ export async function parseLockFile(packageRoot: string): Promise<ParsedLock> {
   }
 
   // Second, test out whether this works for pnpm
-  let pnpmLockPath = await findUp(["pnpm-lock.yaml", "common/config/rush/pnpm-lock.yaml"], { cwd: packageRoot });
+  let pnpmLockPath = searchUp(["pnpm-lock.yaml", "common/config/rush/pnpm-lock.yaml"], packageRoot);
 
   if (pnpmLockPath) {
     if (memoization[pnpmLockPath]) {
@@ -43,7 +43,7 @@ export async function parseLockFile(packageRoot: string): Promise<ParsedLock> {
   }
 
   // Third, try for npm workspaces
-  let npmLockPath = await findUp(["package-lock.json"], { cwd: packageRoot });
+  let npmLockPath = searchUp("package-lock.json", packageRoot);
 
   if (npmLockPath) {
     if (memoization[npmLockPath]) {
