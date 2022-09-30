@@ -2474,10 +2474,10 @@ kleur@^3.0.3:
   resolved "https://registry.yarnpkg.com/kleur/-/kleur-3.0.3.tgz#a79c9ecc86ee1ce3fa6206d1216c501f147fc07e"
   integrity sha512-eTIzlVOSUR+JxdDFepEYcBMtZ9Qqdef+rnzWdRZuMbOywu5tO2w2N7rqjoANZ5k9vywhL6Br1VRjUIgTQx4E8w==
 
-lage@1.9.0:
-  version "1.9.0"
-  resolved "https://registry.yarnpkg.com/lage/-/lage-1.9.0.tgz#68dac4f8d23e179dab1d934548d4beffb822fa34"
-  integrity sha512-wCGZRlg/XUM47Cye2Sven6PCvEGAr9sk4YpTwoybqN0htdY1APcuN1WSHZTyEA5rUGo+ugwWiyZKJW7bFDtV9g==
+lage@1.9.2:
+  version "1.9.2"
+  resolved "https://registry.yarnpkg.com/lage/-/lage-1.9.2.tgz#bf695205eb0e6f12c3acb704900bbf724e63f6f6"
+  integrity sha512-zu7/iJ5zWI3bKtFR0iQsUmmFTVMnJmq+fOJ63qggRwtJH3RNveo9RGq4/GC7IoobwD3ue/WyFjTa5dO5L4oDFw==
   dependencies:
     "@lage-run/logger" "*"
     "@xmldom/xmldom" "^0.8.0"
@@ -2494,7 +2494,7 @@ lage@1.9.0:
     p-graph "^1.1.1"
     p-limit "^3.1.0"
     p-profiler "^0.2.1"
-    workspace-tools "^0.27.0"
+    workspace-tools "^0.28.0"
     yargs-parser "^18.1.3"
 
 leven@^3.1.0:
