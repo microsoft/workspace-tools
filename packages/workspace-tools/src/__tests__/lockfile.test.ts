@@ -11,66 +11,83 @@ const ERROR_MESSAGES = {
 };
 
 describe("parseLockFile()", () => {
-  // General
-  it("throws if it cannot find lock file", async () => {
-    const packageRoot = setupFixture("basic-without-lock-file");
+  describe("general", () => {
+    it("throws if it cannot find lock file", async () => {
+      const packageRoot = setupFixture("basic-without-lock-file");
 
-    await expect(parseLockFile(packageRoot)).rejects.toThrow(ERROR_MESSAGES.NO_LOCK);
+      await expect(parseLockFile(packageRoot)).rejects.toThrow(ERROR_MESSAGES.NO_LOCK);
+    });
   });
 
-  // NPM
-  it("parses package-lock.json file when it is found", async () => {
-    const packageRoot = setupFixture("monorepo-npm");
-    const parsedLockFile = await parseLockFile(packageRoot);
+  describe("NPM", () => {
+    it("parses package-lock.json file when it is found", async () => {
+      const packageRoot = setupFixture("monorepo-npm");
+      const parsedLockFile = await parseLockFile(packageRoot);
 
-    expect(parsedLockFile).toHaveProperty("type", "success");
+      expect(parsedLockFile).toHaveProperty("type", "success");
+    });
+
+    it("throws if npm version is unsupported", async () => {
+      const packageRoot = setupFixture("monorepo-npm-unsupported");
+
+      await expect(parseLockFile(packageRoot)).rejects.toThrow(ERROR_MESSAGES.UNSUPPORTED);
+    });
   });
 
-  it("throws if npm version is unsupported", async () => {
-    const packageRoot = setupFixture("monorepo-npm-unsupported");
+  for (const yarnVersion of [1, 2] as (1 | 2)[]) {
+    const updatePath = (path: string) => (yarnVersion === 1 ? path : `${path}-2`);
+    describe(`yarn ${yarnVersion}`, () => {
+      it("parses yarn.lock file when it is found", async () => {
+        if (yarnVersion === 2) {
+          console.log("yarn version 2 is not suppored, skipping test.");
+          return;
+        }
 
-    await expect(parseLockFile(packageRoot)).rejects.toThrow(ERROR_MESSAGES.UNSUPPORTED);
-  });
+        const packageRoot = setupFixture(updatePath("basic"));
+        const parsedLockFile = await parseLockFile(packageRoot);
 
-  // Yarn
-  it("parses yarn.lock file when it is found", async () => {
-    const packageRoot = setupFixture("basic");
-    const parsedLockFile = await parseLockFile(packageRoot);
+        expect(parsedLockFile).toHaveProperty("type", "success");
+      });
 
-    expect(parsedLockFile).toHaveProperty("type", "success");
-  });
+      it("parses combined ranges in yarn.lock", async () => {
+        if (yarnVersion === 2) {
+          console.log("yarn version 2 is not suppored, skipping test.");
+          return;
+        }
 
-  it("parses combined ranges in yarn.lock", async () => {
-    const packageRoot = setupFixture("basic-yarn");
+        const packageRoot = setupFixture(updatePath("basic-yarn"));
 
-    // Verify that __fixtures__/basic-yarn still follows these assumptions:
-    // - "execa" is listed as a dep in package.json
-    // - "@types/execa" is also listed as a dep, and internally has a dep on "execa@*"
-    const packageName = "execa";
-    const packageInfo = fs.readJSONSync(path.join(packageRoot, "package.json")) as PackageInfo;
-    expect(packageInfo.dependencies?.[packageName]).toBeTruthy();
-    expect(packageInfo.devDependencies?.[`@types/${packageName}`]).toBeTruthy();
+        // Verify that __fixtures__/basic-yarn still follows these assumptions:
+        // - "execa" is listed as a dep in package.json
+        // - "@types/execa" is also listed as a dep, and internally has a dep on "execa@*"
+        const packageName = "execa";
+        const packageInfo = fs.readJSONSync(path.join(packageRoot, "package.json")) as PackageInfo;
+        expect(packageInfo.dependencies?.[packageName]).toBeTruthy();
+        expect(packageInfo.devDependencies?.[`@types/${packageName}`]).toBeTruthy();
 
-    // The actual test: execa@* resolves to the same thing as execa@<specific version from package.json>
-    const expectedSpec = `${packageName}@*`;
-    const parsedLockFile = await parseLockFile(packageRoot);
-    expect(parsedLockFile.object[expectedSpec]).toBeTruthy();
-    const otherSpecs = Object.entries(parsedLockFile.object).filter(
-      ([spec]) => spec.startsWith(`${packageName}@`) && spec !== expectedSpec
-    );
-    expect(otherSpecs.length).toBeGreaterThanOrEqual(1);
-    expect(otherSpecs).toContainEqual([expect.anything(), parsedLockFile.object[expectedSpec]]);
-  });
+        // The actual test: execa@* resolves to the same thing as execa@<specific version from package.json>
+        const expectedSpec = `${packageName}@*`;
+        const parsedLockFile = await parseLockFile(packageRoot);
+        expect(parsedLockFile.object[expectedSpec]).toBeTruthy();
+        const otherSpecs = Object.entries(parsedLockFile.object).filter(
+          ([spec]) => spec.startsWith(`${packageName}@`) && spec !== expectedSpec
+        );
+        expect(otherSpecs.length).toBeGreaterThanOrEqual(1);
+        expect(otherSpecs).toContainEqual([expect.anything(), parsedLockFile.object[expectedSpec]]);
+      });
+    });
+  }
 
-  // PNPM
-  it("parses pnpm-lock.yaml file when it is found", async () => {
-    const packageRoot = setupFixture("basic-pnpm");
-    const parsedLockFile = await parseLockFile(packageRoot);
+  describe("PNPM", () => {
+    it("parses pnpm-lock.yaml file when it is found", async () => {
+      const packageRoot = setupFixture("basic-pnpm");
+      const parsedLockFile = await parseLockFile(packageRoot);
 
-    const yargs = Object.keys(parsedLockFile.object).find((key) => /^yargs@/.test(key));
-    // if either of these fails, check the actual lock file to verify the deps didn't change
-    // with renovate updates or something
-    expect(yargs).toBeTruthy();
-    expect(parsedLockFile.object[yargs!].dependencies?.["cliui"]).toBeTruthy();
+      const yargs = Object.keys(parsedLockFile.object).find((key) => /^yargs@/.test(key));
+      // if either of these fails, check the actual lock file to verify the deps didn't change
+      // with renovate updates or something
+      expect(yargs).toBeTruthy();
+      expect(parsedLockFile.object[yargs!].dependencies?.["cliui"]).toBeTruthy();
+    });
   });
 });
