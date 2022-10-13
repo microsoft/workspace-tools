@@ -4,7 +4,7 @@
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
-    "lerna": "^5.0.0"
+    "lerna": "^6.0.0"
   },
   "engines": {
     "npm": "8.x"
