@@ -41,6 +41,7 @@
 
   "regexManagers": [
     {
+      // This updates the "resolutions" entry for lage's workspace-tools version
       "fileMatch": ["^package.json$"],
       "matchStrings": [
         "(?<depName>\\*\\*/.*?workspace-tools)\": \"npm:workspace-tools@(?<currentValue>[~^]?\\d+\\.\\d+\\.\\d+)"
@@ -55,6 +56,12 @@
     {
       "groupName": "workspace-tools resolutions",
       "matchPackagePatterns": [".*lage.*workspace-tools$"]
+    },
+    {
+      // Separate fixture lock file maintenance in case there are issues/bugs specific to this setup
+      "groupName": "[fixtures] lock file maintenance",
+      "matchPaths": ["**/__fixtures__/**"],
+      "matchUpdateTypes": ["lockFileMaintenance"]
     }
   ]
 }
