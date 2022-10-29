@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "added support for non-workspaces in getPackageInfos",
+  "packageName": "workspace-tools",
+  "email": "ken@gizzar.com",
+  "dependentChangeType": "patch"
+}

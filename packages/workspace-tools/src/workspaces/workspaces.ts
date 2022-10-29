@@ -8,7 +8,7 @@ const cache = new Map<string, string[]>();
  */
 export function getAllPackageJsonFiles(cwd: string) {
   if (cache.has(cwd)) {
-    return cache.get(cwd);
+    return cache.get(cwd)!;
   }
 
   const workspaces = getWorkspaces(cwd);
