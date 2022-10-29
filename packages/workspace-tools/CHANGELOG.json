@@ -2,6 +2,21 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Sat, 29 Oct 2022 16:33:47 GMT",
+      "tag": "workspace-tools_v0.29.0",
+      "version": "0.29.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "ken@gizzar.com",
+            "package": "workspace-tools",
+            "commit": "02e5f076fc241c1ea62bde33610fb932e0ff20e4",
+            "comment": "added support for non-workspaces in getPackageInfos"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 20 Sep 2022 18:54:59 GMT",
       "tag": "workspace-tools_v0.28.1",
       "version": "0.28.1",

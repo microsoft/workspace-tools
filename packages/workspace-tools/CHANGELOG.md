@@ -1,8 +1,16 @@
 # Change Log - workspace-tools
 
-This log was last generated on Tue, 20 Sep 2022 18:54:59 GMT and should not be manually modified.
+This log was last generated on Sat, 29 Oct 2022 16:33:47 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.29.0
+
+Sat, 29 Oct 2022 16:33:47 GMT
+
+### Minor changes
+
+- added support for non-workspaces in getPackageInfos (ken@gizzar.com)
 
 ## 0.28.1
 
