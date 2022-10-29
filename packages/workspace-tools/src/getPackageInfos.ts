@@ -1,10 +1,15 @@
 import fs from "fs";
+import path from "path";
 import { PackageInfos } from "./types/PackageInfo";
 import { infoFromPackageJson } from "./infoFromPackageJson";
 import { getAllPackageJsonFiles } from "./workspaces/workspaces";
 
 export function getPackageInfos(cwd: string) {
-  const packageJsonFiles = getAllPackageJsonFiles(cwd);
+  let packageJsonFiles = getAllPackageJsonFiles(cwd);
+
+  if (packageJsonFiles.length === 0 && fs.existsSync(path.join(cwd, "package.json"))) {
+    packageJsonFiles = [path.join(cwd, "package.json")];
+  }
 
   const packageInfos: PackageInfos = {};
   if (packageJsonFiles && packageJsonFiles.length > 0) {
