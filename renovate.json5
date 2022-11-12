@@ -55,7 +55,8 @@
   "packageRules": [
     {
       "groupName": "workspace-tools resolutions",
-      "matchPackagePatterns": [".*lage.*workspace-tools$"]
+      "matchPackagePatterns": [".*lage.*workspace-tools$"],
+      "dependencyDashboardApproval": false
     }
   ]
 }
