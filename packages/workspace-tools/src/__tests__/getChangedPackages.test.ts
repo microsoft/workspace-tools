@@ -5,7 +5,7 @@ import { cleanupFixtures, setupFixture, setupLocalRemote } from "workspace-tools
 import { stageAndCommit, git } from "../git";
 import { getChangedPackages, getChangedPackagesBetweenRefs } from "../workspaces/getChangedPackages";
 
-describe("getChangedPackages()", () => {
+describe("getChangedPackages", () => {
   afterAll(() => {
     cleanupFixtures();
   });
@@ -21,7 +21,7 @@ describe("getChangedPackages()", () => {
     const changedPkgs = getChangedPackages(root, "main");
 
     // assert
-    expect(changedPkgs).toContain("package-a");
+    expect(changedPkgs).toEqual(["package-a"]);
   });
 
   it("can detect changes inside an untracked file in a nested monorepo", () => {
@@ -83,7 +83,7 @@ describe("getChangedPackages()", () => {
     const changedPkgs = getChangedPackages(root, "main");
 
     // assert
-    expect(changedPkgs).toContain("package-a");
+    expect(changedPkgs).toEqual(["package-a"]);
   });
 
   it("can detect changes inside an unstaged file in a nested monorepo", () => {
@@ -112,7 +112,7 @@ describe("getChangedPackages()", () => {
     const changedPkgs = getChangedPackages(root, "main");
 
     // assert
-    expect(changedPkgs).toContain("package-a");
+    expect(changedPkgs).toEqual(["package-a"]);
   });
 
   it("can detect changes inside a staged file in a nested monorepo", () => {
@@ -137,13 +137,13 @@ describe("getChangedPackages()", () => {
     const newFile = path.join(root, "packages/package-a/footest.txt");
     fs.writeFileSync(newFile, "hello foo test");
     git(["checkout", "-b", "newbranch"], { cwd: root });
-    stageAndCommit(["add", newFile], "test commit", root);
+    stageAndCommit([newFile], "test commit", root);
 
     // act
     const changedPkgs = getChangedPackages(root, "main");
 
     // assert
-    expect(changedPkgs).toContain("package-a");
+    expect(changedPkgs).toEqual(["package-a"]);
   });
 
   it("can detect changes inside a file that has been committed in a different branch in a nested monorepo", () => {
@@ -194,25 +194,27 @@ describe("getChangedPackages()", () => {
     expect(changedPkgs).toEqual([]);
   });
 
-  it("can detect changed packages between two refs", () => {
-    // arrange
-    const root = setupFixture("monorepo");
+  describe("getChangedPackagesBetweenRefs", () => {
+    it("can detect changed packages between two refs", () => {
+      // arrange
+      const root = setupFixture("monorepo");
 
-    const newFile = path.join(root, "packages/package-a/footest.txt");
-    fs.writeFileSync(newFile, "hello foo test");
-    git(["add", newFile], { cwd: root });
-    stageAndCommit(["packages/package-a/footest.txt"], "test commit in a", root);
+      const newFile = path.join(root, "packages/package-a/footest.txt");
+      fs.writeFileSync(newFile, "hello foo test");
+      git(["add", newFile], { cwd: root });
+      stageAndCommit(["packages/package-a/footest.txt"], "test commit in a", root);
 
-    const newFile2 = path.join(root, "packages/package-b/footest2.txt");
-    fs.writeFileSync(newFile2, "hello foo test");
-    git(["add", newFile2], { cwd: root });
-    stageAndCommit(["packages/package-b/footest2.txt"], "test commit in b", root);
+      const newFile2 = path.join(root, "packages/package-b/footest2.txt");
+      fs.writeFileSync(newFile2, "hello foo test");
+      git(["add", newFile2], { cwd: root });
+      stageAndCommit(["packages/package-b/footest2.txt"], "test commit in b", root);
 
-    // act
-    const changedPkgs = getChangedPackagesBetweenRefs(root, "HEAD^1", "HEAD");
+      // act
+      const changedPkgs = getChangedPackagesBetweenRefs(root, "HEAD^1", "HEAD");
 
-    // assert
-    expect(changedPkgs).toContain("package-b");
-    expect(changedPkgs).not.toContain("package-a");
+      // assert
+      expect(changedPkgs).toContain("package-b");
+      expect(changedPkgs).not.toContain("package-a");
+    });
   });
 });
