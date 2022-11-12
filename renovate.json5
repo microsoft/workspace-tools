@@ -56,15 +56,6 @@
     {
       "groupName": "workspace-tools resolutions",
       "matchPackagePatterns": [".*lage.*workspace-tools$"]
-    },
-    {
-      // Separate fixture lock file maintenance in case there are issues/bugs specific to this setup
-      "groupName": "[fixtures] lock file maintenance",
-      // This doesn't use the group name by default for some reason
-      "prTitle": "[fixtures] lock file maintenance",
-      "matchPaths": ["**/__fixtures__/**"],
-      "excludePackageNames": ["workspace-tools-monorepo"],
-      "matchUpdateTypes": ["lockFileMaintenance"]
     }
   ]
 }
