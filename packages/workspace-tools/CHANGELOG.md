@@ -1,8 +1,16 @@
 # Change Log - workspace-tools
 
-This log was last generated on Sat, 29 Oct 2022 16:33:47 GMT and should not be manually modified.
+This log was last generated on Thu, 17 Nov 2022 01:23:58 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.29.1
+
+Thu, 17 Nov 2022 01:23:58 GMT
+
+### Patches
+
+- getRecentCommitMessages: return empty array if no commits (elcraig@microsoft.com)
 
 ## 0.29.0
 

@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "getRecentCommitMessages: return empty array if no commits",
-  "packageName": "workspace-tools",
-  "email": "elcraig@microsoft.com",
-  "dependentChangeType": "patch"
-}
