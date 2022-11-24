@@ -2,6 +2,21 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Thu, 24 Nov 2022 08:01:54 GMT",
+      "tag": "workspace-tools_v0.29.1",
+      "version": "0.29.1",
+      "comments": {
+        "none": [
+          {
+            "author": "email not defined",
+            "package": "workspace-tools",
+            "commit": "15cab8e9dee71659c4dd7c2489769a17792ae06a",
+            "comment": "[fixtures] Update devDependency prettier"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 17 Nov 2022 01:23:58 GMT",
       "tag": "workspace-tools_v0.29.1",
       "version": "0.29.1",
