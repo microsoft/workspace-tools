@@ -24,7 +24,7 @@
   "devDependencies": {
     "@types/fs-extra": "9.0.13",
     "@types/git-url-parse": "9.0.1",
-    "@types/jest": "29.2.6",
+    "@types/jest": "29.4.0",
     "@types/jju": "1.4.2",
     "@types/js-yaml": "4.0.5",
     "@types/micromatch": "4.0.2",
@@ -34,7 +34,7 @@
     "beachball": "2.31.7",
     "fs-extra": "10.1.0",
     "gh-pages": "4.0.0",
-    "jest": "29.3.1",
+    "jest": "29.4.1",
     "lage": "1.9.6",
     "prettier": "2.8.2",
     "tmp": "0.2.1",
