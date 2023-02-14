@@ -1,11 +1,13 @@
 // NOTE: never place the import of lockfile implementation here, as it slows down the library as a whole
 import fs from "fs";
-import { ParsedLock, PnpmLockFile, NpmLockFile } from "./types";
+import path from "path";
+import { ParsedLock, PnpmLockFile, NpmLockFile, BerryLockFile } from "./types";
 import { nameAtVersion } from "./nameAtVersion";
 import { searchUp } from "../paths";
 import { parsePnpmLock } from "./parsePnpmLock";
 import { parseNpmLock } from "./parseNpmLock";
 import { readYaml } from "./readYaml";
+import { parseBerryLock } from "./parseBerryLock";
 
 const memoization: { [path: string]: ParsedLock } = {};
 
@@ -18,9 +20,26 @@ export async function parseLockFile(packageRoot: string): Promise<ParsedLock> {
       return memoization[yarnLockPath];
     }
 
-    const parseYarnLock = (await import("@yarnpkg/lockfile")).parse;
     const yarnLock = fs.readFileSync(yarnLockPath, "utf-8");
-    const parsed = parseYarnLock(yarnLock);
+
+    const isBerry =
+      yarnLock.includes("__metadata") || fs.existsSync(path.resolve(yarnLock.replace("yarn.lock", ".yarnrc.yml")));
+
+    let parsed: {
+      type: "success" | "merge" | "conflict";
+      object: any;
+    } = {
+      type: "success",
+      object: {},
+    };
+
+    if (isBerry) {
+      const yaml = readYaml<BerryLockFile>(yarnLockPath);
+      parsed = parseBerryLock(yaml);
+    } else {
+      const parseYarnLock = (await import("@yarnpkg/lockfile")).parse;
+      parsed = parseYarnLock(yarnLock);
+    }
 
     memoization[yarnLockPath] = parsed;
 
