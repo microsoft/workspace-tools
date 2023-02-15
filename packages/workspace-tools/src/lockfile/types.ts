@@ -46,5 +46,8 @@ export interface BerryLockFile {
   __metadata: any;
   [key: string]: {
     version: string;
+    dependencies: {
+      [dependency: string]: string;
+    };
   };
 }

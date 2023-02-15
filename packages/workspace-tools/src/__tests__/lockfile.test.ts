@@ -34,8 +34,7 @@ describe("parseLockFile()", () => {
     });
   });
 
-  // TODO: add yarn 2
-  describe.each([1] as const)("yarn %s", (yarnVersion) => {
+  describe.each([1, 2] as const)("yarn %s", (yarnVersion) => {
     const updatePath = (path: string) => (yarnVersion === 1 ? path : `${path}-2`);
 
     it("parses yarn.lock file when it is found", async () => {

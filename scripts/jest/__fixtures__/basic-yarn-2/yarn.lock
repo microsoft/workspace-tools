@@ -76,10 +76,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/execa@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "@types/execa@npm:2.0.0"
+  dependencies:
+    execa: "*"
+  checksum: 7c01bd5b0dfd87055548a9cd5290620b11853d385b0adfbf12674edd3322016d6198fde4c80bd0047f2b93424de4e4e299a93bcbe9ec227379d4bc4e906ebdd0
+  languageName: node
+  linkType: hard
+
 "@types/node@npm:^14.0.0":
-  version: 14.18.31
-  resolution: "@types/node@npm:14.18.31"
-  checksum: df33021d673a5e3c943cf96c9f3fbccf364d20f487b2ab7eb49db144974c2049f0a91e9358df09235f543c1f0b11388c5b0b636ae1f2ed55a27c75f63bc3d2c5
+  version: 14.18.36
+  resolution: "@types/node@npm:14.18.36"
+  checksum: da7f479b3fc996d585e60b8329987c6e310ddbf051e14f2d900ce04f7768f42fa7b760f0eb376008d3eca130ce9431018fb5c9e44027dcb7bb139c547e44b9c5
   languageName: node
   linkType: hard
 
@@ -91,11 +100,11 @@ __metadata:
   linkType: hard
 
 "acorn@npm:^8.4.1":
-  version: 8.8.0
-  resolution: "acorn@npm:8.8.0"
+  version: 8.8.2
+  resolution: "acorn@npm:8.8.2"
   bin:
     acorn: bin/acorn
-  checksum: 7270ca82b242eafe5687a11fea6e088c960af712683756abf0791b68855ea9cace3057bd5e998ffcef50c944810c1e0ca1da526d02b32110e13c722aa959afdc
+  checksum: f790b99a1bf63ef160c967e23c46feea7787e531292bb827126334612c234ed489a0dc2c7ba33156416f0ffa8d25bf2b0fdb7f35c2ba60eb3e960572bece4001
   languageName: node
   linkType: hard
 
@@ -111,6 +120,7 @@ __metadata:
   resolution: "basic-yarn-2@workspace:."
   dependencies:
     "@microsoft/task-scheduler": ^2.7.1
+    "@types/execa": ^2.0.0
     "@types/node": ^14.0.0
     execa: ^6.0.0
     ts-node: ^10.0.0
@@ -150,7 +160,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"execa@npm:^6.0.0":
+"execa@npm:*, execa@npm:^6.0.0":
   version: 6.1.0
   resolution: "execa@npm:6.1.0"
   dependencies:
@@ -366,22 +376,22 @@ __metadata:
   linkType: hard
 
 "typescript@npm:^4.0.0":
-  version: 4.8.4
-  resolution: "typescript@npm:4.8.4"
+  version: 4.9.5
+  resolution: "typescript@npm:4.9.5"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 3e4f061658e0c8f36c820802fa809e0fd812b85687a9a2f5430bc3d0368e37d1c9605c3ce9b39df9a05af2ece67b1d844f9f6ea8ff42819f13bcb80f85629af0
+  checksum: ee000bc26848147ad423b581bd250075662a354d84f0e06eb76d3b892328d8d4440b7487b5a83e851b12b255f55d71835b008a66cbf8f255a11e4400159237db
   languageName: node
   linkType: hard
 
 "typescript@patch:typescript@^4.0.0#~builtin<compat/typescript>":
-  version: 4.8.4
-  resolution: "typescript@patch:typescript@npm%3A4.8.4#~builtin<compat/typescript>::version=4.8.4&hash=7ad353"
+  version: 4.9.5
+  resolution: "typescript@patch:typescript@npm%3A4.9.5#~builtin<compat/typescript>::version=4.9.5&hash=23ec76"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 563a0ef47abae6df27a9a3ab38f75fc681f633ccf1a3502b1108e252e187787893de689220f4544aaf95a371a4eb3141e4a337deb9895de5ac3c1ca76430e5f0
+  checksum: ab417a2f398380c90a6cf5a5f74badd17866adf57f1165617d6a551f059c3ba0a3e4da0d147b3ac5681db9ac76a303c5876394b13b3de75fdd5b1eaa06181c9d
   languageName: node
   linkType: hard
 
