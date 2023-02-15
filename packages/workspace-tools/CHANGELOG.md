@@ -1,8 +1,16 @@
 # Change Log - workspace-tools
 
-This log was last generated on Thu, 17 Nov 2022 01:23:58 GMT and should not be manually modified.
+This log was last generated on Wed, 15 Feb 2023 01:42:19 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.30.0
+
+Wed, 15 Feb 2023 01:42:19 GMT
+
+### Minor changes
+
+- Adds support for yarn 2+ (berry) (kchau@microsoft.com)
 
 ## 0.29.1
 

@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "Adds support for yarn 2+ (berry)",
-  "packageName": "workspace-tools",
-  "email": "kchau@microsoft.com",
-  "dependentChangeType": "patch"
-}

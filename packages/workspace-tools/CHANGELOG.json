@@ -2,6 +2,21 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Wed, 15 Feb 2023 01:42:19 GMT",
+      "tag": "workspace-tools_v0.30.0",
+      "version": "0.30.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "kchau@microsoft.com",
+            "package": "workspace-tools",
+            "commit": "8f67b8f2138e3ace2412da07071b5ee58c0ea304",
+            "comment": "Adds support for yarn 2+ (berry)"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 24 Nov 2022 08:01:54 GMT",
       "tag": "workspace-tools_v0.29.1",
       "version": "0.29.1",
