@@ -9,7 +9,8 @@
   },
   "workspaces": [
     "packages/*",
-    "scripts"
+    "scripts",
+    "!scripts/jest/__fixtures__/*"
   ],
   "scripts": {
     "build": "lage build",

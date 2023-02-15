@@ -6,3 +6,6 @@ temp/
 **/common/scripts/
 .DS_Store
 *.log*
+**/__fixtures__/*/node_modules/
+**/__fixtures__/*/.yarn/cache/
+install-state.gz

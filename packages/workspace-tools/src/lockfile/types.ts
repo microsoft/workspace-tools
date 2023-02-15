@@ -41,3 +41,13 @@ export interface NpmLockFile {
   } & { [key: string]: NpmSymlinkInfo | LockDependency };
   dependencies?: { [key: string]: LockDependency };
 }
+
+export interface BerryLockFile {
+  __metadata: any;
+  [key: string]: {
+    version: string;
+    dependencies: {
+      [dependency: string]: string;
+    };
+  };
+}
