@@ -44,7 +44,7 @@
     "typescript": "4.5.4"
   },
   "resolutions": {
-    "**/lage/workspace-tools": "npm:workspace-tools@0.29.1",
-    "**/lage/**/workspace-tools": "npm:workspace-tools@0.29.1"
+    "**/lage/workspace-tools": "npm:workspace-tools@0.30.0",
+    "**/lage/**/workspace-tools": "npm:workspace-tools@0.30.0"
   }
 }
