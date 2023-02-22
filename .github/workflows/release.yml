@@ -57,7 +57,7 @@ jobs:
         run: |
           # See previous step for explanation
           trap "git remote set-url origin '$(git remote get-url origin)'" EXIT
-          git remote set-url origin "https://$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY"
+          git remote set-url origin "https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY"
 
           yarn release:docs
         env:
