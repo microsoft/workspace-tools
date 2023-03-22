@@ -13,14 +13,15 @@
     "!scripts/jest/__fixtures__/*"
   ],
   "scripts": {
-    "build": "lage build",
+    "build": "yarn lage build",
     "build:docs": "typedoc",
-    "release:docs": "yarn build:docs && gh-pages -d docs",
     "change": "beachball change",
     "checkchange": "beachball check",
     "format": "prettier --write .",
+    "lage": "cross-env NODE_OPTIONS=\"--experimental-abortcontroller\" lage",
     "release": "beachball publish -y",
-    "test": "lage test"
+    "release:docs": "yarn build:docs && gh-pages -d docs",
+    "test": "yarn lage test"
   },
   "devDependencies": {
     "@types/fs-extra": "9.0.13",
@@ -33,10 +34,11 @@
     "@types/tmp": "0.2.3",
     "@types/yarnpkg__lockfile": "1.1.5",
     "beachball": "2.31.9",
+    "cross-env": "7.0.3",
     "fs-extra": "10.1.0",
     "gh-pages": "4.0.0",
     "jest": "29.4.3",
-    "lage": "1.9.6",
+    "lage": "2.3.0",
     "prettier": "2.8.6",
     "tmp": "0.2.1",
     "ts-jest": "29.0.5",
