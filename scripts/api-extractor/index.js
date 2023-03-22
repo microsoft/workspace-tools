@@ -34,6 +34,9 @@ if (!result.apiReportChanged) {
   process.exit(1);
 } else {
   console.log(`Updating API report file (please check this in): "${config.reportFilePath}"`);
-  fs.mkdirSync(path.join(cwd, "etc"));
+  const configDir = path.dirname(config.reportFilePath);
+  if (!fs.existsSync(configDir)) {
+    fs.mkdirSync(configDir);
+  }
   fs.copyFileSync(config.reportTempFilePath, config.reportFilePath);
 }
