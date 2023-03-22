@@ -1,5 +1,6 @@
 module.exports = {
   pipeline: {
+    api: ["build"],
     build: ["^build"],
     test: ["build"],
   },
