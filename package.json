@@ -13,7 +13,7 @@
     "!scripts/jest/__fixtures__/*"
   ],
   "scripts": {
-    "build": "lage build",
+    "build": "yarn lage build",
     "build:docs": "typedoc",
     "change": "beachball change",
     "checkchange": "beachball check",
@@ -21,7 +21,7 @@
     "lage": "cross-env NODE_OPTIONS=\"--experimental-abortcontroller\" lage",
     "release": "beachball publish -y",
     "release:docs": "yarn build:docs && gh-pages -d docs",
-    "test": "lage test"
+    "test": "yarn lage test"
   },
   "devDependencies": {
     "@types/fs-extra": "9.0.13",
