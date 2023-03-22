@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "license": "MIT",
+  "bin": "run-script.js",
   "scripts": {
     "build": "tsc --noEmit"
   }

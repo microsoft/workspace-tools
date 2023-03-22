@@ -16,3 +16,4 @@ SECURITY.md
 
 .DS_Store
 *.log*
+*.api.md

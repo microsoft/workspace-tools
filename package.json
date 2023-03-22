@@ -13,17 +13,20 @@
     "!scripts/jest/__fixtures__/*"
   ],
   "scripts": {
-    "build": "yarn lage build",
+    "api": "yarn lage api",
+    "build": "yarn lage build api",
     "build:docs": "typedoc",
     "change": "beachball change",
     "checkchange": "beachball check",
     "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "lage": "cross-env NODE_OPTIONS=\"--experimental-abortcontroller\" lage",
     "release": "beachball publish -y",
     "release:docs": "yarn build:docs && gh-pages -d docs",
     "test": "yarn lage test"
   },
   "devDependencies": {
+    "@microsoft/api-extractor": "7.34.4",
     "@types/fs-extra": "9.0.13",
     "@types/git-url-parse": "9.0.1",
     "@types/jest": "29.4.0",
