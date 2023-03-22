@@ -15,11 +15,12 @@
   "scripts": {
     "build": "lage build",
     "build:docs": "typedoc",
-    "release:docs": "yarn build:docs && gh-pages -d docs",
     "change": "beachball change",
     "checkchange": "beachball check",
     "format": "prettier --write .",
+    "lage": "cross-env NODE_OPTIONS=\"--experimental-abortcontroller\" lage",
     "release": "beachball publish -y",
+    "release:docs": "yarn build:docs && gh-pages -d docs",
     "test": "lage test"
   },
   "devDependencies": {
@@ -36,7 +37,7 @@
     "fs-extra": "10.1.0",
     "gh-pages": "4.0.0",
     "jest": "29.4.3",
-    "lage": "1.9.6",
+    "lage": "2.3.0",
     "prettier": "2.8.6",
     "tmp": "0.2.1",
     "ts-jest": "29.0.5",
