@@ -1,7 +1,0 @@
-{
-  "comment": "Add API Extractor for better visibility of API changes",
-  "type": "none",
-  "packageName": "workspace-tools",
-  "email": "elcraig@microsoft.com",
-  "dependentChangeType": "none"
-}

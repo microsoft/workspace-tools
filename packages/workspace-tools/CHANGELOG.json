@@ -2,6 +2,21 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Thu, 23 Mar 2023 08:01:50 GMT",
+      "tag": "workspace-tools_v0.30.0",
+      "version": "0.30.0",
+      "comments": {
+        "none": [
+          {
+            "author": "elcraig@microsoft.com",
+            "package": "workspace-tools",
+            "commit": "86a77ecd132cc97ac41263b862f9056d317c2816",
+            "comment": "Add API Extractor for better visibility of API changes"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 15 Feb 2023 01:42:19 GMT",
       "tag": "workspace-tools_v0.30.0",
       "version": "0.30.0",
