@@ -57,6 +57,11 @@
       "groupName": "workspace-tools resolutions",
       "matchPackagePatterns": [".*lage.*workspace-tools$"],
       "dependencyDashboardApproval": false
+    },
+    {
+      "matchPaths": ["**/__fixtures__/**"],
+      "additionalBranchPrefix": "fixtures-",
+      "commitMessagePrefix": "[fixtures] "
     }
   ]
 }
