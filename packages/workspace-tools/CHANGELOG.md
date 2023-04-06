@@ -1,8 +1,16 @@
 # Change Log - workspace-tools
 
-This log was last generated on Thu, 06 Apr 2023 19:44:34 GMT and should not be manually modified.
+This log was last generated on Thu, 06 Apr 2023 22:06:24 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.32.0
+
+Thu, 06 Apr 2023 22:06:24 GMT
+
+### Minor changes
+
+- making the dep graph generation to be much faster (kchau@microsoft.com)
 
 ## 0.31.0
 

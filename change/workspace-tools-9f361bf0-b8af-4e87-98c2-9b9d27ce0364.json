@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "making the dep graph generation to be much faster",
-  "packageName": "workspace-tools",
-  "email": "kchau@microsoft.com",
-  "dependentChangeType": "patch"
-}

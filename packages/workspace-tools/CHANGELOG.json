@@ -2,6 +2,21 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Thu, 06 Apr 2023 22:06:24 GMT",
+      "tag": "workspace-tools_v0.32.0",
+      "version": "0.32.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "kchau@microsoft.com",
+            "package": "workspace-tools",
+            "commit": "2ce8ddc9819094b14fd1cadf7a5b92af3f61d626",
+            "comment": "making the dep graph generation to be much faster"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 06 Apr 2023 19:44:34 GMT",
       "tag": "workspace-tools_v0.31.0",
       "version": "0.31.0",
