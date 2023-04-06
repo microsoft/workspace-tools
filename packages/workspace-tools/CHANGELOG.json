@@ -2,6 +2,21 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Thu, 06 Apr 2023 19:44:34 GMT",
+      "tag": "workspace-tools_v0.31.0",
+      "version": "0.31.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "kchau@microsoft.com",
+            "package": "workspace-tools",
+            "commit": "f8b5b92e46c6026faf01484a137eaa89cc223e5b",
+            "comment": "adding getPackageInfosAsync() to make that faster"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 23 Mar 2023 08:01:50 GMT",
       "tag": "workspace-tools_v0.30.0",
       "version": "0.30.0",
