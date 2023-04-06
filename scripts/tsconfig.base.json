@@ -9,6 +9,6 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "pretty": true,
-    "types": ["node", "jest"]
+    "types": ["node", "jest", "lodash"]
   }
 }

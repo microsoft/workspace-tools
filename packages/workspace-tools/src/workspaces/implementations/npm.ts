@@ -1,5 +1,9 @@
 import { WorkspaceInfo } from "../../types/WorkspaceInfo";
-import { getPackageJsonWorkspaceRoot, getWorkspaceInfoFromWorkspaceRoot } from "./packageJsonWorkspaces";
+import {
+  getPackageJsonWorkspaceRoot,
+  getWorkspaceInfoFromWorkspaceRoot,
+  getWorkspaceInfoFromWorkspaceRootAsync,
+} from "./packageJsonWorkspaces";
 
 export function getNpmWorkspaceRoot(cwd: string): string {
   const npmWorkspacesRoot = getPackageJsonWorkspaceRoot(cwd);
@@ -14,4 +18,9 @@ export function getNpmWorkspaceRoot(cwd: string): string {
 export function getNpmWorkspaces(cwd: string): WorkspaceInfo {
   const npmWorkspacesRoot = getNpmWorkspaceRoot(cwd);
   return getWorkspaceInfoFromWorkspaceRoot(npmWorkspacesRoot);
+}
+
+export async function getNpmWorkspacesAsync(cwd: string): Promise<WorkspaceInfo> {
+  const npmWorkspacesRoot = getNpmWorkspaceRoot(cwd);
+  return await getWorkspaceInfoFromWorkspaceRootAsync(npmWorkspacesRoot);
 }

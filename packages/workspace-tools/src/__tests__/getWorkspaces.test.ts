@@ -8,6 +8,8 @@ import { getRushWorkspaces } from "../workspaces/implementations/rush";
 import { getNpmWorkspaces } from "../workspaces/implementations/npm";
 import { getLernaWorkspaces } from "../workspaces/implementations/lerna";
 
+import _ from "lodash";
+
 describe("getWorkspaces", () => {
   afterAll(() => {
     cleanupFixtures();
@@ -24,7 +26,7 @@ describe("getWorkspaces", () => {
       const packageAPath = path.join(packageRoot, "packages", "package-a");
       const packageBPath = path.join(packageRoot, "packages", "package-b");
 
-      expect(workspacesPackageInfo).toMatchObject([
+      expect(_.orderBy(workspacesPackageInfo, ["name"], ["asc"])).toMatchObject([
         { name: "package-a", path: packageAPath },
         { name: "package-b", path: packageBPath },
       ]);
@@ -41,10 +43,10 @@ describe("getWorkspaces", () => {
       const packageBPath = path.join(packageRoot, "packages", "package-b");
       const individualPath = path.join(packageRoot, "individual");
 
-      expect(workspacesPackageInfo).toMatchObject([
+      expect(_.orderBy(workspacesPackageInfo, ["name"], ["asc"])).toMatchObject([
+        { name: "individual", path: individualPath },
         { name: "package-a", path: packageAPath },
         { name: "package-b", path: packageBPath },
-        { name: "individual", path: individualPath },
       ]);
     });
   });
@@ -60,7 +62,7 @@ describe("getWorkspaces", () => {
       const packageAPath = path.join(packageRoot, "packages", "package-a");
       const packageBPath = path.join(packageRoot, "packages", "package-b");
 
-      expect(workspacesPackageInfo).toMatchObject([
+      expect(_.orderBy(workspacesPackageInfo, ["name"], ["asc"])).toMatchObject([
         { name: "package-a", path: packageAPath },
         { name: "package-b", path: packageBPath },
       ]);
@@ -78,7 +80,7 @@ describe("getWorkspaces", () => {
       const packageAPath = path.join(packageRoot, "packages", "package-a");
       const packageBPath = path.join(packageRoot, "packages", "package-b");
 
-      expect(workspacesPackageInfo).toMatchObject([
+      expect(_.orderBy(workspacesPackageInfo, ["name"], ["asc"])).toMatchObject([
         { name: "package-a", path: packageAPath },
         { name: "package-b", path: packageBPath },
       ]);
@@ -96,7 +98,7 @@ describe("getWorkspaces", () => {
       const packageAPath = path.join(packageRoot, "packages", "package-a");
       const packageBPath = path.join(packageRoot, "packages", "package-b");
 
-      expect(workspacesPackageInfo).toMatchObject([
+      expect(_.orderBy(workspacesPackageInfo, ["name"], ["asc"])).toMatchObject([
         { name: "package-a", path: packageAPath },
         { name: "package-b", path: packageBPath },
       ]);
@@ -114,7 +116,7 @@ describe("getWorkspaces", () => {
       const packageAPath = path.join(packageRoot, "packages", "package-a");
       const packageBPath = path.join(packageRoot, "packages", "package-b");
 
-      expect(workspacesPackageInfo).toMatchObject([
+      expect(_.orderBy(workspacesPackageInfo, ["name"], ["asc"])).toMatchObject([
         { name: "package-a", path: packageAPath },
         { name: "package-b", path: packageBPath },
       ]);
@@ -131,10 +133,10 @@ describe("getWorkspaces", () => {
       const packageBPath = path.join(packageRoot, "packages", "package-b");
       const individualPath = path.join(packageRoot, "individual");
 
-      expect(workspacesPackageInfo).toMatchObject([
+      expect(_.orderBy(workspacesPackageInfo, ["name"], ["asc"])).toMatchObject([
+        { name: "individual", path: individualPath },
         { name: "package-a", path: packageAPath },
         { name: "package-b", path: packageBPath },
-        { name: "individual", path: individualPath },
       ]);
     });
   });
@@ -150,7 +152,7 @@ describe("getWorkspaces", () => {
       const packageAPath = path.join(packageRoot, "packages", "package-a");
       const packageBPath = path.join(packageRoot, "packages", "package-b");
 
-      expect(workspacesPackageInfo).toMatchObject([
+      expect(_.orderBy(workspacesPackageInfo, ["name"], ["asc"])).toMatchObject([
         { name: "package-a", path: packageAPath },
         { name: "package-b", path: packageBPath },
       ]);

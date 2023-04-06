@@ -1,8 +1,8 @@
 import fs from "fs";
 import path from "path";
 import { getWorkspaceImplementationAndLockFile } from ".";
-import { getPackagePaths } from "../../getPackagePaths";
-import { getWorkspacePackageInfo } from "../getWorkspacePackageInfo";
+import { getPackagePaths, getPackagePathsAsync } from "../../getPackagePaths";
+import { getWorkspacePackageInfo, getWorkspacePackageInfoAsync } from "../getWorkspacePackageInfo";
 
 type PackageJsonWorkspaces = {
   workspaces?:
@@ -49,8 +49,18 @@ export function getWorkspaceInfoFromWorkspaceRoot(packageJsonWorkspacesRoot: str
     const rootPackageJson = getRootPackageJson(packageJsonWorkspacesRoot);
     const packages = getPackages(rootPackageJson);
     const packagePaths = getPackagePaths(packageJsonWorkspacesRoot, packages);
-    const workspaceInfo = getWorkspacePackageInfo(packagePaths);
-    return workspaceInfo;
+    return getWorkspacePackageInfo(packagePaths);
+  } catch {
+    return [];
+  }
+}
+
+export async function getWorkspaceInfoFromWorkspaceRootAsync(packageJsonWorkspacesRoot: string) {
+  try {
+    const rootPackageJson = getRootPackageJson(packageJsonWorkspacesRoot);
+    const packages = getPackages(rootPackageJson);
+    const packagePaths = await getPackagePathsAsync(packageJsonWorkspacesRoot, packages);
+    return getWorkspacePackageInfoAsync(packagePaths);
   } catch {
     return [];
   }
