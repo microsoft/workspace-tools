@@ -8,6 +8,7 @@ function memoizedKey(packages: PackageInfos, scope: string[] = []) {
 }
 
 function getPackageGraph(packages: PackageInfos, scope: string[] = []) {
+  const internalPackages = new Set(Object.keys(packages));
   const key = memoizedKey(packages, scope);
 
   if (graphCache.has(key)) {
@@ -29,7 +30,7 @@ function getPackageGraph(packages: PackageInfos, scope: string[] = []) {
     visited.add(pkg);
 
     const info = packages[pkg];
-    const deps = getPackageDependencies(info, packages);
+    const deps = getPackageDependencies(info, internalPackages);
 
     if (deps.length > 0) {
       for (const dep of deps) {

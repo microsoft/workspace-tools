@@ -138,7 +138,7 @@ export function getFullBranchRef(branch: string, cwd: string): string | null;
 export const getInternalDeps: typeof getPackageDependencies;
 
 // @public (undocumented)
-function getPackageDependencies(info: PackageInfo, packages: PackageInfos, options?: PackageDependenciesOptions): string[];
+function getPackageDependencies(info: PackageInfo, packages: Set<string>, options?: PackageDependenciesOptions): string[];
 
 // @public (undocumented)
 export function getPackageInfos(cwd: string): PackageInfos;

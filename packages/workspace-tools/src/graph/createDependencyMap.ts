@@ -1,5 +1,6 @@
 import { getPackageDependencies, PackageDependenciesOptions } from "./getPackageDependencies";
 import { PackageInfos } from "../types/PackageInfo";
+import { getPackageInfos, getPackageInfosAsync } from "../getPackageInfos";
 
 export interface DependencyMap {
   dependencies: Map<string, Set<string>>;
@@ -15,8 +16,10 @@ export function createDependencyMap(
     dependents: new Map<string, Set<string>>(),
   };
 
+  const internalPackages = new Set(Object.keys(packages));
+
   for (const [pkg, info] of Object.entries(packages)) {
-    const deps = getPackageDependencies(info, packages, options);
+    const deps = getPackageDependencies(info, internalPackages, options);
     for (const dep of deps) {
       if (!map.dependencies.has(pkg)) {
         map.dependencies.set(pkg, new Set());

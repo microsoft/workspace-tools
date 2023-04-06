@@ -7,13 +7,34 @@ export interface PackageDependenciesOptions {
 
 export function getPackageDependencies(
   info: PackageInfo,
-  packages: PackageInfos,
+  packages: Set<string>,
   options: PackageDependenciesOptions = { withDevDependencies: true }
 ): string[] {
-  const deps = {
-    ...info.dependencies,
-    ...(options.withDevDependencies && info.devDependencies),
-    ...(options.withPeerDependencies && info.peerDependencies),
-  };
-  return Object.keys(packages).filter((pkg) => !!deps[pkg]);
+  const deps: string[] = [];
+
+  if (info.dependencies) {
+    for (const dep of Object.keys(info.dependencies)) {
+      if (dep !== info.name && packages.has(dep)) {
+        deps.push(dep);
+      }
+    }
+  }
+
+  if (info.devDependencies && options.withDevDependencies) {
+    for (const dep of Object.keys(info.devDependencies)) {
+      if (dep !== info.name && packages.has(dep)) {
+        deps.push(dep);
+      }
+    }
+  }
+
+  if (info.peerDependencies && options.withPeerDependencies) {
+    for (const dep of Object.keys(info.peerDependencies)) {
+      if (dep !== info.name && packages.has(dep)) {
+        deps.push(dep);
+      }
+    }
+  }
+
+  return deps;
 }
