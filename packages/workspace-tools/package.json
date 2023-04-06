@@ -26,6 +26,8 @@
     "micromatch": "^4.0.0"
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.192",
+    "lodash": "4.17.21",
     "workspace-tools-scripts": "*"
   }
 }
