@@ -1,4 +1,4 @@
-import { getWorkspaces } from "./getWorkspaces";
+import { getWorkspaces, getWorkspacesAsync } from "./getWorkspaces";
 
 const cache = new Map<string, string[]>();
 
@@ -21,4 +21,17 @@ export function getAllPackageJsonFiles(cwd: string) {
 
 export function _resetCache() {
   cache.clear();
+}
+
+export async function getAllPackageJsonFilesAsync(cwd: string) {
+  if (cache.has(cwd)) {
+    return cache.get(cwd)!;
+  }
+
+  const workspaces = await getWorkspacesAsync(cwd);
+  const packageJsonFiles = workspaces.map((workspace) => workspace.packageJson.packageJsonPath);
+
+  cache.set(cwd, packageJsonFiles);
+
+  return packageJsonFiles;
 }

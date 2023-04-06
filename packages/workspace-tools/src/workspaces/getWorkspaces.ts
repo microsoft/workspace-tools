@@ -29,3 +29,24 @@ export function getWorkspaces(cwd: string): WorkspaceInfo {
       return require(`./implementations/lerna`).getLernaWorkspaces(cwd);
   }
 }
+
+export async function getWorkspacesAsync(cwd: string): Promise<WorkspaceInfo> {
+  const workspaceImplementation = preferred || getWorkspaceImplementation(cwd);
+
+  if (!workspaceImplementation) {
+    return [];
+  }
+
+  switch (workspaceImplementation) {
+    case "yarn":
+      return await require(`./implementations/yarn`).getYarnWorkspacesAsync(cwd);
+
+    case "npm":
+      return require(`./implementations/npm`).getNpmWorkspacesAsync(cwd);
+
+    case "pnpm":
+    case "rush":
+    case "lerna":
+      throw new Error(`${cwd} is using ${workspaceImplementation} which has not been converted to async yet`);
+  }
+}
