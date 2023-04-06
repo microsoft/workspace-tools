@@ -8,7 +8,7 @@ import { getRushWorkspaces } from "../workspaces/implementations/rush";
 import { getNpmWorkspaces } from "../workspaces/implementations/npm";
 import { getLernaWorkspaces } from "../workspaces/implementations/lerna";
 
-import _ from 'lodash';
+import _ from "lodash";
 
 describe("getWorkspaces", () => {
   afterAll(() => {
