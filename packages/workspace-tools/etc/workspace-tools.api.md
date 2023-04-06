@@ -72,6 +72,9 @@ export function findWorkspacePath(workspaces: WorkspaceInfo, packageName: string
 // @public
 export function getAllPackageJsonFiles(cwd: string): string[];
 
+// @public (undocumented)
+export function getAllPackageJsonFilesAsync(cwd: string): Promise<string[]>;
+
 // @public
 export function getBranchChanges(branch: string, cwd: string): string[];
 
@@ -140,6 +143,9 @@ function getPackageDependencies(info: PackageInfo, packages: PackageInfos, optio
 // @public (undocumented)
 export function getPackageInfos(cwd: string): PackageInfos;
 
+// @public (undocumented)
+export function getPackageInfosAsync(cwd: string): Promise<PackageInfos>;
+
 // @public
 export function getPackagesByFiles(workspaceRoot: string, files: string[], ignoreGlobs?: string[], returnAllPackagesOnNoMatch?: boolean): string[];
 
@@ -203,10 +209,16 @@ export function getWorkspaceRoot(cwd: string): string | undefined;
 export function getWorkspaces(cwd: string): WorkspaceInfo;
 
 // @public (undocumented)
+export function getWorkspacesAsync(cwd: string): Promise<WorkspaceInfo>;
+
+// @public (undocumented)
 export function getYarnWorkspaceRoot(cwd: string): string;
 
 // @public (undocumented)
 export function getYarnWorkspaces(cwd: string): WorkspaceInfo;
+
+// @public (undocumented)
+export function getYarnWorkspacesAsync(cwd: string): Promise<WorkspaceInfo>;
 
 // @public
 export function git(args: string[], options?: SpawnSyncOptions): GitProcessOutput;
