@@ -19,7 +19,7 @@ export function getAllPackageJsonFiles(cwd: string) {
   return packageJsonFiles;
 }
 
-export function _resetCache() {
+export function _resetPackageJsonFilesCache() {
   cache.clear();
 }
 

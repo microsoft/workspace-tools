@@ -24,3 +24,7 @@ export async function getNpmWorkspacesAsync(cwd: string): Promise<WorkspaceInfo>
   const npmWorkspacesRoot = getNpmWorkspaceRoot(cwd);
   return await getWorkspaceInfoFromWorkspaceRootAsync(npmWorkspacesRoot);
 }
+
+export { getNpmWorkspaceRoot as getWorkspaceRoot };
+export { getNpmWorkspaces as getWorkspaces };
+export { getNpmWorkspacesAsync as getWorkspacesAsync };

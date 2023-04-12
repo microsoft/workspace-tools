@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "Improve workspace manager utility naming. None of the modified methods/types are exported from the root, but if you were deep importing them, the changes are as follows:\n  - Change `getWorkspaceImplementationAndLockFile` to `getWorkspaceManagerAndRoot`, with return type `WorkspaceManagerAndRoot` (replacing `ImplementationAndLockFile`) to be more relevant for actual usage.\n  - Remove `WorkspaceImplementations` type (use the identical existing type `WorkspaceManager` instead)",
+  "packageName": "workspace-tools",
+  "email": "elcraig@microsoft.com",
+  "dependentChangeType": "patch"
+}

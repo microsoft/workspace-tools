@@ -3,7 +3,7 @@ import glob from "fast-glob";
 
 const packagePathsCache: { [workspacesRoot: string]: string[] } = {};
 
-export function getPackagePaths(workspacesRoot: string, packages: string[], ignorePatterns?: string[]): string[] {
+export function getPackagePaths(workspacesRoot: string, packages: string[]): string[] {
   if (packagePathsCache[workspacesRoot]) {
     return packagePathsCache[workspacesRoot];
   }

@@ -1,11 +1,11 @@
 import path from "path";
 
 import { cleanupFixtures, setupFixture } from "workspace-tools-scripts/jest/setupFixture";
-import { getWorkspaceImplementation } from "../workspaces/implementations";
-import { getYarnWorkspaces } from "../workspaces/implementations/yarn";
+import { getWorkspaceManager } from "../workspaces/implementations";
+import { getYarnWorkspaces, getYarnWorkspacesAsync } from "../workspaces/implementations/yarn";
 import { getPnpmWorkspaces } from "../workspaces/implementations/pnpm";
 import { getRushWorkspaces } from "../workspaces/implementations/rush";
-import { getNpmWorkspaces } from "../workspaces/implementations/npm";
+import { getNpmWorkspaces, getNpmWorkspacesAsync } from "../workspaces/implementations/npm";
 import { getLernaWorkspaces } from "../workspaces/implementations/lerna";
 
 import _ from "lodash";
@@ -15,13 +15,16 @@ describe("getWorkspaces", () => {
     cleanupFixtures();
   });
 
-  describe("yarn", () => {
-    it("gets the name and path of the workspaces", () => {
+  describe.each([
+    ["getYarnWorkspaces", getYarnWorkspaces],
+    ["getYarnWorkspacesAsync", getYarnWorkspacesAsync],
+  ])("yarn (%s)", (name, getWorkspaces) => {
+    it("gets the name and path of the workspaces", async () => {
       const packageRoot = setupFixture("monorepo");
 
-      expect(getWorkspaceImplementation(packageRoot, {})).toBe("yarn");
+      expect(getWorkspaceManager(packageRoot, new Map())).toBe("yarn");
 
-      const workspacesPackageInfo = getYarnWorkspaces(packageRoot);
+      const workspacesPackageInfo = await getWorkspaces(packageRoot);
 
       const packageAPath = path.join(packageRoot, "packages", "package-a");
       const packageBPath = path.join(packageRoot, "packages", "package-b");
@@ -32,12 +35,12 @@ describe("getWorkspaces", () => {
       ]);
     });
 
-    it("gets the name and path of the workspaces against a packages spec of an individual package", () => {
+    it("gets the name and path of the workspaces against a packages spec of an individual package", async () => {
       const packageRoot = setupFixture("monorepo-globby");
 
-      expect(getWorkspaceImplementation(packageRoot, {})).toBe("yarn");
+      expect(getWorkspaceManager(packageRoot, new Map())).toBe("yarn");
 
-      const workspacesPackageInfo = getYarnWorkspaces(packageRoot);
+      const workspacesPackageInfo = await getWorkspaces(packageRoot);
 
       const packageAPath = path.join(packageRoot, "packages", "package-a");
       const packageBPath = path.join(packageRoot, "packages", "package-b");
@@ -55,7 +58,7 @@ describe("getWorkspaces", () => {
     it("gets the name and path of the workspaces", () => {
       const packageRoot = setupFixture("monorepo-pnpm");
 
-      expect(getWorkspaceImplementation(packageRoot, {})).toBe("pnpm");
+      expect(getWorkspaceManager(packageRoot, new Map())).toBe("pnpm");
 
       const workspacesPackageInfo = getPnpmWorkspaces(packageRoot);
 
@@ -73,7 +76,7 @@ describe("getWorkspaces", () => {
     it("gets the name and path of the workspaces", () => {
       const packageRoot = setupFixture("monorepo-rush-pnpm");
 
-      expect(getWorkspaceImplementation(packageRoot, {})).toBe("rush");
+      expect(getWorkspaceManager(packageRoot, new Map())).toBe("rush");
 
       const workspacesPackageInfo = getRushWorkspaces(packageRoot);
 
@@ -91,7 +94,7 @@ describe("getWorkspaces", () => {
     it("gets the name and path of the workspaces", () => {
       const packageRoot = setupFixture("monorepo-rush-yarn");
 
-      expect(getWorkspaceImplementation(packageRoot, {})).toBe("rush");
+      expect(getWorkspaceManager(packageRoot, new Map())).toBe("rush");
 
       const workspacesPackageInfo = getRushWorkspaces(packageRoot);
 
@@ -105,13 +108,16 @@ describe("getWorkspaces", () => {
     });
   });
 
-  describe("npm", () => {
-    it("gets the name and path of the workspaces", () => {
+  describe.each([
+    ["getNpmWorkspaces", getNpmWorkspaces],
+    ["getNpmWorkspacesAsync", getNpmWorkspacesAsync],
+  ])("npm (%s)", (name, getWorkspaces) => {
+    it("gets the name and path of the workspaces", async () => {
       const packageRoot = setupFixture("monorepo-npm");
 
-      expect(getWorkspaceImplementation(packageRoot, {})).toBe("npm");
+      expect(getWorkspaceManager(packageRoot, new Map())).toBe("npm");
 
-      const workspacesPackageInfo = getNpmWorkspaces(packageRoot);
+      const workspacesPackageInfo = await getWorkspaces(packageRoot);
 
       const packageAPath = path.join(packageRoot, "packages", "package-a");
       const packageBPath = path.join(packageRoot, "packages", "package-b");
@@ -122,12 +128,12 @@ describe("getWorkspaces", () => {
       ]);
     });
 
-    it("gets the name and path of the workspaces using the shorthand configuration", () => {
+    it("gets the name and path of the workspaces using the shorthand configuration", async () => {
       const packageRoot = setupFixture("monorepo-shorthand");
 
-      expect(getWorkspaceImplementation(packageRoot, {})).toBe("npm");
+      expect(getWorkspaceManager(packageRoot, new Map())).toBe("npm");
 
-      const workspacesPackageInfo = getNpmWorkspaces(packageRoot);
+      const workspacesPackageInfo = await getWorkspaces(packageRoot);
 
       const packageAPath = path.join(packageRoot, "packages", "package-a");
       const packageBPath = path.join(packageRoot, "packages", "package-b");
@@ -145,7 +151,7 @@ describe("getWorkspaces", () => {
     it("gets the name and path of the workspaces", async () => {
       const packageRoot = setupFixture("monorepo-lerna-npm");
 
-      expect(getWorkspaceImplementation(packageRoot, {})).toBe("lerna");
+      expect(getWorkspaceManager(packageRoot, new Map())).toBe("lerna");
 
       const workspacesPackageInfo = getLernaWorkspaces(packageRoot);
 

@@ -31,3 +31,6 @@ export function getRushWorkspaces(cwd: string): WorkspaceInfo {
     return [];
   }
 }
+
+export { getRushWorkspaceRoot as getWorkspaceRoot };
+export { getRushWorkspaces as getWorkspaces };
