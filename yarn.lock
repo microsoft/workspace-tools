@@ -971,10 +971,10 @@ balanced-match@^1.0.0:
   resolved "https://registry.npmjs.org/balanced-match/-/balanced-match-1.0.2.tgz"
   integrity sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==
 
-beachball@2.31.9:
-  version "2.31.9"
-  resolved "https://registry.npmjs.org/beachball/-/beachball-2.31.9.tgz"
-  integrity sha512-O7NJc246hCAn6JMZBugG6RjYw6OeCPuC/HEXdm4Wu3NQNvODbwsSE8hLHeJLVgUXVk9R+gTKZHmGdWXv5QCP7g==
+beachball@2.31.12:
+  version "2.31.12"
+  resolved "https://registry.yarnpkg.com/beachball/-/beachball-2.31.12.tgz#eb0127deb6d2125dfdfbda5ef3b73c4fdd12c913"
+  integrity sha512-fxhuCkacaFHBJLyvdn06cx5UKYpPwC5YbgftHLmhvTDFK0dP4KMOMRxQqoN/7t4sdxqaSopUxG8iI3WsDlTXwA==
   dependencies:
     cosmiconfig "^7.0.0"
     execa "^5.0.0"
@@ -986,7 +986,7 @@ beachball@2.31.9:
     semver "^7.0.0"
     toposort "^2.0.2"
     uuid "^9.0.0"
-    workspace-tools "^0.29.0"
+    workspace-tools "^0.30.0"
     yargs-parser "^21.0.0"
 
 brace-expansion@^1.1.7:
@@ -2866,19 +2866,7 @@ which@^2.0.1:
   dependencies:
     isexe "^2.0.0"
 
-workspace-tools@^0.29.0:
-  version "0.29.1"
-  resolved "https://registry.npmjs.org/workspace-tools/-/workspace-tools-0.29.1.tgz"
-  integrity sha512-BVPROxNszGmyaUD2ErLWP4BpCiIkG1P//CnziOvHd27o1TeBm+7T1HKlYu89T4XGAjgPL/NP+tZ4j6aBvG/p/A==
-  dependencies:
-    "@yarnpkg/lockfile" "^1.1.0"
-    git-url-parse "^13.0.0"
-    globby "^11.0.0"
-    jju "^1.4.0"
-    js-yaml "^4.1.0"
-    micromatch "^4.0.0"
-
-"workspace-tools@npm:workspace-tools@0.30.0":
+workspace-tools@^0.30.0, "workspace-tools@npm:workspace-tools@0.30.0":
   version "0.30.0"
   resolved "https://registry.yarnpkg.com/workspace-tools/-/workspace-tools-0.30.0.tgz#93103df09a66d5a4260bf65005b8f9924e439cf1"
   integrity sha512-vQrzjAFvQYI2Zg9kFAo43aIgQNX5VSTtWLvOxCKhgjKnPdyLMXcPNxPTCKu3v+tjDW+YJNXUAigVv+pykrwOsQ==
