@@ -42,6 +42,10 @@ function getPackages(packageJson: PackageJsonWorkspaces): string[] {
   return workspaces.packages;
 }
 
+/**
+ * Get an array with names, paths, and package.json contents for each package in an npm/yarn workspace.
+ * (See `../getWorkspaces` for why it's named this way.)
+ */
 export function getWorkspaceInfoFromWorkspaceRoot(packageJsonWorkspacesRoot: string) {
   try {
     const rootPackageJson = getRootPackageJson(packageJsonWorkspacesRoot);
@@ -54,6 +58,10 @@ export function getWorkspaceInfoFromWorkspaceRoot(packageJsonWorkspacesRoot: str
   }
 }
 
+/**
+ * Get an array with names, paths, and package.json contents for each package in an npm/yarn workspace.
+ * (See `../getWorkspaces` for why it's named this way.)
+ */
 export async function getWorkspaceInfoFromWorkspaceRootAsync(packageJsonWorkspacesRoot: string) {
   try {
     const rootPackageJson = getRootPackageJson(packageJsonWorkspacesRoot);

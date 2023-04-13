@@ -17,6 +17,10 @@ export function getRushWorkspaceRoot(cwd: string): string {
   return path.dirname(rushJsonPath);
 }
 
+/**
+ * Get an array with names, paths, and package.json contents for each package in a rush workspace.
+ * (See `../getWorkspaces` for why it's named this way.)
+ */
 export function getRushWorkspaces(cwd: string): WorkspaceInfo {
   try {
     const rushWorkspaceRoot = getRushWorkspaceRoot(cwd);

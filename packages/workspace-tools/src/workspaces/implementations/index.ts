@@ -9,8 +9,28 @@ import type * as PnpmUtilities from "./pnpm";
 import type * as RushUtilities from "./rush";
 import type * as YarnUtilities from "./yarn";
 
+export interface WorkspaceUtilities {
+  /**
+   * Get the root directory of a workspace/monorepo, defined as the directory where the workspace
+   * manager config file is located.
+   */
+  getWorkspaceRoot: (cwd: string) => string;
+  /**
+   * Get an array with names, paths, and package.json contents for each package in a workspace.
+   * (See `../getWorkspaces` for why it's named this way.)
+   */
+  getWorkspaces: (cwd: string) => WorkspaceInfo;
+  /**
+   * Get an array with names, paths, and package.json contents for each package in a workspace.
+   * (See `../getWorkspaces` for why it's named this way.)
+   */
+  getWorkspacesAsync?: (cwd: string) => Promise<WorkspaceInfo>;
+}
+
 export interface WorkspaceManagerAndRoot {
+  /** Workspace manager name */
   manager: WorkspaceManager;
+  /** Workspace root, where the manager configuration file is located */
   root: string;
 }
 const workspaceCache = new Map<string, WorkspaceManagerAndRoot | undefined>();
@@ -75,13 +95,7 @@ export function getWorkspaceManager(cwd: string, cache = workspaceCache): Worksp
  * Get utility implementations for the workspace manager of `cwd`.
  * Returns undefined if the manager can't be determined.
  */
-export function getWorkspaceUtilities(cwd: string):
-  | {
-      getWorkspaceRoot: (cwd: string) => string;
-      getWorkspaces: (cwd: string) => WorkspaceInfo;
-      getWorkspacesAsync?: (cwd: string) => Promise<WorkspaceInfo>;
-    }
-  | undefined {
+export function getWorkspaceUtilities(cwd: string): WorkspaceUtilities | undefined {
   const manager = getWorkspaceManager(cwd);
 
   switch (manager) {

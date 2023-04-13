@@ -7,7 +7,7 @@ import { readYaml } from "../../lockfile/readYaml";
 import { searchUp } from "../../paths";
 import { logVerboseWarning } from "../../logging";
 
-type PnpmWorkspaces = {
+type PnpmWorkspaceYaml = {
   packages: string[];
 };
 
@@ -21,12 +21,16 @@ export function getPnpmWorkspaceRoot(cwd: string): string {
   return path.dirname(pnpmWorkspacesFile);
 }
 
+/**
+ * Get an array with names, paths, and package.json contents for each package in a pnpm workspace.
+ * (See `../getWorkspaces` for why it's named this way.)
+ */
 export function getPnpmWorkspaces(cwd: string): WorkspaceInfo {
   try {
     const pnpmWorkspacesRoot = getPnpmWorkspaceRoot(cwd);
     const pnpmWorkspacesFile = path.join(pnpmWorkspacesRoot, "pnpm-workspace.yaml");
 
-    const pnpmWorkspaces = readYaml(pnpmWorkspacesFile) as PnpmWorkspaces;
+    const pnpmWorkspaces = readYaml(pnpmWorkspacesFile) as PnpmWorkspaceYaml;
 
     const packagePaths = getPackagePaths(pnpmWorkspacesRoot, pnpmWorkspaces.packages);
     const workspaceInfo = getWorkspacePackageInfo(packagePaths);

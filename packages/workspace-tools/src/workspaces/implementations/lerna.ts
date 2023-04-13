@@ -17,6 +17,10 @@ export function getLernaWorkspaceRoot(cwd: string): string {
   return path.dirname(lernaJsonPath);
 }
 
+/**
+ * Get an array with names, paths, and package.json contents for each package in a lerna workspace.
+ * (See `../getWorkspaces` for why it's named this way.)
+ */
 export function getLernaWorkspaces(cwd: string): WorkspaceInfo {
   try {
     const lernaWorkspaceRoot = getLernaWorkspaceRoot(cwd);

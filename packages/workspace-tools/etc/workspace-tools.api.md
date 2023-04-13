@@ -66,13 +66,13 @@ export function findPackageRoot(cwd: string): string | undefined;
 // @public
 export function findProjectRoot(cwd: string): string;
 
-// @public (undocumented)
+// @public
 export function findWorkspacePath(workspaces: WorkspaceInfo, packageName: string): string | undefined;
 
 // @public
 export function getAllPackageJsonFiles(cwd: string): string[];
 
-// @public (undocumented)
+// @public
 export function getAllPackageJsonFilesAsync(cwd: string): Promise<string[]>;
 
 // @public
@@ -155,7 +155,7 @@ export function getParentBranch(cwd: string): string | null;
 // @public (undocumented)
 export function getPnpmWorkspaceRoot(cwd: string): string;
 
-// @public (undocumented)
+// @public
 export function getPnpmWorkspaces(cwd: string): WorkspaceInfo;
 
 // @public (undocumented)
@@ -167,7 +167,7 @@ export function getRemoteBranch(branch: string, cwd: string): string | null;
 // @public (undocumented)
 export function getRushWorkspaceRoot(cwd: string): string;
 
-// @public (undocumented)
+// @public
 export function getRushWorkspaces(cwd: string): WorkspaceInfo;
 
 // @public
@@ -202,19 +202,19 @@ export function getUntrackedChanges(cwd: string): string[];
 // @public (undocumented)
 export function getUserEmail(cwd: string): string | null;
 
-// @public (undocumented)
+// @public
 export function getWorkspaceRoot(cwd: string): string | undefined;
 
-// @public (undocumented)
+// @public
 export function getWorkspaces(cwd: string): WorkspaceInfo;
 
-// @public (undocumented)
+// @public
 export function getWorkspacesAsync(cwd: string): Promise<WorkspaceInfo>;
 
 // @public (undocumented)
 export function getYarnWorkspaceRoot(cwd: string): string;
 
-// @public (undocumented)
+// @public
 export function getYarnWorkspaces(cwd: string): WorkspaceInfo;
 
 // @public
@@ -440,7 +440,7 @@ export function stage(patterns: string[], cwd: string): void;
 // @public (undocumented)
 export function stageAndCommit(patterns: string[], message: string, cwd: string, commitOptions?: string[]): void;
 
-// @public (undocumented)
+// @public
 export type WorkspaceInfo = {
     name: string;
     path: string;
