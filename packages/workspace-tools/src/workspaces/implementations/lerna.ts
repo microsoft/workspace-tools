@@ -15,20 +15,27 @@ function getLernaWorkspaceRoot(cwd: string): string {
   return root;
 }
 
+/** Get package paths for a lerna workspace. */
+export function getWorkspacePackagePaths(cwd: string): string[] {
+  try {
+    const lernaWorkspaceRoot = getLernaWorkspaceRoot(cwd);
+    const lernaJsonPath = path.join(lernaWorkspaceRoot, "lerna.json");
+    const lernaConfig = jju.parse(fs.readFileSync(lernaJsonPath, "utf-8"));
+    return getPackagePaths(lernaWorkspaceRoot, lernaConfig.packages);
+  } catch (err) {
+    logVerboseWarning(`Error getting lerna workspace package paths for ${cwd}`, err);
+    return [];
+  }
+}
+
 /**
  * Get an array with names, paths, and package.json contents for each package in a lerna workspace.
  * (See `../getWorkspaces` for why it's named this way.)
  */
 export function getLernaWorkspaces(cwd: string): WorkspaceInfo {
   try {
-    const lernaWorkspaceRoot = getLernaWorkspaceRoot(cwd);
-    const lernaJsonPath = path.join(lernaWorkspaceRoot, "lerna.json");
-
-    const lernaConfig = jju.parse(fs.readFileSync(lernaJsonPath, "utf-8"));
-
-    const packagePaths = getPackagePaths(lernaWorkspaceRoot, lernaConfig.packages);
-    const workspaceInfo = getWorkspacePackageInfo(packagePaths);
-    return workspaceInfo;
+    const packagePaths = getWorkspacePackagePaths(cwd);
+    return getWorkspacePackageInfo(packagePaths);
   } catch (err) {
     logVerboseWarning(`Error getting lerna workspaces for ${cwd}`, err);
     return [];

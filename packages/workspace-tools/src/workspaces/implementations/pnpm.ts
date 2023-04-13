@@ -20,21 +20,29 @@ export function getPnpmWorkspaceRoot(cwd: string): string {
   return root;
 }
 
-/**
- * Get an array with names, paths, and package.json contents for each package in a pnpm workspace.
- * (See `../getWorkspaces` for why it's named this way.)
- */
-export function getPnpmWorkspaces(cwd: string): WorkspaceInfo {
+/** Get package paths for a pnpm workspace. */
+export function getWorkspacePackagePaths(cwd: string): string[] {
   try {
     const pnpmWorkspacesRoot = getPnpmWorkspaceRoot(cwd);
     const pnpmWorkspacesFile = path.join(pnpmWorkspacesRoot, "pnpm-workspace.yaml");
 
     const pnpmWorkspaces = readYaml(pnpmWorkspacesFile) as PnpmWorkspaceYaml;
 
-    const packagePaths = getPackagePaths(pnpmWorkspacesRoot, pnpmWorkspaces.packages);
-    const workspaceInfo = getWorkspacePackageInfo(packagePaths);
+    return getPackagePaths(pnpmWorkspacesRoot, pnpmWorkspaces.packages);
+  } catch (err) {
+    logVerboseWarning(`Error getting pnpm workspace package paths for ${cwd}`, err);
+    return [];
+  }
+}
 
-    return workspaceInfo;
+/**
+ * Get an array with names, paths, and package.json contents for each package in a pnpm workspace.
+ * (See `../getWorkspaces` for why it's named this way.)
+ */
+export function getPnpmWorkspaces(cwd: string): WorkspaceInfo {
+  try {
+    const packagePaths = getWorkspacePackagePaths(cwd);
+    return getWorkspacePackageInfo(packagePaths);
   } catch (err) {
     logVerboseWarning(`Error getting pnpm workspaces for ${cwd}`, err);
     return [];

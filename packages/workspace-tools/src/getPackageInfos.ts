@@ -1,69 +1,53 @@
 import fs from "fs";
-import fsPromises from "fs/promises";
 import path from "path";
-import { PackageInfos } from "./types/PackageInfo";
+import { PackageInfo, PackageInfos } from "./types/PackageInfo";
 import { infoFromPackageJson } from "./infoFromPackageJson";
-import { getAllPackageJsonFiles, getAllPackageJsonFilesAsync } from "./workspaces/workspaces";
+import { getWorkspaces, getWorkspacesAsync } from "./workspaces/getWorkspaces";
 
 export function getPackageInfos(cwd: string) {
-  let packageJsonFiles = getAllPackageJsonFiles(cwd);
-
-  if (packageJsonFiles.length === 0 && fs.existsSync(path.join(cwd, "package.json"))) {
-    packageJsonFiles = [path.join(cwd, "package.json")];
-  }
-
   const packageInfos: PackageInfos = {};
-  if (packageJsonFiles && packageJsonFiles.length > 0) {
-    packageJsonFiles.forEach((packageJsonPath: string) => {
-      try {
-        const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, "utf-8"));
-        packageInfos[packageJson.name] = infoFromPackageJson(packageJson, packageJsonPath);
-      } catch (e) {
-        if (e instanceof Error) {
-          // Pass, the package.json is invalid
-          throw new Error(`Invalid package.json file detected ${packageJsonPath}: ${e.message}`);
-        } else {
-          throw e;
-        }
-      }
-    });
-    return packageInfos;
+  const workspacePackages = getWorkspaces(cwd);
+
+  if (workspacePackages.length) {
+    for (const pkg of workspacePackages) {
+      packageInfos[pkg.name] = pkg.packageJson;
+    }
+  } else {
+    const rootInfo = tryReadRootPackageJson(cwd);
+    if (rootInfo) {
+      packageInfos[rootInfo.name] = rootInfo;
+    }
   }
 
-  return {};
+  return packageInfos;
 }
 
 export async function getPackageInfosAsync(cwd: string) {
-  let packageJsonFiles = await getAllPackageJsonFilesAsync(cwd);
-
-  if (packageJsonFiles.length === 0 && fs.existsSync(path.join(cwd, "package.json"))) {
-    packageJsonFiles = [path.join(cwd, "package.json")];
-  }
-
   const packageInfos: PackageInfos = {};
+  const workspacePackages = await getWorkspacesAsync(cwd);
 
-  if (packageJsonFiles && packageJsonFiles.length > 0) {
-    const packageInfoPromises = packageJsonFiles.map(async (packageJsonPath: string) => {
-      try {
-        const packageJson = JSON.parse(await fsPromises.readFile(packageJsonPath, "utf-8"));
-        return infoFromPackageJson(packageJson, packageJsonPath);
-      } catch (e) {
-        if (e instanceof Error) {
-          // Pass, the package.json is invalid
-          throw new Error(`Invalid package.json file detected ${packageJsonPath}: ${e.message}`);
-        } else {
-          throw e;
-        }
-      }
-    });
-
-    const results = await Promise.all(packageInfoPromises);
-    for (const packageInfo of results) {
-      packageInfos[packageInfo.name] = packageInfo;
+  if (workspacePackages.length) {
+    for (const pkg of workspacePackages) {
+      packageInfos[pkg.name] = pkg.packageJson;
     }
-
-    return packageInfos;
+  } else {
+    const rootInfo = tryReadRootPackageJson(cwd);
+    if (rootInfo) {
+      packageInfos[rootInfo.name] = rootInfo;
+    }
   }
 
-  return {};
+  return packageInfos;
+}
+
+function tryReadRootPackageJson(cwd: string): PackageInfo | undefined {
+  const packageJsonPath = path.join(cwd, "package.json");
+  if (fs.existsSync(packageJsonPath)) {
+    try {
+      const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, "utf-8"));
+      return infoFromPackageJson(packageJson, packageJsonPath);
+    } catch (e) {
+      throw new Error(`Invalid package.json file detected ${packageJsonPath}: ${(e as Error)?.message || e}`);
+    }
+  }
 }

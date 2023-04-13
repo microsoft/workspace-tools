@@ -1,6 +1,11 @@
 import { getWorkspaceManagerAndRoot } from ".";
 import { WorkspaceInfo } from "../../types/WorkspaceInfo";
-import { getWorkspaceInfoFromWorkspaceRoot, getWorkspaceInfoFromWorkspaceRootAsync } from "./packageJsonWorkspaces";
+import {
+  getPackagePathsFromWorkspaceRoot,
+  getPackagePathsFromWorkspaceRootAsync,
+  getWorkspaceInfoFromWorkspaceRoot,
+  getWorkspaceInfoFromWorkspaceRootAsync,
+} from "./packageJsonWorkspaces";
 
 /** @deprecated Use `getWorkspaceRoot` */
 export function getYarnWorkspaceRoot(cwd: string): string {
@@ -9,6 +14,18 @@ export function getYarnWorkspaceRoot(cwd: string): string {
     throw new Error("Could not find yarn workspace root from " + cwd);
   }
   return root;
+}
+
+/** Get package paths for a yarn workspace. */
+export function getWorkspacePackagePaths(cwd: string): string[] {
+  const yarnWorkspacesRoot = getYarnWorkspaceRoot(cwd);
+  return getPackagePathsFromWorkspaceRoot(yarnWorkspacesRoot);
+}
+
+/** Get package paths for a yarn workspace. */
+export function getWorkspacePackagePathsAsync(cwd: string): Promise<string[]> {
+  const yarnWorkspacesRoot = getYarnWorkspaceRoot(cwd);
+  return getPackagePathsFromWorkspaceRootAsync(yarnWorkspacesRoot);
 }
 
 /**

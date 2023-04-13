@@ -202,6 +202,12 @@ export function getUntrackedChanges(cwd: string): string[];
 // @public (undocumented)
 export function getUserEmail(cwd: string): string | null;
 
+// @public
+export function getWorkspacePackagePaths(cwd: string): string[];
+
+// @public
+export function getWorkspacePackagePathsAsync(cwd: string): Promise<string[]>;
+
 // Warning: (ae-forgotten-export) The symbol "WorkspaceManager" needs to be exported by the entry point index.d.ts
 //
 // @public
