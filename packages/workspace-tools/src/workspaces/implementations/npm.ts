@@ -15,11 +15,19 @@ export function getNpmWorkspaceRoot(cwd: string): string {
   return npmWorkspacesRoot;
 }
 
+/**
+ * Get an array with names, paths, and package.json contents for each package in an npm workspace.
+ * (See `../getWorkspaces` for why it's named this way.)
+ */
 export function getNpmWorkspaces(cwd: string): WorkspaceInfo {
   const npmWorkspacesRoot = getNpmWorkspaceRoot(cwd);
   return getWorkspaceInfoFromWorkspaceRoot(npmWorkspacesRoot);
 }
 
+/**
+ * Get an array with names, paths, and package.json contents for each package in an npm workspace.
+ * (See `../getWorkspaces` for why it's named this way.)
+ */
 export async function getNpmWorkspacesAsync(cwd: string): Promise<WorkspaceInfo> {
   const npmWorkspacesRoot = getNpmWorkspaceRoot(cwd);
   return await getWorkspaceInfoFromWorkspaceRootAsync(npmWorkspacesRoot);

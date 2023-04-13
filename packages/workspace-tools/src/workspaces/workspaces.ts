@@ -3,10 +3,12 @@ import { getWorkspaces, getWorkspacesAsync } from "./getWorkspaces";
 const cache = new Map<string, string[]>();
 
 /**
- * Get paths to every package.json in the workspace, given a cwd
- * @param cwd
+ * Get paths to every package.json in the workspace, given a cwd.
+ *
+ * **WARNING**: On first call for a given `cwd`, this will **read ALL package.json files,
+ * not only their paths**!
  */
-export function getAllPackageJsonFiles(cwd: string) {
+export function getAllPackageJsonFiles(cwd: string): string[] {
   if (cache.has(cwd)) {
     return cache.get(cwd)!;
   }
@@ -23,7 +25,13 @@ export function _resetPackageJsonFilesCache() {
   cache.clear();
 }
 
-export async function getAllPackageJsonFilesAsync(cwd: string) {
+/**
+ * Get paths to every package.json in the workspace, given a cwd.
+ *
+ * **WARNING**: On first call for a given `cwd`, this will **read ALL package.json files,
+ * not only their paths**!
+ */
+export async function getAllPackageJsonFilesAsync(cwd: string): Promise<string[]> {
   if (cache.has(cwd)) {
     return cache.get(cwd)!;
   }

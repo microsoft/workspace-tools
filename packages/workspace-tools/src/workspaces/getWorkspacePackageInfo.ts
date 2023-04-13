@@ -5,6 +5,16 @@ import { WorkspaceInfo } from "../types/WorkspaceInfo";
 import { PackageInfo } from "../types/PackageInfo";
 import { logVerboseWarning } from "../logging";
 
+/**
+ * Get an array with names, paths, and package.json contents for each of the given package paths
+ * within a workspace.
+ *
+ * This is an internal helper used by `getWorkspaces` implementations for different managers.
+ * (See `../getWorkspaces` for why it's named this way.)
+ * @param packagePaths Paths to packages within a workspace
+ * @returns Array of workspace package infos
+ * @internal
+ */
 export function getWorkspacePackageInfo(packagePaths: string[]): WorkspaceInfo {
   if (!packagePaths) {
     return [];
@@ -33,6 +43,16 @@ export function getWorkspacePackageInfo(packagePaths: string[]): WorkspaceInfo {
   }, []);
 }
 
+/**
+ * Get an array with names, paths, and package.json contents for each of the given package paths
+ * within a workspace.
+ *
+ * This is an internal helper used by `getWorkspaces` implementations for different managers.
+ * (See `../getWorkspaces` for why it's named this way.)
+ * @param packagePaths Paths to packages within a workspace
+ * @returns Array of workspace package infos
+ * @internal
+ */
 export async function getWorkspacePackageInfoAsync(packagePaths: string[]): Promise<WorkspaceInfo> {
   if (!packagePaths) {
     return [];
