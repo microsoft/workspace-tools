@@ -1,61 +1,61 @@
 import path from "path";
 import fs from "fs";
+import fsPromises from "fs/promises";
 import { WorkspaceInfo } from "../types/WorkspaceInfo";
 import { PackageInfo } from "../types/PackageInfo";
+import { logVerboseWarning } from "../logging";
 
-export function getWorkspacePackageInfo(workspacePaths: string[]): WorkspaceInfo {
-  if (!workspacePaths) {
+export function getWorkspacePackageInfo(packagePaths: string[]): WorkspaceInfo {
+  if (!packagePaths) {
     return [];
   }
 
-  return workspacePaths.reduce<WorkspaceInfo>((returnValue, workspacePath) => {
+  return packagePaths.reduce<WorkspaceInfo>((workspacePkgs, workspacePath) => {
     let packageJson: PackageInfo;
     const packageJsonPath = path.join(workspacePath, "package.json");
 
     try {
       packageJson = JSON.parse(fs.readFileSync(packageJsonPath, "utf-8")) as PackageInfo;
-    } catch {
-      return returnValue;
+    } catch (err) {
+      logVerboseWarning(`Error reading or parsing ${packageJsonPath} while getting workspace package info`, err);
+      return workspacePkgs;
     }
 
-    return [
-      ...returnValue,
-      {
+    workspacePkgs.push({
+      name: packageJson.name,
+      path: workspacePath,
+      packageJson: {
+        ...packageJson,
+        packageJsonPath,
+      },
+    });
+    return workspacePkgs;
+  }, []);
+}
+
+export async function getWorkspacePackageInfoAsync(packagePaths: string[]): Promise<WorkspaceInfo> {
+  if (!packagePaths) {
+    return [];
+  }
+
+  const workspacePkgPromises = packagePaths.map<Promise<WorkspaceInfo[number] | null>>(async (workspacePath) => {
+    const packageJsonPath = path.join(workspacePath, "package.json");
+
+    try {
+      const packageJson = JSON.parse(await fsPromises.readFile(packageJsonPath, "utf-8")) as PackageInfo;
+      return {
         name: packageJson.name,
         path: workspacePath,
         packageJson: {
           ...packageJson,
           packageJsonPath,
         },
-      },
-    ];
-  }, []);
-}
+      };
+    } catch (err) {
+      logVerboseWarning(`Error reading or parsing ${packageJsonPath} while getting workspace package info`, err);
+      return null;
+    }
+  });
 
-export async function getWorkspacePackageInfoAsync(workspacePaths: string[]): Promise<WorkspaceInfo> {
-  if (!workspacePaths) {
-    return [];
-  }
-
-  const packageInfoPromises: Promise<{ name: string; path: string; packageJson: PackageInfo } | null>[] =
-    workspacePaths.map(async (workspacePath) => {
-      let packageJson: PackageInfo;
-      const packageJsonPath = path.join(workspacePath, "package.json");
-
-      try {
-        packageJson = JSON.parse(fs.readFileSync(packageJsonPath, "utf-8")) as PackageInfo;
-        return {
-          name: packageJson.name,
-          path: workspacePath,
-          packageJson: {
-            ...packageJson,
-            packageJsonPath,
-          },
-        };
-      } catch {
-        return null;
-      }
-    });
-
-  return (await Promise.all(packageInfoPromises)).flat().filter(Boolean) as WorkspaceInfo;
+  return (await Promise.all(workspacePkgPromises)).flat().filter(Boolean) as WorkspaceInfo;
 }

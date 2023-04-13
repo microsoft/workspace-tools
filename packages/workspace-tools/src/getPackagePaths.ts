@@ -1,55 +1,50 @@
 import path from "path";
-import glob from "fast-glob";
+import glob, { type Options as GlobOptions } from "fast-glob";
 
-const packagePathsCache: { [workspacesRoot: string]: string[] } = {};
+const packagePathsCache: { [root: string]: string[] } = {};
+const globOptions: GlobOptions = {
+  absolute: true,
+  ignore: ["**/node_modules/**", "**/__fixtures__/**"],
+  stats: false,
+};
 
-export function getPackagePaths(workspacesRoot: string, packages: string[]): string[] {
-  if (packagePathsCache[workspacesRoot]) {
-    return packagePathsCache[workspacesRoot];
+/**
+ * Given package folder globs (such as those from package.json `workspaces`) and a workspace root
+ * directory, get paths to actual package folders.
+ */
+export function getPackagePaths(root: string, packageGlobs: string[]): string[] {
+  if (packagePathsCache[root]) {
+    return packagePathsCache[root];
   }
 
-  const packagePaths = glob
-    .sync(
-      packages.map((glob) => path.join(glob, "package.json").replace(/\\/g, "/")),
-      {
-        cwd: workspacesRoot,
-        absolute: true,
-        ignore: ["**/node_modules/**", "**/__fixtures__/**"],
-        stats: false,
-      }
-    )
-    .map((p) => path.dirname(p));
+  packagePathsCache[root] = glob
+    .sync(getPackageJsonGlobs(packageGlobs), { cwd: root, ...globOptions })
+    .map(getResultPackagePath);
 
-  if (path.sep === "/") {
-    packagePathsCache[workspacesRoot] = packagePaths;
-  } else {
-    packagePathsCache[workspacesRoot] = packagePaths.map((p) => p.replace(/\//g, path.sep));
-  }
-
-  return packagePathsCache[workspacesRoot];
+  return packagePathsCache[root];
 }
 
-export async function getPackagePathsAsync(workspacesRoot: string, packages: string[]): Promise<string[]> {
-  if (packagePathsCache[workspacesRoot]) {
-    return packagePathsCache[workspacesRoot];
+/**
+ * Given package folder globs (such as those from package.json `workspaces`) and a workspace root
+ * directory, get paths to actual package folders.
+ */
+export async function getPackagePathsAsync(root: string, packageGlobs: string[]): Promise<string[]> {
+  if (packagePathsCache[root]) {
+    return packagePathsCache[root];
   }
 
-  const packagePaths = (
-    await glob(
-      packages.map((glob) => path.join(glob, "package.json").replace(/\\/g, "/")),
-      {
-        cwd: workspacesRoot,
-        ignore: ["**/node_modules/**", "**/__fixtures__/**"],
-        stats: false,
-      }
-    )
-  ).map((p) => path.join(workspacesRoot, path.dirname(p)));
+  packagePathsCache[root] = (await glob(getPackageJsonGlobs(packageGlobs), { cwd: root, ...globOptions })).map(
+    getResultPackagePath
+  );
 
-  if (path.sep === "/") {
-    packagePathsCache[workspacesRoot] = packagePaths;
-  } else {
-    packagePathsCache[workspacesRoot] = packagePaths.map((p) => p.replace(/\//g, path.sep));
-  }
+  return packagePathsCache[root];
+}
 
-  return packagePathsCache[workspacesRoot];
+function getPackageJsonGlobs(packageGlobs: string[]) {
+  return packageGlobs.map((glob) => path.join(glob, "package.json").replace(/\\/g, "/"));
+}
+
+function getResultPackagePath(packageJsonPath: string) {
+  const packagePath = path.dirname(packageJsonPath);
+  return path.sep === "/" ? packagePath : packagePath.replace(/\//g, path.sep);
 }

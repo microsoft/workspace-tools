@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Minor fixes to new async workspace/package methods",
+  "packageName": "workspace-tools",
+  "email": "elcraig@microsoft.com",
+  "dependentChangeType": "patch"
+}
