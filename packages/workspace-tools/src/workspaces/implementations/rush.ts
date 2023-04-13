@@ -5,6 +5,7 @@ import fs from "fs";
 import { WorkspaceInfo } from "../../types/WorkspaceInfo";
 import { getWorkspacePackageInfo } from "../getWorkspacePackageInfo";
 import { searchUp } from "../../paths";
+import { logVerboseWarning } from "../../logging";
 
 export function getRushWorkspaceRoot(cwd: string): string {
   const rushJsonPath = searchUp("rush.json", cwd);
@@ -27,7 +28,8 @@ export function getRushWorkspaces(cwd: string): WorkspaceInfo {
     const root = path.dirname(rushJsonPath);
 
     return getWorkspacePackageInfo(rushConfig.projects.map((project) => path.join(root, project.projectFolder)));
-  } catch {
+  } catch (err) {
+    logVerboseWarning(`Error getting rush workspaces for ${cwd}`, err);
     return [];
   }
 }

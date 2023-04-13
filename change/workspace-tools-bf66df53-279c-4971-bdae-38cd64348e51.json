@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Add optional verbose logging for getWorkspaces helpers",
+  "packageName": "workspace-tools",
+  "email": "elcraig@microsoft.com",
+  "dependentChangeType": "patch"
+}

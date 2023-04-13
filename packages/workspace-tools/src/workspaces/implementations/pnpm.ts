@@ -5,6 +5,7 @@ import { WorkspaceInfo } from "../../types/WorkspaceInfo";
 import { getWorkspacePackageInfo } from "../getWorkspacePackageInfo";
 import { readYaml } from "../../lockfile/readYaml";
 import { searchUp } from "../../paths";
+import { logVerboseWarning } from "../../logging";
 
 type PnpmWorkspaces = {
   packages: string[];
@@ -31,7 +32,8 @@ export function getPnpmWorkspaces(cwd: string): WorkspaceInfo {
     const workspaceInfo = getWorkspacePackageInfo(packagePaths);
 
     return workspaceInfo;
-  } catch {
+  } catch (err) {
+    logVerboseWarning(`Error getting pnpm workspaces for ${cwd}`, err);
     return [];
   }
 }

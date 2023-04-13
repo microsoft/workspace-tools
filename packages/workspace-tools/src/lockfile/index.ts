@@ -73,7 +73,7 @@ export async function parseLockFile(packageRoot: string): Promise<ParsedLock> {
     try {
       npmLockJson = fs.readFileSync(npmLockPath, "utf-8");
     } catch {
-      throw new Error("Couldn’t parse package-lock.json.");
+      throw new Error("Couldn't read package-lock.json");
     }
 
     const npmLock: NpmLockFile = JSON.parse(npmLockJson.toString());

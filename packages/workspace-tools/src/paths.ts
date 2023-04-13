@@ -2,6 +2,7 @@ import path from "path";
 import fs from "fs";
 import { getWorkspaceRoot } from "./workspaces/getWorkspaceRoot";
 import { git } from "./git";
+import { logVerboseWarning } from "./logging";
 
 /**
  * Starting from `cwd`, searches up the directory hierarchy for `filePath`.
@@ -55,8 +56,13 @@ export function findProjectRoot(cwd: string) {
   let workspaceRoot: string | undefined;
   try {
     workspaceRoot = getWorkspaceRoot(cwd);
-  } catch {}
+  } catch (err) {
+    logVerboseWarning(`Error getting workspace root for ${cwd}`, err);
+  }
 
+  if (!workspaceRoot) {
+    logVerboseWarning(`Could not find workspace root for ${cwd}. Falling back to git root.`);
+  }
   return workspaceRoot || findGitRoot(cwd);
 }
 
