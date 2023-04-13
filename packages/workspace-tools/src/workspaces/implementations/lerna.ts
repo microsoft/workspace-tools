@@ -5,6 +5,7 @@ import { getPackagePaths } from "../../getPackagePaths";
 import { searchUp } from "../../paths";
 import { WorkspaceInfo } from "../../types/WorkspaceInfo";
 import { getWorkspacePackageInfo } from "../getWorkspacePackageInfo";
+import { logVerboseWarning } from "../../logging";
 
 export function getLernaWorkspaceRoot(cwd: string): string {
   const lernaJsonPath = searchUp("lerna.json", cwd);
@@ -26,7 +27,8 @@ export function getLernaWorkspaces(cwd: string): WorkspaceInfo {
     const packagePaths = getPackagePaths(lernaWorkspaceRoot, lernaConfig.packages);
     const workspaceInfo = getWorkspacePackageInfo(packagePaths);
     return workspaceInfo;
-  } catch {
+  } catch (err) {
+    logVerboseWarning(`Error getting lerna workspaces for ${cwd}`, err);
     return [];
   }
 }

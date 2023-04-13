@@ -3,6 +3,7 @@ import path from "path";
 import { getWorkspaceManagerAndRoot } from ".";
 import { getPackagePaths, getPackagePathsAsync } from "../../getPackagePaths";
 import { getWorkspacePackageInfo, getWorkspacePackageInfoAsync } from "../getWorkspacePackageInfo";
+import { logVerboseWarning } from "../../logging";
 
 type PackageJsonWorkspaces = {
   workspaces?:
@@ -47,7 +48,8 @@ export function getWorkspaceInfoFromWorkspaceRoot(packageJsonWorkspacesRoot: str
     const packages = getPackages(rootPackageJson);
     const packagePaths = getPackagePaths(packageJsonWorkspacesRoot, packages);
     return getWorkspacePackageInfo(packagePaths);
-  } catch {
+  } catch (err) {
+    logVerboseWarning(`Error getting workspace info for ${packageJsonWorkspacesRoot}`, err);
     return [];
   }
 }
@@ -58,7 +60,8 @@ export async function getWorkspaceInfoFromWorkspaceRootAsync(packageJsonWorkspac
     const packages = getPackages(rootPackageJson);
     const packagePaths = await getPackagePathsAsync(packageJsonWorkspacesRoot, packages);
     return getWorkspacePackageInfoAsync(packagePaths);
-  } catch {
+  } catch (err) {
+    logVerboseWarning(`Error getting workspace info for ${packageJsonWorkspacesRoot}`, err);
     return [];
   }
 }
