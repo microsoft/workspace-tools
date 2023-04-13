@@ -1,6 +1,6 @@
 import fs from "fs";
 import path from "path";
-import { getWorkspaceImplementationAndLockFile } from ".";
+import { getWorkspaceManagerAndRoot } from ".";
 import { getPackagePaths, getPackagePathsAsync } from "../../getPackagePaths";
 import { getWorkspacePackageInfo, getWorkspacePackageInfoAsync } from "../getWorkspacePackageInfo";
 
@@ -13,18 +13,15 @@ type PackageJsonWorkspaces = {
     | string[];
 };
 
-export function getPackageJsonWorkspaceRoot(cwd: string): string | null {
-  const lockFile = getWorkspaceImplementationAndLockFile(cwd)?.lockFile;
-  const packageJsonWorkspacesRoot = lockFile ? path.dirname(lockFile) : cwd;
-  return packageJsonWorkspacesRoot;
+export function getPackageJsonWorkspaceRoot(cwd: string): string | undefined {
+  return getWorkspaceManagerAndRoot(cwd)?.root;
 }
 
 function getRootPackageJson(packageJsonWorkspacesRoot: string) {
   const packageJsonFile = path.join(packageJsonWorkspacesRoot, "package.json");
 
   try {
-    const packageJson = JSON.parse(fs.readFileSync(packageJsonFile, "utf-8"));
-    return packageJson;
+    return JSON.parse(fs.readFileSync(packageJsonFile, "utf-8"));
   } catch (e) {
     throw new Error("Could not load package.json from workspaces root");
   }
@@ -33,11 +30,11 @@ function getRootPackageJson(packageJsonWorkspacesRoot: string) {
 function getPackages(packageJson: PackageJsonWorkspaces): string[] {
   const { workspaces } = packageJson;
 
-  if (workspaces && Array.isArray(workspaces)) {
+  if (Array.isArray(workspaces)) {
     return workspaces;
   }
 
-  if (!workspaces || !workspaces.packages) {
+  if (!workspaces?.packages) {
     throw new Error("Could not find a workspaces object in package.json");
   }
 

@@ -24,3 +24,7 @@ export async function getYarnWorkspacesAsync(cwd: string): Promise<WorkspaceInfo
   const yarnWorkspacesRoot = getYarnWorkspaceRoot(cwd);
   return await getWorkspaceInfoFromWorkspaceRootAsync(yarnWorkspacesRoot);
 }
+
+export { getYarnWorkspaceRoot as getWorkspaceRoot };
+export { getYarnWorkspaces as getWorkspaces };
+export { getYarnWorkspacesAsync as getWorkspacesAsync };

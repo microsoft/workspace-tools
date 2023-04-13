@@ -35,3 +35,6 @@ export function getPnpmWorkspaces(cwd: string): WorkspaceInfo {
     return [];
   }
 }
+
+export { getPnpmWorkspaceRoot as getWorkspaceRoot };
+export { getPnpmWorkspaces as getWorkspaces };

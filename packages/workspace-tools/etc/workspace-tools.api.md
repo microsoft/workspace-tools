@@ -217,9 +217,6 @@ export function getYarnWorkspaceRoot(cwd: string): string;
 // @public (undocumented)
 export function getYarnWorkspaces(cwd: string): WorkspaceInfo;
 
-// @public (undocumented)
-export function getYarnWorkspacesAsync(cwd: string): Promise<WorkspaceInfo>;
-
 // @public
 export function git(args: string[], options?: SpawnSyncOptions): GitProcessOutput;
 
@@ -429,7 +426,7 @@ export interface PnpmLockFile {
 export function queryLockFile(name: string, versionRange: string, lock: ParsedLock): LockDependency;
 
 // @public (undocumented)
-export function _resetCache(): void;
+export function _resetPackageJsonFilesCache(): void;
 
 // @public (undocumented)
 export function revertLocalChanges(cwd: string): boolean;
