@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Add more doc comments for getWorkspaces and related",
-  "packageName": "workspace-tools",
-  "email": "elcraig@microsoft.com",
-  "dependentChangeType": "patch"
-}

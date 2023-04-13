@@ -1,8 +1,26 @@
 # Change Log - workspace-tools
 
-This log was last generated on Thu, 06 Apr 2023 22:06:24 GMT and should not be manually modified.
+This log was last generated on Thu, 13 Apr 2023 08:01:43 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.33.0
+
+Thu, 13 Apr 2023 08:01:43 GMT
+
+### Minor changes
+
+- Improve workspace manager utility naming. None of the modified methods/types are exported from the root, but if you were deep importing them, the changes are as follows:
+  - Change `getWorkspaceImplementationAndLockFile` to `getWorkspaceManagerAndRoot`, with return type `WorkspaceManagerAndRoot` (replacing `ImplementationAndLockFile`) to be more relevant for actual usage.
+  - Remove `WorkspaceImplementations` type (use the identical existing type `WorkspaceManager` instead) (elcraig@microsoft.com)
+- Rename `_resetCache` to `_resetPackageJsonFilesCache` to reflect what it does (elcraig@microsoft.com)
+
+### Patches
+
+- Add optional verbose logging for getWorkspaces helpers (elcraig@microsoft.com)
+- Add more doc comments for getWorkspaces and related (elcraig@microsoft.com)
+- Simplify workspace root utilities, and deprecate individual manager `get___WorkspaceRoot` utilities (use `getWorkspaceRoot` instead). This includes moving, deleting, or renaming certain private methods, but has no public-facing changes. (elcraig@microsoft.com)
+- Minor fixes to new async workspace/package methods (elcraig@microsoft.com)
 
 ## 0.32.0
 

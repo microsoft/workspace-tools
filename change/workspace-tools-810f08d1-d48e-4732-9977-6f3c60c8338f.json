@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "Rename `_resetCache` to `_resetPackageJsonFilesCache` to reflect what it does",
-  "packageName": "workspace-tools",
-  "email": "elcraig@microsoft.com",
-  "dependentChangeType": "patch"
-}
