@@ -8,9 +8,5 @@ import { WorkspaceInfo } from "../types/WorkspaceInfo";
  * @returns Package path if found, or undefined
  */
 export function findWorkspacePath(workspaces: WorkspaceInfo, packageName: string): string | undefined {
-  const workspace = workspaces.find(({ name }) => name === packageName);
-
-  if (workspace) {
-    return workspace.path;
-  }
+  return workspaces.find(({ name }) => name === packageName)?.path;
 }

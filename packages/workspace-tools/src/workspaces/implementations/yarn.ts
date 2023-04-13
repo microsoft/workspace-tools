@@ -1,18 +1,14 @@
+import { getWorkspaceManagerAndRoot } from ".";
 import { WorkspaceInfo } from "../../types/WorkspaceInfo";
-import {
-  getPackageJsonWorkspaceRoot,
-  getWorkspaceInfoFromWorkspaceRoot,
-  getWorkspaceInfoFromWorkspaceRootAsync,
-} from "./packageJsonWorkspaces";
+import { getWorkspaceInfoFromWorkspaceRoot, getWorkspaceInfoFromWorkspaceRootAsync } from "./packageJsonWorkspaces";
 
+/** @deprecated Use `getWorkspaceRoot` */
 export function getYarnWorkspaceRoot(cwd: string): string {
-  const yarnWorkspacesRoot = getPackageJsonWorkspaceRoot(cwd);
-
-  if (!yarnWorkspacesRoot) {
-    throw new Error("Could not find yarn workspaces root");
+  const root = getWorkspaceManagerAndRoot(cwd, undefined, "yarn")?.root;
+  if (!root) {
+    throw new Error("Could not find yarn workspace root from " + cwd);
   }
-
-  return yarnWorkspacesRoot;
+  return root;
 }
 
 /**
@@ -28,11 +24,10 @@ export function getYarnWorkspaces(cwd: string): WorkspaceInfo {
  * Get an array with names, paths, and package.json contents for each package in a yarn workspace.
  * (See `../getWorkspaces` for why it's named this way.)
  */
-export async function getYarnWorkspacesAsync(cwd: string): Promise<WorkspaceInfo> {
+export function getYarnWorkspacesAsync(cwd: string): Promise<WorkspaceInfo> {
   const yarnWorkspacesRoot = getYarnWorkspaceRoot(cwd);
-  return await getWorkspaceInfoFromWorkspaceRootAsync(yarnWorkspacesRoot);
+  return getWorkspaceInfoFromWorkspaceRootAsync(yarnWorkspacesRoot);
 }
 
-export { getYarnWorkspaceRoot as getWorkspaceRoot };
 export { getYarnWorkspaces as getWorkspaces };
 export { getYarnWorkspacesAsync as getWorkspacesAsync };

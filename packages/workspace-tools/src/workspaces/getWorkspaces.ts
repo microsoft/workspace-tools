@@ -1,4 +1,4 @@
-import { getWorkspaceUtilities, getWorkspaceManager } from "./implementations";
+import { getWorkspaceUtilities, getWorkspaceManagerAndRoot } from "./implementations";
 import { WorkspaceInfo } from "../types/WorkspaceInfo";
 
 /**
@@ -30,7 +30,7 @@ export async function getWorkspacesAsync(cwd: string): Promise<WorkspaceInfo> {
   }
 
   if (!utils.getWorkspacesAsync) {
-    const managerName = getWorkspaceManager(cwd);
+    const managerName = getWorkspaceManagerAndRoot(cwd)?.manager;
     throw new Error(`${cwd} is using ${managerName} which has not been converted to async yet`);
   }
 
