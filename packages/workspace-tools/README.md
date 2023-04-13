@@ -21,3 +21,7 @@ Override the `maxBuffer` value for git processes, for example if the repo is ver
 ### PREFERRED_WORKSPACE_MANAGER
 
 Sometimes if multiple workspace manager files are checked in, it's necessary to hint which manager is used: `npm`, `yarn`, `pnpm`, `rush`, or `lerna`.
+
+### VERBOSE
+
+Log additional output from certain functions.
