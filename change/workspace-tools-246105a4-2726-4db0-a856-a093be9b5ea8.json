@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "Fix getPackageInfos to only read package.jsons once, and getAllPackageJsonFiles (which only returns paths) to not read the files at all. There's also a new API `getWorkspacePackagePaths` which allows consumers to make the same optimization.",
+  "packageName": "workspace-tools",
+  "email": "elcraig@microsoft.com",
+  "dependentChangeType": "patch"
+}

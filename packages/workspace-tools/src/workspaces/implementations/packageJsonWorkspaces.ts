@@ -39,14 +39,37 @@ function getPackages(packageJsonWorkspacesRoot: string): string[] {
   return workspaces.packages;
 }
 
+export function getPackagePathsFromWorkspaceRoot(packageJsonWorkspacesRoot: string) {
+  try {
+    const packageGlobs = getPackages(packageJsonWorkspacesRoot);
+    return packageGlobs ? getPackagePaths(packageJsonWorkspacesRoot, packageGlobs) : [];
+  } catch (err) {
+    logVerboseWarning(`Error getting package paths for ${packageJsonWorkspacesRoot}`, err);
+    return [];
+  }
+}
+
+/**
+ * Get an array with names, paths, and package.json contents for each package in an npm/yarn workspace.
+ * (See `../getWorkspaces` for why it's named this way.)
+ */
+export async function getPackagePathsFromWorkspaceRootAsync(packageJsonWorkspacesRoot: string): Promise<string[]> {
+  try {
+    const packageGlobs = getPackages(packageJsonWorkspacesRoot);
+    return packageGlobs ? getPackagePathsAsync(packageJsonWorkspacesRoot, packageGlobs) : [];
+  } catch (err) {
+    logVerboseWarning(`Error getting package paths for ${packageJsonWorkspacesRoot}`, err);
+    return [];
+  }
+}
+
 /**
  * Get an array with names, paths, and package.json contents for each package in an npm/yarn workspace.
  * (See `../getWorkspaces` for why it's named this way.)
  */
 export function getWorkspaceInfoFromWorkspaceRoot(packageJsonWorkspacesRoot: string) {
   try {
-    const packageGlobs = getPackages(packageJsonWorkspacesRoot);
-    const packagePaths = getPackagePaths(packageJsonWorkspacesRoot, packageGlobs);
+    const packagePaths = getPackagePathsFromWorkspaceRoot(packageJsonWorkspacesRoot);
     return getWorkspacePackageInfo(packagePaths);
   } catch (err) {
     logVerboseWarning(`Error getting workspace info for ${packageJsonWorkspacesRoot}`, err);
@@ -60,8 +83,7 @@ export function getWorkspaceInfoFromWorkspaceRoot(packageJsonWorkspacesRoot: str
  */
 export async function getWorkspaceInfoFromWorkspaceRootAsync(packageJsonWorkspacesRoot: string) {
   try {
-    const packageGlobs = getPackages(packageJsonWorkspacesRoot);
-    const packagePaths = await getPackagePathsAsync(packageJsonWorkspacesRoot, packageGlobs);
+    const packagePaths = await getPackagePathsFromWorkspaceRootAsync(packageJsonWorkspacesRoot);
     return getWorkspacePackageInfoAsync(packagePaths);
   } catch (err) {
     logVerboseWarning(`Error getting workspace info for ${packageJsonWorkspacesRoot}`, err);

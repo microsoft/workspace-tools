@@ -4,6 +4,7 @@ import fsPromises from "fs/promises";
 import { WorkspaceInfo } from "../types/WorkspaceInfo";
 import { PackageInfo } from "../types/PackageInfo";
 import { logVerboseWarning } from "../logging";
+import { infoFromPackageJson } from "../infoFromPackageJson";
 
 /**
  * Get an array with names, paths, and package.json contents for each of the given package paths
@@ -20,27 +21,25 @@ export function getWorkspacePackageInfo(packagePaths: string[]): WorkspaceInfo {
     return [];
   }
 
-  return packagePaths.reduce<WorkspaceInfo>((workspacePkgs, workspacePath) => {
-    let packageJson: PackageInfo;
-    const packageJsonPath = path.join(workspacePath, "package.json");
+  return packagePaths
+    .map<WorkspaceInfo[number] | null>((workspacePath) => {
+      let packageJson: PackageInfo;
+      const packageJsonPath = path.join(workspacePath, "package.json");
 
-    try {
-      packageJson = JSON.parse(fs.readFileSync(packageJsonPath, "utf-8")) as PackageInfo;
-    } catch (err) {
-      logVerboseWarning(`Error reading or parsing ${packageJsonPath} while getting workspace package info`, err);
-      return workspacePkgs;
-    }
+      try {
+        packageJson = JSON.parse(fs.readFileSync(packageJsonPath, "utf-8")) as PackageInfo;
+      } catch (err) {
+        logVerboseWarning(`Error reading or parsing ${packageJsonPath} while getting workspace package info`, err);
+        return null;
+      }
 
-    workspacePkgs.push({
-      name: packageJson.name,
-      path: workspacePath,
-      packageJson: {
-        ...packageJson,
-        packageJsonPath,
-      },
-    });
-    return workspacePkgs;
-  }, []);
+      return {
+        name: packageJson.name,
+        path: workspacePath,
+        packageJson: infoFromPackageJson(packageJson, packageJsonPath),
+      };
+    })
+    .filter(Boolean) as WorkspaceInfo;
 }
 
 /**
@@ -66,10 +65,7 @@ export async function getWorkspacePackageInfoAsync(packagePaths: string[]): Prom
       return {
         name: packageJson.name,
         path: workspacePath,
-        packageJson: {
-          ...packageJson,
-          packageJsonPath,
-        },
+        packageJson: infoFromPackageJson(packageJson, packageJsonPath),
       };
     } catch (err) {
       logVerboseWarning(`Error reading or parsing ${packageJsonPath} while getting workspace package info`, err);
@@ -77,5 +73,5 @@ export async function getWorkspacePackageInfoAsync(packagePaths: string[]): Prom
     }
   });
 
-  return (await Promise.all(workspacePkgPromises)).flat().filter(Boolean) as WorkspaceInfo;
+  return (await Promise.all(workspacePkgPromises)).filter(Boolean) as WorkspaceInfo;
 }

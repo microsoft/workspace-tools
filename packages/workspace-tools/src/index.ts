@@ -10,6 +10,7 @@ export * from "./types/PackageInfo";
 export * from "./types/WorkspaceInfo";
 export * from "./workspaces/findWorkspacePath";
 export * from "./workspaces/getWorkspaces";
+export * from "./workspaces/getWorkspacePackagePaths";
 export * from "./workspaces/getWorkspaceRoot";
 export { getPnpmWorkspaceRoot, getPnpmWorkspaces } from "./workspaces/implementations/pnpm";
 export { getRushWorkspaceRoot, getRushWorkspaces } from "./workspaces/implementations/rush";
@@ -17,4 +18,4 @@ export { getYarnWorkspaceRoot, getYarnWorkspaces } from "./workspaces/implementa
 export * from "./workspaces/getChangedPackages";
 export * from "./workspaces/getPackagesByFiles";
 export * from "./workspaces/listOfWorkspacePackageNames";
-export * from "./workspaces/workspaces";
+export * from "./workspaces/getAllPackageJsonFiles";
