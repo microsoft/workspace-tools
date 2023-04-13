@@ -2197,7 +2197,7 @@ lodash.memoize@4.x:
   resolved "https://registry.npmjs.org/lodash.memoize/-/lodash.memoize-4.1.2.tgz"
   integrity sha512-t7j+NzmgnQzTAYXcsHYLgimltOV1MXHtlOWf6GjL9Kj8GK5FInw5JotxvbOs+IvV1/Dzo04/fCGfLVs7aXb4Ag==
 
-lodash@4.17.21, lodash@^4.17.14, lodash@^4.17.15, lodash@~4.17.15:
+lodash@^4.17.14, lodash@^4.17.15, lodash@~4.17.15:
   version "4.17.21"
   resolved "https://registry.npmjs.org/lodash/-/lodash-4.17.21.tgz"
   integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
@@ -2865,10 +2865,10 @@ which@^2.0.1:
   dependencies:
     isexe "^2.0.0"
 
-workspace-tools@^0.30.0, "workspace-tools@npm:workspace-tools@0.30.0":
-  version "0.30.0"
-  resolved "https://registry.yarnpkg.com/workspace-tools/-/workspace-tools-0.30.0.tgz#93103df09a66d5a4260bf65005b8f9924e439cf1"
-  integrity sha512-vQrzjAFvQYI2Zg9kFAo43aIgQNX5VSTtWLvOxCKhgjKnPdyLMXcPNxPTCKu3v+tjDW+YJNXUAigVv+pykrwOsQ==
+workspace-tools@^0.30.0, "workspace-tools@npm:workspace-tools@0.33.0":
+  version "0.33.0"
+  resolved "https://registry.yarnpkg.com/workspace-tools/-/workspace-tools-0.33.0.tgz#c49f78843ab0ac0fba23a30b6dfaa47558b9ee11"
+  integrity sha512-BiaNyvqn2m9hN3tu5ccxc+yqUaG7ecWOIdWxDrv796016nhv8zE+Ch22wexES2662+HOmdqGYk698/jrdlCoCA==
   dependencies:
     "@yarnpkg/lockfile" "^1.1.0"
     git-url-parse "^13.0.0"
