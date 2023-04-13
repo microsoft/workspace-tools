@@ -1,63 +1,63 @@
-lockfileVersion: 5.4
+lockfileVersion: '6.0'
 
 importers:
 
   .:
-    specifiers:
-      '@microsoft/task-scheduler': ^2.7.0
-      typescript: ^4.0.0
     dependencies:
-      '@microsoft/task-scheduler': 2.7.1
+      '@microsoft/task-scheduler':
+        specifier: ^2.7.0
+        version: 2.7.0
     devDependencies:
-      typescript: 4.8.4
+      typescript:
+        specifier: ^4.0.0
+        version: 4.0.2
 
-  packages/package-a:
-    specifiers: {}
+  packages/package-a: {}
 
   packages/package-b:
-    specifiers:
-      once: 1.4.0
     devDependencies:
-      once: 1.4.0
+      once:
+        specifier: 1.4.0
+        version: 1.4.0
 
 packages:
 
-  /@microsoft/task-scheduler/2.7.1:
-    resolution: {integrity: sha512-xSmX7xgLTtf3LwVOW5HCEL4qrSWYCmPsVzpJ7PTBayN0KA9acScgsLYaDE6tE26N//DtDEW6mi4RteWU4XSrjA==}
+  /@microsoft/task-scheduler@2.7.0:
+    resolution: {integrity: sha512-8UnOEuq7bmz8kJECSnoJmT987t5jsurSX1kMadtFRe8z6AYMuJQaW0l3pQ2gllgRjOa8LTKujRPLKGRIfJcJcw==}
     dependencies:
       memory-streams: 0.1.3
       p-graph: 1.1.2
     dev: false
 
-  /core-util-is/1.0.3:
+  /core-util-is@1.0.3:
     resolution: {integrity: sha512-ZQBvi1DcpJ4GDqanjucZ2Hj3wEO5pZDS89BWbkcrvdxksJorwUDDZamX9ldFkp9aw2lmBDLgkObEA4DWNJ9FYQ==}
     dev: false
 
-  /inherits/2.0.4:
+  /inherits@2.0.4:
     resolution: {integrity: sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==}
     dev: false
 
-  /isarray/0.0.1:
+  /isarray@0.0.1:
     resolution: {integrity: sha512-D2S+3GLxWH+uhrNEcoh/fnmYeP8E8/zHl644d/jdA0g2uyXvy3sb0qxotE+ne0LtccHknQzWwZEzhak7oJ0COQ==}
     dev: false
 
-  /memory-streams/0.1.3:
+  /memory-streams@0.1.3:
     resolution: {integrity: sha512-qVQ/CjkMyMInPaaRMrwWNDvf6boRZXaT/DbQeMYcCWuXPEBf1v8qChOc9OlEVQp2uOvRXa1Qu30fLmKhY6NipA==}
     dependencies:
       readable-stream: 1.0.34
     dev: false
 
-  /once/1.4.0:
+  /once@1.4.0:
     resolution: {integrity: sha512-lNaJgI+2Q5URQBkccEKHTQOPaXdUxnZZElQTZY0MFUAuaEqe1E+Nyvgdz/aIyNi6Z9MzO5dv1H8n58/GELp3+w==}
     dependencies:
       wrappy: 1.0.2
     dev: true
 
-  /p-graph/1.1.2:
+  /p-graph@1.1.2:
     resolution: {integrity: sha512-GnEEHrOMozk0hCjXBm011oYb3zpaOolxHgqL2s7Od2niGAJKyk/4FZ2VRUAgjqqqoQnZQtwkF6fjGDJkIQTjDQ==}
     dev: false
 
-  /readable-stream/1.0.34:
+  /readable-stream@1.0.34:
     resolution: {integrity: sha512-ok1qVCJuRkNmvebYikljxJA/UEsKwLl2nI1OmaqAu4/UE+h0wKCHok4XkL/gvi39OacXvw59RJUOFUkDib2rHg==}
     dependencies:
       core-util-is: 1.0.3
@@ -66,16 +66,16 @@ packages:
       string_decoder: 0.10.31
     dev: false
 
-  /string_decoder/0.10.31:
+  /string_decoder@0.10.31:
     resolution: {integrity: sha512-ev2QzSzWPYmy9GuqfIVildA4OdcGLeFZQrq5ys6RtiuF+RQQiZWr8TZNyAcuVXyQRYfEO+MsoB/1BuQVhOJuoQ==}
     dev: false
 
-  /typescript/4.8.4:
-    resolution: {integrity: sha512-QCh+85mCy+h0IGff8r5XWzOVSbBO+KfeYrMQh7NJ58QujwcE22u+NUSmUxqF+un70P9GXKxa2HCNiTTMJknyjQ==}
+  /typescript@4.0.2:
+    resolution: {integrity: sha512-e4ERvRV2wb+rRZ/IQeb3jm2VxBsirQLpQhdxplZ2MEzGvDkkMmPglecnNDfSUBivMjP93vRbngYYDQqQ/78bcQ==}
     engines: {node: '>=4.2.0'}
     hasBin: true
     dev: true
 
-  /wrappy/1.0.2:
+  /wrappy@1.0.2:
     resolution: {integrity: sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==}
     dev: true
