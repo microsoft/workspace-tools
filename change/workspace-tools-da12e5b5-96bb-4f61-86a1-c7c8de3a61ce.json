@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Simplify workspace root utilities, and deprecate individual manager `get___WorkspaceRoot` utilities (use `getWorkspaceRoot` instead). This includes moving, deleting, or renaming certain private methods, but has no public-facing changes.",
-  "packageName": "workspace-tools",
-  "email": "elcraig@microsoft.com",
-  "dependentChangeType": "patch"
-}

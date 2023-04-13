@@ -2,6 +2,53 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Thu, 13 Apr 2023 08:01:43 GMT",
+      "tag": "workspace-tools_v0.33.0",
+      "version": "0.33.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "elcraig@microsoft.com",
+            "package": "workspace-tools",
+            "commit": "2826670b707d724b5bddbdf67c06e307c87620d5",
+            "comment": "Improve workspace manager utility naming. None of the modified methods/types are exported from the root, but if you were deep importing them, the changes are as follows:\n  - Change `getWorkspaceImplementationAndLockFile` to `getWorkspaceManagerAndRoot`, with return type `WorkspaceManagerAndRoot` (replacing `ImplementationAndLockFile`) to be more relevant for actual usage.\n  - Remove `WorkspaceImplementations` type (use the identical existing type `WorkspaceManager` instead)"
+          },
+          {
+            "author": "elcraig@microsoft.com",
+            "package": "workspace-tools",
+            "commit": "2826670b707d724b5bddbdf67c06e307c87620d5",
+            "comment": "Rename `_resetCache` to `_resetPackageJsonFilesCache` to reflect what it does"
+          }
+        ],
+        "patch": [
+          {
+            "author": "elcraig@microsoft.com",
+            "package": "workspace-tools",
+            "commit": "bdfbb181a70336b2c53aa443edcf91c4ae858185",
+            "comment": "Add optional verbose logging for getWorkspaces helpers"
+          },
+          {
+            "author": "elcraig@microsoft.com",
+            "package": "workspace-tools",
+            "commit": "18d27beb3d030f2d482b1cd9bd2031fc9b1149d3",
+            "comment": "Add more doc comments for getWorkspaces and related"
+          },
+          {
+            "author": "elcraig@microsoft.com",
+            "package": "workspace-tools",
+            "commit": "b697288732789f631f51cbdc85fb48e41b3b0a76",
+            "comment": "Simplify workspace root utilities, and deprecate individual manager `get___WorkspaceRoot` utilities (use `getWorkspaceRoot` instead). This includes moving, deleting, or renaming certain private methods, but has no public-facing changes."
+          },
+          {
+            "author": "elcraig@microsoft.com",
+            "package": "workspace-tools",
+            "commit": "1dc1125ea5bd87a7496c8b7a1d1d317a5ec74dc1",
+            "comment": "Minor fixes to new async workspace/package methods"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 06 Apr 2023 22:06:24 GMT",
       "tag": "workspace-tools_v0.32.0",
       "version": "0.32.0",
