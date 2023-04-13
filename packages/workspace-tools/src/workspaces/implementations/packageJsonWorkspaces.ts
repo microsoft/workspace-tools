@@ -1,11 +1,10 @@
 import fs from "fs";
 import path from "path";
-import { getWorkspaceManagerAndRoot } from ".";
 import { getPackagePaths, getPackagePathsAsync } from "../../getPackagePaths";
 import { getWorkspacePackageInfo, getWorkspacePackageInfoAsync } from "../getWorkspacePackageInfo";
 import { logVerboseWarning } from "../../logging";
 
-type PackageJsonWorkspaces = {
+type PackageJsonWithWorkspaces = {
   workspaces?:
     | {
         packages?: string[];
@@ -14,21 +13,19 @@ type PackageJsonWorkspaces = {
     | string[];
 };
 
-export function getPackageJsonWorkspaceRoot(cwd: string): string | undefined {
-  return getWorkspaceManagerAndRoot(cwd)?.root;
-}
-
-function getRootPackageJson(packageJsonWorkspacesRoot: string) {
+/**
+ * Read the workspace root package.json and get the list of package globs from its `workspaces` property.
+ */
+function getPackages(packageJsonWorkspacesRoot: string): string[] {
   const packageJsonFile = path.join(packageJsonWorkspacesRoot, "package.json");
 
+  let packageJson: PackageJsonWithWorkspaces;
   try {
-    return JSON.parse(fs.readFileSync(packageJsonFile, "utf-8"));
+    packageJson = JSON.parse(fs.readFileSync(packageJsonFile, "utf-8")) as PackageJsonWithWorkspaces;
   } catch (e) {
     throw new Error("Could not load package.json from workspaces root");
   }
-}
 
-function getPackages(packageJson: PackageJsonWorkspaces): string[] {
   const { workspaces } = packageJson;
 
   if (Array.isArray(workspaces)) {
@@ -48,9 +45,8 @@ function getPackages(packageJson: PackageJsonWorkspaces): string[] {
  */
 export function getWorkspaceInfoFromWorkspaceRoot(packageJsonWorkspacesRoot: string) {
   try {
-    const rootPackageJson = getRootPackageJson(packageJsonWorkspacesRoot);
-    const packages = getPackages(rootPackageJson);
-    const packagePaths = getPackagePaths(packageJsonWorkspacesRoot, packages);
+    const packageGlobs = getPackages(packageJsonWorkspacesRoot);
+    const packagePaths = getPackagePaths(packageJsonWorkspacesRoot, packageGlobs);
     return getWorkspacePackageInfo(packagePaths);
   } catch (err) {
     logVerboseWarning(`Error getting workspace info for ${packageJsonWorkspacesRoot}`, err);
@@ -64,9 +60,8 @@ export function getWorkspaceInfoFromWorkspaceRoot(packageJsonWorkspacesRoot: str
  */
 export async function getWorkspaceInfoFromWorkspaceRootAsync(packageJsonWorkspacesRoot: string) {
   try {
-    const rootPackageJson = getRootPackageJson(packageJsonWorkspacesRoot);
-    const packages = getPackages(rootPackageJson);
-    const packagePaths = await getPackagePathsAsync(packageJsonWorkspacesRoot, packages);
+    const packageGlobs = getPackages(packageJsonWorkspacesRoot);
+    const packagePaths = await getPackagePathsAsync(packageJsonWorkspacesRoot, packageGlobs);
     return getWorkspacePackageInfoAsync(packagePaths);
   } catch (err) {
     logVerboseWarning(`Error getting workspace info for ${packageJsonWorkspacesRoot}`, err);

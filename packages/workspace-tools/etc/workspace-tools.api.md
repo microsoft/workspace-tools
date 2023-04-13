@@ -152,7 +152,7 @@ export function getPackagesByFiles(workspaceRoot: string, files: string[], ignor
 // @public (undocumented)
 export function getParentBranch(cwd: string): string | null;
 
-// @public (undocumented)
+// @public @deprecated (undocumented)
 export function getPnpmWorkspaceRoot(cwd: string): string;
 
 // @public
@@ -164,7 +164,7 @@ export function getRecentCommitMessages(branch: string, cwd: string): string[];
 // @public (undocumented)
 export function getRemoteBranch(branch: string, cwd: string): string | null;
 
-// @public (undocumented)
+// @public @deprecated (undocumented)
 export function getRushWorkspaceRoot(cwd: string): string;
 
 // @public
@@ -202,8 +202,10 @@ export function getUntrackedChanges(cwd: string): string[];
 // @public (undocumented)
 export function getUserEmail(cwd: string): string | null;
 
+// Warning: (ae-forgotten-export) The symbol "WorkspaceManager" needs to be exported by the entry point index.d.ts
+//
 // @public
-export function getWorkspaceRoot(cwd: string): string | undefined;
+export function getWorkspaceRoot(cwd: string, preferredManager?: WorkspaceManager): string | undefined;
 
 // @public
 export function getWorkspaces(cwd: string): WorkspaceInfo;
@@ -211,7 +213,7 @@ export function getWorkspaces(cwd: string): WorkspaceInfo;
 // @public
 export function getWorkspacesAsync(cwd: string): Promise<WorkspaceInfo>;
 
-// @public (undocumented)
+// @public @deprecated (undocumented)
 export function getYarnWorkspaceRoot(cwd: string): string;
 
 // @public
@@ -446,6 +448,9 @@ export type WorkspaceInfo = {
     path: string;
     packageJson: PackageInfo;
 }[];
+
+// @public (undocumented)
+type WorkspaceManager = "yarn" | "pnpm" | "rush" | "npm" | "lerna";
 
 // (No @packageDocumentation comment for this package)
 

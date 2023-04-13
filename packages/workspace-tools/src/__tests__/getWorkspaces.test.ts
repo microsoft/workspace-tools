@@ -1,7 +1,7 @@
 import path from "path";
 
 import { cleanupFixtures, setupFixture } from "workspace-tools-scripts/jest/setupFixture";
-import { getWorkspaceManager } from "../workspaces/implementations";
+import { getWorkspaceManagerAndRoot } from "../workspaces/implementations";
 import { getYarnWorkspaces, getYarnWorkspacesAsync } from "../workspaces/implementations/yarn";
 import { getPnpmWorkspaces } from "../workspaces/implementations/pnpm";
 import { getRushWorkspaces } from "../workspaces/implementations/rush";
@@ -22,7 +22,7 @@ describe("getWorkspaces", () => {
     it("gets the name and path of the workspaces", async () => {
       const packageRoot = setupFixture("monorepo");
 
-      expect(getWorkspaceManager(packageRoot, new Map())).toBe("yarn");
+      expect(getWorkspaceManagerAndRoot(packageRoot, new Map())).toEqual({ manager: "yarn", root: packageRoot });
 
       const workspacesPackageInfo = await getWorkspaces(packageRoot);
 
@@ -38,7 +38,7 @@ describe("getWorkspaces", () => {
     it("gets the name and path of the workspaces against a packages spec of an individual package", async () => {
       const packageRoot = setupFixture("monorepo-globby");
 
-      expect(getWorkspaceManager(packageRoot, new Map())).toBe("yarn");
+      expect(getWorkspaceManagerAndRoot(packageRoot, new Map())).toEqual({ manager: "yarn", root: packageRoot });
 
       const workspacesPackageInfo = await getWorkspaces(packageRoot);
 
@@ -58,7 +58,7 @@ describe("getWorkspaces", () => {
     it("gets the name and path of the workspaces", () => {
       const packageRoot = setupFixture("monorepo-pnpm");
 
-      expect(getWorkspaceManager(packageRoot, new Map())).toBe("pnpm");
+      expect(getWorkspaceManagerAndRoot(packageRoot, new Map())).toEqual({ manager: "pnpm", root: packageRoot });
 
       const workspacesPackageInfo = getPnpmWorkspaces(packageRoot);
 
@@ -76,7 +76,7 @@ describe("getWorkspaces", () => {
     it("gets the name and path of the workspaces", () => {
       const packageRoot = setupFixture("monorepo-rush-pnpm");
 
-      expect(getWorkspaceManager(packageRoot, new Map())).toBe("rush");
+      expect(getWorkspaceManagerAndRoot(packageRoot, new Map())).toEqual({ manager: "rush", root: packageRoot });
 
       const workspacesPackageInfo = getRushWorkspaces(packageRoot);
 
@@ -94,7 +94,7 @@ describe("getWorkspaces", () => {
     it("gets the name and path of the workspaces", () => {
       const packageRoot = setupFixture("monorepo-rush-yarn");
 
-      expect(getWorkspaceManager(packageRoot, new Map())).toBe("rush");
+      expect(getWorkspaceManagerAndRoot(packageRoot, new Map())).toEqual({ manager: "rush", root: packageRoot });
 
       const workspacesPackageInfo = getRushWorkspaces(packageRoot);
 
@@ -115,7 +115,7 @@ describe("getWorkspaces", () => {
     it("gets the name and path of the workspaces", async () => {
       const packageRoot = setupFixture("monorepo-npm");
 
-      expect(getWorkspaceManager(packageRoot, new Map())).toBe("npm");
+      expect(getWorkspaceManagerAndRoot(packageRoot, new Map())).toEqual({ manager: "npm", root: packageRoot });
 
       const workspacesPackageInfo = await getWorkspaces(packageRoot);
 
@@ -131,7 +131,7 @@ describe("getWorkspaces", () => {
     it("gets the name and path of the workspaces using the shorthand configuration", async () => {
       const packageRoot = setupFixture("monorepo-shorthand");
 
-      expect(getWorkspaceManager(packageRoot, new Map())).toBe("npm");
+      expect(getWorkspaceManagerAndRoot(packageRoot, new Map())).toEqual({ manager: "npm", root: packageRoot });
 
       const workspacesPackageInfo = await getWorkspaces(packageRoot);
 
@@ -151,7 +151,7 @@ describe("getWorkspaces", () => {
     it("gets the name and path of the workspaces", async () => {
       const packageRoot = setupFixture("monorepo-lerna-npm");
 
-      expect(getWorkspaceManager(packageRoot, new Map())).toBe("lerna");
+      expect(getWorkspaceManagerAndRoot(packageRoot, new Map())).toEqual({ manager: "lerna", root: packageRoot });
 
       const workspacesPackageInfo = getLernaWorkspaces(packageRoot);
 

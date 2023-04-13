@@ -4,21 +4,20 @@ import { getPackagePaths } from "../../getPackagePaths";
 import { WorkspaceInfo } from "../../types/WorkspaceInfo";
 import { getWorkspacePackageInfo } from "../getWorkspacePackageInfo";
 import { readYaml } from "../../lockfile/readYaml";
-import { searchUp } from "../../paths";
 import { logVerboseWarning } from "../../logging";
+import { getWorkspaceManagerAndRoot } from "./getWorkspaceManagerAndRoot";
 
 type PnpmWorkspaceYaml = {
   packages: string[];
 };
 
+/** @deprecated Use `getWorkspaceRoot` */
 export function getPnpmWorkspaceRoot(cwd: string): string {
-  const pnpmWorkspacesFile = searchUp("pnpm-workspace.yaml", cwd);
-
-  if (!pnpmWorkspacesFile) {
-    throw new Error("Could not find pnpm workspaces root");
+  const root = getWorkspaceManagerAndRoot(cwd, undefined, "pnpm")?.root;
+  if (!root) {
+    throw new Error("Could not find pnpm workspace root from " + cwd);
   }
-
-  return path.dirname(pnpmWorkspacesFile);
+  return root;
 }
 
 /**
@@ -42,5 +41,4 @@ export function getPnpmWorkspaces(cwd: string): WorkspaceInfo {
   }
 }
 
-export { getPnpmWorkspaceRoot as getWorkspaceRoot };
 export { getPnpmWorkspaces as getWorkspaces };

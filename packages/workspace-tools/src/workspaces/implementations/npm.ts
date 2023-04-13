@@ -1,18 +1,13 @@
+import { getWorkspaceManagerAndRoot } from ".";
 import { WorkspaceInfo } from "../../types/WorkspaceInfo";
-import {
-  getPackageJsonWorkspaceRoot,
-  getWorkspaceInfoFromWorkspaceRoot,
-  getWorkspaceInfoFromWorkspaceRootAsync,
-} from "./packageJsonWorkspaces";
+import { getWorkspaceInfoFromWorkspaceRoot, getWorkspaceInfoFromWorkspaceRootAsync } from "./packageJsonWorkspaces";
 
-export function getNpmWorkspaceRoot(cwd: string): string {
-  const npmWorkspacesRoot = getPackageJsonWorkspaceRoot(cwd);
-
-  if (!npmWorkspacesRoot) {
-    throw new Error("Could not find NPM workspaces root");
+function getNpmWorkspaceRoot(cwd: string): string {
+  const root = getWorkspaceManagerAndRoot(cwd, undefined, "npm")?.root;
+  if (!root) {
+    throw new Error("Could not find npm workspace root from " + cwd);
   }
-
-  return npmWorkspacesRoot;
+  return root;
 }
 
 /**
@@ -28,11 +23,10 @@ export function getNpmWorkspaces(cwd: string): WorkspaceInfo {
  * Get an array with names, paths, and package.json contents for each package in an npm workspace.
  * (See `../getWorkspaces` for why it's named this way.)
  */
-export async function getNpmWorkspacesAsync(cwd: string): Promise<WorkspaceInfo> {
+export function getNpmWorkspacesAsync(cwd: string): Promise<WorkspaceInfo> {
   const npmWorkspacesRoot = getNpmWorkspaceRoot(cwd);
-  return await getWorkspaceInfoFromWorkspaceRootAsync(npmWorkspacesRoot);
+  return getWorkspaceInfoFromWorkspaceRootAsync(npmWorkspacesRoot);
 }
 
-export { getNpmWorkspaceRoot as getWorkspaceRoot };
 export { getNpmWorkspaces as getWorkspaces };
 export { getNpmWorkspacesAsync as getWorkspacesAsync };
