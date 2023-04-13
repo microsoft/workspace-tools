@@ -1,8 +1,16 @@
 # Change Log - workspace-tools
 
-This log was last generated on Thu, 13 Apr 2023 08:01:43 GMT and should not be manually modified.
+This log was last generated on Thu, 13 Apr 2023 20:39:59 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.34.0
+
+Thu, 13 Apr 2023 20:39:59 GMT
+
+### Minor changes
+
+- Fix `getPackageInfos` to only read package.jsons once, and `getAllPackageJsonFiles` (which only returns paths) to not read the files at all. There's also a new API `getWorkspacePackagePaths` which allows consumers to make the same optimization. (elcraig@microsoft.com)
 
 ## 0.33.0
 

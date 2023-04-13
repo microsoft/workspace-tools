@@ -2,6 +2,21 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Thu, 13 Apr 2023 20:39:59 GMT",
+      "tag": "workspace-tools_v0.34.0",
+      "version": "0.34.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "elcraig@microsoft.com",
+            "package": "workspace-tools",
+            "commit": "43b7ce01968702903163327b0cad889a0d3d84d3",
+            "comment": "Fix `getPackageInfos` to only read package.jsons once, and `getAllPackageJsonFiles` (which only returns paths) to not read the files at all. There's also a new API `getWorkspacePackagePaths` which allows consumers to make the same optimization."
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 13 Apr 2023 08:01:43 GMT",
       "tag": "workspace-tools_v0.33.0",
       "version": "0.33.0",
