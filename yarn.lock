@@ -2150,10 +2150,10 @@ kleur@^3.0.3:
   resolved "https://registry.yarnpkg.com/kleur/-/kleur-3.0.3.tgz#a79c9ecc86ee1ce3fa6206d1216c501f147fc07e"
   integrity sha512-eTIzlVOSUR+JxdDFepEYcBMtZ9Qqdef+rnzWdRZuMbOywu5tO2w2N7rqjoANZ5k9vywhL6Br1VRjUIgTQx4E8w==
 
-lage@2.5.2:
-  version "2.5.2"
-  resolved "https://registry.yarnpkg.com/lage/-/lage-2.5.2.tgz#07df8b7d6357314ace3a151d8a9b1311c64ea97c"
-  integrity sha512-dYlkErh6LQ5zabLvsK5P72HO3FpwqEHoFfvtWW+KT90xYtMX+bFY8t+Auc23DgQ8s+WHRhXyZigmAqcHEQBP1g==
+lage@2.5.5:
+  version "2.5.5"
+  resolved "https://registry.yarnpkg.com/lage/-/lage-2.5.5.tgz#15ab9f617f615de750a3612be74ba3d41309bd4d"
+  integrity sha512-Mq2vddsQo/8QG1OAq04bwHWPT9vn1OLHEGc6ti4HfFCm8s4KuxXpDB/7ELSynKgONmavFbZXTU8SKqxgdsga9A==
   dependencies:
     glob-hasher "1.2.1"
   optionalDependencies:
@@ -2191,7 +2191,7 @@ lodash.memoize@4.x:
   resolved "https://registry.yarnpkg.com/lodash.memoize/-/lodash.memoize-4.1.2.tgz#bcc6c49a42a2840ed997f323eada5ecd182e0bfe"
   integrity sha512-t7j+NzmgnQzTAYXcsHYLgimltOV1MXHtlOWf6GjL9Kj8GK5FInw5JotxvbOs+IvV1/Dzo04/fCGfLVs7aXb4Ag==
 
-lodash@^4.17.14, lodash@^4.17.15, lodash@~4.17.15:
+lodash@4.17.21, lodash@^4.17.14, lodash@^4.17.15, lodash@~4.17.15:
   version "4.17.21"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
   integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
