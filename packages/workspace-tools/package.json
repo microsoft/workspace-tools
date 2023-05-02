@@ -20,7 +20,7 @@
   "dependencies": {
     "@yarnpkg/lockfile": "^1.1.0",
     "git-url-parse": "^13.0.0",
-    "globby": "^11.0.0",
+    "globby": "^11.1.0",
     "jju": "^1.4.0",
     "js-yaml": "^4.1.0",
     "micromatch": "^4.0.0"
