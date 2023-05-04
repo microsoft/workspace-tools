@@ -442,6 +442,9 @@ export function revertLocalChanges(cwd: string): boolean;
 // @public
 export function searchUp(filePath: string | string[], cwd: string): string | undefined;
 
+// @public
+export function setCachingEnabled(enabled: boolean): void;
+
 // @public (undocumented)
 export function stage(patterns: string[], cwd: string): void;
 

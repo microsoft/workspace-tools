@@ -20,7 +20,7 @@
     "checkchange": "beachball check",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "lage": "cross-env NODE_OPTIONS=\"--experimental-abortcontroller\" lage",
+    "lage": "cross-env NODE_OPTIONS=\"--experimental-abortcontroller --no-warnings\" lage",
     "release": "beachball publish -y",
     "release:docs": "yarn build:docs && gh-pages -d docs",
     "test": "yarn lage test"

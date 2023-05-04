@@ -2,6 +2,7 @@ export * from "./dependencies/index";
 export * from "./getPackageInfos";
 export * from "./git";
 export * from "./graph/index";
+export { setCachingEnabled } from "./isCachingEnabled";
 export * from "./lockfile";
 export * from "./paths";
 export * from "./scope";

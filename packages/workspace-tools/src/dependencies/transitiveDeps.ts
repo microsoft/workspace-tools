@@ -1,5 +1,6 @@
 import { PackageInfos } from "../types/PackageInfo";
 import { getPackageDependencies } from "../graph/getPackageDependencies";
+import { isCachingEnabled } from "../isCachingEnabled";
 
 const graphCache = new Map<string, [string | null, string][]>();
 
@@ -11,7 +12,7 @@ function getPackageGraph(packages: PackageInfos, scope: string[] = []) {
   const internalPackages = new Set(Object.keys(packages));
   const key = memoizedKey(packages, scope);
 
-  if (graphCache.has(key)) {
+  if (isCachingEnabled() && graphCache.has(key)) {
     return graphCache.get(key)!;
   }
 

@@ -1,6 +1,7 @@
 import path from "path";
 import { searchUp } from "../../paths";
 import { WorkspaceManager } from "../WorkspaceManager";
+import { isCachingEnabled } from "../../isCachingEnabled";
 
 export interface WorkspaceManagerAndRoot {
   /** Workspace manager name */
@@ -49,7 +50,7 @@ export function getWorkspaceManagerAndRoot(
   preferredManager?: WorkspaceManager
 ): WorkspaceManagerAndRoot | undefined {
   cache = cache || workspaceCache;
-  if (cache.has(cwd)) {
+  if (isCachingEnabled() && cache.has(cwd)) {
     return cache.get(cwd);
   }
 
