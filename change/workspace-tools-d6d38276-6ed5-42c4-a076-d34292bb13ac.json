@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Add `setCachingEnabled` API so caching can be disabled for tests",
-  "packageName": "workspace-tools",
-  "email": "elcraig@microsoft.com",
-  "dependentChangeType": "patch"
-}

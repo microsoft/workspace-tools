@@ -1,8 +1,16 @@
 # Change Log - workspace-tools
 
-This log was last generated on Thu, 13 Apr 2023 20:39:59 GMT and should not be manually modified.
+This log was last generated on Thu, 04 May 2023 18:32:10 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.34.1
+
+Thu, 04 May 2023 18:32:10 GMT
+
+### Patches
+
+- Add `setCachingEnabled` API so caching can be disabled for tests (elcraig@microsoft.com)
 
 ## 0.34.0
 
