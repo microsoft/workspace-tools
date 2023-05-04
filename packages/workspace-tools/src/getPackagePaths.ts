@@ -1,5 +1,6 @@
 import path from "path";
 import glob, { type Options as GlobOptions } from "fast-glob";
+import { isCachingEnabled } from "./isCachingEnabled";
 
 const packagePathsCache: { [root: string]: string[] } = {};
 const globOptions: GlobOptions = {
@@ -13,7 +14,7 @@ const globOptions: GlobOptions = {
  * directory, get paths to actual package folders.
  */
 export function getPackagePaths(root: string, packageGlobs: string[]): string[] {
-  if (packagePathsCache[root]) {
+  if (isCachingEnabled() && packagePathsCache[root]) {
     return packagePathsCache[root];
   }
 
@@ -29,7 +30,7 @@ export function getPackagePaths(root: string, packageGlobs: string[]): string[] 
  * directory, get paths to actual package folders.
  */
 export async function getPackagePathsAsync(root: string, packageGlobs: string[]): Promise<string[]> {
-  if (packagePathsCache[root]) {
+  if (isCachingEnabled() && packagePathsCache[root]) {
     return packagePathsCache[root];
   }
 

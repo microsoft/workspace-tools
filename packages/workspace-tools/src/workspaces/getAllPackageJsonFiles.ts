@@ -1,5 +1,6 @@
 import path from "path";
 import { getWorkspacePackagePaths, getWorkspacePackagePathsAsync } from "./getWorkspacePackagePaths";
+import { isCachingEnabled } from "../isCachingEnabled";
 
 const cache = new Map<string, string[]>();
 
@@ -7,7 +8,7 @@ const cache = new Map<string, string[]>();
  * Get paths to every package.json in the workspace, given a cwd.
  */
 export function getAllPackageJsonFiles(cwd: string): string[] {
-  if (cache.has(cwd)) {
+  if (isCachingEnabled() && cache.has(cwd)) {
     return cache.get(cwd)!;
   }
 
@@ -26,7 +27,7 @@ export function _resetPackageJsonFilesCache() {
  * Get paths to every package.json in the workspace, given a cwd.
  */
 export async function getAllPackageJsonFilesAsync(cwd: string): Promise<string[]> {
-  if (cache.has(cwd)) {
+  if (isCachingEnabled() && cache.has(cwd)) {
     return cache.get(cwd)!;
   }
 

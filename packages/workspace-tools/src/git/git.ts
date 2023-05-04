@@ -65,8 +65,9 @@ export function git(args: string[], options?: SpawnSyncOptions): GitProcessOutpu
   const results = spawnSync("git", args, { maxBuffer: defaultMaxBuffer, ...options });
 
   const output: GitProcessOutput = {
-    stderr: results.stderr.toString().trimRight(),
-    stdout: results.stdout.toString().trimRight(),
+    // these may be undefined if stdio: inherit is set
+    stderr: (results.stderr || "").toString().trimRight(),
+    stdout: (results.stdout || "").toString().trimRight(),
     success: results.status === 0,
   };
 

@@ -33,7 +33,7 @@ function getPackages(packageJsonWorkspacesRoot: string): string[] {
   }
 
   if (!workspaces?.packages) {
-    throw new Error("Could not find a workspaces object in package.json");
+    throw new Error("Could not find a workspaces object in package.json (expected if this is not a monorepo)");
   }
 
   return workspaces.packages;
