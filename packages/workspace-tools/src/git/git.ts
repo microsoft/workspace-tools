@@ -2,6 +2,7 @@
 // Basic git wrappers
 //
 
+import { SpawnSyncReturns } from "child_process";
 import { spawnSync, SpawnSyncOptions } from "child_process";
 
 export class GitError extends Error {
@@ -29,7 +30,8 @@ export type GitProcessOutput = {
   stderr: string;
   stdout: string;
   success: boolean;
-};
+} & Omit<SpawnSyncReturns<string | Buffer>, "stdout" | "stderr">;
+
 /** Observes the git operations called from `git()` or `gitFailFast()` */
 export type GitObserver = (args: string[], output: GitProcessOutput) => void;
 const observers: GitObserver[] = [];
@@ -65,6 +67,7 @@ export function git(args: string[], options?: SpawnSyncOptions): GitProcessOutpu
   const results = spawnSync("git", args, { maxBuffer: defaultMaxBuffer, ...options });
 
   const output: GitProcessOutput = {
+    ...results,
     // these may be undefined if stdio: inherit is set
     stderr: (results.stderr || "").toString().trimRight(),
     stdout: (results.stdout || "").toString().trimRight(),

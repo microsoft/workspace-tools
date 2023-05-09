@@ -7,6 +7,7 @@
 /// <reference types="node" />
 
 import { SpawnSyncOptions } from 'child_process';
+import { SpawnSyncReturns } from 'child_process';
 
 // @public
 export function addGitObserver(observer: GitObserver): () => void;
@@ -248,7 +249,7 @@ export type GitProcessOutput = {
     stderr: string;
     stdout: string;
     success: boolean;
-};
+} & Omit<SpawnSyncReturns<string | Buffer>, "stdout" | "stderr">;
 
 // @public (undocumented)
 export function init(cwd: string, email?: string, username?: string): void;
