@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Add full spawnSync result to git helper",
-  "packageName": "workspace-tools",
-  "email": "elcraig@microsoft.com",
-  "dependentChangeType": "patch"
-}

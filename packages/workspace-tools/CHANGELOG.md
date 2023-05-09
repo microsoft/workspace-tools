@@ -1,8 +1,16 @@
 # Change Log - workspace-tools
 
-This log was last generated on Thu, 04 May 2023 18:32:10 GMT and should not be manually modified.
+This log was last generated on Tue, 09 May 2023 21:21:56 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.34.2
+
+Tue, 09 May 2023 21:21:56 GMT
+
+### Patches
+
+- Add full spawnSync result to git helper (elcraig@microsoft.com)
 
 ## 0.34.1
 
