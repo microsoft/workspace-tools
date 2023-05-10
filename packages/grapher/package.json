@@ -12,7 +12,6 @@
     "lib/!(__*)"
   ],
   "scripts": {
-    "api": "workspace-tools-scripts api",
     "build": "tsc",
     "start": "tsc -w --preserveWatchOutput",
     "test": "jest"
