@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "adding a deps graph tool",
+  "packageName": "@ws-tools/grapher",
+  "email": "kchau@microsoft.com",
+  "dependentChangeType": "patch"
+}

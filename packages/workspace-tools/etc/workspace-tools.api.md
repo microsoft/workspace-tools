@@ -185,10 +185,10 @@ export function getStagedChanges(cwd: string): string[];
 // @public @deprecated
 export function getTransitiveConsumers(targets: string[], packages: PackageInfos, scope?: string[]): string[];
 
-// @public @deprecated (undocumented)
+// @public (undocumented)
 export const getTransitiveDependencies: typeof getTransitiveProviders;
 
-// @public @deprecated (undocumented)
+// @public (undocumented)
 export const getTransitiveDependents: typeof getTransitiveConsumers;
 
 // @public @deprecated
