@@ -1,6 +1,6 @@
 {
   "name": "workspace-tools",
-  "version": "0.34.2",
+  "version": "0.34.3",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -9,7 +9,8 @@
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
-    "lib/!(__*)"
+    "lib/!(__*)",
+    "lib/!(__*)/**/*"
   ],
   "scripts": {
     "api": "workspace-tools-scripts api",

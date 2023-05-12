@@ -4,7 +4,7 @@ import { depsCommand } from "./commands/depsCommand";
 async function main() {
   try {
     const program = new commander.Command();
-    program.version("0.0.1");
+    program.version(require("../package.json").version);
     program
       .command("deps")
       .description("Generate a list of dependencies and dependents for a package")
@@ -14,7 +14,7 @@ async function main() {
     program.parse(process.argv);
   } catch (e) {
     if (e instanceof Error) {
-      console.error(e.message);
+      console.error(e.stack);
     } else {
       console.error(String(e));
     }

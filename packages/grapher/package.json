@@ -6,10 +6,13 @@
     "type": "git",
     "url": "https://github.com/microsoft/workspace-tools"
   },
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
+  "bin": {
+    "grapher": "./bin/grapher.js"
+  },
+  "exports": null,
   "files": [
-    "lib/!(__*)"
+    "lib/!(__*)",
+    "lib/!(__*)/**/*"
   ],
   "scripts": {
     "build": "tsc",
@@ -18,7 +21,7 @@
   },
   "dependencies": {
     "commander": "^10.0.1",
-    "workspace-tools": "^0.34.2"
+    "workspace-tools": "^0.34.3"
   },
   "devDependencies": {
     "@types/node": "^16.0.0",
