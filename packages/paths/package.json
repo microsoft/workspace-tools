@@ -2,12 +2,19 @@
   "name": "@ws-tools/paths",
   "version": "0.1.0",
   "license": "MIT",
+  "description": "Helper methods related to paths in a repo or monorepo",
   "repository": {
     "type": "git",
     "url": "https://github.com/microsoft/workspace-tools"
   },
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./lib/index.js",
+      "types": "./lib/index.d.ts"
+    }
+  },
   "files": [
     "lib/!(__*)",
     "lib/!(__*)/**"
