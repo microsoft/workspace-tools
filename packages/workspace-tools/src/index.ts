@@ -20,3 +20,5 @@ export * from "./workspaces/getChangedPackages";
 export * from "./workspaces/getPackagesByFiles";
 export * from "./workspaces/listOfWorkspacePackageNames";
 export * from "./workspaces/getAllPackageJsonFiles";
+
+export { searchUp, findGitRoot, findPackageRoot } from "@ws-tools/paths";

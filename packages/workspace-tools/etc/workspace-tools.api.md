@@ -6,6 +6,9 @@
 
 /// <reference types="node" />
 
+import { findGitRoot } from '@ws-tools/paths';
+import { findPackageRoot } from '@ws-tools/paths';
+import { searchUp } from '@ws-tools/paths';
 import { SpawnSyncOptions } from 'child_process';
 import { SpawnSyncReturns } from 'child_process';
 
@@ -56,11 +59,9 @@ export function fetchRemote(remote: string, cwd: string): void;
 // @public (undocumented)
 export function fetchRemoteBranch(remote: string, remoteBranch: string, cwd: string): void;
 
-// @public
-export function findGitRoot(cwd: string): string;
+export { findGitRoot }
 
-// @public
-export function findPackageRoot(cwd: string): string | undefined;
+export { findPackageRoot }
 
 // @public
 export function findProjectRoot(cwd: string): string;
@@ -250,7 +251,7 @@ export type GitProcessOutput = {
 // @public (undocumented)
 export function init(cwd: string, email?: string, username?: string): void;
 
-// @public (undocumented)
+// @public @deprecated (undocumented)
 export function isChildOf(child: string, parent: string): boolean;
 
 // @public (undocumented)
@@ -444,8 +445,7 @@ export function _resetPackageJsonFilesCache(): void;
 // @public (undocumented)
 export function revertLocalChanges(cwd: string): boolean;
 
-// @public
-export function searchUp(filePath: string | string[], cwd: string): string | undefined;
+export { searchUp }
 
 // @public
 export function setCachingEnabled(enabled: boolean): void;
