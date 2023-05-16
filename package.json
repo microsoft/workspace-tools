@@ -29,7 +29,7 @@
     "@microsoft/api-extractor": "7.34.9",
     "@types/fs-extra": "9.0.13",
     "@types/git-url-parse": "9.0.1",
-    "@types/jest": "29.5.0",
+    "@types/jest": "29.5.1",
     "@types/jju": "1.4.2",
     "@types/js-yaml": "4.0.5",
     "@types/micromatch": "4.0.2",
