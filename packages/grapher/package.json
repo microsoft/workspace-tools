@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "commander": "^10.0.1",
-    "workspace-tools": "^0.34.3"
+    "workspace-tools": "^0.34.4"
   },
   "devDependencies": {
     "@types/node": "^16.0.0",
