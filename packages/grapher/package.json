@@ -21,14 +21,11 @@
   },
   "dependencies": {
     "commander": "^10.0.1",
-    "workspace-tools": "^0.34.4"
+    "workspace-tools": "^0.34.5"
   },
   "devDependencies": {
     "@types/node": "^16.0.0",
     "lodash": "4.17.21",
     "workspace-tools-scripts": "*"
-  },
-  "publishConfig": {
-    "access": "public"
   }
 }
