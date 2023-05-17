@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Sync version after failed publish",
-  "packageName": "workspace-tools",
-  "email": "elcraig@microsoft.com",
-  "dependentChangeType": "none"
-}

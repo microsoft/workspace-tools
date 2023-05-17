@@ -1,8 +1,16 @@
 # Change Log - workspace-tools
 
-This log was last generated on Tue, 09 May 2023 21:21:56 GMT and should not be manually modified.
+This log was last generated on Wed, 17 May 2023 01:25:45 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.34.6
+
+Wed, 17 May 2023 01:25:45 GMT
+
+### Patches
+
+- un-deprecate getTransitive functions (kchau@microsoft.com)
 
 ## 0.34.2
 

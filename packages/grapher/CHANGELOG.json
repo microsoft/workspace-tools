@@ -1,0 +1,32 @@
+{
+  "name": "@ws-tools/grapher",
+  "entries": [
+    {
+      "date": "Wed, 17 May 2023 01:25:45 GMT",
+      "tag": "@ws-tools/grapher_v0.1.1",
+      "version": "0.1.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "elcraig@microsoft.com",
+            "package": "@ws-tools/grapher",
+            "commit": "a14af9fe6d1081712a1f84483a38185fc7603cc8",
+            "comment": "Add `bin` and prevent importing the package"
+          },
+          {
+            "author": "kchau@microsoft.com",
+            "package": "@ws-tools/grapher",
+            "commit": "9311481fb7acc75402900473a38bd6dcc169014d",
+            "comment": "adding a deps graph tool"
+          },
+          {
+            "author": "beachball",
+            "package": "@ws-tools/grapher",
+            "comment": "Bump workspace-tools to v0.34.6",
+            "commit": "1ae1a23fe0402f213d6ef2c5fad221a9bacab185"
+          }
+        ]
+      }
+    }
+  ]
+}

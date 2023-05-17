@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "un-deprecate getTransitive functions",
-  "packageName": "workspace-tools",
-  "email": "kchau@microsoft.com",
-  "dependentChangeType": "patch"
-}

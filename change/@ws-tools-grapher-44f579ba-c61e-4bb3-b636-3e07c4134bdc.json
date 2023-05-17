@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Add `bin` and prevent importing the package",
-  "packageName": "@ws-tools/grapher",
-  "email": "elcraig@microsoft.com",
-  "dependentChangeType": "patch"
-}
