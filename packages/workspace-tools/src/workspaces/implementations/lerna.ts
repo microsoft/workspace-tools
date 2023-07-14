@@ -3,7 +3,7 @@ import jju from "jju";
 import path from "path";
 import { getPackagePaths } from "../../getPackagePaths";
 import { WorkspaceInfo } from "../../types/WorkspaceInfo";
-import { getWorkspacePackageInfo } from "../getWorkspacePackageInfo";
+import { getWorkspacePackageInfo, getWorkspacePackageInfoAsync } from "../getWorkspacePackageInfo";
 import { logVerboseWarning } from "../../logging";
 import { getWorkspaceManagerAndRoot } from "./getWorkspaceManagerAndRoot";
 
@@ -42,4 +42,19 @@ export function getLernaWorkspaces(cwd: string): WorkspaceInfo {
   }
 }
 
+/**
+ * Get an array with names, paths, and package.json contents for each package in a lerna workspace.
+ * (See `../getWorkspaces` for why it's named this way.)
+ */
+export async function getLernaWorkspacesAsync(cwd: string): Promise<WorkspaceInfo> {
+  try {
+    const packagePaths = getWorkspacePackagePaths(cwd);
+    return getWorkspacePackageInfoAsync(packagePaths);
+  } catch (err) {
+    logVerboseWarning(`Error getting lerna workspaces for ${cwd}`, err);
+    return [];
+  }
+}
+
 export { getLernaWorkspaces as getWorkspaces };
+export { getLernaWorkspacesAsync as getWorkspacesAsync };

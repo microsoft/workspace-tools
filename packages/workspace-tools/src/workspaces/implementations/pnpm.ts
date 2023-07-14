@@ -2,7 +2,7 @@ import path from "path";
 
 import { getPackagePaths } from "../../getPackagePaths";
 import { WorkspaceInfo } from "../../types/WorkspaceInfo";
-import { getWorkspacePackageInfo } from "../getWorkspacePackageInfo";
+import { getWorkspacePackageInfo, getWorkspacePackageInfoAsync } from "../getWorkspacePackageInfo";
 import { readYaml } from "../../lockfile/readYaml";
 import { logVerboseWarning } from "../../logging";
 import { getWorkspaceManagerAndRoot } from "./getWorkspaceManagerAndRoot";
@@ -49,4 +49,19 @@ export function getPnpmWorkspaces(cwd: string): WorkspaceInfo {
   }
 }
 
+/**
+ * Get an array with names, paths, and package.json contents for each package in a pnpm workspace.
+ * (See `../getWorkspaces` for why it's named this way.)
+ */
+export async function getPnpmWorkspacesAsync(cwd: string): Promise<WorkspaceInfo> {
+  try {
+    const packagePaths = getWorkspacePackagePaths(cwd);
+    return getWorkspacePackageInfoAsync(packagePaths);
+  } catch (err) {
+    logVerboseWarning(`Error getting pnpm workspaces for ${cwd}`, err);
+    return [];
+  }
+}
+
 export { getPnpmWorkspaces as getWorkspaces };
+export { getPnpmWorkspacesAsync as getWorkspacesAsync };
