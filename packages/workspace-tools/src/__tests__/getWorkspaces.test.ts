@@ -3,10 +3,10 @@ import path from "path";
 import { cleanupFixtures, setupFixture } from "workspace-tools-scripts/jest/setupFixture";
 import { getWorkspaceManagerAndRoot } from "../workspaces/implementations";
 import { getYarnWorkspaces, getYarnWorkspacesAsync } from "../workspaces/implementations/yarn";
-import { getPnpmWorkspaces } from "../workspaces/implementations/pnpm";
-import { getRushWorkspaces } from "../workspaces/implementations/rush";
+import { getPnpmWorkspaces, getPnpmWorkspacesAsync } from "../workspaces/implementations/pnpm";
+import { getRushWorkspaces, getRushWorkspacesAsync } from "../workspaces/implementations/rush";
 import { getNpmWorkspaces, getNpmWorkspacesAsync } from "../workspaces/implementations/npm";
-import { getLernaWorkspaces } from "../workspaces/implementations/lerna";
+import { getLernaWorkspaces, getLernaWorkspacesAsync } from "../workspaces/implementations/lerna";
 
 import _ from "lodash";
 
@@ -54,13 +54,16 @@ describe("getWorkspaces", () => {
     });
   });
 
-  describe("pnpm", () => {
-    it("gets the name and path of the workspaces", () => {
+  describe.each([
+    ["getPnpmWorkspaces", getPnpmWorkspaces],
+    ["getPnpmWorkspacesAsync", getPnpmWorkspacesAsync],
+  ])("pnpm (%s)", (name, getWorkspaces) => {
+    it("gets the name and path of the workspaces", async () => {
       const packageRoot = setupFixture("monorepo-pnpm");
 
       expect(getWorkspaceManagerAndRoot(packageRoot, new Map())).toEqual({ manager: "pnpm", root: packageRoot });
 
-      const workspacesPackageInfo = getPnpmWorkspaces(packageRoot);
+      const workspacesPackageInfo = await getWorkspaces(packageRoot);
 
       const packageAPath = path.join(packageRoot, "packages", "package-a");
       const packageBPath = path.join(packageRoot, "packages", "package-b");
@@ -72,13 +75,16 @@ describe("getWorkspaces", () => {
     });
   });
 
-  describe("rush + pnpm", () => {
-    it("gets the name and path of the workspaces", () => {
+  describe.each([
+    ["getRushWorkspaces", getRushWorkspaces],
+    ["getRushWorkspacesAsync", getRushWorkspacesAsync],
+  ])("rush + pnpm (%s)", (name, getWorkspaces) => {
+    it("gets the name and path of the workspaces", async () => {
       const packageRoot = setupFixture("monorepo-rush-pnpm");
 
       expect(getWorkspaceManagerAndRoot(packageRoot, new Map())).toEqual({ manager: "rush", root: packageRoot });
 
-      const workspacesPackageInfo = getRushWorkspaces(packageRoot);
+      const workspacesPackageInfo = await getWorkspaces(packageRoot);
 
       const packageAPath = path.join(packageRoot, "packages", "package-a");
       const packageBPath = path.join(packageRoot, "packages", "package-b");
@@ -90,13 +96,16 @@ describe("getWorkspaces", () => {
     });
   });
 
-  describe("rush + yarn", () => {
-    it("gets the name and path of the workspaces", () => {
+  describe.each([
+    ["getRushWorkspaces", getRushWorkspaces],
+    ["getRushWorkspacesAsync", getRushWorkspacesAsync],
+  ])("rush + pnpm (%s)", (name, getWorkspaces) => {
+    it("gets the name and path of the workspaces", async () => {
       const packageRoot = setupFixture("monorepo-rush-yarn");
 
       expect(getWorkspaceManagerAndRoot(packageRoot, new Map())).toEqual({ manager: "rush", root: packageRoot });
 
-      const workspacesPackageInfo = getRushWorkspaces(packageRoot);
+      const workspacesPackageInfo = await getWorkspaces(packageRoot);
 
       const packageAPath = path.join(packageRoot, "packages", "package-a");
       const packageBPath = path.join(packageRoot, "packages", "package-b");
@@ -147,13 +156,16 @@ describe("getWorkspaces", () => {
     });
   });
 
-  describe("lerna", () => {
+  describe.each([
+    ["getLernaWorkspaces", getLernaWorkspaces],
+    ["getLernaWorkspacesAsync", getLernaWorkspacesAsync],
+  ])("lerna (%s)", (name, getWorkspaces) => {
     it("gets the name and path of the workspaces", async () => {
       const packageRoot = setupFixture("monorepo-lerna-npm");
 
       expect(getWorkspaceManagerAndRoot(packageRoot, new Map())).toEqual({ manager: "lerna", root: packageRoot });
 
-      const workspacesPackageInfo = getLernaWorkspaces(packageRoot);
+      const workspacesPackageInfo = await getWorkspaces(packageRoot);
 
       const packageAPath = path.join(packageRoot, "packages", "package-a");
       const packageBPath = path.join(packageRoot, "packages", "package-b");

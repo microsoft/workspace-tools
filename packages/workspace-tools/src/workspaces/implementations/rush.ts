@@ -3,7 +3,7 @@ import jju from "jju";
 import fs from "fs";
 
 import { WorkspaceInfo } from "../../types/WorkspaceInfo";
-import { getWorkspacePackageInfo } from "../getWorkspacePackageInfo";
+import { getWorkspacePackageInfo, getWorkspacePackageInfoAsync } from "../getWorkspacePackageInfo";
 import { logVerboseWarning } from "../../logging";
 import { getWorkspaceManagerAndRoot } from "./getWorkspaceManagerAndRoot";
 
@@ -47,4 +47,19 @@ export function getRushWorkspaces(cwd: string): WorkspaceInfo {
   }
 }
 
+/**
+ * Get an array with names, paths, and package.json contents for each package in a rush workspace.
+ * (See `../getWorkspaces` for why it's named this way.)
+ */
+export async function getRushWorkspacesAsync(cwd: string): Promise<WorkspaceInfo> {
+  try {
+    const packagePaths = getWorkspacePackagePaths(cwd);
+    return getWorkspacePackageInfoAsync(packagePaths);
+  } catch (err) {
+    logVerboseWarning(`Error getting rush workspaces for ${cwd}`, err);
+    return [];
+  }
+}
+
 export { getRushWorkspaces as getWorkspaces };
+export { getRushWorkspacesAsync as getWorkspacesAsync };
