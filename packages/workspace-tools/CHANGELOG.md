@@ -1,8 +1,16 @@
 # Change Log - workspace-tools
 
-This log was last generated on Wed, 17 May 2023 01:25:45 GMT and should not be manually modified.
+This log was last generated on Sat, 15 Jul 2023 08:02:42 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.35.0
+
+Sat, 15 Jul 2023 08:02:42 GMT
+
+### Minor changes
+
+- adding support for async getWorspaces (kchau@microsoft.com)
 
 ## 0.34.6
 
