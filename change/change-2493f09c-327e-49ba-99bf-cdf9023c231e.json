@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "type": "patch",
+      "comment": "Adding fast-glob to deps list.",
+      "packageName": "workspace-tools",
+      "email": "dzearing@microsoft.com",
+      "dependentChangeType": "patch"
+    }
+  ]
+}
