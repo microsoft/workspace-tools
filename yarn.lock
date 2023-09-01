@@ -2891,12 +2891,13 @@ which@^2.0.1:
   dependencies:
     isexe "^2.0.0"
 
-"workspace-tools@npm:workspace-tools@0.34.4":
-  version "0.34.4"
-  resolved "https://registry.yarnpkg.com/workspace-tools/-/workspace-tools-0.34.4.tgz#abc30d191d880b0f9729f4a9791cd3538a74214a"
-  integrity sha512-ifRINKCnz31duFJMnojHHP6XeNecbXtEdQkXOQCCDJspQ3fJtQks7/No0s76Sq6hsSx2mKMaiCXNkn44Lf0vTw==
+"workspace-tools@npm:workspace-tools@0.35.1":
+  version "0.35.1"
+  resolved "https://registry.yarnpkg.com/workspace-tools/-/workspace-tools-0.35.1.tgz#7ff3e71ca8e710d2c1d79e7f2be925cb90ec6026"
+  integrity sha512-IMnKTbCo4Ej9KjsZf9ijOE3ZpdT7L4aER9krSWEitrHXr/oErLe3CIHupsg1tAJAjPJ/+CDwpu2yFKHdmRCJdA==
   dependencies:
     "@yarnpkg/lockfile" "^1.1.0"
+    fast-glob "^3.3.1"
     git-url-parse "^13.0.0"
     globby "^11.0.0"
     jju "^1.4.0"

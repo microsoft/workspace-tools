@@ -50,8 +50,8 @@
     "typescript": "~4.5.4"
   },
   "resolutions": {
-    "**/beachball/workspace-tools": "npm:workspace-tools@0.34.4",
-    "**/lage/workspace-tools": "npm:workspace-tools@0.34.4",
-    "**/lage/**/workspace-tools": "npm:workspace-tools@0.34.4"
+    "**/beachball/workspace-tools": "npm:workspace-tools@0.35.1",
+    "**/lage/workspace-tools": "npm:workspace-tools@0.35.1",
+    "**/lage/**/workspace-tools": "npm:workspace-tools@0.35.1"
   }
 }
