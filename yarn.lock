@@ -959,9 +959,9 @@ balanced-match@^1.0.0:
   integrity sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==
 
 beachball@^2.31.12:
-  version "2.36.1"
-  resolved "https://registry.yarnpkg.com/beachball/-/beachball-2.36.1.tgz#67c1c118b90c39629c8314517f3c705a9e0b4ac4"
-  integrity sha512-aMeXo5zhl1GqdWPCKQmiLCtE9FKbUfTvDzCXlVdVpb6pGmoGDMW+6+TWE6tikDi5n5UlWC88hRKhmQl8DH1FOQ==
+  version "2.37.0"
+  resolved "https://registry.yarnpkg.com/beachball/-/beachball-2.37.0.tgz#b9aee94e69727e3569aea2b2aca15bfd32987327"
+  integrity sha512-JcHjlo+Srq7rXlfbjCgEAp6V/Fb1Nbu1EunU86A6Zv4f7r0HBFhTt+LBIvHutUn1Q7lzrTPJAKMb9eCEFCb7Fg==
   dependencies:
     cosmiconfig "^7.0.0"
     execa "^5.0.0"
