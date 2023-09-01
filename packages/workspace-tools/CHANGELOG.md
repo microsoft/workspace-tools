@@ -1,8 +1,16 @@
 # Change Log - workspace-tools
 
-This log was last generated on Sat, 15 Jul 2023 08:02:42 GMT and should not be manually modified.
+This log was last generated on Fri, 01 Sep 2023 01:20:47 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.35.1
+
+Fri, 01 Sep 2023 01:20:47 GMT
+
+### Patches
+
+- Adding fast-glob to deps list. (dzearing@microsoft.com)
 
 ## 0.35.0
 
