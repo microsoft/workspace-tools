@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "@yarnpkg/lockfile": "^1.1.0",
+    "fast-glob": "^3.3.1",
     "git-url-parse": "^13.0.0",
     "globby": "^11.0.0",
     "jju": "^1.4.0",
