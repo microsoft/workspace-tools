@@ -958,10 +958,10 @@ balanced-match@^1.0.0:
   resolved "https://registry.yarnpkg.com/balanced-match/-/balanced-match-1.0.2.tgz#e83e3a7e3f300b34cb9d87f615fa0cbf357690ee"
   integrity sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==
 
-beachball@2.31.12:
-  version "2.31.12"
-  resolved "https://registry.yarnpkg.com/beachball/-/beachball-2.31.12.tgz#eb0127deb6d2125dfdfbda5ef3b73c4fdd12c913"
-  integrity sha512-fxhuCkacaFHBJLyvdn06cx5UKYpPwC5YbgftHLmhvTDFK0dP4KMOMRxQqoN/7t4sdxqaSopUxG8iI3WsDlTXwA==
+beachball@2.36.1:
+  version "2.36.1"
+  resolved "https://registry.yarnpkg.com/beachball/-/beachball-2.36.1.tgz#67c1c118b90c39629c8314517f3c705a9e0b4ac4"
+  integrity sha512-aMeXo5zhl1GqdWPCKQmiLCtE9FKbUfTvDzCXlVdVpb6pGmoGDMW+6+TWE6tikDi5n5UlWC88hRKhmQl8DH1FOQ==
   dependencies:
     cosmiconfig "^7.0.0"
     execa "^5.0.0"
@@ -973,7 +973,7 @@ beachball@2.31.12:
     semver "^7.0.0"
     toposort "^2.0.2"
     uuid "^9.0.0"
-    workspace-tools "^0.30.0"
+    workspace-tools "^0.35.0"
     yargs-parser "^21.0.0"
 
 brace-expansion@^1.1.7:
@@ -2887,7 +2887,7 @@ which@^2.0.1:
   dependencies:
     isexe "^2.0.0"
 
-workspace-tools@^0.30.0, "workspace-tools@npm:workspace-tools@0.34.4":
+"workspace-tools@npm:workspace-tools@0.34.4":
   version "0.34.4"
   resolved "https://registry.yarnpkg.com/workspace-tools/-/workspace-tools-0.34.4.tgz#abc30d191d880b0f9729f4a9791cd3538a74214a"
   integrity sha512-ifRINKCnz31duFJMnojHHP6XeNecbXtEdQkXOQCCDJspQ3fJtQks7/No0s76Sq6hsSx2mKMaiCXNkn44Lf0vTw==

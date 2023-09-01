@@ -37,7 +37,7 @@
     "@types/tmp": "0.2.3",
     "@types/yarnpkg__lockfile": "1.1.5",
     "@types/lodash": "4.14.194",
-    "beachball": "2.31.12",
+    "beachball": "2.36.1",
     "cross-env": "7.0.3",
     "fs-extra": "10.1.0",
     "gh-pages": "4.0.0",
