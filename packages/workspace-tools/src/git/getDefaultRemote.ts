@@ -1,6 +1,6 @@
 import fs from "fs";
 import path from "path";
-import { findGitRoot } from "../paths";
+import { findGitRoot } from "@ws-tools/paths";
 import { PackageInfo } from "../types/PackageInfo";
 import { getRepositoryName } from "./getRepositoryName";
 import { git } from "./git";

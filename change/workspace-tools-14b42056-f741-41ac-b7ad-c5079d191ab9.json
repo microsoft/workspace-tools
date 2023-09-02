@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "Move path utilities to separate package (re-exported by this one)",
+  "packageName": "workspace-tools",
+  "email": "elcraig@microsoft.com",
+  "dependentChangeType": "patch"
+}

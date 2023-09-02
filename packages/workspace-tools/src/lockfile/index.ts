@@ -3,7 +3,7 @@ import fs from "fs";
 import path from "path";
 import { ParsedLock, PnpmLockFile, NpmLockFile, BerryLockFile } from "./types";
 import { nameAtVersion } from "./nameAtVersion";
-import { searchUp } from "../paths";
+import { searchUp } from "@ws-tools/paths";
 import { parsePnpmLock } from "./parsePnpmLock";
 import { parseNpmLock } from "./parseNpmLock";
 import { readYaml } from "./readYaml";

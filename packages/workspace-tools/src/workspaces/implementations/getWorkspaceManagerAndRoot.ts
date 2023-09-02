@@ -1,5 +1,5 @@
 import path from "path";
-import { searchUp } from "../../paths";
+import { searchUp } from "@ws-tools/paths";
 import { WorkspaceManager } from "../WorkspaceManager";
 import { isCachingEnabled } from "../../isCachingEnabled";
 
