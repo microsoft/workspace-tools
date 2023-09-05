@@ -11,6 +11,8 @@ import { logVerboseWarning } from "./logging";
  */
 export function searchUp(filePath: string | string[], cwd: string) {
   const paths = typeof filePath === "string" ? [filePath] : filePath;
+  // convert to an absolute path if needed
+  cwd = path.resolve(cwd);
   const root = path.parse(cwd).root;
 
   let foundPath: string | undefined;
