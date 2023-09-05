@@ -1,8 +1,16 @@
 # Change Log - workspace-tools
 
-This log was last generated on Fri, 01 Sep 2023 01:20:47 GMT and should not be manually modified.
+This log was last generated on Tue, 05 Sep 2023 21:12:43 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.35.2
+
+Tue, 05 Sep 2023 21:12:43 GMT
+
+### Patches
+
+- searchUp: handle relative cwd (elcraig@microsoft.com)
 
 ## 0.35.1
 
