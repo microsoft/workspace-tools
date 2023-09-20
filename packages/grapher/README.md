@@ -5,11 +5,11 @@
 For one package
 
 ```
-npx @ws-tools/grapher --scope foo
+npx @ws-tools/grapher deps --scope foo
 ```
 
 For multiple packages:
 
 ```
-npx @ws-tools/grapher --scope foo --scope bar
+npx @ws-tools/grapher deps --scope foo --scope bar
 ```
