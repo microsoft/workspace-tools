@@ -1,8 +1,16 @@
 # Change Log - @ws-tools/grapher
 
-This log was last generated on Tue, 05 Sep 2023 21:12:43 GMT and should not be manually modified.
+This log was last generated on Thu, 21 Sep 2023 08:01:58 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.1.5
+
+Thu, 21 Sep 2023 08:01:58 GMT
+
+### Patches
+
+- Update README.md (dzearing@microsoft.com)
 
 ## 0.1.4
 

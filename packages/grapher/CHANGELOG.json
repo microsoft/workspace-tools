@@ -2,6 +2,21 @@
   "name": "@ws-tools/grapher",
   "entries": [
     {
+      "date": "Thu, 21 Sep 2023 08:01:58 GMT",
+      "version": "0.1.5",
+      "tag": "@ws-tools/grapher_v0.1.5",
+      "comments": {
+        "patch": [
+          {
+            "author": "dzearing@microsoft.com",
+            "package": "@ws-tools/grapher",
+            "commit": "78092edbb6e6af87d5b9ceae75502f5d184e4536",
+            "comment": "Update README.md"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 05 Sep 2023 21:12:43 GMT",
       "version": "0.1.4",
       "tag": "@ws-tools/grapher_v0.1.4",
