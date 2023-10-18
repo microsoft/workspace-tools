@@ -2,7 +2,6 @@
 
 const { spawnSync } = require("child_process");
 const fs = require("fs");
-const { getUnstagedChanges } = require("workspace-tools");
 
 /** @type {import('beachball').BeachballConfig} */
 const config = {
@@ -16,6 +15,9 @@ const config = {
       if (name !== "workspace-tools") {
         return;
       }
+
+      // This has to be loaded here because the package won't be built yet during checkchange in CI
+      const { getUnstagedChanges } = require("workspace-tools");
 
       if (getUnstagedChanges(process.cwd()).includes("yarn.lock")) {
         console.warn("yarn.lock unexpectedly had changes; not updating workspace-tools resolutions");
