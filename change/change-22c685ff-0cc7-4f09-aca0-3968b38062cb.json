@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "type": "patch",
+      "comment": "Update dependency commander to v11",
+      "packageName": "@ws-tools/grapher",
+      "email": "email not defined",
+      "dependentChangeType": "patch"
+    }
+  ]
+}
