@@ -1,6 +1,6 @@
 # workspace-tools
 
-A collection of tools that are useful in a git-controlled monorepo that is managed by one of these tools:
+A collection of utilities that are useful in a git-controlled monorepo managed by one of these tools:
 
 - lerna
 - npm workspaces
@@ -8,7 +8,7 @@ A collection of tools that are useful in a git-controlled monorepo that is manag
 - rush
 - yarn workspaces
 
-## Environment Variables
+## Environment variables
 
 ### GIT_DEBUG
 
