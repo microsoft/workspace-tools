@@ -1,8 +1,16 @@
 # Change Log - workspace-tools
 
-This log was last generated on Wed, 18 Oct 2023 06:44:38 GMT and should not be manually modified.
+This log was last generated on Wed, 18 Oct 2023 22:14:54 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.36.3
+
+Wed, 18 Oct 2023 22:14:54 GMT
+
+### Patches
+
+- Update readme (elcraig@microsoft.com)
 
 ## 0.36.2
 
