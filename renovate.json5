@@ -42,19 +42,6 @@
 
   "semanticCommits": "disabled",
 
-  "regexManagers": [
-    {
-      // This updates the "resolutions" entry for lage's workspace-tools version
-      "fileMatch": ["^package.json$"],
-      "matchStrings": [
-        "(?<depName>\\*\\*/.*?workspace-tools)\": \"npm:workspace-tools@(?<currentValue>[~^]?\\d+\\.\\d+\\.\\d+)"
-      ],
-      "packageNameTemplate": "workspace-tools",
-      "datasourceTemplate": "npm",
-      "depTypeTemplate": "devDependencies"
-    }
-  ],
-
   "packageRules": [
     {
       "groupName": "workspace-tools resolutions",

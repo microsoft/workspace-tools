@@ -69,8 +69,8 @@ export function git(args: string[], options?: SpawnSyncOptions): GitProcessOutpu
   const output: GitProcessOutput = {
     ...results,
     // these may be undefined if stdio: inherit is set
-    stderr: (results.stderr || "").toString().trimRight(),
-    stdout: (results.stdout || "").toString().trimRight(),
+    stderr: (results.stderr || "").toString().trimEnd(),
+    stdout: (results.stdout || "").toString().trimEnd(),
     success: results.status === 0,
   };
 
@@ -103,7 +103,7 @@ export function gitFailFast(args: string[], options?: SpawnSyncOptions & { noExi
     }
 
     throw new GitError(`CRITICAL ERROR: running git command: git ${args.join(" ")}!
-    ${gitResult.stdout?.toString().trimRight()}
-    ${gitResult.stderr?.toString().trimRight()}`);
+    ${gitResult.stdout?.toString().trimEnd()}
+    ${gitResult.stderr?.toString().trimEnd()}`);
   }
 }
