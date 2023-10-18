@@ -1,8 +1,16 @@
 # Change Log - workspace-tools
 
-This log was last generated on Wed, 18 Oct 2023 05:00:25 GMT and should not be manually modified.
+This log was last generated on Wed, 18 Oct 2023 05:45:05 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.36.1
+
+Wed, 18 Oct 2023 05:45:05 GMT
+
+### Patches
+
+- Go back to transpiling to ES2021 (elcraig@microsoft.com)
 
 ## 0.36.0
 

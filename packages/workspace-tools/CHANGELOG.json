@@ -2,6 +2,21 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Wed, 18 Oct 2023 05:45:05 GMT",
+      "version": "0.36.1",
+      "tag": "workspace-tools_v0.36.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "elcraig@microsoft.com",
+            "package": "workspace-tools",
+            "commit": "12315421123165908ef94844b88c08e529850d90",
+            "comment": "Go back to transpiling to ES2021"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 18 Oct 2023 05:00:25 GMT",
       "version": "0.36.0",
       "tag": "workspace-tools_v0.36.0",
