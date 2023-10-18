@@ -1,6 +1,6 @@
 import path from "path";
 
-import { cleanupFixtures, setupFixture } from "workspace-tools-scripts/jest/setupFixture";
+import { cleanupFixtures, setupFixture } from "@ws-tools/scripts/jest/setupFixture";
 import { getWorkspaceManagerAndRoot } from "../workspaces/implementations";
 import { getYarnWorkspaces, getYarnWorkspacesAsync } from "../workspaces/implementations/yarn";
 import { getPnpmWorkspaces, getPnpmWorkspacesAsync } from "../workspaces/implementations/pnpm";

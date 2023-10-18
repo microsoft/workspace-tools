@@ -1,4 +1,4 @@
-import { cleanupFixtures, setupFixture } from "workspace-tools-scripts/jest/setupFixture";
+import { cleanupFixtures, setupFixture } from "@ws-tools/scripts/jest/setupFixture";
 import { getWorkspaceRoot } from "../workspaces/getWorkspaceRoot";
 
 describe("getWorkspaceRoot", () => {
