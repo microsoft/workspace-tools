@@ -2,6 +2,35 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Wed, 18 Oct 2023 06:44:38 GMT",
+      "version": "0.36.2",
+      "tag": "workspace-tools_v0.36.2",
+      "comments": {
+        "none": [
+          {
+            "author": "elcraig@microsoft.com",
+            "package": "workspace-tools",
+            "commit": "4a42b4e5a83f4260a10d7c592a2f0bd674874b2d",
+            "comment": "Rename monorepo and scripts package to use `@ws-tools` scope"
+          }
+        ],
+        "patch": [
+          {
+            "author": "elcraig@microsoft.com",
+            "package": "workspace-tools",
+            "commit": "f77ed5b628d2b22faa4eee58cfa374a83fd35109",
+            "comment": "Go back to transpiling to ES2020"
+          },
+          {
+            "author": "elcraig@microsoft.com",
+            "package": "workspace-tools",
+            "commit": "628a3a440ab5c5221397b1e21d090f7dcb86ef4a",
+            "comment": "Use trimEnd instead of trimRight"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 18 Oct 2023 05:45:05 GMT",
       "version": "0.36.1",
       "tag": "workspace-tools_v0.36.1",

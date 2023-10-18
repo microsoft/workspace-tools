@@ -2,6 +2,29 @@
   "name": "@ws-tools/grapher",
   "entries": [
     {
+      "date": "Wed, 18 Oct 2023 06:44:38 GMT",
+      "version": "0.2.2",
+      "tag": "@ws-tools/grapher_v0.2.2",
+      "comments": {
+        "none": [
+          {
+            "author": "elcraig@microsoft.com",
+            "package": "@ws-tools/grapher",
+            "commit": "4a42b4e5a83f4260a10d7c592a2f0bd674874b2d",
+            "comment": "Rename monorepo and scripts package to use `@ws-tools` scope"
+          }
+        ],
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@ws-tools/grapher",
+            "comment": "Bump workspace-tools to v0.36.2",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 18 Oct 2023 05:45:05 GMT",
       "version": "0.2.1",
       "tag": "@ws-tools/grapher_v0.2.1",

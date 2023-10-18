@@ -1,8 +1,17 @@
 # Change Log - workspace-tools
 
-This log was last generated on Wed, 18 Oct 2023 05:45:05 GMT and should not be manually modified.
+This log was last generated on Wed, 18 Oct 2023 06:44:38 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.36.2
+
+Wed, 18 Oct 2023 06:44:38 GMT
+
+### Patches
+
+- Go back to transpiling to ES2020 (elcraig@microsoft.com)
+- Use trimEnd instead of trimRight (elcraig@microsoft.com)
 
 ## 0.36.1
 
