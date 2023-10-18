@@ -2,6 +2,21 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Wed, 18 Oct 2023 04:16:22 GMT",
+      "version": "0.35.3",
+      "tag": "workspace-tools_v0.35.3",
+      "comments": {
+        "patch": [
+          {
+            "author": "elcraig@microsoft.com",
+            "package": "workspace-tools",
+            "commit": "3c2f57e7297c08a98c1cd00d8383aa94591e2496",
+            "comment": "getRecentCommitMessages: filter out empty lines"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 05 Sep 2023 21:12:43 GMT",
       "version": "0.35.2",
       "tag": "workspace-tools_v0.35.2",
