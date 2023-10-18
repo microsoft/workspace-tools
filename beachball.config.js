@@ -1,7 +1,8 @@
 // @ts-check
 
 const { spawnSync } = require("child_process");
-const { getUnstagedChanges, git, stageAndCommit } = require("workspace-tools");
+const fs = require("fs");
+const { getUnstagedChanges } = require("workspace-tools");
 
 /** @type {import('beachball').BeachballConfig} */
 const config = {
@@ -11,7 +12,7 @@ const config = {
   scope: ["!**/__fixtures__/**"],
   ignorePatterns: ["**/jest.config.js", "**/src/__fixtures__/**", "**/src/__tests__/**"],
   hooks: {
-    postpublish: (packagePath, name) => {
+    postbump: (packagePath, name) => {
       if (name !== "workspace-tools") {
         return;
       }
@@ -21,15 +22,17 @@ const config = {
         return;
       }
 
-      console.log('Running "yarn --force" to update workspace-tools resolutions');
-      spawnSync("yarn", ["--force", "--ignore-scripts"], { stdio: "inherit" });
+      let yarnLock = fs.readFileSync("yarn.lock", "utf-8");
+      const wsToolsMatch = yarnLock.match(/.*workspace-tools@npm:workspace-tools@latest[\s\S]+?\n\n/);
+      if (wsToolsMatch) {
+        console.log("Removing workspace-tools entry from yarn.lock");
+        yarnLock = yarnLock.replace(wsToolsMatch[0], "");
+        fs.writeFileSync("yarn.lock", yarnLock);
 
-      if (getUnstagedChanges(process.cwd()).includes("yarn.lock")) {
-        console.log("Committing and pushing yarn.lock changes");
-        stageAndCommit(["yarn.lock"], "Update workspace-tools resolutions", process.cwd());
-        git(["push", "--no-verify", "--verbose", "origin", "HEAD:master"]);
+        console.log("Running yarn to update workspace-tools resolutions");
+        spawnSync("yarn", ["--ignore-scripts"], { stdio: "inherit" });
       } else {
-        console.log("No changes to yarn.lock");
+        console.warn("Didn't find a yarn.lock entry for workspace-tools resolutions in expected format");
       }
     },
   },
