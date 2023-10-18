@@ -20,7 +20,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "commander": "^10.0.1",
+    "commander": "^11.1.0",
     "workspace-tools": "^0.35.3"
   },
   "devDependencies": {
