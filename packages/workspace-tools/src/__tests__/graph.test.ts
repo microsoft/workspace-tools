@@ -10,12 +10,10 @@ describe("createPackageGraph", () => {
     };
 
     const actual = createPackageGraph(allPackages, { namePatterns: [], includeDependencies: true });
-    expect(actual).toMatchInlineSnapshot(`
-      {
-        "dependencies": [],
-        "packages": [],
-      }
-    `);
+    expect(actual).toEqual({
+      dependencies: [],
+      packages: [],
+    });
   });
 
   it("can exclude peer dependencies", () => {
@@ -32,25 +30,13 @@ describe("createPackageGraph", () => {
       withDevDependencies: true,
       withPeerDependencies: false,
     });
-    expect(actual).toMatchInlineSnapshot(`
-      {
-        "dependencies": [
-          {
-            "dependency": "c",
-            "name": "b",
-          },
-          {
-            "dependency": "d",
-            "name": "b",
-          },
-        ],
-        "packages": [
-          "b",
-          "c",
-          "d",
-        ],
-      }
-    `);
+    expect(actual).toEqual({
+      dependencies: [
+        { dependency: "c", name: "b" },
+        { dependency: "d", name: "b" },
+      ],
+      packages: ["b", "c", "d"],
+    });
   });
 
   it("can exclude development dependencies", () => {
@@ -65,20 +51,10 @@ describe("createPackageGraph", () => {
       includeDependencies: true,
       withDevDependencies: false,
     });
-    expect(actual).toMatchInlineSnapshot(`
-      {
-        "dependencies": [
-          {
-            "dependency": "c",
-            "name": "b",
-          },
-        ],
-        "packages": [
-          "b",
-          "c",
-        ],
-      }
-    `);
+    expect(actual).toEqual({
+      dependencies: [{ dependency: "c", name: "b" }],
+      packages: ["b", "c"],
+    });
   });
 
   it("returns the name patterns when includeDependencies & includeDependents are set to false", () => {
@@ -89,15 +65,10 @@ describe("createPackageGraph", () => {
     };
 
     const actual = createPackageGraph(allPackages, { namePatterns: ["a", "b"] });
-    expect(actual).toMatchInlineSnapshot(`
-      {
-        "dependencies": [],
-        "packages": [
-          "b",
-          "a",
-        ],
-      }
-    `);
+    expect(actual).toEqual({
+      dependencies: [],
+      packages: ["b", "a"],
+    });
   });
 
   it("provides the entire graph if scope is not provided", () => {
@@ -108,25 +79,13 @@ describe("createPackageGraph", () => {
     };
 
     const actual = createPackageGraph(allPackages);
-    expect(actual).toMatchInlineSnapshot(`
-      {
-        "dependencies": [
-          {
-            "dependency": "c",
-            "name": "b",
-          },
-          {
-            "dependency": "b",
-            "name": "a",
-          },
-        ],
-        "packages": [
-          "c",
-          "b",
-          "a",
-        ],
-      }
-    `);
+    expect(actual).toEqual({
+      dependencies: [
+        { dependency: "c", name: "b" },
+        { dependency: "b", name: "a" },
+      ],
+      packages: ["c", "b", "a"],
+    });
   });
 
   it("does not repeat packages & edges when the same filter is provided twice", () => {
@@ -152,30 +111,14 @@ describe("createPackageGraph", () => {
         includeDependents: true,
       },
     ]);
-    expect(actual).toMatchInlineSnapshot(`
-      {
-        "dependencies": [
-          {
-            "dependency": "e",
-            "name": "b",
-          },
-          {
-            "dependency": "e",
-            "name": "c",
-          },
-          {
-            "dependency": "b",
-            "name": "i",
-          },
-        ],
-        "packages": [
-          "e",
-          "b",
-          "c",
-          "i",
-        ],
-      }
-    `);
+    expect(actual).toEqual({
+      dependencies: [
+        { dependency: "e", name: "b" },
+        { dependency: "e", name: "c" },
+        { dependency: "b", name: "i" },
+      ],
+      packages: ["e", "b", "c", "i"],
+    });
   });
 
   it("can get take multiple filters as an UNION of the two filters", () => {
@@ -201,45 +144,17 @@ describe("createPackageGraph", () => {
         includeDependencies: true,
       },
     ]);
-    expect(actual).toMatchInlineSnapshot(`
-      {
-        "dependencies": [
-          {
-            "dependency": "e",
-            "name": "b",
-          },
-          {
-            "dependency": "e",
-            "name": "c",
-          },
-          {
-            "dependency": "b",
-            "name": "i",
-          },
-          {
-            "dependency": "f",
-            "name": "e",
-          },
-          {
-            "dependency": "h",
-            "name": "e",
-          },
-          {
-            "dependency": "j",
-            "name": "h",
-          },
-        ],
-        "packages": [
-          "e",
-          "b",
-          "c",
-          "i",
-          "f",
-          "h",
-          "j",
-        ],
-      }
-    `);
+    expect(actual).toEqual({
+      dependencies: [
+        { dependency: "e", name: "b" },
+        { dependency: "e", name: "c" },
+        { dependency: "b", name: "i" },
+        { dependency: "f", name: "e" },
+        { dependency: "h", name: "e" },
+        { dependency: "j", name: "h" },
+      ],
+      packages: ["e", "b", "c", "i", "f", "h", "j"],
+    });
   });
 
   it("can get dependencies and dependents for multiple name patterns", () => {
@@ -260,59 +175,20 @@ describe("createPackageGraph", () => {
       includeDependencies: true,
       includeDependents: true,
     });
-    expect(actual).toMatchInlineSnapshot(`
-      {
-        "dependencies": [
-          {
-            "dependency": "e",
-            "name": "c",
-          },
-          {
-            "dependency": "f",
-            "name": "e",
-          },
-          {
-            "dependency": "h",
-            "name": "e",
-          },
-          {
-            "dependency": "e",
-            "name": "b",
-          },
-          {
-            "dependency": "d",
-            "name": "b",
-          },
-          {
-            "dependency": "b",
-            "name": "i",
-          },
-          {
-            "dependency": "f",
-            "name": "d",
-          },
-          {
-            "dependency": "d",
-            "name": "a",
-          },
-          {
-            "dependency": "j",
-            "name": "h",
-          },
-        ],
-        "packages": [
-          "c",
-          "e",
-          "f",
-          "h",
-          "b",
-          "d",
-          "i",
-          "a",
-          "j",
-        ],
-      }
-    `);
+    expect(actual).toEqual({
+      dependencies: [
+        { dependency: "e", name: "c" },
+        { dependency: "f", name: "e" },
+        { dependency: "h", name: "e" },
+        { dependency: "e", name: "b" },
+        { dependency: "d", name: "b" },
+        { dependency: "b", name: "i" },
+        { dependency: "f", name: "d" },
+        { dependency: "d", name: "a" },
+        { dependency: "j", name: "h" },
+      ],
+      packages: ["c", "e", "f", "h", "b", "d", "i", "a", "j"],
+    });
   });
 
   it("can get dependencies and dependents for a name pattern", () => {
@@ -335,30 +211,14 @@ describe("createPackageGraph", () => {
       includeDependents: false,
     });
 
-    expect(actual).toMatchInlineSnapshot(`
-      {
-        "dependencies": [
-          {
-            "dependency": "f",
-            "name": "e",
-          },
-          {
-            "dependency": "h",
-            "name": "e",
-          },
-          {
-            "dependency": "j",
-            "name": "h",
-          },
-        ],
-        "packages": [
-          "e",
-          "f",
-          "h",
-          "j",
-        ],
-      }
-    `);
+    expect(actual).toEqual({
+      dependencies: [
+        { dependency: "f", name: "e" },
+        { dependency: "h", name: "e" },
+        { dependency: "j", name: "h" },
+      ],
+      packages: ["e", "f", "h", "j"],
+    });
   });
 
   it("can get direct dependencies", () => {
@@ -369,20 +229,10 @@ describe("createPackageGraph", () => {
     };
 
     const actual = createPackageGraph(allPackages, { namePatterns: ["b"], includeDependencies: true });
-    expect(actual).toMatchInlineSnapshot(`
-      {
-        "dependencies": [
-          {
-            "dependency": "c",
-            "name": "b",
-          },
-        ],
-        "packages": [
-          "b",
-          "c",
-        ],
-      }
-    `);
+    expect(actual).toEqual({
+      dependencies: [{ dependency: "c", name: "b" }],
+      packages: ["b", "c"],
+    });
   });
 
   it("can get direct dependents", () => {
@@ -393,20 +243,10 @@ describe("createPackageGraph", () => {
     };
 
     const actual = createPackageGraph(allPackages, { namePatterns: ["b"], includeDependents: true });
-    expect(actual).toMatchInlineSnapshot(`
-      {
-        "dependencies": [
-          {
-            "dependency": "b",
-            "name": "a",
-          },
-        ],
-        "packages": [
-          "b",
-          "a",
-        ],
-      }
-    `);
+    expect(actual).toEqual({
+      dependencies: [{ dependency: "b", name: "a" }],
+      packages: ["b", "a"],
+    });
   });
 
   it("can get linear dependencies", () => {
@@ -417,25 +257,13 @@ describe("createPackageGraph", () => {
     };
 
     const actual = createPackageGraph(allPackages, { namePatterns: ["a"], includeDependencies: true });
-    expect(actual).toMatchInlineSnapshot(`
-      {
-        "dependencies": [
-          {
-            "dependency": "b",
-            "name": "a",
-          },
-          {
-            "dependency": "c",
-            "name": "b",
-          },
-        ],
-        "packages": [
-          "a",
-          "b",
-          "c",
-        ],
-      }
-    `);
+    expect(actual).toEqual({
+      dependencies: [
+        { dependency: "b", name: "a" },
+        { dependency: "c", name: "b" },
+      ],
+      packages: ["a", "b", "c"],
+    });
   });
 
   it("can get linear dependents", () => {
@@ -447,25 +275,13 @@ describe("createPackageGraph", () => {
 
     const actual = createPackageGraph(allPackages, { namePatterns: ["c"], includeDependents: true });
 
-    expect(actual).toMatchInlineSnapshot(`
-      {
-        "dependencies": [
-          {
-            "dependency": "c",
-            "name": "b",
-          },
-          {
-            "dependency": "b",
-            "name": "a",
-          },
-        ],
-        "packages": [
-          "c",
-          "b",
-          "a",
-        ],
-      }
-    `);
+    expect(actual).toEqual({
+      dependencies: [
+        { dependency: "c", name: "b" },
+        { dependency: "b", name: "a" },
+      ],
+      packages: ["c", "b", "a"],
+    });
   });
   it("can get dependencies for multiple patterns given", () => {
     const allPackages = {
@@ -476,30 +292,14 @@ describe("createPackageGraph", () => {
     };
 
     const actual = createPackageGraph(allPackages, { namePatterns: ["a", "b"], includeDependencies: true });
-    expect(actual).toMatchInlineSnapshot(`
-      {
-        "dependencies": [
-          {
-            "dependency": "c",
-            "name": "b",
-          },
-          {
-            "dependency": "d",
-            "name": "b",
-          },
-          {
-            "dependency": "c",
-            "name": "a",
-          },
-        ],
-        "packages": [
-          "b",
-          "c",
-          "d",
-          "a",
-        ],
-      }
-    `);
+    expect(actual).toEqual({
+      dependencies: [
+        { dependency: "c", name: "b" },
+        { dependency: "d", name: "b" },
+        { dependency: "c", name: "a" },
+      ],
+      packages: ["b", "c", "d", "a"],
+    });
   });
 
   it("can get dependents for multiple patterns given", () => {
@@ -511,30 +311,14 @@ describe("createPackageGraph", () => {
     };
 
     const actual = createPackageGraph(allPackages, { namePatterns: ["c", "d"], includeDependents: true });
-    expect(actual).toMatchInlineSnapshot(`
-      {
-        "dependencies": [
-          {
-            "dependency": "d",
-            "name": "b",
-          },
-          {
-            "dependency": "c",
-            "name": "a",
-          },
-          {
-            "dependency": "c",
-            "name": "b",
-          },
-        ],
-        "packages": [
-          "d",
-          "b",
-          "c",
-          "a",
-        ],
-      }
-    `);
+    expect(actual).toEqual({
+      dependencies: [
+        { dependency: "d", name: "b" },
+        { dependency: "c", name: "a" },
+        { dependency: "c", name: "b" },
+      ],
+      packages: ["d", "b", "c", "a"],
+    });
   });
 
   it("can represent a graph with some nodes with no edges", () => {
@@ -546,16 +330,10 @@ describe("createPackageGraph", () => {
 
     const actual = createPackageGraph(allPackages);
 
-    expect(actual).toMatchInlineSnapshot(`
-      {
-        "dependencies": [],
-        "packages": [
-          "c",
-          "b",
-          "a",
-        ],
-      }
-    `);
+    expect(actual).toEqual({
+      dependencies: [],
+      packages: ["c", "b", "a"],
+    });
   });
 
   it("can represent a graph with some nodes with no edges", () => {
@@ -567,16 +345,10 @@ describe("createPackageGraph", () => {
 
     const actual = createPackageGraph(allPackages);
 
-    expect(actual).toMatchInlineSnapshot(`
-      {
-        "dependencies": [],
-        "packages": [
-          "c",
-          "b",
-          "a",
-        ],
-      }
-    `);
+    expect(actual).toEqual({
+      dependencies: [],
+      packages: ["c", "b", "a"],
+    });
   });
 
   it("will handle circular dependencies", () => {
@@ -588,29 +360,14 @@ describe("createPackageGraph", () => {
 
     const actual = createPackageGraph(allPackages, { namePatterns: ["a"], includeDependencies: true });
 
-    expect(actual).toMatchInlineSnapshot(`
-      {
-        "dependencies": [
-          {
-            "dependency": "b",
-            "name": "a",
-          },
-          {
-            "dependency": "c",
-            "name": "b",
-          },
-          {
-            "dependency": "a",
-            "name": "c",
-          },
-        ],
-        "packages": [
-          "a",
-          "b",
-          "c",
-        ],
-      }
-    `);
+    expect(actual).toEqual({
+      dependencies: [
+        { dependency: "b", name: "a" },
+        { dependency: "c", name: "b" },
+        { dependency: "a", name: "c" },
+      ],
+      packages: ["a", "b", "c"],
+    });
   });
 });
 
