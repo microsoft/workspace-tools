@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "type": "minor",
+      "comment": "Update to TypeScript to 5.2 and transpile to ES2022 syntax (Node 16+). Dependencies requiring Node 16 may also be introduced after this point.",
+      "packageName": "workspace-tools",
+      "email": "elcraig@microsoft.com",
+      "dependentChangeType": "patch"
+    }
+  ]
+}

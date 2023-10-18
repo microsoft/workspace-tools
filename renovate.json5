@@ -20,8 +20,8 @@
     "github>microsoft/m365-renovate-config:groupMore",
     // Group @types updates
     "github>microsoft/m365-renovate-config:groupTypes",
-    // Don't update beyond Node 14
-    "github>microsoft/m365-renovate-config:restrictNode(14)"
+    // Don't update beyond Node 16
+    "github>microsoft/m365-renovate-config:restrictNode(16)"
   ],
 
   "ignorePaths": [
@@ -39,6 +39,8 @@
 
   "reviewers": ["ecraig12345", "kenotron"],
   "reviewersSampleSize": 1,
+
+  "semanticCommits": "disabled",
 
   "regexManagers": [
     {
