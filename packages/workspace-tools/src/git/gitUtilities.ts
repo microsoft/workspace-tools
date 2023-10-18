@@ -94,9 +94,9 @@ export function getRecentCommitMessages(branch: string, cwd: string) {
     }
 
     return results.stdout
-      .trim()
       .split(/\n/)
-      .map((line) => line.trim());
+      .map((line) => line.trim())
+      .filter((line) => !!line);
   } catch (e) {
     throw new GitError(`Cannot gather information about recent commits`, e);
   }
