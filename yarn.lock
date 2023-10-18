@@ -2886,7 +2886,7 @@ which@^2.0.1:
   dependencies:
     isexe "^2.0.0"
 
-workspace-tools@^0.35.0, "workspace-tools@npm:workspace-tools@0.36.1":
+workspace-tools@^0.35.0, "workspace-tools@npm:workspace-tools@latest":
   version "0.36.1"
   resolved "https://registry.yarnpkg.com/workspace-tools/-/workspace-tools-0.36.1.tgz#d40aba09312b9c60b11ce3784c64adcc87fc6fe3"
   integrity sha512-cpg+uIoQ2BCmpo9DXlGJeJF4XvrKXbNhQRJkuwe+KJJ/ZOM4pa195wMgkA1eBv9L987GS4f2SRO9WaOAIRdV8Q==
