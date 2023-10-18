@@ -1,8 +1,17 @@
 # Change Log - @ws-tools/grapher
 
-This log was last generated on Wed, 18 Oct 2023 04:16:22 GMT and should not be manually modified.
+This log was last generated on Wed, 18 Oct 2023 05:00:25 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.2.0
+
+Wed, 18 Oct 2023 05:00:25 GMT
+
+### Minor changes
+
+- Update dependency commander to v11 (requires Node 16) (email not defined)
+- Bump workspace-tools to v0.36.0
 
 ## 0.1.6
 

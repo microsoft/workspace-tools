@@ -2,6 +2,21 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Wed, 18 Oct 2023 05:00:25 GMT",
+      "version": "0.36.0",
+      "tag": "workspace-tools_v0.36.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "elcraig@microsoft.com",
+            "package": "workspace-tools",
+            "commit": "e21de7290a2d75c0056f7b93df9120e6413751eb",
+            "comment": "Update to TypeScript to 5.2 and transpile to ES2022 syntax (Node 16+). Dependencies requiring Node 16 may also be introduced after this point."
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 18 Oct 2023 04:16:22 GMT",
       "version": "0.35.3",
       "tag": "workspace-tools_v0.35.3",

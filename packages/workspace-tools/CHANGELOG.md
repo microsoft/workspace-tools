@@ -1,8 +1,16 @@
 # Change Log - workspace-tools
 
-This log was last generated on Wed, 18 Oct 2023 04:16:22 GMT and should not be manually modified.
+This log was last generated on Wed, 18 Oct 2023 05:00:25 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.36.0
+
+Wed, 18 Oct 2023 05:00:25 GMT
+
+### Minor changes
+
+- Update to TypeScript to 5.2 and transpile to ES2022 syntax (Node 16+). Dependencies requiring Node 16 may also be introduced after this point. (elcraig@microsoft.com)
 
 ## 0.35.3
 
