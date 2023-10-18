@@ -1,7 +1,7 @@
 import path from "path";
 import fs from "fs";
 
-import { cleanupFixtures, setupFixture, setupLocalRemote } from "workspace-tools-scripts/jest/setupFixture";
+import { cleanupFixtures, setupFixture, setupLocalRemote } from "@ws-tools/scripts/jest/setupFixture";
 import { stageAndCommit, git } from "../git";
 import { getChangedPackages, getChangedPackagesBetweenRefs } from "../workspaces/getChangedPackages";
 

@@ -1,4 +1,4 @@
-import { setupFixture } from "workspace-tools-scripts/jest/setupFixture";
+import { setupFixture } from "@ws-tools/scripts/jest/setupFixture";
 import { parseLockFile, queryLockFile, ParsedLock } from "..";
 
 /**

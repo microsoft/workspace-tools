@@ -1,1 +1,1 @@
-module.exports = require("workspace-tools-scripts/jest/jest.config");
+module.exports = require("@ws-tools/scripts/jest/jest.config");
