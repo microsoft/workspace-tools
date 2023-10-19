@@ -47,10 +47,5 @@
     "ts-jest": "^29.1.0",
     "typedoc": "^0.25.2",
     "typescript": "~5.2.2"
-  },
-  "resolutions": {
-    "**/beachball/workspace-tools": "npm:workspace-tools@latest",
-    "**/lage/workspace-tools": "npm:workspace-tools@latest",
-    "**/lage/**/workspace-tools": "npm:workspace-tools@latest"
   }
 }

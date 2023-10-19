@@ -15,13 +15,23 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
+
       - name: Install Node.js
         uses: actions/setup-node@v3
         with:
           node-version-file: .nvmrc
+
       - run: yarn --frozen-lockfile
-      - run: yarn checkchange
+
       - run: yarn format:check
+
       - run: yarn build
+
+      # checkchange must come after build in case beachball ends up using the local workspace-tools
+      # (this will happen when beachball depends on a workspace-tools version which is compatible
+      # with the local version)
+      - run: yarn checkchange
+
       - run: yarn build:docs
+
       - run: yarn test
