@@ -38,6 +38,35 @@ describe("getScopedPackages", () => {
     expect(results).not.toContain("baz");
   });
 
+  it("matches the correct packages when search pattern starts with @, irrespective of case", () => {
+    const results = getScopedPackages(
+      ["@i-love/theavettbrothers"],
+      [
+        "@i-love/theavettbrothers",
+        "@i-love/THEAVETTBROTHERS",
+        "@i-love/TheAvettBrothers",
+        "theAvettBrothers",
+        "@i-love/JimmyEatWorld",
+      ]
+    );
+    expect(results).toContain("@i-love/theavettbrothers");
+    expect(results).toContain("@i-love/THEAVETTBROTHERS");
+    expect(results).toContain("@i-love/TheAvettBrothers");
+    expect(results).not.toContain("theAvettBrothers");
+    expect(results).not.toContain("@i-love/JimmyEatWorld");
+  });
+
+  it("matches the correct package, irrespective of case", () => {
+    const results = getScopedPackages(
+      ["ilovetheavettbrothers"],
+      ["ilovetheavettbrothers", "ILOVETHEAVETTBROTHERS", "iLoveTheAvettBrothers", "IDoNotLoveTaylorSwift"]
+    );
+    expect(results).toContain("ilovetheavettbrothers");
+    expect(results).toContain("ILOVETHEAVETTBROTHERS");
+    expect(results).toContain("iLoveTheAvettBrothers");
+    expect(results).not.toContain("IDoNotLoveTaylorSwift");
+  });
+
   it("can match with npm package scopes", () => {
     const results = getScopedPackages(["foo"], ["@yay/foo", "@yay1/foo", "foo", "baz"]);
     expect(results).toContain("@yay/foo");
@@ -83,3 +112,5 @@ describe("getScopedPackages", () => {
     expect(results).not.toContain("baz");
   });
 });
+
+// cspell:ignore ilovetheavettbrothers, theavettbrothers
