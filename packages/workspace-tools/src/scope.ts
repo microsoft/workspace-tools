@@ -12,7 +12,7 @@ export function getScopedPackages(search: string[], packages: { [pkg: string]: u
   // perform a package-scoped search (e.g. search is @scope/foo*)
   const scopedSearch = search.filter((needle) => needle.startsWith("@") || needle.startsWith("!@"));
   if (scopedSearch.length > 0) {
-    const matched = micromatch(packageNames, scopedSearch);
+    const matched = micromatch(packageNames, scopedSearch, { nocase: true });
     for (const pkg of matched) {
       results.add(pkg);
     }
@@ -24,7 +24,7 @@ export function getScopedPackages(search: string[], packages: { [pkg: string]: u
     // only generate the bare package map if there ARE unscoped searches
     const barePackageMap = generateBarePackageMap(packageNames);
 
-    let matched = micromatch(Object.keys(barePackageMap), unscopedSearch);
+    let matched = micromatch(Object.keys(barePackageMap), unscopedSearch, { nocase: true });
     for (const bare of matched) {
       for (const pkg of barePackageMap[bare]) {
         results.add(pkg);
