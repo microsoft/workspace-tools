@@ -1,8 +1,16 @@
 # Change Log - workspace-tools
 
-This log was last generated on Wed, 18 Oct 2023 22:14:54 GMT and should not be manually modified.
+This log was last generated on Mon, 11 Dec 2023 23:58:13 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.36.4
+
+Mon, 11 Dec 2023 23:58:13 GMT
+
+### Patches
+
+- Support case-insensitive package name match (stchur@microsoft.com)
 
 ## 0.36.3
 

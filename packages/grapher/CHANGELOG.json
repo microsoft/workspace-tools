@@ -2,6 +2,21 @@
   "name": "@ws-tools/grapher",
   "entries": [
     {
+      "date": "Mon, 11 Dec 2023 23:58:13 GMT",
+      "version": "0.2.4",
+      "tag": "@ws-tools/grapher_v0.2.4",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@ws-tools/grapher",
+            "comment": "Bump workspace-tools to v0.36.4",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 18 Oct 2023 22:14:54 GMT",
       "version": "0.2.3",
       "tag": "@ws-tools/grapher_v0.2.3",
