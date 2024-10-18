@@ -1,5 +1,44 @@
 import { PackageInfo } from "../types/PackageInfo";
 import { createPackageGraph } from "../graph";
+import { getPackageDependencies } from "../graph/getPackageDependencies";
+
+describe("getPackageDependencies", () => {
+  it("returns the dependencies of a package", () => {
+    const allPackages = {
+      a: stubPackageWithSpecs("a", { b: "*", c: "*" }),
+      b: stubPackageWithSpecs("b", { c: "*" }),
+      c: stubPackageWithSpecs("c"),
+    };
+
+    const deps = getPackageDependencies(allPackages.a, new Set(Object.keys(allPackages)));
+
+    expect(deps).toEqual(["b", "c"]);
+  });
+
+  it("returns the dependencies of a package, but one of these are from npm registry", () => {
+    const allPackages = {
+      a: stubPackageWithSpecs("a", { b: "npm:1.0.0", c: "*" }),
+      b: stubPackageWithSpecs("b", { c: "*" }),
+      c: stubPackageWithSpecs("c"),
+    };
+
+    const deps = getPackageDependencies(allPackages.a, new Set(Object.keys(allPackages)));
+
+    expect(deps).toEqual(["c"]);
+  });
+
+  it("returns the dependencies of a package, but one of these are from local file", () => {
+    const allPackages = {
+      a: stubPackageWithSpecs("a", { b: "file:///somewhere", c: "*" }),
+      b: stubPackageWithSpecs("b", { c: "*" }),
+      c: stubPackageWithSpecs("c"),
+    };
+
+    const deps = getPackageDependencies(allPackages.a, new Set(Object.keys(allPackages)));
+
+    expect(deps).toEqual(["c"]);
+  });
+});
 
 describe("createPackageGraph", () => {
   it("namePatterns is an empty array", () => {
@@ -336,21 +375,6 @@ describe("createPackageGraph", () => {
     });
   });
 
-  it("can represent a graph with some nodes with no edges", () => {
-    const allPackages = {
-      a: stubPackage("a"),
-      b: stubPackage("b"),
-      c: stubPackage("c"),
-    };
-
-    const actual = createPackageGraph(allPackages);
-
-    expect(actual).toEqual({
-      dependencies: [],
-      packages: ["c", "b", "a"],
-    });
-  });
-
   it("will handle circular dependencies", () => {
     const allPackages = {
       a: stubPackage("a", ["b"]),
@@ -359,12 +383,28 @@ describe("createPackageGraph", () => {
     };
 
     const actual = createPackageGraph(allPackages, { namePatterns: ["a"], includeDependencies: true });
-
-    expect(actual).toEqual({
+    expect(actual).toMatchObject({
       dependencies: [
-        { dependency: "b", name: "a" },
-        { dependency: "c", name: "b" },
-        { dependency: "a", name: "c" },
+        { name: "a", dependency: "b" },
+        { name: "b", dependency: "c" },
+        { name: "c", dependency: "a" },
+      ],
+      packages: ["a", "b", "c"],
+    });
+  });
+
+  it("will handle npm: dependencies when avoiding circular dependencies", () => {
+    const allPackages = {
+      a: stubPackage("a", ["b"]),
+      b: stubPackage("b", ["c"]),
+      c: stubPackageWithSpecs("c", { a: "npm:1.0.0" }),
+    };
+
+    const actual = createPackageGraph(allPackages, { namePatterns: ["a"], includeDependencies: true });
+    expect(actual).toMatchObject({
+      dependencies: [
+        { name: "a", dependency: "b" },
+        { name: "b", dependency: "c" },
       ],
       packages: ["a", "b", "c"],
     });
@@ -379,5 +419,21 @@ function stubPackage(name: string, deps: string[] = [], devDeps: string[] = [], 
     dependencies: deps.reduce((depMap, dep) => ({ ...depMap, [dep]: "*" }), {}),
     devDependencies: devDeps.reduce((depMap, dep) => ({ ...depMap, [dep]: "*" }), {}),
     peerDependencies: peerDeps.reduce((depMap, dep) => ({ ...depMap, [dep]: "*" }), {}),
+  } as PackageInfo;
+}
+
+function stubPackageWithSpecs(
+  name: string,
+  deps: { [s: string]: string } = {},
+  devDeps: { [s: string]: string } = {},
+  peerDeps: { [s: string]: string } = {}
+) {
+  return {
+    name,
+    packageJsonPath: `packages/${name}`,
+    version: "1.0",
+    dependencies: Object.entries(deps).reduce((depMap, [dep, spec]) => ({ ...depMap, [dep]: spec }), {}),
+    devDependencies: Object.entries(devDeps).reduce((depMap, [dep, spec]) => ({ ...depMap, [dep]: spec }), {}),
+    peerDependencies: Object.entries(peerDeps).reduce((depMap, [dep, spec]) => ({ ...depMap, [dep]: spec }), {}),
   } as PackageInfo;
 }

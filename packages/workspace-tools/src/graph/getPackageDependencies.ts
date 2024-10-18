@@ -1,8 +1,20 @@
-import { PackageInfo, PackageInfos } from "../types/PackageInfo";
+import { PackageInfo } from "../types/PackageInfo";
 
 export interface PackageDependenciesOptions {
   withDevDependencies?: boolean;
   withPeerDependencies?: boolean;
+}
+
+function isValidDependency(info: PackageInfo, dep: string): boolean {
+  // check if the dependency range is specified by an external package like npm: or file:
+  const range = info.dependencies?.[dep] || info.devDependencies?.[dep] || info.peerDependencies?.[dep];
+
+  // this case should not happen by this point, but we will handle it anyway
+  if (!range) {
+    return false;
+  }
+
+  return !range.startsWith("npm:") && !range.startsWith("file:");
 }
 
 export function getPackageDependencies(
@@ -36,5 +48,7 @@ export function getPackageDependencies(
     }
   }
 
-  return deps;
+  const filteredDeps = deps.filter((dep) => isValidDependency(info, dep));
+
+  return filteredDeps;
 }
