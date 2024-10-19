@@ -2,6 +2,21 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Sat, 19 Oct 2024 08:01:45 GMT",
+      "version": "0.37.0",
+      "tag": "workspace-tools_v0.37.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "kchau@microsoft.com",
+            "package": "workspace-tools",
+            "commit": "6024b0684238faaa0d8566d294050b367d0407c7",
+            "comment": "fixing graph generation to skip non-internal packages based on the protocol"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 11 Dec 2023 23:58:13 GMT",
       "version": "0.36.4",
       "tag": "workspace-tools_v0.36.4",
