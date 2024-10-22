@@ -3,11 +3,12 @@ import { PackageInfo } from "../types/PackageInfo";
 export interface PackageDependenciesOptions {
   withDevDependencies?: boolean;
   withPeerDependencies?: boolean;
+  withOptionalDependencies?: boolean;
 }
 
 function isValidDependency(info: PackageInfo, dep: string): boolean {
   // check if the dependency range is specified by an external package like npm: or file:
-  const range = info.dependencies?.[dep] || info.devDependencies?.[dep] || info.peerDependencies?.[dep];
+  const range = info.dependencies?.[dep] || info.devDependencies?.[dep] || info.peerDependencies?.[dep] || info.optionalDependencies?.[dep];
 
   // this case should not happen by this point, but we will handle it anyway
   if (!range) {
@@ -42,6 +43,14 @@ export function getPackageDependencies(
 
   if (info.peerDependencies && options.withPeerDependencies) {
     for (const dep of Object.keys(info.peerDependencies)) {
+      if (dep !== info.name && packages.has(dep)) {
+        deps.push(dep);
+      }
+    }
+  }
+
+  if (info.optionalDependencies && options.withOptionalDependencies) {
+    for (const dep of Object.keys(info.optionalDependencies)) {
       if (dep !== info.name && packages.has(dep)) {
         deps.push(dep);
       }
