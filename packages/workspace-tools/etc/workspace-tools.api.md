@@ -361,6 +361,8 @@ export interface PackageGraphFilter {
     // (undocumented)
     withDevDependencies?: boolean;
     // (undocumented)
+    withOptionalDependencies?: boolean;
+    // (undocumented)
     withPeerDependencies?: boolean;
 }
 

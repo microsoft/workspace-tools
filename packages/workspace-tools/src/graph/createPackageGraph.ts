@@ -12,6 +12,7 @@ export interface PackageGraphFilter {
   includeDependents?: boolean;
   withDevDependencies?: boolean;
   withPeerDependencies?: boolean;
+  withOptionalDependencies?: boolean;
 }
 
 /** Package graph visitor is called as it visits every package in dependency order */
@@ -23,17 +24,14 @@ export function createPackageGraph(
   packages: PackageInfos,
   filters?: PackageGraphFilter[] | PackageGraphFilter
 ): PackageGraph {
-  /** set of packages being accumulated as the graph is filtered */
+  /** Set of packages being accumulated as the graph is filtered */
   const packageSet = new Set<string>();
 
-  /** array of package names & its dependency being accumulated as the graph is filtered */
+  /** Array of package names & its dependencies being accumulated as the graph is filtered */
   const edges: PackageGraph["dependencies"] = [];
 
   const edgeKeys: Set<string> = new Set();
-  let dependencyMapWithPeerDevDeps: DependencyMap | undefined = undefined;
-  let dependencyMapWithPeerDeps: DependencyMap | undefined = undefined;
-  let dependencyMapWithDevDeps: DependencyMap | undefined = undefined;
-  let dependencyMapWithoutPeerDevDeps: DependencyMap | undefined = undefined;
+  const dependencyMapCache = new Map<string, DependencyMap>();
 
   function visitorForFilter(
     filter: PackageGraphFilter | undefined,
@@ -85,30 +83,34 @@ export function createPackageGraph(
 
   return { packages: [...packageSet], dependencies: edges };
 
-  /** calculates a key, for looking up whether an edge is already added */
+  /** Calculates a key for checking if an edge is already added */
   function edgeKey(name: string, dependency: string) {
     return `${name}->${dependency}`;
   }
 
-  /** gets the dependencyMap for a filter - with or without devDeps */
+  /** Gets the dependencyMap for a filter, using a cache based on filter options */
   function getDependencyMapForFilter(packages: PackageInfos, filter?: PackageGraphFilter) {
+    const cacheKey = getCacheKeyForFilter(filter);
+    if (!dependencyMapCache.has(cacheKey)) {
+      const dependencyMap = createDependencyMap(packages, filter);
+      dependencyMapCache.set(cacheKey, dependencyMap);
+    }
+    return dependencyMapCache.get(cacheKey)!;
+  }
+
+  /** Generates a cache key based on the filter options */
+  function getCacheKeyForFilter(filter?: PackageGraphFilter): string {
     if (!filter) {
-      return createDependencyMap(packages);
+      return "default";
     }
-    if (filter.withDevDependencies && filter.withPeerDependencies) {
-      dependencyMapWithPeerDevDeps ??= createDependencyMap(packages, filter);
-      return dependencyMapWithPeerDevDeps;
-    }
-    if (filter.withDevDependencies && !filter.withPeerDependencies) {
-      dependencyMapWithDevDeps ??= createDependencyMap(packages, filter);
-      return dependencyMapWithDevDeps;
-    }
-    if (!filter.withDevDependencies && filter.withPeerDependencies) {
-      dependencyMapWithPeerDeps ??= createDependencyMap(packages, filter);
-      return dependencyMapWithPeerDeps;
-    }
-    dependencyMapWithoutPeerDevDeps ??= createDependencyMap(packages, filter);
-    return dependencyMapWithoutPeerDevDeps;
+    const options = [
+      filter.withDevDependencies ? "dev" : "",
+      filter.withPeerDependencies ? "peer" : "",
+      filter.withOptionalDependencies ? "optional" : "",
+    ]
+      .filter(Boolean)
+      .join("_");
+    return options || "prod";
   }
 }
 
