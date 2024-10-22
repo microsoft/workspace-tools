@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "type": "minor",
+      "comment": "adding optional dependency filtering",
+      "packageName": "workspace-tools",
+      "email": "nemanjatesic@microsoft.com",
+      "dependentChangeType": "patch"
+    }
+  ]
+}
