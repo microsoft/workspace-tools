@@ -8,7 +8,11 @@ export interface PackageDependenciesOptions {
 
 function isValidDependency(info: PackageInfo, dep: string): boolean {
   // check if the dependency range is specified by an external package like npm: or file:
-  const range = info.dependencies?.[dep] || info.devDependencies?.[dep] || info.peerDependencies?.[dep] || info.optionalDependencies?.[dep];
+  const range =
+    info.dependencies?.[dep] ||
+    info.devDependencies?.[dep] ||
+    info.peerDependencies?.[dep] ||
+    info.optionalDependencies?.[dep];
 
   // this case should not happen by this point, but we will handle it anyway
   if (!range) {
