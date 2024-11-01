@@ -5,6 +5,7 @@ export interface PackageInfo {
   dependencies?: { [dep: string]: string };
   devDependencies?: { [dep: string]: string };
   peerDependencies?: { [dep: string]: string };
+  optionalDependencies?: { [dep: string]: string };
   private?: boolean;
   group?: string;
   scripts?: { [scriptName: string]: string };

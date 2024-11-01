@@ -38,6 +38,36 @@ describe("getPackageDependencies", () => {
 
     expect(deps).toEqual(["c"]);
   });
+
+  it("returns the dependencies of a package including optional dependencies", () => {
+    const allPackages = {
+      a: stubPackage("a", ["b"], [], [], ["d"]),
+      b: stubPackage("b", ["c"]),
+      c: stubPackage("c"),
+      d: stubPackage("d"),
+    };
+
+    const deps = getPackageDependencies(allPackages.a, new Set(Object.keys(allPackages)), {
+      withOptionalDependencies: true,
+    });
+
+    expect(deps).toEqual(["b", "d"]);
+  });
+
+  it("returns the dependencies of a package excluding optional dependencies when specified", () => {
+    const allPackages = {
+      a: stubPackage("a", ["b"], [], [], ["d"]),
+      b: stubPackage("b", ["c"]),
+      c: stubPackage("c"),
+      d: stubPackage("d"),
+    };
+
+    const deps = getPackageDependencies(allPackages.a, new Set(Object.keys(allPackages)), {
+      withOptionalDependencies: false,
+    });
+
+    expect(deps).toEqual(["b"]);
+  });
 });
 
 describe("createPackageGraph", () => {
@@ -409,9 +439,80 @@ describe("createPackageGraph", () => {
       packages: ["a", "b", "c"],
     });
   });
+
+  it("can include optional dependencies in the package graph", () => {
+    const allPackages = {
+      a: stubPackage("a", ["b"], [], [], ["e"]),
+      b: stubPackage("b", ["c"]),
+      c: stubPackage("c"),
+      e: stubPackage("e"),
+    };
+
+    const actual = createPackageGraph(allPackages, {
+      namePatterns: ["a"],
+      includeDependencies: true,
+      withOptionalDependencies: true,
+    });
+
+    expect(actual).toEqual({
+      dependencies: [
+        { name: "a", dependency: "b" },
+        { name: "a", dependency: "e" },
+        { name: "b", dependency: "c" },
+      ],
+      packages: ["a", "b", "e", "c"],
+    });
+  });
+
+  it("can exclude optional dependencies from the package graph", () => {
+    const allPackages = {
+      a: stubPackage("a", ["b"], [], [], ["e"]),
+      b: stubPackage("b", ["c"]),
+      c: stubPackage("c"),
+      e: stubPackage("e"),
+    };
+
+    const actual = createPackageGraph(allPackages, {
+      namePatterns: ["a"],
+      includeDependencies: true,
+      withOptionalDependencies: false,
+    });
+
+    expect(actual).toEqual({
+      dependencies: [
+        { name: "a", dependency: "b" },
+        { name: "b", dependency: "c" },
+      ],
+      packages: ["a", "b", "c"],
+    });
+  });
+
+  it("handles packages with only optional dependencies", () => {
+    const allPackages = {
+      a: stubPackage("a", [], [], [], ["b"]),
+      b: stubPackage("b"),
+    };
+
+    const actual = createPackageGraph(allPackages, {
+      namePatterns: ["a"],
+      includeDependencies: true,
+      withOptionalDependencies: true,
+    });
+
+    expect(actual).toEqual({
+      dependencies: [{ name: "a", dependency: "b" }],
+      packages: ["a", "b"],
+    });
+  });
 });
 
-function stubPackage(name: string, deps: string[] = [], devDeps: string[] = [], peerDeps: string[] = []) {
+function stubPackage(
+  name: string,
+  deps: string[] = [],
+  devDeps: string[] = [],
+  peerDeps: string[] = [],
+  optionalDeps: string[] = []
+) {
   return {
     name,
     packageJsonPath: `packages/${name}`,
@@ -419,6 +520,7 @@ function stubPackage(name: string, deps: string[] = [], devDeps: string[] = [], 
     dependencies: deps.reduce((depMap, dep) => ({ ...depMap, [dep]: "*" }), {}),
     devDependencies: devDeps.reduce((depMap, dep) => ({ ...depMap, [dep]: "*" }), {}),
     peerDependencies: peerDeps.reduce((depMap, dep) => ({ ...depMap, [dep]: "*" }), {}),
+    optionalDependencies: optionalDeps.reduce((depMap, dep) => ({ ...depMap, [dep]: "*" }), {}),
   } as PackageInfo;
 }
 
@@ -426,7 +528,8 @@ function stubPackageWithSpecs(
   name: string,
   deps: { [s: string]: string } = {},
   devDeps: { [s: string]: string } = {},
-  peerDeps: { [s: string]: string } = {}
+  peerDeps: { [s: string]: string } = {},
+  optionalDeps: { [s: string]: string } = {}
 ) {
   return {
     name,
@@ -435,5 +538,9 @@ function stubPackageWithSpecs(
     dependencies: Object.entries(deps).reduce((depMap, [dep, spec]) => ({ ...depMap, [dep]: spec }), {}),
     devDependencies: Object.entries(devDeps).reduce((depMap, [dep, spec]) => ({ ...depMap, [dep]: spec }), {}),
     peerDependencies: Object.entries(peerDeps).reduce((depMap, [dep, spec]) => ({ ...depMap, [dep]: spec }), {}),
+    optionalDependencies: Object.entries(optionalDeps).reduce(
+      (depMap, [dep, spec]) => ({ ...depMap, [dep]: spec }),
+      {}
+    ),
   } as PackageInfo;
 }

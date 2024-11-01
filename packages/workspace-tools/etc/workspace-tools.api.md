@@ -329,6 +329,8 @@ interface PackageDependenciesOptions {
     // (undocumented)
     withDevDependencies?: boolean;
     // (undocumented)
+    withOptionalDependencies?: boolean;
+    // (undocumented)
     withPeerDependencies?: boolean;
 }
 
@@ -359,6 +361,8 @@ export interface PackageGraphFilter {
     // (undocumented)
     withDevDependencies?: boolean;
     // (undocumented)
+    withOptionalDependencies?: boolean;
+    // (undocumented)
     withPeerDependencies?: boolean;
 }
 
@@ -378,6 +382,10 @@ export interface PackageInfo {
     group?: string;
     // (undocumented)
     name: string;
+    // (undocumented)
+    optionalDependencies?: {
+        [dep: string]: string;
+    };
     // (undocumented)
     packageJsonPath: string;
     // (undocumented)
