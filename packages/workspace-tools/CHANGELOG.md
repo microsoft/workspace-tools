@@ -1,8 +1,16 @@
 # Change Log - workspace-tools
 
-This log was last generated on Sat, 19 Oct 2024 08:01:45 GMT and should not be manually modified.
+This log was last generated on Sat, 02 Nov 2024 08:01:50 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.38.0
+
+Sat, 02 Nov 2024 08:01:50 GMT
+
+### Minor changes
+
+- adding optional dependency filtering (nemanjatesic@microsoft.com)
 
 ## 0.37.0
 

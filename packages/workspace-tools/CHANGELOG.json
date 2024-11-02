@@ -2,6 +2,21 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Sat, 02 Nov 2024 08:01:50 GMT",
+      "version": "0.38.0",
+      "tag": "workspace-tools_v0.38.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "nemanjatesic@microsoft.com",
+            "package": "workspace-tools",
+            "commit": "8d904666766d7fa961b61896592cc72c352e907e",
+            "comment": "adding optional dependency filtering"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 19 Oct 2024 08:01:45 GMT",
       "version": "0.37.0",
       "tag": "workspace-tools_v0.37.0",
