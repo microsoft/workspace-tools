@@ -289,7 +289,7 @@ function processGitOutput(output: GitProcessOutput) {
   if (output.stderr) {
     throw new Error(output.stderr);
   }
-  
+
   if (!output.success) {
     return [];
   }
