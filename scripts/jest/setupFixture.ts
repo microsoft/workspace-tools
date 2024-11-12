@@ -84,6 +84,7 @@ export function setupLocalRemote(cwd: string, remoteName: string, fixtureName?: 
   const remoteCwd = setupFixture(fixtureName);
   const remoteUrl = remoteCwd.replace(/\\/g, "/");
   basicGit(["remote", "add", remoteName, remoteUrl], { cwd });
+  basicGit(["config", "pull.rebase", "false"], { cwd });
   basicGit(["pull", "-X", "ours", "origin", "main", "--allow-unrelated-histories"], { cwd });
   // Configure url in package.json
   setupPackageJson(cwd, { repository: { url: remoteUrl, type: "git" } });
