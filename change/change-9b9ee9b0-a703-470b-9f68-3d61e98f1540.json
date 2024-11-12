@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "type": "patch",
+      "comment": "processGitOutput should throw when stderr is defined",
+      "packageName": "workspace-tools",
+      "email": "email not defined",
+      "dependentChangeType": "patch"
+    }
+  ]
+}

@@ -287,6 +287,9 @@ export function listAllTrackedFiles(patterns: string[], cwd: string) {
 
 function processGitOutput(output: GitProcessOutput) {
   if (!output.success) {
+    if (output.stderr) {
+      throw new Error(output.stderr);
+    }
     return [];
   }
 
