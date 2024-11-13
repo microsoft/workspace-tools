@@ -1,8 +1,16 @@
 # Change Log - workspace-tools
 
-This log was last generated on Sat, 02 Nov 2024 08:01:50 GMT and should not be manually modified.
+This log was last generated on Wed, 13 Nov 2024 08:01:48 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.38.1
+
+Wed, 13 Nov 2024 08:01:48 GMT
+
+### Patches
+
+- processGitOutput should throw when stderr is defined (email not defined)
 
 ## 0.38.0
 

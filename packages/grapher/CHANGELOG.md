@@ -1,8 +1,16 @@
 # Change Log - @ws-tools/grapher
 
-This log was last generated on Sat, 02 Nov 2024 08:01:50 GMT and should not be manually modified.
+This log was last generated on Wed, 13 Nov 2024 08:01:48 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.2.7
+
+Wed, 13 Nov 2024 08:01:48 GMT
+
+### Patches
+
+- Bump workspace-tools to v0.38.1
 
 ## 0.2.6
 
