@@ -1,6 +1,7 @@
 {
   "$schema": "https://typedoc.org/schema.json",
   "entryPointStrategy": "packages",
-  "entryPoints": ["packages/*"],
-  "name": "workspace-tools"
+  // "entryPoints": ["packages/*"],
+  "name": "workspace-tools",
+  "logLevel": "Verbose"
 }
