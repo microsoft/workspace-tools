@@ -2878,6 +2878,19 @@ which@^2.0.1:
   dependencies:
     isexe "^2.0.0"
 
+workspace-tools@^0.36.3:
+  version "0.36.4"
+  resolved "https://registry.yarnpkg.com/workspace-tools/-/workspace-tools-0.36.4.tgz#57504c687569785148c5b7ef1470dadc9be970c5"
+  integrity sha512-v0UFVvw9BjHtRu2Dau5PEJKkuG8u4jPlpXZQWjSz9XgbSutpPURqtO2P0hp3cVmQVATh8lkMFCewFgJuDnyC/w==
+  dependencies:
+    "@yarnpkg/lockfile" "^1.1.0"
+    fast-glob "^3.3.1"
+    git-url-parse "^13.0.0"
+    globby "^11.0.0"
+    jju "^1.4.0"
+    js-yaml "^4.1.0"
+    micromatch "^4.0.0"
+
 wrap-ansi@^7.0.0:
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/wrap-ansi/-/wrap-ansi-7.0.0.tgz#67e145cff510a6a6984bdf1152911d69d2eb9e43"
