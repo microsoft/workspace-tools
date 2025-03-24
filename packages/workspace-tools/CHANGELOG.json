@@ -2,6 +2,21 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Mon, 24 Mar 2025 21:48:16 GMT",
+      "version": "0.38.2",
+      "tag": "workspace-tools_v0.38.2",
+      "comments": {
+        "patch": [
+          {
+            "author": "rsiemens@microsoft.com",
+            "package": "workspace-tools",
+            "commit": "fb38907ad9d71e51346ffa4b5e5b88312251a05a",
+            "comment": "Limit git rev-list to one result"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 13 Nov 2024 08:01:48 GMT",
       "version": "0.38.1",
       "tag": "workspace-tools_v0.38.1",

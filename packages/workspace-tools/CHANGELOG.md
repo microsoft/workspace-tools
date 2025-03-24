@@ -1,8 +1,16 @@
 # Change Log - workspace-tools
 
-This log was last generated on Wed, 13 Nov 2024 08:01:48 GMT and should not be manually modified.
+This log was last generated on Mon, 24 Mar 2025 21:48:16 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.38.2
+
+Mon, 24 Mar 2025 21:48:16 GMT
+
+### Patches
+
+- Limit git rev-list to one result (rsiemens@microsoft.com)
 
 ## 0.38.1
 
