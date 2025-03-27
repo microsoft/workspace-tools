@@ -45,7 +45,7 @@
   "packageRules": [
     {
       "groupName": "workspace-tools resolutions",
-      "matchPackagePatterns": [".*workspace-tools$"],
+      "matchPackageNames": ["/.*workspace-tools$/"],
       "dependencyDashboardApproval": false
     }
   ]
