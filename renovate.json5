@@ -1,25 +1,52 @@
+// Available options:
+// https://docs.renovatebot.com/configuration-options/
+
+// NOTE: Renovate only allows comments in .json5 files, but this isn't well-supported by
+// Prettier + VS Code. Workaround is to configure tools to treat the file as JSONC
+// (in .prettierrc and .vscode/settings.json).
 {
-  $schema: "https://docs.renovatebot.com/renovate-schema.json",
-  extends: [
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+
+  "extends": [
+    // Basic recommended config + generate change files
     "github>microsoft/m365-renovate-config:beachballLibraryRecommended",
+    // Auto-merge PRs only affecting @types devDependencies
     "github>microsoft/m365-renovate-config:automergeTypes",
+    // Disable updating to package versions that are converted to ESM
     "github>microsoft/m365-renovate-config:disableEsmVersions",
+    // Dedupe after updates, and periodically re-create the entire lock file so all deps are updated to latest
     "github>microsoft/m365-renovate-config:keepFresh",
+    // Group various related updates
     "github>microsoft/m365-renovate-config:groupMore",
+    // Group @types updates
     "github>microsoft/m365-renovate-config:groupTypes",
-    "github>microsoft/m365-renovate-config:restrictNode(16)",
+    // Don't update beyond Node 16
+    "github>microsoft/m365-renovate-config:restrictNode(16)"
   ],
-  ignorePaths: ["**/node_modules/**", "**/__fixtures__/**"],
-  labels: ["renovate"],
-  prHourlyLimit: 5,
-  reviewers: ["ecraig12345", "kenotron"],
-  reviewersSampleSize: 1,
-  semanticCommits: "disabled",
-  packageRules: [
+
+  "ignorePaths": [
+    "**/node_modules/**",
+    // Renovate tends to use the wrong manager version on the fixtures, and they don't need to be
+    // updated often (really only when one of the deps has a security issue)
+    "**/__fixtures__/**"
+  ],
+
+  // Use this label on all PRs
+  "labels": ["renovate"],
+
+  // Limit 5 PRs per hour (could be changed later based on preference)
+  "prHourlyLimit": 5,
+
+  "reviewers": ["ecraig12345", "kenotron"],
+  "reviewersSampleSize": 1,
+
+  "semanticCommits": "disabled",
+
+  "packageRules": [
     {
-      groupName: "workspace-tools resolutions",
-      dependencyDashboardApproval: false,
-      matchPackageNames: ["/.*workspace-tools$/"],
-    },
-  ],
+      "groupName": "workspace-tools resolutions",
+      "matchPackageNames": ["/.*workspace-tools$/"],
+      "dependencyDashboardApproval": false
+    }
+  ]
 }
