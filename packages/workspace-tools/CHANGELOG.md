@@ -1,8 +1,16 @@
 # Change Log - workspace-tools
 
-This log was last generated on Mon, 24 Mar 2025 21:48:16 GMT and should not be manually modified.
+<!-- This log was last generated on Mon, 14 Apr 2025 22:35:08 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.38.3
+
+Mon, 14 Apr 2025 22:35:08 GMT
+
+### Patches
+
+- Export getPackageDependencies (elcraig@microsoft.com)
 
 ## 0.38.2
 

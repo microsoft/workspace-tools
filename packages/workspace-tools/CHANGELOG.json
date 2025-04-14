@@ -2,6 +2,21 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Mon, 14 Apr 2025 22:35:08 GMT",
+      "version": "0.38.3",
+      "tag": "workspace-tools_v0.38.3",
+      "comments": {
+        "patch": [
+          {
+            "author": "elcraig@microsoft.com",
+            "package": "workspace-tools",
+            "commit": "3ce65136f3ec0f9db7ad2cab87be80327b67b1b8",
+            "comment": "Export getPackageDependencies"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 24 Mar 2025 21:48:16 GMT",
       "version": "0.38.2",
       "tag": "workspace-tools_v0.38.2",
