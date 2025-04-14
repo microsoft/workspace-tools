@@ -31,8 +31,6 @@ export function clearGitObservers(): void;
 // @public (undocumented)
 export function commit(message: string, cwd: string, options?: string[]): void;
 
-// Warning: (ae-forgotten-export) The symbol "PackageDependenciesOptions" needs to be exported by the entry point index.d.ts
-//
 // @public (undocumented)
 export function createDependencyMap(packages: PackageInfos, options?: PackageDependenciesOptions): DependencyMap;
 
@@ -133,13 +131,11 @@ export function getFileAddedHash(filename: string, cwd: string): string | undefi
 // @public (undocumented)
 export function getFullBranchRef(branch: string, cwd: string): string | null;
 
-// Warning: (ae-forgotten-export) The symbol "getPackageDependencies" needs to be exported by the entry point index.d.ts
-//
 // @public @deprecated (undocumented)
 export const getInternalDeps: typeof getPackageDependencies;
 
 // @public (undocumented)
-function getPackageDependencies(info: PackageInfo, packages: Set<string>, options?: PackageDependenciesOptions): string[];
+export function getPackageDependencies(info: PackageInfo, packages: Set<string>, options?: PackageDependenciesOptions): string[];
 
 // @public (undocumented)
 export function getPackageInfos(cwd: string): PackageInfos;
@@ -325,7 +321,7 @@ export interface NpmWorkspacesInfo {
 }
 
 // @public (undocumented)
-interface PackageDependenciesOptions {
+export interface PackageDependenciesOptions {
     // (undocumented)
     withDevDependencies?: boolean;
     // (undocumented)

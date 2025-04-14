@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "comment": "Export getPackageDependencies",
+      "type": "patch",
+      "packageName": "workspace-tools",
+      "email": "elcraig@microsoft.com",
+      "dependentChangeType": "patch"
+    }
+  ]
+}
