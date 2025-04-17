@@ -1,8 +1,17 @@
 # Change Log - workspace-tools
 
-<!-- This log was last generated on Mon, 14 Apr 2025 22:35:08 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 17 Apr 2025 02:50:51 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.38.4
+
+Thu, 17 Apr 2025 02:50:51 GMT
+
+### Patches
+
+- Update `git-url-parse` to v16, and modify `getRepositoryName` URL checks. There's a slight chance this could change behavior for less-common URL formats. (elcraig@microsoft.com)
+- Update `git()` to always set `shell: false` and validate that the `--upload-pack` option is not provided (elcraig@microsoft.com)
 
 ## 0.38.3
 

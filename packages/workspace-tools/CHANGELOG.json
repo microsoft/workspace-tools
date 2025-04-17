@@ -2,6 +2,27 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Thu, 17 Apr 2025 02:50:51 GMT",
+      "version": "0.38.4",
+      "tag": "workspace-tools_v0.38.4",
+      "comments": {
+        "patch": [
+          {
+            "author": "elcraig@microsoft.com",
+            "package": "workspace-tools",
+            "commit": "a8a0d4470f39138d0aea114394fb0b5e2ce5a162",
+            "comment": "Update `git-url-parse` to v16, and modify `getRepositoryName` URL checks. There's a slight chance this could change behavior for less-common URL formats."
+          },
+          {
+            "author": "elcraig@microsoft.com",
+            "package": "workspace-tools",
+            "commit": "a8a0d4470f39138d0aea114394fb0b5e2ce5a162",
+            "comment": "Update `git()` to always set `shell: false` and validate that the `--upload-pack` option is not provided"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 14 Apr 2025 22:35:08 GMT",
       "version": "0.38.3",
       "tag": "workspace-tools_v0.38.3",
