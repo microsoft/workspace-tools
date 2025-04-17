@@ -68,6 +68,11 @@ function removeGitObserver(observer: GitObserver) {
  */
 export function git(args: string[], options?: SpawnSyncOptions): GitProcessOutput {
   isDebug && console.log(`git ${args.join(" ")}`);
+  if (args.some((arg) => arg.startsWith("--upload-pack"))) {
+    // This is a security issue and not needed for any expected usage of this library.
+    throw new GitError("git command contains --upload-pack, which is not allowed: " + args.join(" "));
+  }
+
   const results = spawnSync("git", args, { maxBuffer: defaultMaxBuffer, ...options, shell: false });
 
   const output: GitProcessOutput = {
