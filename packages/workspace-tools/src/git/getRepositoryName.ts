@@ -26,8 +26,7 @@ export function getRepositoryName(url: string) {
     // `host` is set in `parse-url` but not documented... https://github.com/IonicaBizau/parse-url/blob/c830d48647f33c054745a916cf7c4c58722f4b25/src/index.js#L28
     const host: string = (parsedUrl as any).host || "";
     const isVSO = host.endsWith(".visualstudio.com");
-    const isADO = host.endsWith("dev.azure.com");
-    if (!isVSO && !isADO) {
+    if (!isVSO && host !== "dev.azure.com" && host !== "ssh.dev.azure.com") {
       return parsedUrl.full_name;
     }
 
