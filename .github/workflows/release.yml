@@ -8,8 +8,17 @@ on:
   # or on manual trigger
   workflow_dispatch:
 
-permissions:
-  contents: write
+permissions: {}
+
+# Only run one release at a time to avoid duplicate attempts to publish particular versions.
+# To avoid backups after multiple pushes in rapid succession, the prerelease job below emulates
+# batching (which github actions don't support) by skipping the release job if a newer run is pending.
+#
+# (There's an option "cancel-in-progress" to cancel in-progress workflows upon a new request, but
+# that's not safe because it could potentially cause a job to be cancelled in the middle of the
+# actual npm publish step, leaving things in an inconsistent state.)
+concurrency:
+  group: release-${{ github.ref }}
 
 jobs:
   build:
@@ -21,7 +30,6 @@ jobs:
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
-          fetch-depth: 0
           # Don't save creds in the git config (so it's easier to override later)
           persist-credentials: false
 
@@ -33,6 +41,7 @@ jobs:
       - run: yarn --frozen-lockfile
 
       - run: yarn build
+      - run: yarn build:docs
 
       - run: yarn test
 
@@ -53,13 +62,27 @@ jobs:
           NPM_AUTHTOKEN: ${{ secrets.NPM_AUTHTOKEN }}
           REPO_PAT: ${{ secrets.REPO_PAT }}
 
-      - name: Update docs
-        run: |
-          # See previous step for explanation
-          trap "git remote set-url origin '$(git remote get-url origin)'" EXIT
-          git remote set-url origin "https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY"
+      - name: Upload docs artifact
+        uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3
+        with:
+          path: docs
 
-          yarn release:docs
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NODE_DEBUG: gh-pages
+  deploy:
+    name: Deploy to GitHub Pages
+    needs: build
+
+    # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
+    permissions:
+      pages: write # to deploy to Pages
+      id-token: write # to verify the deployment originates from an appropriate source
+
+    # Deploy to the github-pages environment
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4
