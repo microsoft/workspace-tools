@@ -21,12 +21,12 @@ export function getRepositoryName(url: string) {
     // https://dev.azure.com/foo/bar/_git/_optimized/some-repo
     // https://user@dev.azure.com/foo/bar/_git/some-repo
     // git@ssh.dev.azure.com:v3/foo/bar/some-repo
-    let fixedUrl = url.replace("/_optimized/", "/").replace("/DefaultCollection/", "/");
-    const parsedUrl = gitUrlParse(fixedUrl);
+    const parsedUrl = gitUrlParse(url.replace("/_optimized/", "/").replace("/DefaultCollection/", "/"));
 
-    const isVSO = fixedUrl.includes(".visualstudio.com");
-    const isADO = fixedUrl.includes("dev.azure.com");
-    if (!isVSO && !isADO) {
+    // `host` is set in `parse-url` but not documented... https://github.com/IonicaBizau/parse-url/blob/c830d48647f33c054745a916cf7c4c58722f4b25/src/index.js#L28
+    const host: string = (parsedUrl as any).host || "";
+    const isVSO = host.endsWith(".visualstudio.com");
+    if (!isVSO && host !== "dev.azure.com" && host !== "ssh.dev.azure.com") {
       return parsedUrl.full_name;
     }
 
@@ -43,7 +43,7 @@ export function getRepositoryName(url: string) {
     let organization: string | undefined = parsedUrl.organization;
     if (!organization && isVSO) {
       // organization is missing or wrong for VSO
-      organization = parsedUrl.resource.match(/([^.@]+)\.visualstudio\.com/)?.[1];
+      organization = host.match(/([^.@]+)\.visualstudio\.com$/)?.[1];
     }
     return `${organization}/${parsedUrl.owner}/${parsedUrl.name}`;
   } catch (err) {

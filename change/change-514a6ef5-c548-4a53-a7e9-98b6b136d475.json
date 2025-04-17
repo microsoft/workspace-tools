@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "type": "patch",
+      "comment": "Update `git-url-parse` to v16, and modify `getRepositoryName` URL checks. There's a slight chance this could change behavior for less-common URL formats.",
+      "packageName": "workspace-tools",
+      "email": "elcraig@microsoft.com",
+      "dependentChangeType": "patch"
+    }
+  ]
+}
