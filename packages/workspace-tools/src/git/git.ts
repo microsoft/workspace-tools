@@ -60,11 +60,15 @@ function removeGitObserver(observer: GitObserver) {
 }
 
 /**
- * Runs git command - use this for read-only commands
+ * Runs git command - use this for read-only commands.
+ * `gitFailFast` is recommended for commands that make changes to the filesystem.
+ *
+ * The caller is responsible for validating the input.
+ * `shell` will always be set to false.
  */
 export function git(args: string[], options?: SpawnSyncOptions): GitProcessOutput {
   isDebug && console.log(`git ${args.join(" ")}`);
-  const results = spawnSync("git", args, { maxBuffer: defaultMaxBuffer, ...options });
+  const results = spawnSync("git", args, { maxBuffer: defaultMaxBuffer, ...options, shell: false });
 
   const output: GitProcessOutput = {
     ...results,
@@ -93,7 +97,11 @@ export function git(args: string[], options?: SpawnSyncOptions): GitProcessOutpu
 }
 
 /**
- * Runs git command - use this for commands that make changes to the filesystem
+ * Runs git command and throws an error if it fails.
+ * Use this for commands that make changes to the filesystem.
+ *
+ * The caller is responsible for validating the input.
+ * `shell` will always be set to false.
  */
 export function gitFailFast(args: string[], options?: SpawnSyncOptions & { noExitCode?: boolean }) {
   const gitResult = git(args, options);
