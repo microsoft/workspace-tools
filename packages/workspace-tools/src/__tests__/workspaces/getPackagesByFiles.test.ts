@@ -2,7 +2,7 @@ import path from "path";
 import fs from "fs";
 
 import { cleanupFixtures, setupFixture } from "@ws-tools/scripts/jest/setupFixture";
-import { getPackagesByFiles } from "../workspaces/getPackagesByFiles";
+import { getPackagesByFiles } from "../../workspaces/getPackagesByFiles";
 
 describe("getPackagesByFiles", () => {
   afterAll(() => {

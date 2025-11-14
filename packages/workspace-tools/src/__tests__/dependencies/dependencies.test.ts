@@ -1,5 +1,5 @@
-import { PackageInfo } from "../types/PackageInfo";
-import { getTransitiveConsumers, getTransitiveProviders } from "../dependencies/index";
+import type { PackageInfo } from "../../types/PackageInfo";
+import { getTransitiveConsumers, getTransitiveProviders } from "../../dependencies/index";
 
 describe("getTransitiveConsumers", () => {
   it("can get linear transitive consumers", () => {

@@ -12,6 +12,10 @@
     {
       "packageName": "package-b",
       "projectFolder": "packages/package-b"
+    },
+    {
+      "packageName": "individual",
+      "projectFolder": "individual"
     }
   ]
 }

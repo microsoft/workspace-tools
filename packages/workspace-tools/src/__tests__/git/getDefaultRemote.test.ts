@@ -1,5 +1,5 @@
 import os from "os";
-import { gitFailFast, getDefaultRemote } from "../git";
+import { gitFailFast, getDefaultRemote } from "../../git/index";
 import { cleanupFixtures, setupFixture, setupPackageJson } from "@ws-tools/scripts/jest/setupFixture";
 
 describe("getDefaultRemote", () => {

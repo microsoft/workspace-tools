@@ -1,5 +1,5 @@
 import { getScopedPackages } from "../scope";
-import { PackageInfos } from "../types/PackageInfo";
+import type { PackageInfos } from "../types/PackageInfo";
 
 describe("getScopedPackages", () => {
   it("can match scopes for full matches for an array", () => {

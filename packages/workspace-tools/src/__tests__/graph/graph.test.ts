@@ -1,6 +1,6 @@
-import { PackageInfo } from "../types/PackageInfo";
-import { createPackageGraph } from "../graph";
-import { getPackageDependencies } from "../graph/getPackageDependencies";
+import type { PackageInfo } from "../../types/PackageInfo";
+import { createPackageGraph } from "../../graph/index";
+import { getPackageDependencies } from "../../graph/getPackageDependencies";
 
 describe("getPackageDependencies", () => {
   it("returns the dependencies of a package", () => {

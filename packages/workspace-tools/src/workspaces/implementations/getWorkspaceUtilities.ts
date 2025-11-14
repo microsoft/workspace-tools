@@ -27,7 +27,7 @@ export interface WorkspaceUtilities {
    * Get an array with names, paths, and package.json contents for each package ("workspace")
    * in a monorepo.
    */
-  getWorkspacesAsync?: (cwd: string) => Promise<WorkspaceInfos>;
+  getWorkspacesAsync: (cwd: string) => Promise<WorkspaceInfos>;
 }
 
 /**
