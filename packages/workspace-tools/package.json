@@ -14,7 +14,7 @@
   ],
   "scripts": {
     "api": "ws-tools-scripts api",
-    "build": "tsc",
+    "build": "tsc --pretty",
     "start": "tsc -w --preserveWatchOutput",
     "test": "jest"
   },
