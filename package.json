@@ -26,7 +26,7 @@
   "devDependencies": {
     "@microsoft/api-extractor": "7.52.9",
     "@types/fs-extra": "^11.0.0",
-    "@types/git-url-parse": "^9.0.1",
+    "@types/git-url-parse": "^16.0.0",
     "@types/jest": "^29.5.1",
     "@types/jju": "^1.4.2",
     "@types/js-yaml": "^4.0.5",
