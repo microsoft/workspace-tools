@@ -2,7 +2,7 @@ import fs from "fs-extra";
 import path from "path";
 import { setupFixture } from "@ws-tools/scripts/jest/setupFixture";
 import { parseLockFile } from "../../lockfile/index";
-import type { PackageInfo } from "../../types/PackageInfo";
+import { readPackageInfo } from "../../workspaces/readPackageInfo";
 
 const ERROR_MESSAGES = {
   NO_LOCK: "You do not have yarn.lock, pnpm-lock.yaml or package-lock.json. Please use one of these package managers.",
@@ -50,20 +50,29 @@ describe("parseLockFile()", () => {
       // Verify that __fixtures__/lage-yarn-* still follows these assumptions:
       // - "execa" is listed as a dep in package.json
       // - "@types/execa" is also listed as a dep, and internally has a dep on "execa@*"
-      const packageName = "execa";
-      const packageInfo = fs.readJSONSync(path.join(packageRoot, "package.json")) as PackageInfo;
-      expect(packageInfo.dependencies?.[packageName]).toBeTruthy();
-      expect(packageInfo.devDependencies?.[`@types/${packageName}`]).toBeTruthy();
+      const depName = "execa";
+      const packageInfo = readPackageInfo(packageRoot)!;
+      const depRange = packageInfo.dependencies?.[depName];
+      expect(depRange).toBeTruthy();
+      expect(packageInfo.devDependencies?.[`@types/${depName}`]).toBeTruthy();
+
+      const depSpec = `${depName}@${depRange}`;
+      const extraSpec = `${depName}@*`;
+      const combinedResolution = `${extraSpec}, ${depSpec}`;
+      const lockContent = fs.readFileSync(path.join(packageRoot, "yarn.lock"), "utf8");
+      // If this fails, an update to the fixture has probably resolved execa@* to a separate version.
+      // To fix, combine the resolutions in the lock file and re-run yarn.
+      expect(lockContent).toContain(yarnVersion === 1 ? combinedResolution : combinedResolution.replace(/@/g, "@npm:"));
 
       // The actual test: execa@* resolves to the same thing as execa@<specific version from package.json>
-      const expectedSpec = `${packageName}@*`;
       const parsedLockFile = await parseLockFile(packageRoot);
-      expect(parsedLockFile.object[expectedSpec]).toBeTruthy();
-      const otherSpecs = Object.entries(parsedLockFile.object).filter(
-        ([spec]) => spec.startsWith(`${packageName}@`) && spec !== expectedSpec
-      );
-      expect(otherSpecs.length).toBeGreaterThanOrEqual(1);
-      expect(otherSpecs).toContainEqual([expect.anything(), parsedLockFile.object[expectedSpec]]);
+      // Two separate entries
+      const resolvedDep = parsedLockFile.object[depSpec];
+      expect(resolvedDep).toBeTruthy();
+      const resolvedExtra = parsedLockFile.object[extraSpec];
+      expect(resolvedExtra).toBeTruthy();
+      // Resolved to the same version
+      expect(resolvedExtra).toEqual(resolvedDep);
     });
   });
 
@@ -72,11 +81,10 @@ describe("parseLockFile()", () => {
       const packageRoot = setupFixture("basic-pnpm");
       const parsedLockFile = await parseLockFile(packageRoot);
 
-      const yargs = Object.keys(parsedLockFile.object).find((key) => /^yargs@/.test(key));
-      // if either of these fails, check the actual lock file to verify the deps didn't change
-      // with renovate updates or something
-      expect(yargs).toBeTruthy();
-      expect(parsedLockFile.object[yargs!].dependencies?.["cliui"]).toBeTruthy();
+      // If the lock file is updated, you might need to switch to a different key and dependency
+      const which = Object.keys(parsedLockFile.object).find((key) => /^which@/.test(key));
+      expect(which).toBeTruthy();
+      expect(parsedLockFile.object[which!].dependencies?.["isexe"]).toBeTruthy();
     });
   });
 });

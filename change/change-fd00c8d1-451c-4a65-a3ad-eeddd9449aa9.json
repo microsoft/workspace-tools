@@ -1,0 +1,18 @@
+{
+  "changes": [
+    {
+      "type": "none",
+      "comment": "Use pretty tsc output",
+      "packageName": "@ws-tools/grapher",
+      "email": "elcraig@microsoft.com",
+      "dependentChangeType": "none"
+    },
+    {
+      "type": "none",
+      "comment": "Use pretty tsc output",
+      "packageName": "workspace-tools",
+      "email": "elcraig@microsoft.com",
+      "dependentChangeType": "none"
+    }
+  ]
+}

@@ -9,7 +9,7 @@ importers:
     dependencies:
       '@microsoft/task-scheduler': 2.7.1
     devDependencies:
-      typescript: 4.8.4
+      typescript: 4.9.5
 
   individual:
     specifiers: {}
@@ -29,7 +29,7 @@ packages:
     resolution: {integrity: sha512-xSmX7xgLTtf3LwVOW5HCEL4qrSWYCmPsVzpJ7PTBayN0KA9acScgsLYaDE6tE26N//DtDEW6mi4RteWU4XSrjA==}
     dependencies:
       memory-streams: 0.1.3
-      p-graph: 1.1.2
+      p-graph: 1.2.0
     dev: false
 
   /core-util-is/1.0.3:
@@ -56,8 +56,8 @@ packages:
       wrappy: 1.0.2
     dev: true
 
-  /p-graph/1.1.2:
-    resolution: {integrity: sha512-GnEEHrOMozk0hCjXBm011oYb3zpaOolxHgqL2s7Od2niGAJKyk/4FZ2VRUAgjqqqoQnZQtwkF6fjGDJkIQTjDQ==}
+  /p-graph/1.2.0:
+    resolution: {integrity: sha512-tJcm42n9DPoTKtt/m2/KAoSSVuFrxV+p32A+58mtt8ta7sjcUBcOTS7AIPpz2miqEpVNuDYjPzs+3lM/hJWAQQ==}
     dev: false
 
   /readable-stream/1.0.34:
@@ -73,8 +73,8 @@ packages:
     resolution: {integrity: sha512-ev2QzSzWPYmy9GuqfIVildA4OdcGLeFZQrq5ys6RtiuF+RQQiZWr8TZNyAcuVXyQRYfEO+MsoB/1BuQVhOJuoQ==}
     dev: false
 
-  /typescript/4.8.4:
-    resolution: {integrity: sha512-QCh+85mCy+h0IGff8r5XWzOVSbBO+KfeYrMQh7NJ58QujwcE22u+NUSmUxqF+un70P9GXKxa2HCNiTTMJknyjQ==}
+  /typescript/4.9.5:
+    resolution: {integrity: sha512-1FXk9E2Hm+QzZQ7z+McJiHL4NW1F2EzMu9Nq9i3zAaGqibafqYwCVU6WyWAuyQRRzOlxou8xZSyXLEN8oKj24g==}
     engines: {node: '>=4.2.0'}
     hasBin: true
     dev: true
