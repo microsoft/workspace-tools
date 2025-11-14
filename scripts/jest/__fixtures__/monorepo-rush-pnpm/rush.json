@@ -6,6 +6,10 @@
 
   "projects": [
     {
+      "packageName": "individual",
+      "projectFolder": "individual"
+    },
+    {
       "packageName": "package-a",
       "projectFolder": "packages/package-a"
     },

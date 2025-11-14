@@ -11,6 +11,9 @@ importers:
     devDependencies:
       typescript: 4.8.4
 
+  individual:
+    specifiers: {}
+
   packages/package-a:
     specifiers: {}
 

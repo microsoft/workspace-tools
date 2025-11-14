@@ -1,5 +1,5 @@
 import { cleanupFixtures, setupFixture } from "@ws-tools/scripts/jest/setupFixture";
-import { getDefaultBranch, git } from "../git";
+import { getDefaultBranch, git } from "../../git/index";
 
 describe("getDefaultBranch()", () => {
   afterAll(() => {

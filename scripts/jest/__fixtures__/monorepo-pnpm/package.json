@@ -8,5 +8,8 @@
   },
   "devDependencies": {
     "typescript": "^4.0.0"
+  },
+  "engines": {
+    "pnpm": "7.x"
   }
 }

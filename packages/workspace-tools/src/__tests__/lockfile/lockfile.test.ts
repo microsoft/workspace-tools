@@ -1,8 +1,8 @@
 import fs from "fs-extra";
 import path from "path";
 import { setupFixture } from "@ws-tools/scripts/jest/setupFixture";
-import { parseLockFile } from "../lockfile";
-import { PackageInfo } from "../types/PackageInfo";
+import { parseLockFile } from "../../lockfile/index";
+import type { PackageInfo } from "../../types/PackageInfo";
 
 const ERROR_MESSAGES = {
   NO_LOCK: "You do not have yarn.lock, pnpm-lock.yaml or package-lock.json. Please use one of these package managers.",
@@ -34,20 +34,20 @@ describe("parseLockFile()", () => {
     });
   });
 
-  describe.each([1, 2] as const)("yarn %s", (yarnVersion) => {
-    const updatePath = (path: string) => (yarnVersion === 1 ? path : `${path}-2`);
+  describe.each([1, "berry"] as const)("yarn %s", (yarnVersion) => {
+    const updatePath = (path: string) => `${path}-${yarnVersion}`;
 
     it("parses yarn.lock file when it is found", async () => {
-      const packageRoot = setupFixture(updatePath("basic"));
+      const packageRoot = setupFixture(updatePath("basic-yarn"));
       const parsedLockFile = await parseLockFile(packageRoot);
 
       expect(parsedLockFile).toHaveProperty("type", "success");
     });
 
     it("parses combined ranges in yarn.lock", async () => {
-      const packageRoot = setupFixture(updatePath("basic-yarn"));
+      const packageRoot = setupFixture(updatePath("lage-yarn"));
 
-      // Verify that __fixtures__/basic-yarn still follows these assumptions:
+      // Verify that __fixtures__/lage-yarn-* still follows these assumptions:
       // - "execa" is listed as a dep in package.json
       // - "@types/execa" is also listed as a dep, and internally has a dep on "execa@*"
       const packageName = "execa";

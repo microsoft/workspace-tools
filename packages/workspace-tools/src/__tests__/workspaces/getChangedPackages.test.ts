@@ -1,9 +1,8 @@
 import path from "path";
 import fs from "fs";
-
 import { cleanupFixtures, setupFixture, setupLocalRemote } from "@ws-tools/scripts/jest/setupFixture";
-import { stageAndCommit, git } from "../git";
-import { getChangedPackages, getChangedPackagesBetweenRefs } from "../workspaces/getChangedPackages";
+import { stageAndCommit, git } from "../../git";
+import { getChangedPackages, getChangedPackagesBetweenRefs } from "../../workspaces/getChangedPackages";
 
 describe("getChangedPackages", () => {
   afterAll(() => {
@@ -134,7 +133,7 @@ describe("getChangedPackages", () => {
 
   it("can detect changes inside a file that has been committed in a different branch using default remote", () => {
     const root = setupFixture("monorepo");
-    setupLocalRemote(root, "origin", "basic");
+    setupLocalRemote(root, "origin", "basic-yarn-1");
 
     const newFile = path.join(root, "packages/package-a/footest.txt");
     fs.writeFileSync(newFile, "hello foo test");
