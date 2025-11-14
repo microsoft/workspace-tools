@@ -101,8 +101,16 @@ export function setupLocalRemote(cwd: string, remoteName: string, fixtureName?: 
   basicGit(["remote", "add", remoteName, remoteUrl], { cwd });
   basicGit(["config", "pull.rebase", "false"], { cwd });
   basicGit(["pull", "-X", "ours", "origin", "main", "--allow-unrelated-histories"], { cwd });
-  // Configure url in package.json
-  setupPackageJson(cwd, { repository: { url: remoteUrl, type: "git" } });
+
+  // Configure url in package.json (make the same commit in local and remote so there's no diff;
+  // note that we can't just commit locally and push since the remote isn't a bare repo)
+  for (const dir of [cwd, remoteCwd]) {
+    setupPackageJson(dir, { repository: { url: remoteUrl, type: "git" } });
+    basicGit(["commit", "-a", "-m", "update repository url"], { cwd: dir });
+  }
+
+  // Ensure remote is available for comparison
+  basicGit(["fetch", remoteName, "main"], { cwd });
 }
 
 /**

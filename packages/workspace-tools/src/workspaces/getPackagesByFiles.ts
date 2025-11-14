@@ -8,7 +8,7 @@ import { getWorkspaces } from "./getWorkspaces";
  * @param workspaceRoot - The root of the workspace
  * @param files - files to search for
  * @param ignoreGlobs - glob patterns to ignore
- * @param returnAllPackagesOnNoMatch - if true, will return all packages if no matches are found
+ * @param returnAllPackagesOnNoMatch - if true, will return all packages if no matches are found for any file
  * @returns package names that have changed
  */
 export function getPackagesByFiles(
@@ -29,7 +29,7 @@ export function getPackagesByFiles(
       (pkgPath) => file.indexOf(path.relative(workspaceRoot, pkgPath.path).replace(/\\/g, "/")) === 0
     );
 
-    if (candidates && candidates.length > 0) {
+    if (candidates.length) {
       const found = candidates.reduce((found, item) => {
         return found.path.length > item.path.length ? found : item;
       }, candidates[0]);

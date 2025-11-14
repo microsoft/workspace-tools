@@ -103,10 +103,10 @@ export function getCatalogVersion(params: {
 }): string | undefined;
 
 // @public
-export function getChangedPackages(cwd: string, target: string | undefined, ignoreGlobs?: string[]): string[];
+export function getChangedPackages(cwd: string, target: string | undefined, ignoreGlobs?: string[], returnAllPackagesOnNoMatch?: boolean): string[];
 
 // @public
-export function getChangedPackagesBetweenRefs(cwd: string, fromRef: string, toRef?: string, ignoreGlobs?: string[]): string[];
+export function getChangedPackagesBetweenRefs(cwd: string, fromRef: string, toRef?: string, ignoreGlobs?: string[], returnAllPackagesOnNoMatch?: boolean): string[];
 
 // @public
 export function getChanges(branch: string, cwd: string): string[];
