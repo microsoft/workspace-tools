@@ -9,6 +9,6 @@ module.exports = {
   cacheOptions: {
     // These are relative to the git root, and affects the hash of the cache
     // Any of these file changes will invalidate cache
-    environmentGlob: [".github/workflows/*", "*.js", "package.json"],
+    environmentGlob: [".github/workflows/*", "*.js", "package.json", "scripts", "yarn.lock"],
   },
 };
