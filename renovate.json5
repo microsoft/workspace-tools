@@ -55,6 +55,7 @@
     },
     {
       "matchManagers": ["github-actions"],
+      "matchUpdateTypes": ["major", "minor", "patch", "digest"],
       "groupName": "GitHub actions",
       "dependencyDashboardApproval": false
     }
