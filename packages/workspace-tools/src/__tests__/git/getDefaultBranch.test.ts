@@ -7,7 +7,7 @@ describe("getDefaultBranch()", () => {
   });
 
   it("is main or master in the default test repo", () => {
-    const cwd = setupFixture();
+    const cwd = setupFixture(undefined, { git: true });
 
     const branch = getDefaultBranch(cwd);
 
@@ -16,7 +16,7 @@ describe("getDefaultBranch()", () => {
   });
 
   it("is myMain when default branch is different", () => {
-    const cwd = setupFixture();
+    const cwd = setupFixture(undefined, { git: true });
     git(["config", "init.defaultBranch", "myMain"], { cwd });
 
     const branch = getDefaultBranch(cwd);

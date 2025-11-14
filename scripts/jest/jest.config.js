@@ -1,8 +1,9 @@
 /** @type {import('@jest/types').Config.InitialOptions} */
-module.exports = {
+const config = {
   roots: ["<rootDir>/src"],
   transform: {
-    "^.+\\.tsx?$": "ts-jest",
+    // Use ts-jest but disable type checking (superfluous)
+    "^.+\\.tsx?$": ["ts-jest", { tsconfig: { isolatedModules: true } }],
   },
   testRegex: "(/__tests__/.*(\\.|/)(test|spec))\\.tsx?$",
   moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
@@ -11,3 +12,4 @@ module.exports = {
   preset: "ts-jest",
   setupFilesAfterEnv: [require.resolve("./setupTests.ts")],
 };
+module.exports = config;

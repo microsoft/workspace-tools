@@ -35,7 +35,7 @@ describe("getDefaultRemote", () => {
   });
 
   it("handles no package.json at git root", () => {
-    cwd = setupFixture();
+    cwd = setupFixture(undefined, { git: true });
     expect(getDefaultRemote({ cwd, verbose: true })).toBe("origin");
     expectConsole(1, /Could not read .*package\.json/);
 
@@ -43,7 +43,7 @@ describe("getDefaultRemote", () => {
   });
 
   it("handles no repository field or remotes", () => {
-    cwd = setupFixture();
+    cwd = setupFixture(undefined, { git: true });
     setupPackageJson(cwd);
 
     // permissive: defaults to origin
@@ -57,7 +57,7 @@ describe("getDefaultRemote", () => {
   });
 
   it("defaults to upstream remote without repository field", () => {
-    cwd = setupFixture();
+    cwd = setupFixture(undefined, { git: true });
     setupPackageJson(cwd);
 
     gitRemote("add", "first", "https://github.com/kenotron/workspace-tools.git");
@@ -76,7 +76,7 @@ describe("getDefaultRemote", () => {
   });
 
   it("defaults to origin remote without repository field or upstream remote", () => {
-    cwd = setupFixture();
+    cwd = setupFixture(undefined, { git: true });
     setupPackageJson(cwd);
 
     gitRemote("add", "first", "https://github.com/kenotron/workspace-tools.git");
@@ -94,7 +94,7 @@ describe("getDefaultRemote", () => {
   });
 
   it("defaults to first remote without repository field, origin, or upstream", () => {
-    cwd = setupFixture();
+    cwd = setupFixture(undefined, { git: true });
     setupPackageJson(cwd);
 
     gitRemote("add", "first", "https://github.com/kenotron/workspace-tools.git");
@@ -112,7 +112,7 @@ describe("getDefaultRemote", () => {
   });
 
   it("finds remote matching repository string", () => {
-    cwd = setupFixture();
+    cwd = setupFixture(undefined, { git: true });
     setupPackageJson(cwd, { repository: "https://github.com/microsoft/workspace-tools.git" });
     gitRemote("add", "first", "https://github.com/kenotron/workspace-tools.git");
     gitRemote("add", "second", "https://github.com/microsoft/workspace-tools.git");
@@ -122,7 +122,7 @@ describe("getDefaultRemote", () => {
   });
 
   it("finds remote matching repository object", () => {
-    cwd = setupFixture();
+    cwd = setupFixture(undefined, { git: true });
     setupPackageJson(cwd, { repository: { url: "https://github.com/microsoft/workspace-tools.git", type: "git" } });
     gitRemote("add", "first", "https://github.com/kenotron/workspace-tools.git");
     gitRemote("add", "second", "https://github.com/microsoft/workspace-tools.git");
@@ -132,7 +132,7 @@ describe("getDefaultRemote", () => {
   });
 
   it("handles no remotes set and repository specified", () => {
-    cwd = setupFixture();
+    cwd = setupFixture(undefined, { git: true });
     setupPackageJson(cwd, { repository: { url: "https://github.com/baz/some-repo", type: "git" } });
 
     // permissive: default to origin
@@ -146,7 +146,7 @@ describe("getDefaultRemote", () => {
   });
 
   it("handles remotes set but none matching repository", () => {
-    cwd = setupFixture();
+    cwd = setupFixture(undefined, { git: true });
     setupPackageJson(cwd, { repository: { url: "https://github.com/ecraig12345/some-repo", type: "git" } });
     gitRemote("add", "first", "https://github.com/kenotron/workspace-tools.git");
     gitRemote("add", "second", "https://github.com/microsoft/workspace-tools.git");
@@ -160,7 +160,7 @@ describe("getDefaultRemote", () => {
   });
 
   it("works with SSH remote format", () => {
-    cwd = setupFixture();
+    cwd = setupFixture(undefined, { git: true });
     setupPackageJson(cwd, { repository: { url: "https://github.com/microsoft/workspace-tools", type: "git" } });
     gitRemote("add", "first", "git@github.com:kenotron/workspace-tools.git");
     gitRemote("add", "second", "git@github.com:microsoft/workspace-tools.git");
@@ -169,7 +169,7 @@ describe("getDefaultRemote", () => {
   });
 
   it("works with shorthand repository format", () => {
-    cwd = setupFixture();
+    cwd = setupFixture(undefined, { git: true });
     setupPackageJson(cwd, { repository: { url: "github:microsoft/workspace-tools", type: "git" } });
 
     // HTTPS
@@ -185,7 +185,7 @@ describe("getDefaultRemote", () => {
   });
 
   it("works with VSO repository and mismatched remote format", () => {
-    cwd = setupFixture();
+    cwd = setupFixture(undefined, { git: true });
     setupPackageJson(cwd, { repository: { url: "https://foo.visualstudio.com/bar/_git/some-repo", type: "git" } });
     // The multi-remote scenario is less common with VSO/ADO, but cover it just in case
     gitRemote("add", "first", "https://baz.visualstudio.com/bar/_git/some-repo");
@@ -232,7 +232,7 @@ describe("getDefaultRemote", () => {
   });
 
   it("works with ADO repository and mismatched remote format", () => {
-    cwd = setupFixture();
+    cwd = setupFixture(undefined, { git: true });
     setupPackageJson(cwd, { repository: { url: "https://dev.azure.com/foo/bar/_git/some-repo", type: "git" } });
     // The multi-remote scenario is less common with VSO/ADO, but cover it just in case
     gitRemote("add", "first", "https://dev.azure.com/baz/bar/_git/some-repo");
