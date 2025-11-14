@@ -31,6 +31,7 @@ const namedCatalogs: Required<Catalogs> = {
   },
 };
 
+/** Convert catalogs to the yaml format used by yarn v4 and pnpm */
 function catalogsToYaml(catalogs: Catalogs): string {
   const { named, default: defaultCatalog } = catalogs;
   const lines: string[] = [];
@@ -83,10 +84,21 @@ describe("getCatalogs", () => {
     addCatalogs: (root: string, catalogs: Catalogs) => void;
   }>([
     {
+      name: "pnpm",
+      manager: "pnpm",
+      baseFixture: "monorepo-pnpm",
+      addCatalogs: (root, catalogs) => {
+        // https://pnpm.io/catalogs
+        const pnpmWorkspacePath = path.join(root, "pnpm-workspace.yaml");
+        fs.appendFileSync(pnpmWorkspacePath, `\n${catalogsToYaml(catalogs)}\n`);
+      },
+    },
+    {
       name: "yarn v4",
       manager: "yarn",
       baseFixture: "monorepo-yarn-berry",
       addCatalogs: (root, catalogs) => {
+        // https://yarnpkg.com/features/catalogs
         const yarnrcPath = path.join(root, ".yarnrc.yml");
         fs.appendFileSync(yarnrcPath, `\n${catalogsToYaml(catalogs)}\n`);
       },
@@ -96,22 +108,14 @@ describe("getCatalogs", () => {
       manager: "yarn",
       baseFixture: "monorepo",
       addCatalogs: (root, catalogs) => {
-        // https://yarnpkg.com/features/catalogs
         const { packageJsonPath, ...packageJson } = readPackageInfo(root)!;
+        packageJson.workspaces = Array.isArray(packageJson.workspaces)
+          ? { packages: packageJson.workspaces }
+          : packageJson.workspaces || { packages: [] };
         const { named, default: defaultCatalog } = catalogs;
-        defaultCatalog && (packageJson.catalog = defaultCatalog);
-        named && (packageJson.catalogs = named);
+        defaultCatalog && (packageJson.workspaces.catalog = defaultCatalog);
+        named && (packageJson.workspaces.catalogs = named);
         fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2));
-      },
-    },
-    {
-      name: "pnpm",
-      manager: "pnpm",
-      baseFixture: "monorepo-pnpm",
-      addCatalogs: (root, catalogs) => {
-        // https://pnpm.io/catalogs
-        const pnpmWorkspacePath = path.join(root, "pnpm-workspace.yaml");
-        fs.appendFileSync(pnpmWorkspacePath, `\n${catalogsToYaml(catalogs)}\n`);
       },
     },
   ])("$name", ({ manager, baseFixture, addCatalogs }) => {

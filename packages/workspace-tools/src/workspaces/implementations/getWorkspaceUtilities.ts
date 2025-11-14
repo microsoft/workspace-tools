@@ -31,8 +31,6 @@ export interface WorkspaceUtilities {
   getWorkspacesAsync: (cwd: string) => Promise<WorkspaceInfos>;
   /**
    * Get version catalogs, if supported by the manager (only pnpm and yarn v4 as of writing).
-   * @see https://pnpm.io/catalogs
-   * @see https://yarnpkg.com/features/catalogs
    */
   getCatalogs?: (cwd: string) => Catalogs | undefined;
 }

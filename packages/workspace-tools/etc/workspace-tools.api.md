@@ -435,6 +435,13 @@ export interface PackageInfo {
     };
     // (undocumented)
     version: string;
+    workspaces?: string[] | {
+        packages: string[];
+        nohoist?: string[];
+        catalog?: Catalog;
+        catalogs?: NamedCatalogs;
+        [key: string]: any;
+    };
 }
 
 // @public

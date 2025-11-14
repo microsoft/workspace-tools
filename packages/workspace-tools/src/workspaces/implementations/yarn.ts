@@ -64,13 +64,18 @@ export function getYarnCatalogs(cwd: string): Catalogs | undefined {
     if (fs.existsSync(yarnrcYmlPath)) {
       const yarnrcYml = readYaml<{ catalog?: Catalog; catalogs?: NamedCatalogs }>(yarnrcYmlPath);
       if (yarnrcYml?.catalog || yarnrcYml?.catalogs) {
+        // Yarn v4+ format
         return { default: yarnrcYml.catalog, named: yarnrcYml.catalogs };
       }
     } else {
       // Check for midgard-yarn-strict definition of catalogs in package.json
-      const rootPackageJson = readPackageInfo(root);
-      if (rootPackageJson?.catalog || rootPackageJson?.catalogs) {
-        return { named: rootPackageJson.catalogs, default: rootPackageJson.catalog };
+      const workspaceSettings = readPackageInfo(root)?.workspaces;
+      if (
+        workspaceSettings &&
+        !Array.isArray(workspaceSettings) &&
+        (workspaceSettings?.catalog || workspaceSettings?.catalogs)
+      ) {
+        return { named: workspaceSettings.catalogs, default: workspaceSettings.catalog };
       }
     }
   } catch (err) {

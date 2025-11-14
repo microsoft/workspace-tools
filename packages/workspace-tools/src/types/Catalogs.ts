@@ -22,8 +22,12 @@ export interface NamedCatalogs {
  * @see https://yarnpkg.com/features/catalogs
  */
 export interface Catalogs {
-  /** The default catalog if present */
+  /**
+   * The default catalog if present.
+   * (This can't be combined with the named catalogs because "default" could be a catalog name.)
+   */
   default?: Catalog;
-  /** Mapping from catalog name (non-default) to catalog definition, if present */
+
+  /** Mapping from catalog name to catalog definition, if present */
   named?: NamedCatalogs;
 }
