@@ -1,6 +1,6 @@
 import { PackageInfos } from "./types/PackageInfo";
 import { getWorkspaces, getWorkspacesAsync } from "./workspaces/getWorkspaces";
-import { readPackageInfo } from "./workspaces/readPackageInfo";
+import { getPackageInfo } from "./getPackageInfo";
 
 /**
  * Read all the package.json files in a monorepo. Only works for monorepos which
@@ -16,7 +16,7 @@ export function getPackageInfos(cwd: string): PackageInfos {
       packageInfos[pkg.name] = pkg.packageJson;
     }
   } else {
-    const rootInfo = readPackageInfo(cwd);
+    const rootInfo = getPackageInfo(cwd);
     if (rootInfo) {
       packageInfos[rootInfo.name] = rootInfo;
     }
@@ -43,7 +43,7 @@ export async function getPackageInfosAsync(cwd: string): Promise<PackageInfos> {
       packageInfos[pkg.name] = pkg.packageJson;
     }
   } else {
-    const rootInfo = readPackageInfo(cwd);
+    const rootInfo = getPackageInfo(cwd);
     if (rootInfo) {
       packageInfos[rootInfo.name] = rootInfo;
     }

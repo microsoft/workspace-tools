@@ -160,6 +160,12 @@ export const getInternalDeps: typeof getPackageDependencies;
 export function getPackageDependencies(info: PackageInfo, internalPackages: Set<string>, options?: PackageDependenciesOptions): string[];
 
 // @public
+export function getPackageInfo(cwd: string): PackageInfo | undefined;
+
+// @public
+export function getPackageInfoAsync(cwd: string): Promise<PackageInfo | undefined>;
+
+// @public
 export function getPackageInfos(cwd: string): PackageInfos;
 
 // @public
@@ -477,12 +483,6 @@ export interface PnpmLockFile {
 
 // @public (undocumented)
 export function queryLockFile(name: string, versionRange: string, lock: ParsedLock): LockDependency;
-
-// @public
-export function readPackageInfo(cwd: string): PackageInfo | undefined;
-
-// @public
-export function readPackageInfoAsync(cwd: string): Promise<PackageInfo | undefined>;
 
 // @public
 export function revertLocalChanges(cwd: string): boolean;

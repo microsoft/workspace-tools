@@ -5,7 +5,7 @@ import type { Catalogs } from "../../types/Catalogs";
 import { getCatalogs, getCatalogVersion } from "../../workspaces/catalogs";
 import type { WorkspaceManager } from "../../workspaces/WorkspaceManager";
 import { getWorkspaceManagerAndRoot } from "../../workspaces/implementations";
-import { readPackageInfo } from "../../workspaces/readPackageInfo";
+import { getPackageInfo } from "../../getPackageInfo";
 
 // Samples from https://yarnpkg.com/features/catalogs
 const defaultCatalogs: Required<Pick<Catalogs, "default">> = {
@@ -108,7 +108,7 @@ describe("getCatalogs", () => {
       manager: "yarn",
       baseFixture: "monorepo",
       addCatalogs: (root, catalogs) => {
-        const { packageJsonPath, ...packageJson } = readPackageInfo(root)!;
+        const { packageJsonPath, ...packageJson } = getPackageInfo(root)!;
         packageJson.workspaces = Array.isArray(packageJson.workspaces)
           ? { packages: packageJson.workspaces }
           : packageJson.workspaces || { packages: [] };
@@ -199,6 +199,18 @@ describe("getCatalogVersion", () => {
   it("throws if package not found in catalog", () => {
     expect(() => getCatalogVersion({ name: "vue", version: "catalog:", catalogs: defaultCatalogs })).toThrow(
       'Dependency "vue" uses a catalog version "catalog:", but the default catalog doesn\'t define a version for "vue".'
+    );
+  });
+
+  it("throws on recursive catalog version", () => {
+    const catalogs: Catalogs = {
+      named: {
+        react18: { react: "^18.0.0" },
+        bad: { react: "catalog:react18" },
+      },
+    };
+    expect(() => getCatalogVersion({ name: "react", version: "catalog:bad", catalogs })).toThrow(
+      'Dependency "react" resolves to a recursive catalog version "catalog:react18", which is not supported.'
     );
   });
 });
