@@ -24,7 +24,7 @@
     "test": "yarn lage test"
   },
   "devDependencies": {
-    "@microsoft/api-extractor": "7.52.9",
+    "@microsoft/api-extractor": "7.54.0",
     "@types/fs-extra": "^11.0.0",
     "@types/git-url-parse": "^9.0.1",
     "@types/jest": "^29.5.1",
