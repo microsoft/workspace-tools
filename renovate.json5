@@ -47,6 +47,16 @@
       "groupName": "workspace-tools resolutions",
       "matchPackageNames": ["/.*workspace-tools$/"],
       "dependencyDashboardApproval": false
+    },
+    {
+      // disabled due to > pinned version requiring node 18
+      "matchPackageNames": ["@microsoft/api-extractor"],
+      "enabled": false
+    },
+    {
+      "matchManagers": ["github-actions"],
+      "groupName": "GitHub actions",
+      "dependencyDashboardApproval": false
     }
   ]
 }
