@@ -31,6 +31,22 @@ describe("getChangedPackages", () => {
     expect(changedPkgs).toEqual(["package-a"]);
   });
 
+  it("returns all packages by default when a root level monorepo file is changed", () => {
+    const root = setupFixture("monorepo", { git: true });
+
+    fs.writeFileSync(path.join(root, "lage.config.json"), "hello foo test");
+
+    expect(getChangedPackages(root, "main").sort()).toEqual(["individual", "package-a", "package-b"]);
+  });
+
+  it("returns nothing when a root level monorepo file is changed and returnAllPackagesOnNoMatch is false", () => {
+    const root = setupFixture("monorepo", { git: true });
+
+    fs.writeFileSync(path.join(root, "lage.config.json"), "hello foo test");
+
+    expect(getChangedPackages(root, "main", [], false /*returnAllPackagesOnNoMatch*/)).toEqual([]);
+  });
+
   it("can detect changes when multiple files are changed", () => {
     const root = path.join(setupFixture("monorepo-nested", { git: true }), "monorepo");
 
@@ -44,7 +60,7 @@ describe("getChangedPackages", () => {
     expect(changedPkgs).toEqual(["package-a", "package-b"]);
   });
 
-  it("can ignore changes when multiple files are changed", () => {
+  it("can ignore changes", () => {
     const root = path.join(setupFixture("monorepo-nested", { git: true }), "monorepo");
 
     const readmeFile = path.join(root, "README.md");
@@ -158,6 +174,17 @@ describe("getChangedPackages", () => {
   });
 
   describe("getChangedPackagesBetweenRefs", () => {
+    it("returns all packages as changed if a top level file changes", () => {
+      const root = setupFixture("monorepo", { git: true });
+
+      fs.writeFileSync(path.join(root, "footest.txt"), "hello foo test");
+      stageAndCommit(["."], "test commit", root);
+
+      const changedPkgs = getChangedPackagesBetweenRefs(root, "HEAD^1", "HEAD");
+
+      expect(changedPkgs.sort()).toEqual(["individual", "package-a", "package-b"]);
+    });
+
     it("can detect changed packages between two refs", () => {
       const root = setupFixture("monorepo", { git: true });
 
@@ -173,8 +200,7 @@ describe("getChangedPackages", () => {
 
       const changedPkgs = getChangedPackagesBetweenRefs(root, "HEAD^1", "HEAD");
 
-      expect(changedPkgs).toContain("package-b");
-      expect(changedPkgs).not.toContain("package-a");
+      expect(changedPkgs).toEqual(["package-b"]);
     });
   });
 });
