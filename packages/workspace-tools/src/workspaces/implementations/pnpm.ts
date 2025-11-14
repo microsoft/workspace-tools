@@ -6,10 +6,20 @@ import { getWorkspacePackageInfo, getWorkspacePackageInfoAsync } from "../getWor
 import { readYaml } from "../../lockfile/readYaml";
 import { logVerboseWarning } from "../../logging";
 import { getWorkspaceManagerAndRoot } from "./getWorkspaceManagerAndRoot";
+import type { Catalog, Catalogs, NamedCatalogs } from "../../types/Catalogs";
 
 type PnpmWorkspaceYaml = {
   packages: string[];
+  // Format per https://pnpm.io/catalogs
+  catalog?: Catalog;
+  catalogs?: NamedCatalogs;
 };
+
+function getPnpmWorkspaceRootAndYaml(cwd: string) {
+  const root = getPnpmWorkspaceRoot(cwd);
+  const pnpmWorkspacesFile = path.join(root, "pnpm-workspace.yaml");
+  return { root, workspaceYaml: readYaml<PnpmWorkspaceYaml>(pnpmWorkspacesFile) };
+}
 
 /** @deprecated Use `getWorkspaceManagerRoot` */
 export function getPnpmWorkspaceRoot(cwd: string): string {
@@ -23,12 +33,9 @@ export function getPnpmWorkspaceRoot(cwd: string): string {
 /** Get paths for each package ("workspace") in a pnpm monorepo. */
 export function getWorkspacePackagePaths(cwd: string): string[] {
   try {
-    const pnpmWorkspacesRoot = getPnpmWorkspaceRoot(cwd);
-    const pnpmWorkspacesFile = path.join(pnpmWorkspacesRoot, "pnpm-workspace.yaml");
+    const { root, workspaceYaml } = getPnpmWorkspaceRootAndYaml(cwd);
 
-    const pnpmWorkspaces = readYaml(pnpmWorkspacesFile) as PnpmWorkspaceYaml;
-
-    return getPackagePaths(pnpmWorkspacesRoot, pnpmWorkspaces.packages);
+    return getPackagePaths(root, workspaceYaml.packages);
   } catch (err) {
     logVerboseWarning(`Error getting pnpm workspace package paths for ${cwd}`, err);
     return [];
@@ -63,5 +70,27 @@ export async function getPnpmWorkspacesAsync(cwd: string): Promise<WorkspaceInfo
   }
 }
 
+/**
+ * Get version catalogs if present.
+ * Returns undefined if there's no catalog, or any issue reading or parsing.
+ * @see https://pnpm.io/catalogs
+ */
+export function getPnpmCatalogs(cwd: string): Catalogs | undefined {
+  try {
+    const { workspaceYaml } = getPnpmWorkspaceRootAndYaml(cwd);
+    if (!workspaceYaml.catalog && !workspaceYaml.catalogs) {
+      return undefined;
+    }
+    return {
+      default: workspaceYaml.catalog,
+      named: workspaceYaml.catalogs,
+    };
+  } catch (err) {
+    logVerboseWarning(`Error getting pnpm catalogs for ${cwd}`, err);
+    return undefined;
+  }
+}
+
 export { getPnpmWorkspaces as getWorkspaces };
 export { getPnpmWorkspacesAsync as getWorkspacesAsync };
+export { getPnpmCatalogs as getCatalogs };

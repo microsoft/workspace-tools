@@ -26,6 +26,18 @@ export interface BerryLockFile {
 }
 
 // @public
+export interface Catalog {
+    // (undocumented)
+    [packageName: string]: string;
+}
+
+// @public
+export interface Catalogs {
+    default?: Catalog;
+    named?: NamedCatalogs;
+}
+
+// @public
 export function clearGitObservers(): void;
 
 // @public
@@ -79,6 +91,16 @@ export function getBranchChanges(branch: string, cwd: string): string[];
 
 // @public
 export function getBranchName(cwd: string): string | null;
+
+// @public
+export function getCatalogs(cwd: string): Catalogs | undefined;
+
+// @public
+export function getCatalogVersion(params: {
+    name: string;
+    version: string;
+    catalogs: Catalogs | undefined;
+}): string | undefined;
 
 // @public
 export function getChangedPackages(cwd: string, target: string | undefined, ignoreGlobs?: string[]): string[];
@@ -254,6 +276,9 @@ export type GitProcessOutput = {
 export function init(cwd: string, email?: string, username?: string): void;
 
 // @public
+export function isCatalogVersion(version: string): boolean;
+
+// @public
 export function isChildOf(child: string, parent: string): boolean;
 
 // @public
@@ -270,6 +295,12 @@ export type LockDependency = {
 
 // @public (undocumented)
 export function nameAtVersion(name: string, version: string): string;
+
+// @public
+export interface NamedCatalogs {
+    // (undocumented)
+    [catalogName: string]: Catalog;
+}
 
 // @public
 export interface NpmLockFile {
@@ -404,6 +435,13 @@ export interface PackageInfo {
     };
     // (undocumented)
     version: string;
+    workspaces?: string[] | {
+        packages: string[];
+        nohoist?: string[];
+        catalog?: Catalog;
+        catalogs?: NamedCatalogs;
+        [key: string]: any;
+    };
 }
 
 // @public

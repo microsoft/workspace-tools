@@ -1,0 +1,33 @@
+/**
+ * Mapping from package name to package version.
+ * @see https://pnpm.io/catalogs#default-catalog
+ * @see https://yarnpkg.com/features/catalogs#basic-usage
+ */
+export interface Catalog {
+  [packageName: string]: string;
+}
+
+/**
+ * Mapping from catalog name (non-default) to catalog definition
+ * @see https://pnpm.io/catalogs#named-catalogs
+ * @see https://yarnpkg.com/features/catalogs#named-catalogs
+ */
+export interface NamedCatalogs {
+  [catalogName: string]: Catalog;
+}
+
+/**
+ * Package version catalogs
+ * @see https://pnpm.io/catalogs
+ * @see https://yarnpkg.com/features/catalogs
+ */
+export interface Catalogs {
+  /**
+   * The default catalog if present.
+   * (This can't be combined with the named catalogs because "default" could be a catalog name.)
+   */
+  default?: Catalog;
+
+  /** Mapping from catalog name to catalog definition, if present */
+  named?: NamedCatalogs;
+}
