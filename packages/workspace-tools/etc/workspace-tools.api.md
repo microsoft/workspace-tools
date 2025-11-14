@@ -66,7 +66,7 @@ export function findPackageRoot(cwd: string): string | undefined;
 export function findProjectRoot(cwd: string): string;
 
 // @public
-export function findWorkspacePath(workspaces: WorkspaceInfo, packageName: string): string | undefined;
+export function findWorkspacePath(workspaces: WorkspaceInfos, packageName: string): string | undefined;
 
 // @public
 export function getAllPackageJsonFiles(cwd: string): string[];
@@ -153,7 +153,7 @@ export function getParentBranch(cwd: string): string | null;
 export function getPnpmWorkspaceRoot(cwd: string): string;
 
 // @public
-export function getPnpmWorkspaces(cwd: string): WorkspaceInfo;
+export function getPnpmWorkspaces(cwd: string): WorkspaceInfos;
 
 // @public
 export function getRecentCommitMessages(branch: string, cwd: string): string[];
@@ -165,7 +165,7 @@ export function getRemoteBranch(branch: string, cwd: string): string | null;
 export function getRushWorkspaceRoot(cwd: string): string;
 
 // @public
-export function getRushWorkspaces(cwd: string): WorkspaceInfo;
+export function getRushWorkspaces(cwd: string): WorkspaceInfos;
 
 // @public
 export function getScopedPackages(search: string[], packages: {
@@ -199,28 +199,31 @@ export function getUntrackedChanges(cwd: string): string[];
 // @public
 export function getUserEmail(cwd: string): string | null;
 
+// Warning: (ae-forgotten-export) The symbol "WorkspaceManager" needs to be exported by the entry point index.d.ts
+//
+// @public
+export function getWorkspaceManagerRoot(cwd: string, preferredManager?: WorkspaceManager): string | undefined;
+
 // @public
 export function getWorkspacePackagePaths(cwd: string): string[];
 
 // @public
 export function getWorkspacePackagePathsAsync(cwd: string): Promise<string[]>;
 
-// Warning: (ae-forgotten-export) The symbol "WorkspaceManager" needs to be exported by the entry point index.d.ts
-//
-// @public
+// @public @deprecated
 export function getWorkspaceRoot(cwd: string, preferredManager?: WorkspaceManager): string | undefined;
 
 // @public
-export function getWorkspaces(cwd: string): WorkspaceInfo;
+export function getWorkspaces(cwd: string): WorkspaceInfos;
 
 // @public
-export function getWorkspacesAsync(cwd: string): Promise<WorkspaceInfo>;
+export function getWorkspacesAsync(cwd: string): Promise<WorkspaceInfos>;
 
 // @public @deprecated (undocumented)
 export function getYarnWorkspaceRoot(cwd: string): string;
 
 // @public
-export function getYarnWorkspaces(cwd: string): WorkspaceInfo;
+export function getYarnWorkspaces(cwd: string): WorkspaceInfos;
 
 // @public
 export function git(args: string[], options?: SpawnSyncOptions): GitProcessOutput;
@@ -256,8 +259,8 @@ export function isChildOf(child: string, parent: string): boolean;
 // @public
 export function listAllTrackedFiles(patterns: string[], cwd: string): string[];
 
-// @public (undocumented)
-export function listOfWorkspacePackageNames(workspaces: WorkspaceInfo): string[];
+// @public @deprecated (undocumented)
+export function listOfWorkspacePackageNames(workspaces: WorkspaceInfos): string[];
 
 // @public (undocumented)
 export type LockDependency = {
@@ -437,8 +440,11 @@ export interface PnpmLockFile {
 // @public (undocumented)
 export function queryLockFile(name: string, versionRange: string, lock: ParsedLock): LockDependency;
 
-// @public (undocumented)
-export function _resetPackageJsonFilesCache(): void;
+// @public
+export function readPackageInfo(cwd: string): PackageInfo | undefined;
+
+// @public
+export function readPackageInfoAsync(cwd: string): Promise<PackageInfo | undefined>;
 
 // @public
 export function revertLocalChanges(cwd: string): boolean;
@@ -455,15 +461,21 @@ export function stage(patterns: string[], cwd: string): void;
 // @public
 export function stageAndCommit(patterns: string[], message: string, cwd: string, commitOptions?: string[]): void;
 
+// @public @deprecated (undocumented)
+export type WorkspaceInfo = WorkspaceInfos;
+
 // @public
-export type WorkspaceInfo = {
-    name: string;
-    path: string;
-    packageJson: PackageInfo;
-}[];
+export type WorkspaceInfos = WorkspacePackageInfo[];
 
 // @public (undocumented)
 type WorkspaceManager = "yarn" | "pnpm" | "rush" | "npm" | "lerna";
+
+// @public
+export interface WorkspacePackageInfo {
+    name: string;
+    packageJson: PackageInfo;
+    path: string;
+}
 
 // (No @packageDocumentation comment for this package)
 

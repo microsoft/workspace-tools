@@ -2,7 +2,7 @@ import path from "path";
 import jju from "jju";
 import fs from "fs";
 
-import { WorkspaceInfo } from "../../types/WorkspaceInfo";
+import type { WorkspaceInfos } from "../../types/WorkspaceInfo";
 import { getWorkspacePackageInfo, getWorkspacePackageInfoAsync } from "../getWorkspacePackageInfo";
 import { logVerboseWarning } from "../../logging";
 import { getWorkspaceManagerAndRoot } from "./getWorkspaceManagerAndRoot";
@@ -16,7 +16,7 @@ export function getRushWorkspaceRoot(cwd: string): string {
   return root;
 }
 
-/** Get package paths for a rush workspace. */
+/** Get paths for each package ("workspace") in a rush monorepo. */
 export function getWorkspacePackagePaths(cwd: string): string[] {
   try {
     const rushWorkspaceRoot = getRushWorkspaceRoot(cwd);
@@ -34,10 +34,10 @@ export function getWorkspacePackagePaths(cwd: string): string[] {
 }
 
 /**
- * Get an array with names, paths, and package.json contents for each package in a rush workspace.
- * (See `../getWorkspaces` for why it's named this way.)
+ * Get an array with names, paths, and package.json contents for each package ("workspace")
+ * in a rush monorepo.
  */
-export function getRushWorkspaces(cwd: string): WorkspaceInfo {
+export function getRushWorkspaces(cwd: string): WorkspaceInfos {
   try {
     const packagePaths = getWorkspacePackagePaths(cwd);
     return getWorkspacePackageInfo(packagePaths);
@@ -48,10 +48,10 @@ export function getRushWorkspaces(cwd: string): WorkspaceInfo {
 }
 
 /**
- * Get an array with names, paths, and package.json contents for each package in a rush workspace.
- * (See `../getWorkspaces` for why it's named this way.)
+ * Get an array with names, paths, and package.json contents for each package ("workspace")
+ * in a rush monorepo.
  */
-export async function getRushWorkspacesAsync(cwd: string): Promise<WorkspaceInfo> {
+export async function getRushWorkspacesAsync(cwd: string): Promise<WorkspaceInfos> {
   try {
     const packagePaths = getWorkspacePackagePaths(cwd);
     return getWorkspacePackageInfoAsync(packagePaths);

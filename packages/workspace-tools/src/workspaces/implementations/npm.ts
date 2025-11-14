@@ -1,5 +1,5 @@
 import { getWorkspaceManagerAndRoot } from ".";
-import { WorkspaceInfo } from "../../types/WorkspaceInfo";
+import type { WorkspaceInfos } from "../../types/WorkspaceInfo";
 import {
   getWorkspaceInfoFromWorkspaceRoot,
   getWorkspaceInfoFromWorkspaceRootAsync,
@@ -15,32 +15,32 @@ function getNpmWorkspaceRoot(cwd: string): string {
   return root;
 }
 
-/** Get package paths for an npm workspace. */
+/** Get paths for each package ("workspace") in an npm monorepo. */
 export function getWorkspacePackagePaths(cwd: string): string[] {
   const npmWorkspacesRoot = getNpmWorkspaceRoot(cwd);
   return getPackagePathsFromWorkspaceRoot(npmWorkspacesRoot);
 }
 
-/** Get package paths for an npm workspace. */
+/** Get paths for each package ("workspace") in an npm monorepo. */
 export function getWorkspacePackagePathsAsync(cwd: string): Promise<string[]> {
   const npmWorkspacesRoot = getNpmWorkspaceRoot(cwd);
   return getPackagePathsFromWorkspaceRootAsync(npmWorkspacesRoot);
 }
 
 /**
- * Get an array with names, paths, and package.json contents for each package in an npm workspace.
- * (See `../getWorkspaces` for why it's named this way.)
+ * Get an array with names, paths, and package.json contents for each package ("workspace")
+ * in an npm monorepo.
  */
-export function getNpmWorkspaces(cwd: string): WorkspaceInfo {
+export function getNpmWorkspaces(cwd: string): WorkspaceInfos {
   const npmWorkspacesRoot = getNpmWorkspaceRoot(cwd);
   return getWorkspaceInfoFromWorkspaceRoot(npmWorkspacesRoot);
 }
 
 /**
- * Get an array with names, paths, and package.json contents for each package in an npm workspace.
- * (See `../getWorkspaces` for why it's named this way.)
+ * Get an array with names, paths, and package.json contents for each package ("workspace")
+ * in an npm monorepo.
  */
-export function getNpmWorkspacesAsync(cwd: string): Promise<WorkspaceInfo> {
+export function getNpmWorkspacesAsync(cwd: string): Promise<WorkspaceInfos> {
   const npmWorkspacesRoot = getNpmWorkspaceRoot(cwd);
   return getWorkspaceInfoFromWorkspaceRootAsync(npmWorkspacesRoot);
 }

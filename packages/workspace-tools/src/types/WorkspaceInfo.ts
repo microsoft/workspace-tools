@@ -1,14 +1,25 @@
 import { PackageInfo } from "./PackageInfo";
 
 /**
- * Array with names, paths, and package.json contents for each package in a workspace.
+ * Info about a single package ("workspace" in npm/yarn/pnpm terms) within a monorepo.
  *
- * The method name is somewhat misleading due to the double meaning of "workspace", but it's retained
- * for compatibility. "Workspace" here refers to an individual package, in the sense of the `workspaces`
- * package.json config used by npm/yarn (instead of referring to the entire monorepo).
+ * Ideally this should be called just `WorkspaceInfo`, but that name was previously used for the
+ * aggregate type.
  */
-export type WorkspaceInfo = {
+export interface WorkspacePackageInfo {
+  /** Package name */
   name: string;
+  /** Absolute path to the package root */
   path: string;
+  /** `package.json` contents + path */
   packageJson: PackageInfo;
-}[];
+}
+
+/**
+ * Array with names, paths, and package.json contents for each package ("workspace" in
+ * npm/yarn/pnpm terms) within a monorepo.
+ */
+export type WorkspaceInfos = WorkspacePackageInfo[];
+
+/** @deprecated Use `WorkspaceInfos` */
+export type WorkspaceInfo = WorkspaceInfos;

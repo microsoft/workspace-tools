@@ -1,11 +1,16 @@
-import { getPackageInfos, getTransitiveDependencies, getTransitiveDependents, getWorkspaceRoot } from "workspace-tools";
+import {
+  getPackageInfos,
+  getTransitiveDependencies,
+  getTransitiveDependents,
+  getWorkspaceManagerRoot,
+} from "workspace-tools";
 
 interface DepsCommandOptions {
   scope?: string[];
 }
 
 export function depsCommand(options: DepsCommandOptions): void {
-  const root = getWorkspaceRoot(process.cwd());
+  const root = getWorkspaceManagerRoot(process.cwd());
 
   if (!root) {
     throw new Error("Could not find workspace root");

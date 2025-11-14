@@ -14,10 +14,10 @@ type PackageJsonWithWorkspaces = {
 };
 
 /**
- * Read the workspace root package.json and get the list of package globs from its `workspaces` property.
+ * Read the monorepo root package.json and get the list of package globs from its `workspaces` property.
  */
-function getPackages(packageJsonWorkspacesRoot: string): string[] {
-  const packageJsonFile = path.join(packageJsonWorkspacesRoot, "package.json");
+function getPackages(root: string): string[] {
+  const packageJsonFile = path.join(root, "package.json");
 
   let packageJson: PackageJsonWithWorkspaces;
   try {
@@ -39,54 +39,65 @@ function getPackages(packageJsonWorkspacesRoot: string): string[] {
   return workspaces.packages;
 }
 
-export function getPackagePathsFromWorkspaceRoot(packageJsonWorkspacesRoot: string) {
+/**
+ * Read the `workspaces` property the monorepo root package.json, then process the workspace globs
+ * into absolute package paths. Returns an empty array if the `workspaces` property is not found or
+ * there's some other issue.
+ */
+export function getPackagePathsFromWorkspaceRoot(root: string) {
   try {
-    const packageGlobs = getPackages(packageJsonWorkspacesRoot);
-    return packageGlobs ? getPackagePaths(packageJsonWorkspacesRoot, packageGlobs) : [];
+    const packageGlobs = getPackages(root);
+    return packageGlobs ? getPackagePaths(root, packageGlobs) : [];
   } catch (err) {
-    logVerboseWarning(`Error getting package paths for ${packageJsonWorkspacesRoot}`, err);
+    logVerboseWarning(`Error getting package paths for ${root}`, err);
     return [];
   }
 }
 
 /**
- * Get an array with names, paths, and package.json contents for each package in an npm/yarn workspace.
- * (See `../getWorkspaces` for why it's named this way.)
+ * Read the `workspaces` property the monorepo root package.json, then process the workspace globs
+ * into absolute package paths. Returns an empty array if the `workspaces` property is not found or
+ * there's some other issue.
  */
-export async function getPackagePathsFromWorkspaceRootAsync(packageJsonWorkspacesRoot: string): Promise<string[]> {
+export async function getPackagePathsFromWorkspaceRootAsync(root: string): Promise<string[]> {
   try {
-    const packageGlobs = getPackages(packageJsonWorkspacesRoot);
-    return packageGlobs ? getPackagePathsAsync(packageJsonWorkspacesRoot, packageGlobs) : [];
+    const packageGlobs = getPackages(root);
+    return packageGlobs ? getPackagePathsAsync(root, packageGlobs) : [];
   } catch (err) {
-    logVerboseWarning(`Error getting package paths for ${packageJsonWorkspacesRoot}`, err);
+    logVerboseWarning(`Error getting package paths for ${root}`, err);
     return [];
   }
 }
 
 /**
- * Get an array with names, paths, and package.json contents for each package in an npm/yarn workspace.
- * (See `../getWorkspaces` for why it's named this way.)
+ * Read the `workspaces` property the monorepo root package.json, then process the workspace globs
+ * into an array with names, paths, and package.json contents for each package (each "workspace"
+ * in npm/yarn/pnpm terms). Returns an empty array if there's any issue.
  */
-export function getWorkspaceInfoFromWorkspaceRoot(packageJsonWorkspacesRoot: string) {
+export function getWorkspaceInfoFromWorkspaceRoot(root: string) {
   try {
-    const packagePaths = getPackagePathsFromWorkspaceRoot(packageJsonWorkspacesRoot);
+    const packagePaths = getPackagePathsFromWorkspaceRoot(root);
     return getWorkspacePackageInfo(packagePaths);
   } catch (err) {
-    logVerboseWarning(`Error getting workspace info for ${packageJsonWorkspacesRoot}`, err);
+    logVerboseWarning(`Error getting workspace info for ${root}`, err);
     return [];
   }
 }
 
 /**
- * Get an array with names, paths, and package.json contents for each package in an npm/yarn workspace.
- * (See `../getWorkspaces` for why it's named this way.)
+ * Read the `workspaces` property the monorepo root package.json, then process the workspace globs
+ * into an array with names, paths, and package.json contents for each package (each "workspace"
+ * in npm/yarn/pnpm terms). Returns an empty array if there's any issue.
+ *
+ * NOTE: As of writing, this will start promises to read all package.json files in parallel,
+ * without direct concurrency control.
  */
-export async function getWorkspaceInfoFromWorkspaceRootAsync(packageJsonWorkspacesRoot: string) {
+export async function getWorkspaceInfoFromWorkspaceRootAsync(root: string) {
   try {
-    const packagePaths = await getPackagePathsFromWorkspaceRootAsync(packageJsonWorkspacesRoot);
+    const packagePaths = await getPackagePathsFromWorkspaceRootAsync(root);
     return getWorkspacePackageInfoAsync(packagePaths);
   } catch (err) {
-    logVerboseWarning(`Error getting workspace info for ${packageJsonWorkspacesRoot}`, err);
+    logVerboseWarning(`Error getting workspace info for ${root}`, err);
     return [];
   }
 }
