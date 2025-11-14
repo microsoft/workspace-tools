@@ -12,6 +12,7 @@ export type ParsedLock = {
   };
 };
 
+/** pnpm `pnpm-lock.yaml` format */
 export interface PnpmLockFile {
   packages: { [name: string]: any };
 }
@@ -31,6 +32,7 @@ export interface NpmSymlinkInfo {
   dependencies?: { [key: string]: LockDependency };
 }
 
+/** npm `package-lock.json` format */
 export interface NpmLockFile {
   name: string;
   version: string;
@@ -42,6 +44,7 @@ export interface NpmLockFile {
   dependencies?: { [key: string]: LockDependency };
 }
 
+/** Yarn Berry (v2+) `yarn.lock` YAML format */
 export interface BerryLockFile {
   __metadata: any;
   [key: string]: {

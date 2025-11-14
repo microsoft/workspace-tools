@@ -1,6 +1,5 @@
 import { getPackageDependencies, PackageDependenciesOptions } from "./getPackageDependencies";
-import { PackageInfos } from "../types/PackageInfo";
-import { getPackageInfos, getPackageInfosAsync } from "../getPackageInfos";
+import type { PackageInfos } from "../types/PackageInfo";
 
 export interface DependencyMap {
   dependencies: Map<string, Set<string>>;
