@@ -6,6 +6,7 @@ export { setCachingEnabled } from "./isCachingEnabled";
 export * from "./lockfile";
 export { findGitRoot, findPackageRoot, findProjectRoot, isChildOf, searchUp } from "./paths";
 export { getScopedPackages } from "./scope";
+export type { Catalog, Catalogs, NamedCatalogs } from "./types/Catalogs";
 export type { PackageDependency, PackageGraph } from "./types/PackageGraph";
 export type { PackageInfo, PackageInfos } from "./types/PackageInfo";
 export type { WorkspacePackageInfo, WorkspaceInfos, WorkspaceInfo } from "./types/WorkspaceInfo";
@@ -21,3 +22,4 @@ export { getChangedPackages, getChangedPackagesBetweenRefs } from "./workspaces/
 export { getPackagesByFiles } from "./workspaces/getPackagesByFiles";
 export { listOfWorkspacePackageNames } from "./workspaces/listOfWorkspacePackageNames";
 export { getAllPackageJsonFiles, getAllPackageJsonFilesAsync } from "./workspaces/getAllPackageJsonFiles";
+export { getCatalogs, getCatalogVersion, isCatalogVersion } from "./workspaces/catalogs";

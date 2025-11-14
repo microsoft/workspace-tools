@@ -1,3 +1,5 @@
+import fs from "fs";
+import path from "path";
 import { getWorkspaceManagerAndRoot } from "./index";
 import type { WorkspaceInfos } from "../../types/WorkspaceInfo";
 import {
@@ -6,6 +8,10 @@ import {
   getWorkspaceInfoFromWorkspaceRoot,
   getWorkspaceInfoFromWorkspaceRootAsync,
 } from "./packageJsonWorkspaces";
+import { readPackageInfo } from "../readPackageInfo";
+import type { Catalog, Catalogs, NamedCatalogs } from "../../types/Catalogs";
+import { logVerboseWarning } from "../../logging";
+import { readYaml } from "../../lockfile/readYaml";
 
 /** @deprecated Use `getWorkspaceManagerRoot` */
 export function getYarnWorkspaceRoot(cwd: string): string {
@@ -46,5 +52,33 @@ export function getYarnWorkspacesAsync(cwd: string): Promise<WorkspaceInfos> {
   return getWorkspaceInfoFromWorkspaceRootAsync(yarnWorkspacesRoot);
 }
 
+/**
+ * Get version catalogs if present.
+ * Returns undefined if there's no catalog, or any issue reading or parsing.
+ * @see https://yarnpkg.com/features/catalogs
+ */
+export function getYarnCatalogs(cwd: string): Catalogs | undefined {
+  try {
+    const root = getYarnWorkspaceRoot(cwd);
+    const yarnrcYmlPath = path.join(root, ".yarnrc.yml");
+    if (fs.existsSync(yarnrcYmlPath)) {
+      const yarnrcYml = readYaml<{ catalog?: Catalog; catalogs?: NamedCatalogs }>(yarnrcYmlPath);
+      if (yarnrcYml?.catalog || yarnrcYml?.catalogs) {
+        return { default: yarnrcYml.catalog, named: yarnrcYml.catalogs };
+      }
+    } else {
+      // Check for midgard-yarn-strict definition of catalogs in package.json
+      const rootPackageJson = readPackageInfo(root);
+      if (rootPackageJson?.catalog || rootPackageJson?.catalogs) {
+        return { named: rootPackageJson.catalogs, default: rootPackageJson.catalog };
+      }
+    }
+  } catch (err) {
+    logVerboseWarning(`Error getting yarn catalogs for ${cwd}`, err);
+    return undefined;
+  }
+}
+
 export { getYarnWorkspaces as getWorkspaces };
 export { getYarnWorkspacesAsync as getWorkspacesAsync };
+export { getYarnCatalogs as getCatalogs };

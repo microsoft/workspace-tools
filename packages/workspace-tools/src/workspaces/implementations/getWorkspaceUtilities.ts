@@ -1,3 +1,4 @@
+import type { Catalogs } from "../../types/Catalogs";
 import type { WorkspaceInfos } from "../../types/WorkspaceInfo";
 import { getWorkspaceManagerAndRoot } from "./getWorkspaceManagerAndRoot";
 // These must be type imports to avoid parsing the additional deps at runtime
@@ -28,6 +29,12 @@ export interface WorkspaceUtilities {
    * in a monorepo.
    */
   getWorkspacesAsync: (cwd: string) => Promise<WorkspaceInfos>;
+  /**
+   * Get version catalogs, if supported by the manager (only pnpm and yarn v4 as of writing).
+   * @see https://pnpm.io/catalogs
+   * @see https://yarnpkg.com/features/catalogs
+   */
+  getCatalogs?: (cwd: string) => Catalogs | undefined;
 }
 
 /**
