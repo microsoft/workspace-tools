@@ -2,6 +2,47 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Fri, 14 Nov 2025 21:48:11 GMT",
+      "version": "0.38.5",
+      "tag": "workspace-tools_v0.38.5",
+      "comments": {
+        "patch": [
+          {
+            "author": "elcraig@microsoft.com",
+            "package": "workspace-tools",
+            "commit": "b525ad235d26cd4a48675d544759fc10d9452e43",
+            "comment": "Add missing doc comments"
+          },
+          {
+            "author": "elcraig@microsoft.com",
+            "package": "workspace-tools",
+            "commit": "b525ad235d26cd4a48675d544759fc10d9452e43",
+            "comment": "Add catalog helpers `getCatalogs` and `getCatalogVersion`"
+          },
+          {
+            "author": "elcraig@microsoft.com",
+            "package": "workspace-tools",
+            "commit": "b525ad235d26cd4a48675d544759fc10d9452e43",
+            "comment": "Replace confusing `WorkspaceInfo` array type with `WorkspaceInfos` type, and add `WorkspacePackageInfo` type for array entries. Deprecate `getWorkspaceRoot` in favor of `getWorkspaceManagerRoot`. Clarify doc comments regarding \"workspace\" terminology. Introduce `readPackageInfo` helper for reading package.json files."
+          }
+        ],
+        "none": [
+          {
+            "author": "elcraig@microsoft.com",
+            "package": "workspace-tools",
+            "commit": "b525ad235d26cd4a48675d544759fc10d9452e43",
+            "comment": "Update tests"
+          },
+          {
+            "author": "elcraig@microsoft.com",
+            "package": "workspace-tools",
+            "commit": "b525ad235d26cd4a48675d544759fc10d9452e43",
+            "comment": "Use pretty tsc output"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 17 Apr 2025 02:50:51 GMT",
       "version": "0.38.4",
       "tag": "workspace-tools_v0.38.4",
