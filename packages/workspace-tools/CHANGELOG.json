@@ -2,6 +2,27 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Fri, 14 Nov 2025 22:14:21 GMT",
+      "version": "0.38.6",
+      "tag": "workspace-tools_v0.38.6",
+      "comments": {
+        "patch": [
+          {
+            "author": "elcraig@microsoft.com",
+            "package": "workspace-tools",
+            "commit": "a9855dad2d67a2790653d72c49d9419d53c9a59d",
+            "comment": "Rename `readPackageInfo` to `getPackageInfo`"
+          },
+          {
+            "author": "elcraig@microsoft.com",
+            "package": "workspace-tools",
+            "commit": "a9855dad2d67a2790653d72c49d9419d53c9a59d",
+            "comment": "Error on recursive catalog versions"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 14 Nov 2025 21:48:11 GMT",
       "version": "0.38.5",
       "tag": "workspace-tools_v0.38.5",

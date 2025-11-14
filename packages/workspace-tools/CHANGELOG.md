@@ -1,8 +1,17 @@
 # Change Log - workspace-tools
 
-<!-- This log was last generated on Fri, 14 Nov 2025 21:48:11 GMT and should not be manually modified. -->
+<!-- This log was last generated on Fri, 14 Nov 2025 22:14:21 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.38.6
+
+Fri, 14 Nov 2025 22:14:21 GMT
+
+### Patches
+
+- Rename `readPackageInfo` to `getPackageInfo` (elcraig@microsoft.com)
+- Error on recursive catalog versions (elcraig@microsoft.com)
 
 ## 0.38.5
 
