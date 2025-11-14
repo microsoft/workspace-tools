@@ -2,7 +2,7 @@ import fs from "fs-extra";
 import path from "path";
 import { setupFixture } from "@ws-tools/scripts/jest/setupFixture";
 import { parseLockFile } from "../../lockfile/index";
-import { readPackageInfo } from "../../workspaces/readPackageInfo";
+import { getPackageInfo } from "../../getPackageInfo";
 
 const ERROR_MESSAGES = {
   NO_LOCK: "You do not have yarn.lock, pnpm-lock.yaml or package-lock.json. Please use one of these package managers.",
@@ -51,7 +51,7 @@ describe("parseLockFile()", () => {
       // - "execa" is listed as a dep in package.json
       // - "@types/execa" is also listed as a dep, and internally has a dep on "execa@*"
       const depName = "execa";
-      const packageInfo = readPackageInfo(packageRoot)!;
+      const packageInfo = getPackageInfo(packageRoot)!;
       const depRange = packageInfo.dependencies?.[depName];
       expect(depRange).toBeTruthy();
       expect(packageInfo.devDependencies?.[`@types/${depName}`]).toBeTruthy();

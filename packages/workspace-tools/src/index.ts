@@ -14,7 +14,7 @@ export { findWorkspacePath } from "./workspaces/findWorkspacePath";
 export { getWorkspaces, getWorkspacesAsync } from "./workspaces/getWorkspaces";
 export { getWorkspacePackagePaths, getWorkspacePackagePathsAsync } from "./workspaces/getWorkspacePackagePaths";
 export { getWorkspaceManagerRoot, getWorkspaceRoot } from "./workspaces/getWorkspaceRoot";
-export { readPackageInfo, readPackageInfoAsync } from "./workspaces/readPackageInfo";
+export { getPackageInfo, getPackageInfoAsync } from "./getPackageInfo";
 export { getPnpmWorkspaceRoot, getPnpmWorkspaces } from "./workspaces/implementations/pnpm";
 export { getRushWorkspaceRoot, getRushWorkspaces } from "./workspaces/implementations/rush";
 export { getYarnWorkspaceRoot, getYarnWorkspaces } from "./workspaces/implementations/yarn";

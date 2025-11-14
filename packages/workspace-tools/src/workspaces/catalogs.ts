@@ -12,25 +12,30 @@ export function getCatalogs(cwd: string): Catalogs | undefined {
   return utils?.getCatalogs?.(cwd);
 }
 
-const catalogRegex = /^catalog:(.*)$/;
+const catalogPrefix = "catalog:";
 
 /**
  * Returns true if the version starts with `catalog:`.
  */
 export function isCatalogVersion(version: string): boolean {
-  return catalogRegex.test(version);
+  return version.startsWith(catalogPrefix);
 }
 
 /**
- * Given a dependency package name and a version string, if the version starts with `catalog:`,
- * look up the actual version spec from the given catalogs.
+ * Given a dependency package name and a version spec string, if the version starts with `catalog:`,
+ * look up the actual version spec (not the final resolved version) from the given catalogs.
  *
- * Throws an error if the version uses `catalog:` but no catalogs are defined, or the version
- * isn't found in the given catalog.
+ * Throws an error if there's anything invalid about the catalog spec (no catalogs defined,
+ * no matching catalog, catalog doesn't contain `name`, recursive catalog version).
  *
  * Returns undefined if the version doesn't start with `catalog:`.
  * @see https://pnpm.io/catalogs
  * @see https://yarnpkg.com/features/catalogs
+ *
+ * @param name - Dependency package name
+ * @param version - Dependency version spec, e.g. `catalog:my-catalog` or `catalog:`,
+ * or some non-catalog spec like `^1.2.3`
+ * @returns Actual version spec from the catalog, or undefined if not a catalog version
  */
 export function getCatalogVersion(params: {
   name: string;
@@ -39,8 +44,7 @@ export function getCatalogVersion(params: {
 }): string | undefined {
   const { name, version, catalogs } = params;
 
-  const catalogMatch = version.match(/^catalog:(.*)$/);
-  if (!catalogMatch) {
+  if (!isCatalogVersion(version)) {
     return undefined;
   }
 
@@ -48,7 +52,9 @@ export function getCatalogVersion(params: {
     throw new Error(`Dependency "${name}" uses a catalog version "${version}" but no catalogs are defined.`);
   }
 
-  const catalogName = catalogMatch[1];
+  const catalogName = version.slice(catalogPrefix.length);
+  // If there's no name specified after "catalog:", use the default catalog.
+  // Otherwise use the named catalog.
   const checkCatalog = catalogName ? catalogs.named?.[catalogName] : catalogs.default;
   const catalogNameStr = catalogName ? `catalogs.${catalogName}` : "the default catalog";
 
@@ -56,11 +62,18 @@ export function getCatalogVersion(params: {
     throw new Error(`Dependency "${name}" uses a catalog version "${version}" but ${catalogNameStr} is not defined.`);
   }
 
-  const actualVersion = checkCatalog[name];
-  if (!actualVersion) {
+  const actualSpec = checkCatalog[name];
+  if (!actualSpec) {
     throw new Error(
       `Dependency "${name}" uses a catalog version "${version}", but ${catalogNameStr} doesn't define a version for "${name}".`
     );
   }
-  return actualVersion;
+
+  if (isCatalogVersion(actualSpec)) {
+    throw new Error(
+      `Dependency "${name}" resolves to a recursive catalog version "${actualSpec}", which is not supported.`
+    );
+  }
+
+  return actualSpec;
 }

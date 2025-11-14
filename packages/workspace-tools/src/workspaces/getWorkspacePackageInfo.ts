@@ -4,7 +4,7 @@ import type { WorkspacePackageInfo, WorkspaceInfos } from "../types/WorkspaceInf
 import { PackageInfo } from "../types/PackageInfo";
 import { logVerboseWarning } from "../logging";
 import { infoFromPackageJson } from "../infoFromPackageJson";
-import { readPackageInfo } from "./readPackageInfo";
+import { getPackageInfo } from "../getPackageInfo";
 
 /**
  * Get an array with names, paths, and package.json contents for each of the given package paths
@@ -23,9 +23,9 @@ export function getWorkspacePackageInfo(packagePaths: string[]): WorkspaceInfos 
 
   return packagePaths
     .map<WorkspacePackageInfo | null>((workspacePath) => {
-      const packageJson = readPackageInfo(workspacePath);
+      const packageJson = getPackageInfo(workspacePath);
       if (!packageJson) {
-        return null; // readPackageInfo already logged a warning
+        return null; // getPackageInfo already logged a warning
       }
 
       return {

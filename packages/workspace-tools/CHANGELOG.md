@@ -10,9 +10,11 @@ Fri, 14 Nov 2025 21:48:11 GMT
 
 ### Patches
 
-- Add missing doc comments (elcraig@microsoft.com)
 - Add catalog helpers `getCatalogs` and `getCatalogVersion` (elcraig@microsoft.com)
-- Replace confusing `WorkspaceInfo` array type with `WorkspaceInfos` type, and add `WorkspacePackageInfo` type for array entries. Deprecate `getWorkspaceRoot` in favor of `getWorkspaceManagerRoot`. Clarify doc comments regarding "workspace" terminology. Introduce `readPackageInfo` helper for reading package.json files. (elcraig@microsoft.com)
+- Replace confusing `WorkspaceInfo` array type with `WorkspaceInfos` type, and add `WorkspacePackageInfo` type for array entries.
+- Deprecate `getWorkspaceRoot` in favor of `getWorkspaceManagerRoot`, and clarify doc comments regarding "workspace" terminology.
+- Introduce ~~`readPackageInfo`~~ *(renamed to `getPackageInfo` in next version)* helper for reading package.json files.
+- Add missing doc comments (elcraig@microsoft.com)
 
 ## 0.38.4
 

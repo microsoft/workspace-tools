@@ -8,7 +8,7 @@ import {
   getWorkspaceInfoFromWorkspaceRoot,
   getWorkspaceInfoFromWorkspaceRootAsync,
 } from "./packageJsonWorkspaces";
-import { readPackageInfo } from "../readPackageInfo";
+import { getPackageInfo } from "../../getPackageInfo";
 import type { Catalog, Catalogs, NamedCatalogs } from "../../types/Catalogs";
 import { logVerboseWarning } from "../../logging";
 import { readYaml } from "../../lockfile/readYaml";
@@ -69,7 +69,7 @@ export function getYarnCatalogs(cwd: string): Catalogs | undefined {
       }
     } else {
       // Check for midgard-yarn-strict definition of catalogs in package.json
-      const workspaceSettings = readPackageInfo(root)?.workspaces;
+      const workspaceSettings = getPackageInfo(root)?.workspaces;
       if (
         workspaceSettings &&
         !Array.isArray(workspaceSettings) &&
