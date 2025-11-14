@@ -1,5 +1,8 @@
 import type { LockDependency, ParsedLock, BerryLockFile } from "./types";
 
+/**
+ * Convert a Yarn Berry (v2+) YAML lock file contents into a standardized format.
+ */
 export function parseBerryLock(yaml: BerryLockFile): ParsedLock {
   const results: { [key: string]: LockDependency } = {};
 

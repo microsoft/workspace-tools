@@ -6,6 +6,9 @@ export interface PackageDependenciesOptions {
   withOptionalDependencies?: boolean;
 }
 
+/**
+ * Verify that `dep`'s version is not specified with `npm:` or `file:` protocol.
+ */
 function isValidDependency(info: PackageInfo, dep: string): boolean {
   // check if the dependency range is specified by an external package like npm: or file:
   const range =
@@ -22,16 +25,25 @@ function isValidDependency(info: PackageInfo, dep: string): boolean {
   return !range.startsWith("npm:") && !range.startsWith("file:");
 }
 
+/**
+ * Gets the workspace package dependencies for a given package (excluding `file:` or `npm:` versions).
+ * It only considers `dependencies` unless options specify otherwise.
+ *
+ * @param info - The package information containing dependencies
+ * @param internalPackages - Set of in-repo package names to consider.
+ * @param options - Configuration options for which dependency types to include
+ * @returns Subset of `packages` that are dependencies of the given package
+ */
 export function getPackageDependencies(
   info: PackageInfo,
-  packages: Set<string>,
+  internalPackages: Set<string>,
   options: PackageDependenciesOptions = { withDevDependencies: true }
 ): string[] {
   const deps: string[] = [];
 
   if (info.dependencies) {
     for (const dep of Object.keys(info.dependencies)) {
-      if (dep !== info.name && packages.has(dep)) {
+      if (dep !== info.name && internalPackages.has(dep)) {
         deps.push(dep);
       }
     }
@@ -39,7 +51,7 @@ export function getPackageDependencies(
 
   if (info.devDependencies && options.withDevDependencies) {
     for (const dep of Object.keys(info.devDependencies)) {
-      if (dep !== info.name && packages.has(dep)) {
+      if (dep !== info.name && internalPackages.has(dep)) {
         deps.push(dep);
       }
     }
@@ -47,7 +59,7 @@ export function getPackageDependencies(
 
   if (info.peerDependencies && options.withPeerDependencies) {
     for (const dep of Object.keys(info.peerDependencies)) {
-      if (dep !== info.name && packages.has(dep)) {
+      if (dep !== info.name && internalPackages.has(dep)) {
         deps.push(dep);
       }
     }
@@ -55,7 +67,7 @@ export function getPackageDependencies(
 
   if (info.optionalDependencies && options.withOptionalDependencies) {
     for (const dep of Object.keys(info.optionalDependencies)) {
-      if (dep !== info.name && packages.has(dep)) {
+      if (dep !== info.name && internalPackages.has(dep)) {
         deps.push(dep);
       }
     }

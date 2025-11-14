@@ -12,7 +12,7 @@ import { SpawnSyncReturns } from 'child_process';
 // @public
 export function addGitObserver(observer: GitObserver): () => void;
 
-// @public (undocumented)
+// @public
 export interface BerryLockFile {
     // (undocumented)
     [key: string]: {
@@ -28,7 +28,7 @@ export interface BerryLockFile {
 // @public
 export function clearGitObservers(): void;
 
-// @public (undocumented)
+// @public
 export function commit(message: string, cwd: string, options?: string[]): void;
 
 // @public (undocumented)
@@ -50,10 +50,10 @@ export interface DependencyMap {
     dependents: Map<string, Set<string>>;
 }
 
-// @public (undocumented)
+// @public
 export function fetchRemote(remote: string, cwd: string): void;
 
-// @public (undocumented)
+// @public
 export function fetchRemoteBranch(remote: string, remoteBranch: string, cwd: string): void;
 
 // @public
@@ -77,7 +77,7 @@ export function getAllPackageJsonFilesAsync(cwd: string): Promise<string[]>;
 // @public
 export function getBranchChanges(branch: string, cwd: string): string[];
 
-// @public (undocumented)
+// @public
 export function getBranchName(cwd: string): string | null;
 
 // @public
@@ -86,13 +86,13 @@ export function getChangedPackages(cwd: string, target: string | undefined, igno
 // @public
 export function getChangedPackagesBetweenRefs(cwd: string, fromRef: string, toRef?: string, ignoreGlobs?: string[]): string[];
 
-// @public (undocumented)
+// @public
 export function getChanges(branch: string, cwd: string): string[];
 
-// @public (undocumented)
+// @public
 export function getChangesBetweenRefs(fromRef: string, toRef: string, options: string[], pattern: string, cwd: string): string[];
 
-// @public (undocumented)
+// @public
 export function getCurrentHash(cwd: string): string | null;
 
 // @public
@@ -128,25 +128,25 @@ export function getDependentMap(packages: PackageInfos): Map<string, Set<string>
 // @public
 export function getFileAddedHash(filename: string, cwd: string): string | undefined;
 
-// @public (undocumented)
+// @public
 export function getFullBranchRef(branch: string, cwd: string): string | null;
 
 // @public @deprecated (undocumented)
 export const getInternalDeps: typeof getPackageDependencies;
 
-// @public (undocumented)
-export function getPackageDependencies(info: PackageInfo, packages: Set<string>, options?: PackageDependenciesOptions): string[];
+// @public
+export function getPackageDependencies(info: PackageInfo, internalPackages: Set<string>, options?: PackageDependenciesOptions): string[];
 
-// @public (undocumented)
+// @public
 export function getPackageInfos(cwd: string): PackageInfos;
 
-// @public (undocumented)
+// @public
 export function getPackageInfosAsync(cwd: string): Promise<PackageInfos>;
 
 // @public
 export function getPackagesByFiles(workspaceRoot: string, files: string[], ignoreGlobs?: string[], returnAllPackagesOnNoMatch?: boolean): string[];
 
-// @public (undocumented)
+// @public
 export function getParentBranch(cwd: string): string | null;
 
 // @public @deprecated (undocumented)
@@ -155,10 +155,10 @@ export function getPnpmWorkspaceRoot(cwd: string): string;
 // @public
 export function getPnpmWorkspaces(cwd: string): WorkspaceInfo;
 
-// @public (undocumented)
+// @public
 export function getRecentCommitMessages(branch: string, cwd: string): string[];
 
-// @public (undocumented)
+// @public
 export function getRemoteBranch(branch: string, cwd: string): string | null;
 
 // @public @deprecated (undocumented)
@@ -172,10 +172,10 @@ export function getScopedPackages(search: string[], packages: {
     [pkg: string]: unknown;
 } | string[]): string[];
 
-// @public (undocumented)
+// @public
 export function getShortBranchName(fullBranchRef: string, cwd: string): string | null;
 
-// @public (undocumented)
+// @public
 export function getStagedChanges(cwd: string): string[];
 
 // @public @deprecated
@@ -193,10 +193,10 @@ export function getTransitiveProviders(targets: string[], packages: PackageInfos
 // @public
 export function getUnstagedChanges(cwd: string): string[];
 
-// @public (undocumented)
+// @public
 export function getUntrackedChanges(cwd: string): string[];
 
-// @public (undocumented)
+// @public
 export function getUserEmail(cwd: string): string | null;
 
 // @public
@@ -247,13 +247,13 @@ export type GitProcessOutput = {
     success: boolean;
 } & Omit<SpawnSyncReturns<string | Buffer>, "stdout" | "stderr">;
 
-// @public (undocumented)
+// @public
 export function init(cwd: string, email?: string, username?: string): void;
 
-// @public (undocumented)
+// @public
 export function isChildOf(child: string, parent: string): boolean;
 
-// @public (undocumented)
+// @public
 export function listAllTrackedFiles(patterns: string[], cwd: string): string[];
 
 // @public (undocumented)
@@ -268,7 +268,7 @@ export type LockDependency = {
 // @public (undocumented)
 export function nameAtVersion(name: string, version: string): string;
 
-// @public (undocumented)
+// @public
 export interface NpmLockFile {
     // (undocumented)
     dependencies?: {
@@ -362,7 +362,7 @@ export interface PackageGraphFilter {
     withPeerDependencies?: boolean;
 }
 
-// @public (undocumented)
+// @public
 export interface PackageInfo {
     // (undocumented)
     [key: string]: any;
@@ -382,7 +382,6 @@ export interface PackageInfo {
     optionalDependencies?: {
         [dep: string]: string;
     };
-    // (undocumented)
     packageJsonPath: string;
     // (undocumented)
     peerDependencies?: {
@@ -404,7 +403,7 @@ export interface PackageInfo {
     version: string;
 }
 
-// @public (undocumented)
+// @public
 export interface PackageInfos {
     // (undocumented)
     [pkgName: string]: PackageInfo;
@@ -421,13 +420,13 @@ export type ParsedLock = {
 // @public (undocumented)
 export function parseLockFile(packageRoot: string): Promise<ParsedLock>;
 
-// @public (undocumented)
+// @public
 export function parseRemoteBranch(branch: string): {
     remote: string;
     remoteBranch: string;
 };
 
-// @public (undocumented)
+// @public
 export interface PnpmLockFile {
     // (undocumented)
     packages: {
@@ -441,7 +440,7 @@ export function queryLockFile(name: string, versionRange: string, lock: ParsedLo
 // @public (undocumented)
 export function _resetPackageJsonFilesCache(): void;
 
-// @public (undocumented)
+// @public
 export function revertLocalChanges(cwd: string): boolean;
 
 // @public
@@ -450,10 +449,10 @@ export function searchUp(filePath: string | string[], cwd: string): string | und
 // @public
 export function setCachingEnabled(enabled: boolean): void;
 
-// @public (undocumented)
+// @public
 export function stage(patterns: string[], cwd: string): void;
 
-// @public (undocumented)
+// @public
 export function stageAndCommit(patterns: string[], message: string, cwd: string, commitOptions?: string[]): void;
 
 // @public
