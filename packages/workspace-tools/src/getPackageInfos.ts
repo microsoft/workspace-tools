@@ -1,8 +1,6 @@
-import fs from "fs";
-import path from "path";
-import { PackageInfo, PackageInfos } from "./types/PackageInfo";
-import { infoFromPackageJson } from "./infoFromPackageJson";
+import { PackageInfos } from "./types/PackageInfo";
 import { getWorkspaces, getWorkspacesAsync } from "./workspaces/getWorkspaces";
+import { readPackageInfo } from "./workspaces/readPackageInfo";
 
 /**
  * Read all the package.json files in a monorepo. Only works for monorepos which
@@ -18,7 +16,7 @@ export function getPackageInfos(cwd: string): PackageInfos {
       packageInfos[pkg.name] = pkg.packageJson;
     }
   } else {
-    const rootInfo = tryReadRootPackageJson(cwd);
+    const rootInfo = readPackageInfo(cwd);
     if (rootInfo) {
       packageInfos[rootInfo.name] = rootInfo;
     }
@@ -45,23 +43,11 @@ export async function getPackageInfosAsync(cwd: string): Promise<PackageInfos> {
       packageInfos[pkg.name] = pkg.packageJson;
     }
   } else {
-    const rootInfo = tryReadRootPackageJson(cwd);
+    const rootInfo = readPackageInfo(cwd);
     if (rootInfo) {
       packageInfos[rootInfo.name] = rootInfo;
     }
   }
 
   return packageInfos;
-}
-
-function tryReadRootPackageJson(cwd: string): PackageInfo | undefined {
-  const packageJsonPath = path.join(cwd, "package.json");
-  if (fs.existsSync(packageJsonPath)) {
-    try {
-      const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, "utf-8"));
-      return infoFromPackageJson(packageJson, packageJsonPath);
-    } catch (e) {
-      throw new Error(`Invalid package.json file detected ${packageJsonPath}: ${(e as Error)?.message || e}`);
-    }
-  }
 }

@@ -1,7 +1,7 @@
 import path from "path";
 
 import { getPackagePaths } from "../../getPackagePaths";
-import { WorkspaceInfo } from "../../types/WorkspaceInfo";
+import type { WorkspaceInfos } from "../../types/WorkspaceInfo";
 import { getWorkspacePackageInfo, getWorkspacePackageInfoAsync } from "../getWorkspacePackageInfo";
 import { readYaml } from "../../lockfile/readYaml";
 import { logVerboseWarning } from "../../logging";
@@ -11,7 +11,7 @@ type PnpmWorkspaceYaml = {
   packages: string[];
 };
 
-/** @deprecated Use `getWorkspaceRoot` */
+/** @deprecated Use `getWorkspaceManagerRoot` */
 export function getPnpmWorkspaceRoot(cwd: string): string {
   const root = getWorkspaceManagerAndRoot(cwd, undefined, "pnpm")?.root;
   if (!root) {
@@ -20,7 +20,7 @@ export function getPnpmWorkspaceRoot(cwd: string): string {
   return root;
 }
 
-/** Get package paths for a pnpm workspace. */
+/** Get paths for each package ("workspace") in a pnpm monorepo. */
 export function getWorkspacePackagePaths(cwd: string): string[] {
   try {
     const pnpmWorkspacesRoot = getPnpmWorkspaceRoot(cwd);
@@ -36,10 +36,10 @@ export function getWorkspacePackagePaths(cwd: string): string[] {
 }
 
 /**
- * Get an array with names, paths, and package.json contents for each package in a pnpm workspace.
- * (See `../getWorkspaces` for why it's named this way.)
+ * Get an array with names, paths, and package.json contents for each package ("workspace")
+ * in a pnpm monorepo.
  */
-export function getPnpmWorkspaces(cwd: string): WorkspaceInfo {
+export function getPnpmWorkspaces(cwd: string): WorkspaceInfos {
   try {
     const packagePaths = getWorkspacePackagePaths(cwd);
     return getWorkspacePackageInfo(packagePaths);
@@ -50,10 +50,10 @@ export function getPnpmWorkspaces(cwd: string): WorkspaceInfo {
 }
 
 /**
- * Get an array with names, paths, and package.json contents for each package in a pnpm workspace.
- * (See `../getWorkspaces` for why it's named this way.)
+ * Get an array with names, paths, and package.json contents for each package ("workspace")
+ * in a pnpm monorepo.
  */
-export async function getPnpmWorkspacesAsync(cwd: string): Promise<WorkspaceInfo> {
+export async function getPnpmWorkspacesAsync(cwd: string): Promise<WorkspaceInfos> {
   try {
     const packagePaths = getWorkspacePackagePaths(cwd);
     return getWorkspacePackageInfoAsync(packagePaths);

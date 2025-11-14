@@ -1,63 +1,61 @@
 import path from "path";
-import fs from "fs";
 import fsPromises from "fs/promises";
-import { WorkspaceInfo } from "../types/WorkspaceInfo";
+import type { WorkspacePackageInfo, WorkspaceInfos } from "../types/WorkspaceInfo";
 import { PackageInfo } from "../types/PackageInfo";
 import { logVerboseWarning } from "../logging";
 import { infoFromPackageJson } from "../infoFromPackageJson";
+import { readPackageInfo } from "./readPackageInfo";
 
 /**
  * Get an array with names, paths, and package.json contents for each of the given package paths
- * within a workspace.
+ * ("workspace" paths in npm/yarn/pnpm terms) within a monorepo.
  *
  * This is an internal helper used by `getWorkspaces` implementations for different managers.
- * (See `../getWorkspaces` for why it's named this way.)
- * @param packagePaths Paths to packages within a workspace
+ *
+ * @param packagePaths Paths to packages within a monorepo
  * @returns Array of workspace package infos
  * @internal
  */
-export function getWorkspacePackageInfo(packagePaths: string[]): WorkspaceInfo {
+export function getWorkspacePackageInfo(packagePaths: string[]): WorkspaceInfos {
   if (!packagePaths) {
     return [];
   }
 
   return packagePaths
-    .map<WorkspaceInfo[number] | null>((workspacePath) => {
-      let packageJson: PackageInfo;
-      const packageJsonPath = path.join(workspacePath, "package.json");
-
-      try {
-        packageJson = JSON.parse(fs.readFileSync(packageJsonPath, "utf-8")) as PackageInfo;
-      } catch (err) {
-        logVerboseWarning(`Error reading or parsing ${packageJsonPath} while getting workspace package info`, err);
-        return null;
+    .map<WorkspacePackageInfo | null>((workspacePath) => {
+      const packageJson = readPackageInfo(workspacePath);
+      if (!packageJson) {
+        return null; // readPackageInfo already logged a warning
       }
 
       return {
         name: packageJson.name,
         path: workspacePath,
-        packageJson: infoFromPackageJson(packageJson, packageJsonPath),
+        packageJson,
       };
     })
-    .filter(Boolean) as WorkspaceInfo;
+    .filter(Boolean) as WorkspaceInfos;
 }
 
 /**
  * Get an array with names, paths, and package.json contents for each of the given package paths
- * within a workspace.
+ * ("workspace" paths in npm/yarn/pnpm terms) within a monorepo.
+ *
+ * NOTE: As of writing, this will start promises to read all package.json files in parallel,
+ * without direct concurrency control.
  *
  * This is an internal helper used by `getWorkspaces` implementations for different managers.
- * (See `../getWorkspaces` for why it's named this way.)
- * @param packagePaths Paths to packages within a workspace
+ *
+ * @param packagePaths Paths to packages within a monorepo
  * @returns Array of workspace package infos
  * @internal
  */
-export async function getWorkspacePackageInfoAsync(packagePaths: string[]): Promise<WorkspaceInfo> {
+export async function getWorkspacePackageInfoAsync(packagePaths: string[]): Promise<WorkspaceInfos> {
   if (!packagePaths) {
     return [];
   }
 
-  const workspacePkgPromises = packagePaths.map<Promise<WorkspaceInfo[number] | null>>(async (workspacePath) => {
+  const workspacePkgPromises = packagePaths.map<Promise<WorkspacePackageInfo | null>>(async (workspacePath) => {
     const packageJsonPath = path.join(workspacePath, "package.json");
 
     try {
@@ -73,5 +71,5 @@ export async function getWorkspacePackageInfoAsync(packagePaths: string[]): Prom
     }
   });
 
-  return (await Promise.all(workspacePkgPromises)).filter(Boolean) as WorkspaceInfo;
+  return (await Promise.all(workspacePkgPromises)).filter(Boolean) as WorkspaceInfos;
 }

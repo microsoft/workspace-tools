@@ -2,7 +2,7 @@ import fs from "fs";
 import jju from "jju";
 import path from "path";
 import { getPackagePaths } from "../../getPackagePaths";
-import { WorkspaceInfo } from "../../types/WorkspaceInfo";
+import type { WorkspaceInfos } from "../../types/WorkspaceInfo";
 import { getWorkspacePackageInfo, getWorkspacePackageInfoAsync } from "../getWorkspacePackageInfo";
 import { logVerboseWarning } from "../../logging";
 import { getWorkspaceManagerAndRoot } from "./getWorkspaceManagerAndRoot";
@@ -15,7 +15,7 @@ function getLernaWorkspaceRoot(cwd: string): string {
   return root;
 }
 
-/** Get package paths for a lerna workspace. */
+/** Get paths for each package ("workspace") in a lerna monorepo. */
 export function getWorkspacePackagePaths(cwd: string): string[] {
   try {
     const lernaWorkspaceRoot = getLernaWorkspaceRoot(cwd);
@@ -29,10 +29,10 @@ export function getWorkspacePackagePaths(cwd: string): string[] {
 }
 
 /**
- * Get an array with names, paths, and package.json contents for each package in a lerna workspace.
- * (See `../getWorkspaces` for why it's named this way.)
+ * Get an array with names, paths, and package.json contents for each package ("workspace")
+ * in a lerna monorepo.
  */
-export function getLernaWorkspaces(cwd: string): WorkspaceInfo {
+export function getLernaWorkspaces(cwd: string): WorkspaceInfos {
   try {
     const packagePaths = getWorkspacePackagePaths(cwd);
     return getWorkspacePackageInfo(packagePaths);
@@ -43,10 +43,10 @@ export function getLernaWorkspaces(cwd: string): WorkspaceInfo {
 }
 
 /**
- * Get an array with names, paths, and package.json contents for each package in a lerna workspace.
- * (See `../getWorkspaces` for why it's named this way.)
+ * Get an array with names, paths, and package.json contents for each package ("workspace")
+ * in a lerna monorepo.
  */
-export async function getLernaWorkspacesAsync(cwd: string): Promise<WorkspaceInfo> {
+export async function getLernaWorkspacesAsync(cwd: string): Promise<WorkspaceInfos> {
   try {
     const packagePaths = getWorkspacePackagePaths(cwd);
     return getWorkspacePackageInfoAsync(packagePaths);

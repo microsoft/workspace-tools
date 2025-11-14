@@ -11,7 +11,7 @@ const globOptions: GlobOptions = {
 
 /**
  * Given package folder globs (such as those from package.json `workspaces`) and a workspace root
- * directory, get paths to actual package folders.
+ * directory, get absolute paths to actual package folders.
  */
 export function getPackagePaths(root: string, packageGlobs: string[]): string[] {
   if (isCachingEnabled() && packagePathsCache[root]) {
@@ -27,7 +27,7 @@ export function getPackagePaths(root: string, packageGlobs: string[]): string[] 
 
 /**
  * Given package folder globs (such as those from package.json `workspaces`) and a workspace root
- * directory, get paths to actual package folders.
+ * directory, get absolute paths to actual package folders.
  */
 export async function getPackagePathsAsync(root: string, packageGlobs: string[]): Promise<string[]> {
   if (isCachingEnabled() && packagePathsCache[root]) {

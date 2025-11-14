@@ -1,0 +1,18 @@
+{
+  "changes": [
+    {
+      "type": "patch",
+      "comment": "Update API usage",
+      "packageName": "@ws-tools/grapher",
+      "email": "elcraig@microsoft.com",
+      "dependentChangeType": "patch"
+    },
+    {
+      "type": "patch",
+      "comment": "Replace confusing `WorkspaceInfo` array type with `WorkspaceInfos` type, and add `WorkspacePackageInfo` type for array entries. Deprecate `getWorkspaceRoot` in favor of `getWorkspaceManagerRoot`. Clarify doc comments regarding \"workspace\" terminology. Introduce `readPackageInfo` helper for reading package.json files.",
+      "packageName": "workspace-tools",
+      "email": "elcraig@microsoft.com",
+      "dependentChangeType": "patch"
+    }
+  ]
+}

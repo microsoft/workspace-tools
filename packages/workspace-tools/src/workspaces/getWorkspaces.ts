@@ -1,28 +1,25 @@
 import { getWorkspaceUtilities, getWorkspaceManagerAndRoot } from "./implementations";
-import { WorkspaceInfo } from "../types/WorkspaceInfo";
+import type { WorkspaceInfos } from "../types/WorkspaceInfo";
 
 /**
- * Get an array with names, paths, and package.json contents for each package in a workspace.
- * The list of included packages is based on the workspace manager's config file.
- *
- * The method name is somewhat misleading due to the double meaning of "workspace", but it's retained
- * for compatibility. "Workspace" here refers to an individual package, in the sense of the `workspaces`
- * package.json config used by npm/yarn (instead of referring to the entire monorepo).
+ * Get an array with names, paths, and package.json contents for each package ("workspace" in
+ * npm/yarn/pnpm terms) within a monorepo. The list of included packages is based on the workspace
+ * manager's config file.
  */
-export function getWorkspaces(cwd: string): WorkspaceInfo {
+export function getWorkspaces(cwd: string): WorkspaceInfos {
   const utils = getWorkspaceUtilities(cwd);
   return utils?.getWorkspaces(cwd) || [];
 }
 
 /**
- * Get an array with names, paths, and package.json contents for each package in a workspace.
- * The list of included packages is based on the workspace manager's config file.
+ * Get an array with names, paths, and package.json contents for each package ("workspace" in
+ * npm/yarn/pnpm terms) within a monorepo. The list of included packages is based on the workspace
+ * manager's config file.
  *
- * The method name is somewhat misleading due to the double meaning of "workspace", but it's retained
- * for compatibility. "Workspace" here refers to an individual package, in the sense of the `workspaces`
- * package.json config used by npm/yarn (instead of referring to the entire monorepo).
+ * NOTE: As of writing, this will start promises to read all package.json files in parallel,
+ * without direct concurrency control.
  */
-export async function getWorkspacesAsync(cwd: string): Promise<WorkspaceInfo> {
+export async function getWorkspacesAsync(cwd: string): Promise<WorkspaceInfos> {
   const utils = getWorkspaceUtilities(cwd);
 
   if (!utils) {

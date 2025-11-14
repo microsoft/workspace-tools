@@ -1,6 +1,6 @@
 import path from "path";
 import fs from "fs";
-import { getWorkspaceRoot } from "./workspaces/getWorkspaceRoot";
+import { getWorkspaceManagerRoot } from "./workspaces/getWorkspaceRoot";
 import { git } from "./git";
 import { logVerboseWarning } from "./logging";
 
@@ -57,7 +57,7 @@ export function findPackageRoot(cwd: string) {
 export function findProjectRoot(cwd: string) {
   let workspaceRoot: string | undefined;
   try {
-    workspaceRoot = getWorkspaceRoot(cwd);
+    workspaceRoot = getWorkspaceManagerRoot(cwd);
   } catch (err) {
     logVerboseWarning(`Error getting workspace root for ${cwd}`, err);
   }

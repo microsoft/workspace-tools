@@ -1,5 +1,5 @@
-import { getWorkspaceManagerAndRoot } from ".";
-import { WorkspaceInfo } from "../../types/WorkspaceInfo";
+import { getWorkspaceManagerAndRoot } from "./index";
+import type { WorkspaceInfos } from "../../types/WorkspaceInfo";
 import {
   getPackagePathsFromWorkspaceRoot,
   getPackagePathsFromWorkspaceRootAsync,
@@ -7,7 +7,7 @@ import {
   getWorkspaceInfoFromWorkspaceRootAsync,
 } from "./packageJsonWorkspaces";
 
-/** @deprecated Use `getWorkspaceRoot` */
+/** @deprecated Use `getWorkspaceManagerRoot` */
 export function getYarnWorkspaceRoot(cwd: string): string {
   const root = getWorkspaceManagerAndRoot(cwd, undefined, "yarn")?.root;
   if (!root) {
@@ -16,32 +16,32 @@ export function getYarnWorkspaceRoot(cwd: string): string {
   return root;
 }
 
-/** Get package paths for a yarn workspace. */
+/** Get paths for each package ("workspace") in a yarn monorepo. */
 export function getWorkspacePackagePaths(cwd: string): string[] {
   const yarnWorkspacesRoot = getYarnWorkspaceRoot(cwd);
   return getPackagePathsFromWorkspaceRoot(yarnWorkspacesRoot);
 }
 
-/** Get package paths for a yarn workspace. */
+/** Get paths for each package ("workspace") in a yarn monorepo. */
 export function getWorkspacePackagePathsAsync(cwd: string): Promise<string[]> {
   const yarnWorkspacesRoot = getYarnWorkspaceRoot(cwd);
   return getPackagePathsFromWorkspaceRootAsync(yarnWorkspacesRoot);
 }
 
 /**
- * Get an array with names, paths, and package.json contents for each package in a yarn workspace.
- * (See `../getWorkspaces` for why it's named this way.)
+ * Get an array with names, paths, and package.json contents for each package ("workspace")
+ * in a yarn monorepo.
  */
-export function getYarnWorkspaces(cwd: string): WorkspaceInfo {
+export function getYarnWorkspaces(cwd: string): WorkspaceInfos {
   const yarnWorkspacesRoot = getYarnWorkspaceRoot(cwd);
   return getWorkspaceInfoFromWorkspaceRoot(yarnWorkspacesRoot);
 }
 
 /**
- * Get an array with names, paths, and package.json contents for each package in a yarn workspace.
- * (See `../getWorkspaces` for why it's named this way.)
+ * Get an array with names, paths, and package.json contents for each package ("workspace")
+ * in a yarn monorepo.
  */
-export function getYarnWorkspacesAsync(cwd: string): Promise<WorkspaceInfo> {
+export function getYarnWorkspacesAsync(cwd: string): Promise<WorkspaceInfos> {
   const yarnWorkspacesRoot = getYarnWorkspaceRoot(cwd);
   return getWorkspaceInfoFromWorkspaceRootAsync(yarnWorkspacesRoot);
 }
