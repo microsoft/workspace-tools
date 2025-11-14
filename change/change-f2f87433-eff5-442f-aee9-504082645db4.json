@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "type": "none",
+      "comment": "Update tsc command format",
+      "packageName": "@ws-tools/grapher",
+      "email": "elcraig@microsoft.com",
+      "dependentChangeType": "none"
+    }
+  ]
+}

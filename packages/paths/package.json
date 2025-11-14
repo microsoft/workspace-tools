@@ -1,16 +1,23 @@
 {
-  "name": "workspace-tools",
-  "version": "0.38.4",
+  "name": "@ws-tools/paths",
+  "version": "0.1.0",
   "license": "MIT",
+  "description": "Helper methods related to paths in a repo or monorepo",
   "repository": {
     "type": "git",
     "url": "https://github.com/microsoft/workspace-tools"
   },
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./lib/index.js",
+      "types": "./lib/index.d.ts"
+    }
+  },
   "files": [
     "lib/!(__*)",
-    "lib/!(__*)/**/*"
+    "lib/!(__*)/**"
   ],
   "scripts": {
     "api": "ws-tools-scripts api",
@@ -18,18 +25,7 @@
     "start": "tsc -w --preserveWatchOutput",
     "test": "jest"
   },
-  "dependencies": {
-    "@yarnpkg/lockfile": "^1.1.0",
-    "fast-glob": "^3.3.1",
-    "git-url-parse": "^16.0.0",
-    "globby": "^11.0.0",
-    "jju": "^1.4.0",
-    "js-yaml": "^4.1.0",
-    "micromatch": "^4.0.0",
-    "@ws-tools/paths": "^0.1.0"
-  },
   "devDependencies": {
-    "lodash": "^4.17.21",
     "@ws-tools/scripts": "*"
   }
 }

@@ -7,6 +7,6 @@
     "ws-tools-scripts": "bin/ws-tools-scripts.js"
   },
   "scripts": {
-    "build": "tsc --noEmit"
+    "build": "tsc --pretty --noEmit"
   }
 }
