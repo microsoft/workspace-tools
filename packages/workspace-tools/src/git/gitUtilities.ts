@@ -3,58 +3,106 @@
 // (could be split into separate files later if desired)
 //
 
-import { git, GitError, GitProcessOutput } from "./git";
+import { getConfigValue } from "./config";
+import { git, processGitOutput } from "./git";
+import type {
+  GetChangesBetweenRefsOptions,
+  GitBranchOptions,
+  GitCommitOptions,
+  GitCommonOptions,
+  GitFetchOptions,
+  GitInitOptions,
+  GitStageOptions,
+  ParsedRemoteBranch,
+  ParseRemoteBranchOptions,
+} from "./types";
+
+const diffArgs = ["--no-pager", "diff", "--name-only", "--relative"];
 
 /**
  * Get a list of files with untracked changes.
- * Throws an error on failure.
+ * Throws an error on failure by default.
  *
  * @returns An array of file paths with untracked changes
  */
-export function getUntrackedChanges(cwd: string): string[] {
-  try {
-    return processGitOutput(git(["ls-files", "--others", "--exclude-standard"], { cwd }));
-  } catch (e) {
-    throw new GitError(`Cannot gather information about untracked changes`, e);
-  }
+// TODO: move to getChanges.ts
+export function getUntrackedChanges(options: GitCommonOptions): string[];
+/** @deprecated Use object params version */
+export function getUntrackedChanges(cwd: string): string[];
+export function getUntrackedChanges(cwdOrOptions: string | GitCommonOptions) {
+  const options: GitCommonOptions = typeof cwdOrOptions === "string" ? { cwd: cwdOrOptions } : cwdOrOptions;
+
+  const results = git(["ls-files", "--others", "--exclude-standard"], {
+    description: "Gathering information about untracked changes",
+    throwOnError: true,
+    ...options,
+  });
+  return processGitOutput(results, { excludeNodeModules: true });
 }
 
 /**
- * Fetch from the given remote.
- * Throws an error on failure.
+ * Fetch from the given remote (and optionally branch) or all remotes.
+ * Throws an error on failure by default.
  */
-export function fetchRemote(remote: string, cwd: string): void {
-  const results = git(["fetch", "--", remote], { cwd });
+// TODO: move to fetch.ts
+export function fetchRemote(options: GitFetchOptions): void;
+/** @deprecated Use object params version */
+export function fetchRemote(remote: string, cwd: string): void;
+export function fetchRemote(remoteOrOptions: string | GitFetchOptions, cwd?: string) {
+  const { remote, remoteBranch, options, ...gitOptions } =
+    typeof remoteOrOptions === "string"
+      ? ({ remote: remoteOrOptions, cwd: cwd! } satisfies GitFetchOptions)
+      : remoteOrOptions;
 
-  if (!results.success) {
-    throw new GitError(`Cannot fetch remote "${remote}"`);
+  if (remoteBranch && !remote) {
+    throw new Error('Must provide "remote" when using "remoteBranch" option');
   }
+
+  const fetchArgs = [
+    "fetch",
+    "--",
+    ...(remote ? [remote] : []),
+    ...(remoteBranch ? [remoteBranch] : []),
+    ...(options || []),
+  ];
+
+  git(fetchArgs, {
+    description: remote
+      ? `Fetching ${remoteBranch ? `branch "${remoteBranch}" from ` : ""}remote "${remote}"`
+      : "Fetching all remotes",
+    throwOnError: true,
+    ...gitOptions,
+  });
 }
 
 /**
- * Fetch from the given remote and branch.
- * Throws an error on failure.
+ * Fetch from the given remote and branch. Throws an error on failure.
+ * @deprecated Use `fetchRemote({ remote, remoteBranch, cwd })`
  */
-export function fetchRemoteBranch(remote: string, remoteBranch: string, cwd: string): void {
-  const results = git(["fetch", "--", remote, remoteBranch], { cwd });
-
-  if (!results.success) {
-    throw new GitError(`Cannot fetch branch "${remoteBranch}" from remote "${remote}"`);
-  }
+// TODO: move to fetch.ts
+export function fetchRemoteBranch(remote: string, remoteBranch: string, cwd: string) {
+  fetchRemote({ remote, remoteBranch, cwd, throwOnError: true });
 }
 
 /**
  * Gets file paths with changes that have not been staged yet.
- * Throws an error on failure.
+ * Throws an error on failure by default.
  *
  * @returns An array of relative file paths with unstaged changes
  */
-export function getUnstagedChanges(cwd: string): string[] {
-  try {
-    return processGitOutput(git(["--no-pager", "diff", "--name-only", "--relative"], { cwd }));
-  } catch (e) {
-    throw new GitError(`Cannot gather information about unstaged changes`, e);
-  }
+// TODO: move to getChanges.ts
+export function getUnstagedChanges(options: GitCommonOptions): string[];
+/** @deprecated Use object params version */
+export function getUnstagedChanges(cwd: string): string[];
+export function getUnstagedChanges(cwdOrOptions: string | GitCommonOptions) {
+  const options: GitCommonOptions = typeof cwdOrOptions === "string" ? { cwd: cwdOrOptions } : cwdOrOptions;
+
+  const results = git(diffArgs, {
+    description: "Gathering information about unstaged changes",
+    throwOnError: true,
+    ...options,
+  });
+  return processGitOutput(results, { excludeNodeModules: true });
 }
 
 /**
@@ -62,275 +110,344 @@ export function getUnstagedChanges(cwd: string): string[] {
  * Throws an error on failure.
  *
  * @returns An array of relative file paths that have changed
+ * @deprecated Use `getBranchChanges({ branch, cwd })`
  */
-export function getChanges(branch: string, cwd: string): string[] {
-  try {
-    return processGitOutput(git(["--no-pager", "diff", "--relative", "--name-only", branch + "..."], { cwd }));
-  } catch (e) {
-    throw new GitError(`Cannot gather information about changes`, e);
-  }
+// TODO: move to getChanges.ts
+export function getChanges(branch: string, cwd: string) {
+  return getChangesBetweenRefs({ fromRef: branch, cwd, throwOnError: true });
 }
 
 /**
  * Gets file paths with changes between the branch and the merge-base.
+ * Throws an error on failure by default.
  *
  * @returns An array of relative file paths that have changed
  */
-export function getBranchChanges(branch: string, cwd: string): string[] {
-  return getChangesBetweenRefs(/*from*/ branch, /*to*/ "", /*options*/ [], /*file pattern*/ "", cwd);
+// TODO: move to getChanges.ts
+export function getBranchChanges(options: GitBranchOptions): string[];
+/** @deprecated Use object params version */
+export function getBranchChanges(branch: string, cwd: string): string[];
+export function getBranchChanges(branchOrOptions: string | GitBranchOptions, cwd?: string) {
+  const { branch, ...options } =
+    typeof branchOrOptions === "string" ? { branch: branchOrOptions, cwd: cwd! } : branchOrOptions;
+
+  return getChangesBetweenRefs({ fromRef: branch, throwOnError: true, ...options });
 }
 
 /**
  * Gets file paths with changes between two git references (commits, branches, tags).
- * Throws an error on failure.
+ * Throws an error on failure by default.
  *
- * @param fromRef - The starting reference
- * @param toRef - The ending reference
- * @param options - Additional git diff options
- * @param pattern - Optional file pattern to filter results
- * @param cwd - The working directory
  * @returns An array of file paths that have changed
  */
+// TODO: move to getChanges.ts
+export function getChangesBetweenRefs(options: GetChangesBetweenRefsOptions): string[];
+/** @deprecated Use object param version */
 export function getChangesBetweenRefs(
   fromRef: string,
   toRef: string,
   options: string[],
   pattern: string,
   cwd: string
+): string[];
+export function getChangesBetweenRefs(
+  fromRef: string | GetChangesBetweenRefsOptions,
+  toRef?: string,
+  options?: string[],
+  pattern?: string,
+  cwd?: string
 ): string[] {
-  try {
-    return processGitOutput(
-      git(
-        [
-          "--no-pager",
-          "diff",
-          "--name-only",
-          "--relative",
-          ...options,
-          `${fromRef}...${toRef}`,
-          ...(pattern ? ["--", pattern] : []),
-        ],
-        { cwd }
-      )
-    );
-  } catch (e) {
-    throw new GitError(`Cannot gather information about change between refs changes (${fromRef} to ${toRef})`, e);
+  let gitOptions: GitCommonOptions;
+  if (typeof fromRef === "string") {
+    gitOptions = { cwd: cwd! };
+  } else {
+    ({ fromRef, toRef, options, pattern, ...gitOptions } = fromRef);
   }
+
+  const range = `${fromRef}...${toRef || ""}`;
+  const results = git([...diffArgs, ...(options || []), range, ...(pattern ? ["--", pattern] : [])], {
+    description: `Gathering information about changes between refs (${range})`,
+    throwOnError: true,
+    ...gitOptions,
+  });
+  return processGitOutput(results, { excludeNodeModules: true });
 }
 
 /**
  * Gets all files with staged changes (files added to the index).
- * Throws an error on failure.
+ * Throws an error on failure by default.
  *
  * @returns An array of relative file paths that have been staged
  */
-export function getStagedChanges(cwd: string): string[] {
-  try {
-    return processGitOutput(git(["--no-pager", "diff", "--relative", "--staged", "--name-only"], { cwd }));
-  } catch (e) {
-    throw new GitError(`Cannot gather information about staged changes`, e);
-  }
+// TODO: move to getChanges.ts
+export function getStagedChanges(options: GitCommonOptions): string[];
+/** @deprecated Use object params version */
+export function getStagedChanges(cwd: string): string[];
+export function getStagedChanges(cwdOrOptions: string | GitCommonOptions) {
+  const options: GitCommonOptions = typeof cwdOrOptions === "string" ? { cwd: cwdOrOptions } : cwdOrOptions;
+
+  const results = git([...diffArgs, "--staged"], {
+    description: "Gathering information about staged changes",
+    throwOnError: true,
+    ...options,
+  });
+  return processGitOutput(results, { excludeNodeModules: true });
 }
 
 /**
- * Gets recent commit messages between the specified branch and HEAD.
- * Returns an empty array if the operation fails.
+ * Gets recent commit messages between the specified parent branch and HEAD.
+ * By default, returns an empty array if the operation fails.
  *
  * @returns An array of commit message strings
  */
-export function getRecentCommitMessages(branch: string, cwd: string): string[] {
-  try {
-    const results = git(["log", "--decorate", "--pretty=format:%s", `${branch}..HEAD`], { cwd });
+// TODO: move to history.ts
+export function getRecentCommitMessages(options: GitBranchOptions): string[];
+/** @deprecated Use object params version */
+export function getRecentCommitMessages(branch: string, cwd: string): string[];
+export function getRecentCommitMessages(branchOrOptions: string | GitBranchOptions, cwd?: string) {
+  const { branch, ...options } =
+    typeof branchOrOptions === "string" ? { branch: branchOrOptions, cwd: cwd! } : branchOrOptions;
 
-    if (!results.success) {
-      return [];
-    }
-
-    return results.stdout
-      .split(/\n/)
-      .map((line) => line.trim())
-      .filter((line) => !!line);
-  } catch (e) {
-    throw new GitError(`Cannot gather information about recent commits`, e);
-  }
+  const results = git(["log", "--decorate", "--pretty=format:%s", `${branch}..HEAD`], {
+    description: `Getting recent commit messages for branch "${branch}"`,
+    ...options,
+  });
+  return processGitOutput(results);
 }
 
 /**
  * Gets the user email from the git config.
  * @returns The email string if found, null otherwise
  */
-export function getUserEmail(cwd: string): string | null {
-  try {
-    const results = git(["config", "user.email"], { cwd });
-
-    return results.success ? results.stdout : null;
-  } catch (e) {
-    throw new GitError(`Cannot gather information about user.email`, e);
-  }
+// TODO: move to config.ts
+export function getUserEmail(options: GitCommonOptions): string | null;
+/** @deprecated Use object params version */
+export function getUserEmail(cwd: string): string | null;
+export function getUserEmail(cwdOrOptions: string | GitCommonOptions) {
+  const options: GitCommonOptions = typeof cwdOrOptions === "string" ? { cwd: cwdOrOptions } : cwdOrOptions;
+  return getConfigValue({ key: "user.email", ...options });
 }
 
 /**
  * Gets the current branch name.
+ * In detached HEAD state, returns "HEAD".
+ *
  * @returns The branch name if successful, null otherwise
  */
-export function getBranchName(cwd: string): string | null {
-  try {
-    const results = git(["rev-parse", "--abbrev-ref", "HEAD"], { cwd });
+// TODO: move to refs.ts
+export function getBranchName(options: GitCommonOptions): string;
+/** @deprecated Use object params version */
+export function getBranchName(cwd: string): string;
+export function getBranchName(cwdOrOptions: string | GitCommonOptions) {
+  const options: GitCommonOptions = typeof cwdOrOptions === "string" ? { cwd: cwdOrOptions } : cwdOrOptions;
 
-    return results.success ? results.stdout : null;
-  } catch (e) {
-    throw new GitError(`Cannot get branch name`, e);
-  }
+  const results = git(["rev-parse", "--abbrev-ref", "HEAD"], {
+    description: "Getting current branch name",
+    ...options,
+  });
+  return results.success ? results.stdout : null;
 }
 
 /**
  * Gets the full reference path for a given branch.
- * @param branch - The short branch name (e.g., `branch-name`)
+ * `branch` here is the short branch name, e.g. `branch-name`.
  * @returns The full branch reference (e.g., `refs/heads/branch-name`) if found, null otherwise
  */
-export function getFullBranchRef(branch: string, cwd: string): string | null {
-  const showRefResults = git(["show-ref", "--heads", branch], { cwd });
+// TODO: move to refs.ts
+export function getFullBranchRef(options: GitBranchOptions): string | null;
+/** @deprecated Use object params version */
+export function getFullBranchRef(branch: string, cwd: string): string | null;
+export function getFullBranchRef(branchOrOptions: string | GitBranchOptions, cwd?: string) {
+  const { branch, ...options } =
+    typeof branchOrOptions === "string" ? { branch: branchOrOptions, cwd: cwd! } : branchOrOptions;
+
+  const showRefResults = git(["show-ref", "--heads", branch], options);
 
   return showRefResults.success ? showRefResults.stdout.split(" ")[1] : null;
 }
 
 /**
  * Gets the short branch name from a full branch reference.
- * Note this may not work properly for the current branch.
- * @param fullBranchRef - The full branch reference (e.g., `refs/heads/branch-name`)
  * @returns The short branch name if successful, null otherwise
  */
-export function getShortBranchName(fullBranchRef: string, cwd: string): string | null {
-  const showRefResults = git(["name-rev", "--name-only", fullBranchRef], {
-    cwd,
-  });
+// TODO: move to refs.ts
+export function getShortBranchName(
+  options: {
+    /** The full branch reference (e.g., `refs/heads/branch-name`) */
+    fullBranchRef: string;
+  } & GitCommonOptions
+): string | null;
+/** @deprecated Use object params version */
+export function getShortBranchName(fullBranchRef: string, cwd: string): string | null;
+export function getShortBranchName(
+  refOrOptions: string | ({ fullBranchRef: string } & GitCommonOptions),
+  cwd?: string
+) {
+  const { fullBranchRef, ...options } =
+    typeof refOrOptions === "string" ? { fullBranchRef: refOrOptions, cwd: cwd! } : refOrOptions;
 
-  return showRefResults.success ? showRefResults.stdout : null;
+  // The original command `git name-rev --name-only` returned unreliable results if multiple
+  // named refs point to the same commit as the branch.
+  const showRefResults = git(["rev-parse", "--abbrev-ref", fullBranchRef], options);
+
+  return showRefResults.success ? showRefResults.stdout || null : null;
 }
 
 /**
  * Gets the current commit hash (SHA).
  * @returns The hash if successful, null otherwise
  */
-export function getCurrentHash(cwd: string): string | null {
-  try {
-    const results = git(["rev-parse", "HEAD"], { cwd });
+// TODO: move to refs.ts
+export function getCurrentHash(options: GitCommonOptions): string | null;
+/** @deprecated Use object params version */
+export function getCurrentHash(cwd: string): string | null;
+export function getCurrentHash(cwdOrOptions: string | GitCommonOptions) {
+  const options: GitCommonOptions = typeof cwdOrOptions === "string" ? { cwd: cwdOrOptions } : cwdOrOptions;
 
-    return results.success ? results.stdout : null;
-  } catch (e) {
-    throw new GitError(`Cannot get current git hash`, e);
-  }
+  const results = git(["rev-parse", "HEAD"], {
+    description: "Getting current git hash",
+    ...options,
+  });
+
+  return results.success ? results.stdout : null;
 }
 
 /**
  * Get the commit hash in which the file was first added.
  * @returns The commit hash if found, undefined otherwise
  */
-export function getFileAddedHash(filename: string, cwd: string): string | undefined {
-  const results = git(["rev-list", "--max-count=1", "HEAD", filename], { cwd });
+// TODO: move to history.ts
+export function getFileAddedHash(options: { filename: string } & GitCommonOptions): string | undefined;
+/** @deprecated Use object params version */
+export function getFileAddedHash(filename: string, cwd: string): string | undefined;
+export function getFileAddedHash(filenameOrOptions: string | ({ filename: string } & GitCommonOptions), cwd?: string) {
+  const { filename, ...options } =
+    typeof filenameOrOptions === "string" ? { filename: filenameOrOptions, cwd: cwd! } : filenameOrOptions;
 
-  if (results.success) {
-    return results.stdout.trim();
-  }
+  const results = git(["rev-list", "--max-count=1", "HEAD", filename], options);
 
-  return undefined;
+  return results.success ? results.stdout.trim() : undefined;
 }
 
 /**
- * Initializes a git repository in the specified directory.
- * Optionally sets user email and username if not already configured.
- * Throws an error if required email or username is not provided and not already configured.
+ * Run `git init` and verify that the `user.name` and `user.email` configs are set (at any level).
+ * Throws an error if `git init` fails.
  *
- * @param cwd - The directory to initialize the git repository in
- * @param email - Optional email to set in git config
- * @param username - Optional username to set in git config
+ * If `user.email` and `user.name` aren't already set globally, and the missing value is provided
+ * in params, set it at the repo level. Otherwise, throw an error.
  */
-export function init(cwd: string, email?: string, username?: string): void {
-  git(["init"], { cwd });
+// TODO: move to init.ts
+export function init(options: GitInitOptions): void;
+/** @deprecated Use object params version */
+export function init(cwd: string, email?: string, username?: string): void;
+export function init(cwdOrOptions: string | GitInitOptions, _email?: string, _username?: string) {
+  const { email, username, ...options } =
+    typeof cwdOrOptions === "string" ? { cwd: cwdOrOptions, email: _email, username: _username } : cwdOrOptions;
 
-  const configLines = git(["config", "--list"], { cwd }).stdout.split("\n");
+  git(["init"], { ...options, throwOnError: true });
 
-  if (!configLines.find((line) => line.includes("user.name"))) {
+  if (!getConfigValue({ key: "user.name", ...options })) {
     if (!username) {
-      throw new GitError("must include a username when initializing git repo");
+      throw new Error("must include a username when initializing git repo");
     }
-    git(["config", "user.name", username], { cwd });
+    git(["config", "user.name", username], options);
   }
 
-  if (!configLines.find((line) => line.includes("user.email"))) {
+  if (!getUserEmail(options)) {
     if (!email) {
       throw new Error("must include a email when initializing git repo");
     }
-    git(["config", "user.email", email], { cwd });
+    git(["config", "user.email", email], options);
   }
 }
 
 /**
  * Stages files matching the given patterns.
  */
-export function stage(patterns: string[], cwd: string): void {
-  try {
-    patterns.forEach((pattern) => {
-      git(["add", pattern], { cwd });
-    });
-  } catch (e) {
-    throw new GitError(`Cannot stage changes`, e);
+// TODO: move to stageAndCommit.ts
+export function stage(options: GitStageOptions): void;
+/** @deprecated Use object params version */
+export function stage(patterns: string[], cwd: string): void;
+export function stage(patternsOrOptions: string[] | GitStageOptions, cwd?: string) {
+  const { patterns, ...options } = Array.isArray(patternsOrOptions)
+    ? { patterns: patternsOrOptions, cwd: cwd! }
+    : patternsOrOptions;
+
+  for (const pattern of patterns) {
+    git(["add", pattern], { ...options, description: `Staging changes (git add ${pattern})` });
   }
 }
 
 /**
- * Creates a commit with the given message and optional git commit options.
- * Throws an error on failure.
- *
- * @param message - The commit message
- * @param cwd - The working directory
- * @param options - Additional git commit options
+ * Commit changes. Throws an error on failure by default.
  */
-export function commit(message: string, cwd: string, options: string[] = []): void {
-  try {
-    const commitResults = git(["commit", "-m", message, ...options], { cwd });
+// TODO: move to stageAndCommit.ts
+export function commit(options: GitCommitOptions): void;
+/** @deprecated Use object params version */
+export function commit(message: string, cwd: string, options?: string[]): void;
+export function commit(messageOrOptions: string | GitCommitOptions, _cwd?: string, _options?: string[]) {
+  const { message, options, ...gitOptions } =
+    typeof messageOrOptions === "string"
+      ? { message: messageOrOptions, cwd: _cwd!, options: _options }
+      : messageOrOptions;
 
-    if (!commitResults.success) {
-      throw new Error(`Cannot commit changes: ${commitResults.stdout} ${commitResults.stderr}`);
-    }
-  } catch (e) {
-    throw new GitError(`Cannot commit changes`, e);
-  }
+  git(["commit", "-m", message, ...(options || [])], {
+    throwOnError: true,
+    description: "Committing changes",
+    ...gitOptions,
+  });
 }
 
 /**
  * Stages files matching the given patterns and creates a commit with the specified message.
  * Convenience function that combines `stage()` and `commit()`.
- * Throws an error on commit failure.
- *
- * @param patterns - File patterns to stage
- * @param message - The commit message
- * @param cwd - The working directory
- * @param commitOptions - Additional git commit options
+ * Throws an error on commit failure by default.
  */
-export function stageAndCommit(patterns: string[], message: string, cwd: string, commitOptions: string[] = []): void {
-  stage(patterns, cwd);
-  commit(message, cwd, commitOptions);
+// TODO: move to stageAndCommit.ts
+export function stageAndCommit(options: GitStageOptions & GitCommitOptions): void;
+/** @deprecated Use object params version */
+export function stageAndCommit(patterns: string[], message: string, cwd: string, commitOptions?: string[]): void;
+export function stageAndCommit(
+  patternsOrOptions: string[] | (GitStageOptions & GitCommitOptions),
+  message?: string,
+  cwd?: string,
+  commitOptions?: string[]
+) {
+  const options: GitStageOptions & GitCommitOptions = Array.isArray(patternsOrOptions)
+    ? { patterns: patternsOrOptions, message: message!, cwd: cwd!, options: commitOptions }
+    : patternsOrOptions;
+
+  stage(options);
+  commit(options);
 }
 
 /**
  * Reverts all local changes (both staged and unstaged) by stashing them and then dropping the stash.
- * @returns True if the revert was successful, false otherwise
+ * @returns True if the revert was successful, false otherwise. It will also be false if there were
+ * no changes to revert. (To distinguish between this case and errors, use the `throwOnError` option.)
  */
-export function revertLocalChanges(cwd: string): boolean {
-  const stash = `workspace-tools_${new Date().getTime()}`;
-  git(["stash", "push", "-u", "-m", stash], { cwd });
-  const results = git(["stash", "list"]);
-  if (results.success) {
-    const lines = results.stdout.split(/\n/);
-    const foundLine = lines.find((line) => line.includes(stash));
+// TODO: move to revertLocalChanges.ts
+export function revertLocalChanges(options: GitCommonOptions): boolean;
+/** @deprecated Use object params version */
+export function revertLocalChanges(cwd: string): boolean;
+export function revertLocalChanges(cwdOrOptions: string | GitCommonOptions) {
+  const options: GitCommonOptions = typeof cwdOrOptions === "string" ? { cwd: cwdOrOptions } : cwdOrOptions;
 
-    if (foundLine) {
-      const matched = foundLine.match(/^[^:]+/);
-      if (matched) {
-        git(["stash", "drop", matched[0]]);
-        return true;
-      }
+  const stash = `workspace-tools_${new Date().getTime()}`;
+  if (!git(["stash", "push", "-u", "-m", stash], options).success) {
+    return false;
+  }
+
+  const results = git(["stash", "list"], options);
+  if (results.success) {
+    const matched = results.stdout
+      .split(/\n/)
+      .find((line) => line.includes(stash))
+      ?.match(/^[^:]+/);
+
+    if (matched) {
+      git(["stash", "drop", matched[0]], options);
+      return true;
     }
   }
 
@@ -339,11 +456,11 @@ export function revertLocalChanges(cwd: string): boolean {
 
 /**
  * Attempts to determine the parent branch of the current branch using `git show-branch`.
- *
  * @returns The parent branch name if found, null otherwise
+ * @deprecated Does not appear to be used
  */
 export function getParentBranch(cwd: string): string | null {
-  const branchName = getBranchName(cwd);
+  const branchName = getBranchName({ cwd });
 
   if (!branchName || branchName === "HEAD") {
     return null;
@@ -369,80 +486,100 @@ export function getParentBranch(cwd: string): string | null {
  *
  * @returns The remote branch name (e.g., `origin/main`) if found, null otherwise
  */
-export function getRemoteBranch(branch: string, cwd: string): string | null {
-  const results = git(["rev-parse", "--abbrev-ref", "--symbolic-full-name", `${branch}@\{u\}`], { cwd });
+// TODO: move to refs.ts
+export function getRemoteBranch(options: GitBranchOptions): string | null;
+/** @deprecated Use object params version */
+export function getRemoteBranch(branch: string, cwd: string): string | null;
+export function getRemoteBranch(branchOrOptions: string | GitBranchOptions, cwd?: string) {
+  const options: GitBranchOptions =
+    typeof branchOrOptions === "string" ? { branch: branchOrOptions, cwd: cwd! } : branchOrOptions;
 
-  if (results.success) {
-    return results.stdout.trim();
-  }
+  const results = git(["rev-parse", "--abbrev-ref", "--symbolic-full-name", `${options.branch}@\{u\}`], options);
 
-  return null;
+  return results.success ? results.stdout.trim() : null;
 }
 
 /**
- * Parses a remote branch string (e.g., `origin/main`) into its components.
+ * Get the remote and branch name from a full branch name that may include a remote prefix.
+ * If the path doesn't start with one of `options.knownRemotes` (but has multiple segments),
+ * the actual list of remotes will be fetched to see if one of those matches.
  *
- * @param branch - The remote branch string to parse (e.g., `origin/main`)
+ * NOTE: The additional verification is new in the object params version; the original version
+ * incorrectly assumes the first segment before a slash is always a remote.
  */
-export function parseRemoteBranch(branch: string): {
-  /** Remote name, e.g. `origin` */
-  remote: string;
-  /** Remote branch name, e.g. `main` */
-  remoteBranch: string;
-} {
-  const firstSlashPos = branch.indexOf("/", 0);
-  const remote = branch.substring(0, firstSlashPos);
-  const remoteBranch = branch.substring(firstSlashPos + 1);
+// TODO: move to parseRemoteBranch.ts
+export function parseRemoteBranch(options: ParseRemoteBranchOptions): ParsedRemoteBranch;
+/**
+ * @deprecated Use object params version, which does more verification. This version inaccurately
+ * assumes the first segment before a slash is always a remote, which could lead to tricky bugs.
+ */
+export function parseRemoteBranch(branch: string): ParsedRemoteBranch;
+export function parseRemoteBranch(branchOrOptions: string | ParseRemoteBranchOptions): ParsedRemoteBranch {
+  if (typeof branchOrOptions === "string") {
+    const branch = branchOrOptions;
+    const firstSlashPos = branch.indexOf("/", 0);
+    return {
+      remote: branch.substring(0, firstSlashPos),
+      remoteBranch: branch.substring(firstSlashPos + 1),
+    };
+  }
 
-  return {
-    remote,
-    remoteBranch,
-  };
+  const { branch, knownRemotes = ["origin", "upstream"], ...options } = branchOrOptions;
+
+  if (!branch.includes("/")) {
+    return { remote: "", remoteBranch: branch };
+  }
+
+  let remote = knownRemotes.find((remote) => branch.startsWith(`${remote}/`));
+
+  if (!remote) {
+    const remotes = git(["remote"], options).stdout.trim().split(/\n/);
+    remote = remotes.find((remote) => branch.startsWith(`${remote}/`));
+  }
+
+  if (remote) {
+    return { remote, remoteBranch: branch.slice(remote.length + 1) };
+  }
+  return { remote: "", remoteBranch: branch };
 }
 
 /**
  * Gets the default branch based on `git config init.defaultBranch`, falling back to `master`.
  */
-export function getDefaultBranch(cwd: string): string {
-  const result = git(["config", "init.defaultBranch"], { cwd });
+// TODO: move to config.ts
+export function getDefaultBranch(options: GitCommonOptions): string;
+/** @deprecated Use object params version */
+export function getDefaultBranch(cwd: string): string;
+export function getDefaultBranch(cwdOrOptions: string | GitCommonOptions) {
+  const options = typeof cwdOrOptions === "string" ? { cwd: cwdOrOptions } : cwdOrOptions;
 
   // Default to the legacy 'master' for backwards compat and old git clients
-  return result.success ? result.stdout.trim() : "master";
+  return getConfigValue({ key: "init.defaultBranch", ...options }) || "master";
 }
 
 /**
  * Lists all tracked files matching the given patterns.
- *
- * @param patterns - File patterns to match (passed to git ls-files)
- * @param cwd - The working directory
+ * Throws on error by default.
  * @returns An array of file paths, or an empty array if no files are found
  */
-export function listAllTrackedFiles(patterns: string[], cwd: string): string[] {
-  const results = git(["ls-files", ...patterns], { cwd });
+// TODO: move to history.ts
+export function listAllTrackedFiles(
+  options: {
+    /** File patterns to match (passed to git ls-files) */
+    patterns: string[];
+  } & GitCommonOptions
+): string[];
+/** @deprecated Use object params version */
+export function listAllTrackedFiles(patterns: string[], cwd: string): string[];
+export function listAllTrackedFiles(
+  patternsOrOptions: string[] | ({ patterns: string[] } & GitCommonOptions),
+  cwd?: string
+) {
+  const { patterns, ...options } = Array.isArray(patternsOrOptions)
+    ? { patterns: patternsOrOptions, cwd: cwd! }
+    : patternsOrOptions;
 
-  return results.success && results.stdout.trim() ? results.stdout.trim().split(/\n/) : [];
-}
+  const results = git(["ls-files", ...patterns], { throwOnError: true, ...options });
 
-/**
- * Processes git command output by splitting it into lines and filtering out empty lines and `node_modules`.
- *
- * If the command failed with stderr output, an error is thrown.
- *
- * @param output - The git command output to process
- * @returns An array of lines (presumably file paths), or an empty array if the command failed
- * without stderr output.
- */
-function processGitOutput(output: GitProcessOutput): string[] {
-  if (!output.success) {
-    if (output.stderr) {
-      throw new Error(output.stderr);
-    }
-    // TODO: this inconsistency seems maybe not desirable?
-    return [];
-  }
-
-  return output.stdout
-    .split(/\n/)
-    .map((line) => line.trim())
-    .filter((line) => !!line && !line.includes("node_modules"));
+  return processGitOutput(results);
 }

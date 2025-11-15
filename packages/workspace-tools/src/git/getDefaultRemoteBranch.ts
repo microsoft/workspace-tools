@@ -52,5 +52,7 @@ export function getDefaultRemoteBranch(...args: (string | GetDefaultRemoteBranch
       ?.replace(/^\s*HEAD branch:\s+/, "");
   }
 
-  return `${defaultRemote}/${remoteDefaultBranch || getDefaultBranch(cwd)}`;
+  remoteDefaultBranch ||= getDefaultBranch({ cwd, throwOnError: options.strict });
+
+  return `${defaultRemote}/${remoteDefaultBranch}`;
 }

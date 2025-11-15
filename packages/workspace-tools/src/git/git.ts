@@ -2,18 +2,30 @@
 // Basic git wrappers
 //
 
-import { SpawnSyncReturns } from "child_process";
-import { spawnSync, SpawnSyncOptions } from "child_process";
+import { spawnSync, SpawnSyncOptions, SpawnSyncReturns } from "child_process";
+import { GitCommonOptions } from "./types";
+
+export type GitOptions = Omit<SpawnSyncOptions, "cwd"> &
+  GitCommonOptions & {
+    /** Operation description to be used in error message (formatted as start of sentence) */
+    description?: string;
+    debug?: boolean;
+  };
 
 export class GitError extends Error {
-  public originalError: unknown;
-  constructor(message: string, originalError?: unknown) {
+  public readonly originalError: unknown;
+  public readonly gitOutput?: GitProcessOutput;
+
+  constructor(message: string, originalError?: unknown, gitOutput?: GitProcessOutput) {
     if (originalError instanceof Error) {
       super(`${message}: ${originalError.message}`);
+    } else if (gitOutput?.stderr) {
+      super(`${message} -- stderr:\n${gitOutput.stderr}`);
     } else {
       super(message);
     }
     this.originalError = originalError;
+    this.gitOutput = gitOutput;
   }
 }
 
@@ -60,20 +72,30 @@ function removeGitObserver(observer: GitObserver) {
 }
 
 /**
- * Runs git command - use this for read-only commands.
- * `gitFailFast` is recommended for commands that make changes to the filesystem.
+ * Runs git command - use this for read-only commands, or if you'd like to explicitly check the
+ * result and implement custom error handling.
  *
  * The caller is responsible for validating the input.
  * `shell` will always be set to false.
  */
-export function git(args: string[], options?: SpawnSyncOptions): GitProcessOutput {
-  isDebug && console.log(`git ${args.join(" ")}`);
+export function git(args: string[], options?: GitOptions): GitProcessOutput {
   if (args.some((arg) => arg.startsWith("--upload-pack"))) {
     // This is a security issue and not needed for any expected usage of this library.
     throw new GitError("git command contains --upload-pack, which is not allowed: " + args.join(" "));
   }
 
-  const results = spawnSync("git", args, { maxBuffer: defaultMaxBuffer, ...options, shell: false });
+  const gitDescription = `git ${args.join(" ")}`;
+  const { throwOnError, description = gitDescription, debug = isDebug, ...spawnOptions } = options || {};
+
+  debug && console.log(gitDescription);
+
+  let results: SpawnSyncReturns<string | Buffer>;
+  try {
+    // this only throws if git isn't found or other rare cases
+    results = spawnSync("git", args, { maxBuffer: defaultMaxBuffer, ...spawnOptions });
+  } catch (e) {
+    throw new GitError(`${description} failed (while spawning process)`, e);
+  }
 
   const output: GitProcessOutput = {
     ...results,
@@ -83,7 +105,7 @@ export function git(args: string[], options?: SpawnSyncOptions): GitProcessOutpu
     success: results.status === 0,
   };
 
-  if (isDebug) {
+  if (debug) {
     console.log("exited with code " + results.status);
     output.stdout && console.log("git stdout:\n", output.stdout);
     output.stderr && console.warn("git stderr:\n", output.stderr);
@@ -98,17 +120,21 @@ export function git(args: string[], options?: SpawnSyncOptions): GitProcessOutpu
     observing = false;
   }
 
+  if (!output.success && throwOnError) {
+    throw new GitError(`${description} failed${output.stderr ? `\n${output.stderr}` : ""}`, undefined, output);
+  }
+
   return output;
 }
 
 /**
- * Runs git command and throws an error if it fails.
- * Use this for commands that make changes to the filesystem.
+ * Run a git command. Use this for commands that make critical changes to the filesystem.
+ * If it fails, throw an error and set `process.exitCode = 1` (unless `options.noExitCode` is set).
  *
  * The caller is responsible for validating the input.
  * `shell` will always be set to false.
  */
-export function gitFailFast(args: string[], options?: SpawnSyncOptions & { noExitCode?: boolean }) {
+export function gitFailFast(args: string[], options?: GitCommonOptions & { noExitCode?: boolean }) {
   const gitResult = git(args, options);
   if (!gitResult.success) {
     if (!options?.noExitCode) {
@@ -119,4 +145,27 @@ export function gitFailFast(args: string[], options?: SpawnSyncOptions & { noExi
     ${gitResult.stdout?.toString().trimEnd()}
     ${gitResult.stderr?.toString().trimEnd()}`);
   }
+}
+
+/**
+ * Processes git command output by splitting it into lines and filtering out empty lines.
+ * Also filters out `node_modules` lines if specified in options.
+ *
+ * If the command failed with stderr output, an error is thrown.
+ *
+ * @param output - The git command output to process
+ * @returns An array of lines (presumably file paths), or an empty array if the command failed
+ * without stderr output.
+ * @internal
+ */
+export function processGitOutput(output: GitProcessOutput, options?: { excludeNodeModules?: boolean }) {
+  if (!output.success) {
+    // If the intent was to throw on failure, `throwOnError` should have been set for the git command.
+    return [];
+  }
+
+  return output.stdout
+    .split(/\n/)
+    .map((line) => line.trim())
+    .filter((line) => !!line && (!options?.excludeNodeModules || !line.includes("node_modules")));
 }

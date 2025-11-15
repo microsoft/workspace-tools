@@ -14,5 +14,6 @@
     // (since json5 allows things like unquoted keys that jsonc doesn't).
     "*.json5": "jsonc",
     "api-extractor*.json": "jsonc"
-  }
+  },
+  "typescript.tsdk": "node_modules/typescript/lib"
 }

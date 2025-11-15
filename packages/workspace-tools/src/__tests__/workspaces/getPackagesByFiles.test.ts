@@ -1,7 +1,6 @@
-import path from "path";
-import fs from "fs";
-
 import { cleanupFixtures, setupFixture } from "@ws-tools/scripts/jest/setupFixture";
+import fs from "fs";
+import path from "path";
 import { getPackagesByFiles } from "../../workspaces/getPackagesByFiles";
 
 describe("getPackagesByFiles", () => {
@@ -15,7 +14,7 @@ describe("getPackagesByFiles", () => {
     const newFile = path.join(root, "packages/package-a/footest.txt");
     fs.writeFileSync(newFile, "hello foo test");
 
-    const packages = getPackagesByFiles(root, ["packages/package-a/footest.txt"]);
+    const packages = getPackagesByFiles({ root, files: ["packages/package-a/footest.txt"] });
 
     expect(packages).toEqual(["package-a"]);
   });
@@ -29,19 +28,18 @@ describe("getPackagesByFiles", () => {
     const newFileB = path.join(root, "packages/package-b/footest.txt");
     fs.writeFileSync(newFileB, "hello foo test");
 
-    const packages = getPackagesByFiles(
+    const packages = getPackagesByFiles({
       root,
-      ["packages/package-a/footest.txt", "packages/package-b/footest.txt"],
-      ["packages/package-b/**"]
-    );
-
+      files: ["packages/package-a/footest.txt", "packages/package-b/footest.txt"],
+      ignoreGlobs: ["packages/package-b/**"],
+    });
     expect(packages).toEqual(["package-a"]);
   });
 
   it("can find can handle empty files", () => {
     const root = setupFixture("monorepo");
 
-    const packages = getPackagesByFiles(root, []);
+    const packages = getPackagesByFiles({ root, files: [] });
 
     expect(packages).toEqual([]);
   });
@@ -49,7 +47,7 @@ describe("getPackagesByFiles", () => {
   it("can find can handle unrelated files", () => {
     const root = setupFixture("monorepo");
 
-    const packages = getPackagesByFiles(root, ["package.json"]);
+    const packages = getPackagesByFiles({ root, files: ["package.json"] });
 
     expect(packages).toEqual([]);
   });

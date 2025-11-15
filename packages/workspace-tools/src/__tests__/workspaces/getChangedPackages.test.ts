@@ -1,8 +1,11 @@
 import path from "path";
 import fs from "fs";
 import { cleanupFixtures, setupFixture, setupLocalRemote } from "@ws-tools/scripts/jest/setupFixture";
-import { stageAndCommit, git } from "../../git";
+import { stageAndCommit, git as _git, type GitOptions } from "../../git/index";
 import { getChangedPackages, getChangedPackagesBetweenRefs } from "../../workspaces/getChangedPackages";
+
+/** Call git helper but throw on error by default */
+const git = (args: string[], opts: GitOptions) => _git(args, { throwOnError: true, ...opts });
 
 describe("getChangedPackages", () => {
   afterAll(() => {
@@ -15,7 +18,7 @@ describe("getChangedPackages", () => {
     const newFile = path.join(root, "packages/package-a/footest.txt");
     fs.writeFileSync(newFile, "hello foo test");
 
-    const changedPkgs = getChangedPackages(root, "main");
+    const changedPkgs = getChangedPackages({ cwd: root, target: "main" });
 
     expect(changedPkgs).toEqual(["package-a"]);
   });
@@ -26,7 +29,7 @@ describe("getChangedPackages", () => {
     const newFile = path.join(root, "packages/package-a/footest.txt");
     fs.writeFileSync(newFile, "hello foo test");
 
-    const changedPkgs = getChangedPackages(root, "main");
+    const changedPkgs = getChangedPackages({ cwd: root, target: "main" });
 
     expect(changedPkgs).toEqual(["package-a"]);
   });
@@ -36,7 +39,7 @@ describe("getChangedPackages", () => {
 
     fs.writeFileSync(path.join(root, "lage.config.json"), "hello foo test");
 
-    expect(getChangedPackages(root, "main").sort()).toEqual(["individual", "package-a", "package-b"]);
+    expect(getChangedPackages({ cwd: root, target: "main" }).sort()).toEqual(["individual", "package-a", "package-b"]);
   });
 
   it("returns nothing when a root level monorepo file is changed and returnAllPackagesOnNoMatch is false", () => {
@@ -44,7 +47,7 @@ describe("getChangedPackages", () => {
 
     fs.writeFileSync(path.join(root, "lage.config.json"), "hello foo test");
 
-    expect(getChangedPackages(root, "main", [], false /*returnAllPackagesOnNoMatch*/)).toEqual([]);
+    expect(getChangedPackages({ cwd: root, target: "main", returnAllPackagesOnNoMatch: false })).toEqual([]);
   });
 
   it("can detect changes when multiple files are changed", () => {
@@ -55,7 +58,7 @@ describe("getChangedPackages", () => {
     fs.writeFileSync(readmeFile, "hello foo test");
     fs.writeFileSync(lageFile, "hello foo test");
 
-    const changedPkgs = getChangedPackages(root, "main");
+    const changedPkgs = getChangedPackages({ cwd: root, target: "main" });
 
     expect(changedPkgs).toEqual(["package-a", "package-b"]);
   });
@@ -70,7 +73,7 @@ describe("getChangedPackages", () => {
 
     const ignoreGlobs = ["lage.config.json", "README.md"];
 
-    const changedPkgs = getChangedPackages(root, "main", ignoreGlobs);
+    const changedPkgs = getChangedPackages({ cwd: root, target: "main", ignoreGlobs });
 
     expect(changedPkgs).toEqual([]);
   });
@@ -81,7 +84,7 @@ describe("getChangedPackages", () => {
     const newFile = path.join(root, "packages/package-a/index.ts");
     fs.writeFileSync(newFile, "hello foo test");
 
-    const changedPkgs = getChangedPackages(root, "main");
+    const changedPkgs = getChangedPackages({ cwd: root, target: "main" });
 
     expect(changedPkgs).toEqual(["package-a"]);
   });
@@ -92,7 +95,7 @@ describe("getChangedPackages", () => {
     const newFile = path.join(root, "packages/package-a/index.ts");
     fs.writeFileSync(newFile, "hello foo test");
 
-    const changedPkgs = getChangedPackages(root, "main");
+    const changedPkgs = getChangedPackages({ cwd: root, target: "main" });
 
     expect(changedPkgs).toEqual(["package-a"]);
   });
@@ -104,7 +107,7 @@ describe("getChangedPackages", () => {
     fs.writeFileSync(newFile, "hello foo test");
     git(["add", newFile], { cwd: root });
 
-    const changedPkgs = getChangedPackages(root, "main");
+    const changedPkgs = getChangedPackages({ cwd: root, target: "main" });
 
     expect(changedPkgs).toEqual(["package-a"]);
   });
@@ -116,7 +119,7 @@ describe("getChangedPackages", () => {
     fs.writeFileSync(newFile, "hello foo test");
     git(["add", newFile], { cwd: root });
 
-    const changedPkgs = getChangedPackages(root, "main");
+    const changedPkgs = getChangedPackages({ cwd: root, target: "main" });
 
     expect(changedPkgs).toEqual(["package-a"]);
   });
@@ -127,9 +130,9 @@ describe("getChangedPackages", () => {
     const newFile = path.join(root, "packages/package-a/footest.txt");
     fs.writeFileSync(newFile, "hello foo test");
     git(["checkout", "-b", "newbranch"], { cwd: root });
-    stageAndCommit([newFile], "test commit", root);
+    stageAndCommit({ patterns: [newFile], message: "test commit", cwd: root });
 
-    const changedPkgs = getChangedPackages(root, "main");
+    const changedPkgs = getChangedPackages({ cwd: root, target: "main" });
 
     expect(changedPkgs).toEqual(["package-a"]);
   });
@@ -140,23 +143,23 @@ describe("getChangedPackages", () => {
     const newFile = path.join(root, "packages/package-a/footest.txt");
     fs.writeFileSync(newFile, "hello foo test");
     git(["checkout", "-b", "newbranch"], { cwd: root });
-    stageAndCommit(["add", newFile], "test commit", root);
+    stageAndCommit({ patterns: [newFile], message: "test commit", cwd: root });
 
-    const changedPkgs = getChangedPackages(root, "main");
+    const changedPkgs = getChangedPackages({ cwd: root, target: "main" });
 
     expect(changedPkgs).toEqual(["package-a"]);
   });
 
   it("can detect changes inside a file that has been committed in a different branch using default remote", () => {
     const root = setupFixture("monorepo", { git: true });
-    setupLocalRemote(root, "origin", "basic-yarn-1");
+    setupLocalRemote({ cwd: root, remoteName: "origin", fixtureName: "basic-yarn-1" });
 
     const newFile = path.join(root, "packages/package-a/footest.txt");
     fs.writeFileSync(newFile, "hello foo test");
     git(["checkout", "-b", "newbranch"], { cwd: root });
-    stageAndCommit(["add", newFile], "test commit", root);
+    stageAndCommit({ patterns: [newFile], message: "test commit", cwd: root });
 
-    const changedPkgs = getChangedPackages(root, undefined);
+    const changedPkgs = getChangedPackages({ cwd: root });
 
     expect(changedPkgs).toContain("package-a");
   });
@@ -168,7 +171,7 @@ describe("getChangedPackages", () => {
     fs.writeFileSync(newFile, "hello foo test");
     git(["add", newFile], { cwd: root });
 
-    const changedPkgs = getChangedPackages(root, "main", ["packages/package-a/*"]);
+    const changedPkgs = getChangedPackages({ cwd: root, target: "main", ignoreGlobs: ["packages/package-a/*"] });
 
     expect(changedPkgs).toEqual([]);
   });
@@ -178,9 +181,9 @@ describe("getChangedPackages", () => {
       const root = setupFixture("monorepo", { git: true });
 
       fs.writeFileSync(path.join(root, "footest.txt"), "hello foo test");
-      stageAndCommit(["."], "test commit", root);
+      stageAndCommit({ patterns: ["."], message: "test commit", cwd: root });
 
-      const changedPkgs = getChangedPackagesBetweenRefs(root, "HEAD^1", "HEAD");
+      const changedPkgs = getChangedPackagesBetweenRefs({ cwd: root, fromRef: "HEAD^1", toRef: "HEAD" });
 
       expect(changedPkgs.sort()).toEqual(["individual", "package-a", "package-b"]);
     });
@@ -191,14 +194,14 @@ describe("getChangedPackages", () => {
       const newFile = path.join(root, "packages/package-a/footest.txt");
       fs.writeFileSync(newFile, "hello foo test");
       git(["add", newFile], { cwd: root });
-      stageAndCommit(["packages/package-a/footest.txt"], "test commit in a", root);
+      stageAndCommit({ patterns: ["packages/package-a/footest.txt"], message: "test commit in a", cwd: root });
 
       const newFile2 = path.join(root, "packages/package-b/footest2.txt");
       fs.writeFileSync(newFile2, "hello foo test");
       git(["add", newFile2], { cwd: root });
-      stageAndCommit(["packages/package-b/footest2.txt"], "test commit in b", root);
+      stageAndCommit({ patterns: ["packages/package-b/footest2.txt"], message: "test commit in b", cwd: root });
 
-      const changedPkgs = getChangedPackagesBetweenRefs(root, "HEAD^1", "HEAD");
+      const changedPkgs = getChangedPackagesBetweenRefs({ cwd: root, fromRef: "HEAD^1", toRef: "HEAD" });
 
       expect(changedPkgs).toEqual(["package-b"]);
     });
