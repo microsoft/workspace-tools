@@ -40,7 +40,12 @@ export interface Catalogs {
 // @public
 export function clearGitObservers(): void;
 
+// Warning: (ae-forgotten-export) The symbol "GitCommitOptions" needs to be exported by the entry point index.d.ts
+//
 // @public
+export function commit(options: GitCommitOptions): void;
+
+// @public @deprecated (undocumented)
 export function commit(message: string, cwd: string, options?: string[]): void;
 
 // @public (undocumented)
@@ -62,10 +67,15 @@ export interface DependencyMap {
     dependents: Map<string, Set<string>>;
 }
 
+// Warning: (ae-forgotten-export) The symbol "GitFetchOptions" needs to be exported by the entry point index.d.ts
+//
 // @public
+export function fetchRemote(options: GitFetchOptions): void;
+
+// @public @deprecated (undocumented)
 export function fetchRemote(remote: string, cwd: string): void;
 
-// @public
+// @public @deprecated
 export function fetchRemoteBranch(remote: string, remoteBranch: string, cwd: string): void;
 
 // @public
@@ -86,11 +96,21 @@ export function getAllPackageJsonFiles(cwd: string): string[];
 // @public
 export function getAllPackageJsonFilesAsync(cwd: string): Promise<string[]>;
 
+// Warning: (ae-forgotten-export) The symbol "GitBranchOptions" needs to be exported by the entry point index.d.ts
+//
 // @public
+export function getBranchChanges(options: GitBranchOptions): string[];
+
+// @public @deprecated (undocumented)
 export function getBranchChanges(branch: string, cwd: string): string[];
 
+// Warning: (ae-forgotten-export) The symbol "GitCommonOptions" needs to be exported by the entry point index.d.ts
+//
 // @public
-export function getBranchName(cwd: string): string | null;
+export function getBranchName(options: GitCommonOptions): string;
+
+// @public @deprecated (undocumented)
+export function getBranchName(cwd: string): string;
 
 // @public
 export function getCatalogs(cwd: string): Catalogs | undefined;
@@ -102,22 +122,66 @@ export function getCatalogVersion(params: {
     catalogs: Catalogs | undefined;
 }): string | undefined;
 
+// Warning: (ae-forgotten-export) The symbol "GetChangedPackagesOptions" needs to be exported by the entry point index.d.ts
+//
 // @public
-export function getChangedPackages(cwd: string, target: string | undefined, ignoreGlobs?: string[], returnAllPackagesOnNoMatch?: boolean): string[];
+export function getChangedPackages(params: GetChangedPackagesOptions): string[];
 
+// @public @deprecated (undocumented)
+export function getChangedPackages(cwd: string, target?: string, ignoreGlobs?: string[], returnAllPackagesOnNoMatch?: boolean): string[];
+
+// Warning: (ae-forgotten-export) The symbol "GetChangedPackagesBetweenRefsOptions" needs to be exported by the entry point index.d.ts
+//
 // @public
+export function getChangedPackagesBetweenRefs(params: GetChangedPackagesBetweenRefsOptions): string[];
+
+// @public @deprecated (undocumented)
 export function getChangedPackagesBetweenRefs(cwd: string, fromRef: string, toRef?: string, ignoreGlobs?: string[], returnAllPackagesOnNoMatch?: boolean): string[];
 
-// @public
+// Warning: (ae-forgotten-export) The symbol "GetChangesBetweenRefsOptions" needs to be exported by the entry point index.d.ts
+//
+// @public (undocumented)
+type GetChangedPackagesBetweenRefsOptions = Omit<GetChangedPackagesOptions, "target"> & Pick<GetChangesBetweenRefsOptions, "fromRef" | "toRef">;
+
+// @public (undocumented)
+type GetChangedPackagesOptions = GitCommonOptions & {
+    target?: string;
+    ignoreGlobs?: string[];
+    returnAllPackagesOnNoMatch?: boolean;
+};
+
+// @public @deprecated
 export function getChanges(branch: string, cwd: string): string[];
 
 // @public
+export function getChangesBetweenRefs(options: GetChangesBetweenRefsOptions): string[];
+
+// @public @deprecated (undocumented)
 export function getChangesBetweenRefs(fromRef: string, toRef: string, options: string[], pattern: string, cwd: string): string[];
 
+// @public (undocumented)
+type GetChangesBetweenRefsOptions = GitCommonOptions & {
+    fromRef: string;
+    toRef?: string;
+    options?: string[];
+    pattern?: string;
+};
+
 // @public
+export function getConfigValue(options: {
+    key: string;
+} & GitCommonOptions): string | null;
+
+// @public
+export function getCurrentHash(options: GitCommonOptions): string | null;
+
+// @public @deprecated (undocumented)
 export function getCurrentHash(cwd: string): string | null;
 
 // @public
+export function getDefaultBranch(options: GitCommonOptions): string;
+
+// @public @deprecated (undocumented)
 export function getDefaultBranch(cwd: string): string;
 
 // @public
@@ -148,9 +212,17 @@ export type GetDefaultRemoteOptions = {
 export function getDependentMap(packages: PackageInfos): Map<string, Set<string>>;
 
 // @public
+export function getFileAddedHash(options: {
+    filename: string;
+} & GitCommonOptions): string | undefined;
+
+// @public @deprecated (undocumented)
 export function getFileAddedHash(filename: string, cwd: string): string | undefined;
 
 // @public
+export function getFullBranchRef(options: GitBranchOptions): string | null;
+
+// @public @deprecated (undocumented)
 export function getFullBranchRef(branch: string, cwd: string): string | null;
 
 // @public @deprecated (undocumented)
@@ -171,10 +243,23 @@ export function getPackageInfos(cwd: string): PackageInfos;
 // @public
 export function getPackageInfosAsync(cwd: string): Promise<PackageInfos>;
 
+// Warning: (ae-forgotten-export) The symbol "GetPackagesByFilesOptions" needs to be exported by the entry point index.d.ts
+//
 // @public
-export function getPackagesByFiles(workspaceRoot: string, files: string[], ignoreGlobs?: string[], returnAllPackagesOnNoMatch?: boolean): string[];
+export function getPackagesByFiles(options: GetPackagesByFilesOptions): string[];
 
-// @public
+// @public @deprecated (undocumented)
+export function getPackagesByFiles(root: string, files: string[], ignoreGlobs?: string[], returnAllPackagesOnNoMatch?: boolean): string[];
+
+// @public (undocumented)
+interface GetPackagesByFilesOptions {
+    files: string[];
+    ignoreGlobs?: string[];
+    returnAllPackagesOnNoMatch?: boolean;
+    root: string;
+}
+
+// @public @deprecated
 export function getParentBranch(cwd: string): string | null;
 
 // @public @deprecated (undocumented)
@@ -184,9 +269,15 @@ export function getPnpmWorkspaceRoot(cwd: string): string;
 export function getPnpmWorkspaces(cwd: string): WorkspaceInfos;
 
 // @public
+export function getRecentCommitMessages(options: GitBranchOptions): string[];
+
+// @public @deprecated (undocumented)
 export function getRecentCommitMessages(branch: string, cwd: string): string[];
 
 // @public
+export function getRemoteBranch(options: GitBranchOptions): string | null;
+
+// @public @deprecated (undocumented)
 export function getRemoteBranch(branch: string, cwd: string): string | null;
 
 // @public @deprecated (undocumented)
@@ -201,9 +292,17 @@ export function getScopedPackages(search: string[], packages: {
 } | string[]): string[];
 
 // @public
+export function getShortBranchName(options: {
+    fullBranchRef: string;
+} & GitCommonOptions): string | null;
+
+// @public @deprecated (undocumented)
 export function getShortBranchName(fullBranchRef: string, cwd: string): string | null;
 
 // @public
+export function getStagedChanges(options: GitCommonOptions): string[];
+
+// @public @deprecated (undocumented)
 export function getStagedChanges(cwd: string): string[];
 
 // @public @deprecated
@@ -219,12 +318,21 @@ export const getTransitiveDependents: typeof getTransitiveConsumers;
 export function getTransitiveProviders(targets: string[], packages: PackageInfos): string[];
 
 // @public
+export function getUnstagedChanges(options: GitCommonOptions): string[];
+
+// @public @deprecated (undocumented)
 export function getUnstagedChanges(cwd: string): string[];
 
 // @public
+export function getUntrackedChanges(options: GitCommonOptions): string[];
+
+// @public @deprecated (undocumented)
 export function getUntrackedChanges(cwd: string): string[];
 
 // @public
+export function getUserEmail(options: GitCommonOptions): string | null;
+
+// @public @deprecated (undocumented)
 export function getUserEmail(cwd: string): string | null;
 
 // Warning: (ae-forgotten-export) The symbol "WorkspaceManager" needs to be exported by the entry point index.d.ts
@@ -254,22 +362,60 @@ export function getYarnWorkspaceRoot(cwd: string): string;
 export function getYarnWorkspaces(cwd: string): WorkspaceInfos;
 
 // @public
-export function git(args: string[], options?: SpawnSyncOptions): GitProcessOutput;
+export function git(args: string[], options?: GitOptions): GitProcessOutput;
+
+// @public
+type GitBranchOptions = {
+    branch: string;
+} & GitCommonOptions;
+
+// @public (undocumented)
+type GitCommitOptions = GitCommonOptions & {
+    message: string;
+    options?: string[];
+};
+
+// @public
+type GitCommonOptions = {
+    cwd: string;
+    throwOnError?: boolean;
+};
 
 // @public (undocumented)
 export class GitError extends Error {
-    constructor(message: string, originalError?: unknown);
+    constructor(message: string, originalError?: unknown, gitOutput?: GitProcessOutput);
     // (undocumented)
-    originalError: unknown;
+    readonly gitOutput?: GitProcessOutput;
+    // (undocumented)
+    readonly originalError: unknown;
 }
 
 // @public
-export function gitFailFast(args: string[], options?: SpawnSyncOptions & {
+export function gitFailFast(args: string[], options?: GitCommonOptions & {
     noExitCode?: boolean;
 }): void;
 
+// @public (undocumented)
+type GitFetchOptions = GitCommonOptions & {
+    remote?: string;
+    remoteBranch?: string;
+    options?: string[];
+};
+
+// @public (undocumented)
+type GitInitOptions = Omit<GitCommonOptions, "throwOnError"> & {
+    email?: string;
+    username?: string;
+};
+
 // @public
 export type GitObserver = (args: string[], output: GitProcessOutput) => void;
+
+// @public (undocumented)
+export type GitOptions = Omit<SpawnSyncOptions, "cwd"> & GitCommonOptions & {
+    description?: string;
+    debug?: boolean;
+};
 
 // @public (undocumented)
 export type GitProcessOutput = {
@@ -278,7 +424,17 @@ export type GitProcessOutput = {
     success: boolean;
 } & Omit<SpawnSyncReturns<string | Buffer>, "stdout" | "stderr">;
 
+// @public (undocumented)
+type GitStageOptions = {
+    patterns: string[];
+} & GitCommonOptions;
+
+// Warning: (ae-forgotten-export) The symbol "GitInitOptions" needs to be exported by the entry point index.d.ts
+//
 // @public
+export function init(options: GitInitOptions): void;
+
+// @public @deprecated (undocumented)
 export function init(cwd: string, email?: string, username?: string): void;
 
 // @public
@@ -288,6 +444,11 @@ export function isCatalogVersion(version: string): boolean;
 export function isChildOf(child: string, parent: string): boolean;
 
 // @public
+export function listAllTrackedFiles(options: {
+    patterns: string[];
+} & GitCommonOptions): string[];
+
+// @public @deprecated (undocumented)
 export function listAllTrackedFiles(patterns: string[], cwd: string): string[];
 
 // @public @deprecated (undocumented)
@@ -465,12 +626,27 @@ export type ParsedLock = {
 };
 
 // @public (undocumented)
-export function parseLockFile(packageRoot: string): Promise<ParsedLock>;
-
-// @public
-export function parseRemoteBranch(branch: string): {
+type ParsedRemoteBranch = {
     remote: string;
     remoteBranch: string;
+};
+
+// @public (undocumented)
+export function parseLockFile(packageRoot: string): Promise<ParsedLock>;
+
+// Warning: (ae-forgotten-export) The symbol "ParseRemoteBranchOptions" needs to be exported by the entry point index.d.ts
+// Warning: (ae-forgotten-export) The symbol "ParsedRemoteBranch" needs to be exported by the entry point index.d.ts
+//
+// @public
+export function parseRemoteBranch(options: ParseRemoteBranchOptions): ParsedRemoteBranch;
+
+// @public @deprecated (undocumented)
+export function parseRemoteBranch(branch: string): ParsedRemoteBranch;
+
+// @public (undocumented)
+type ParseRemoteBranchOptions = GitCommonOptions & {
+    branch: string;
+    knownRemotes?: string[];
 };
 
 // @public
@@ -485,6 +661,9 @@ export interface PnpmLockFile {
 export function queryLockFile(name: string, versionRange: string, lock: ParsedLock): LockDependency;
 
 // @public
+export function revertLocalChanges(options: GitCommonOptions): boolean;
+
+// @public @deprecated (undocumented)
 export function revertLocalChanges(cwd: string): boolean;
 
 // @public
@@ -493,10 +672,18 @@ export function searchUp(filePath: string | string[], cwd: string): string | und
 // @public
 export function setCachingEnabled(enabled: boolean): void;
 
+// Warning: (ae-forgotten-export) The symbol "GitStageOptions" needs to be exported by the entry point index.d.ts
+//
 // @public
+export function stage(options: GitStageOptions): void;
+
+// @public @deprecated (undocumented)
 export function stage(patterns: string[], cwd: string): void;
 
 // @public
+export function stageAndCommit(options: GitStageOptions & GitCommitOptions): void;
+
+// @public @deprecated (undocumented)
 export function stageAndCommit(patterns: string[], message: string, cwd: string, commitOptions?: string[]): void;
 
 // @public @deprecated (undocumented)
