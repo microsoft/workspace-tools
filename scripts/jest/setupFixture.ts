@@ -15,14 +15,15 @@ const fixturesRoot = path.join(__dirname, "__fixtures__");
 
 /**
  * Create a temp directory, optionally containing the fixture files from `fixtureName`,
- * and optionally initializing a git repository.
+ * and optionally initializing a git repository. (If using a git repo and there's no fixture,
+ * it will have an empty initial commit.)
  *
  * Be sure to call `cleanupFixtures()` after all tests to clean up temp directories.
  */
 export function setupFixture(
   fixtureName?: string,
   options?: {
-    /** Whether to set up a git repo*/
+    /** Whether to set up a git repo */
     git?: boolean;
   }
 ) {
@@ -69,6 +70,9 @@ export function setupFixture(
       basicGit(["add", "."], { cwd });
       basicGit(["commit", "-m", "test"], { cwd });
     }
+  } else if (useGit) {
+    // Otherwise make an initial empty commit
+    basicGit(["commit", "--allow-empty", "-m", "initial"], { cwd });
   }
 
   return cwd;
@@ -94,32 +98,51 @@ export function setupPackageJson(cwd: string, packageJson: Record<string, any> =
   fs.writeFileSync(pkgJsonPath, JSON.stringify({ ...oldPackageJson, ...packageJson }, null, 2));
 }
 
-export function setupLocalRemote(cwd: string, remoteName: string, fixtureName?: string) {
+/**
+ * Create a separate local git repo and configure it as a remote for `cwd`.
+ * @returns The path to the remote repo directory.
+ */
+export function setupLocalRemote(params: { cwd: string; remoteName: string; fixtureName?: string }) {
+  const { cwd, remoteName, fixtureName } = params;
+
   // Create a separate repo and configure it as a remote
   const remoteCwd = setupFixture(fixtureName, { git: true });
   const remoteUrl = remoteCwd.replace(/\\/g, "/");
   basicGit(["remote", "add", remoteName, remoteUrl], { cwd });
   basicGit(["config", "pull.rebase", "false"], { cwd });
-  basicGit(["pull", "-X", "ours", "origin", "main", "--allow-unrelated-histories"], { cwd });
+  basicGit(["pull", "-X", "ours", remoteName, "main", "--allow-unrelated-histories"], { cwd });
 
   // Configure url in package.json (make the same commit in local and remote so there's no diff;
   // note that we can't just commit locally and push since the remote isn't a bare repo)
   for (const dir of [cwd, remoteCwd]) {
     setupPackageJson(dir, { repository: { url: remoteUrl, type: "git" } });
-    basicGit(["commit", "-a", "-m", "update repository url"], { cwd: dir });
+    basicGit(["add", "package.json"], { cwd: dir });
+    basicGit(["commit", "-m", "update repository url"], { cwd: dir });
   }
 
   // Ensure remote is available for comparison
   basicGit(["fetch", remoteName, "main"], { cwd });
+
+  return remoteCwd;
 }
 
 /**
  * Very basic git wrapper that throws on error.
- * (Can't use the helper methods from `workspace-tools-git` to avoid a circular dependency.)
+ * (Can't use the helper methods from `workspace-tools` to avoid a circular dependency.)
  */
 function basicGit(args: string[], options: { cwd: string } & SpawnSyncOptions) {
   const result = spawnSync("git", args, options);
   if (result.status !== 0) {
-    throw new Error(`git ${args.join(" ")} failed with ${result.status}\n\n${result.stderr.toString()}`);
+    const stdout = result.stdout?.toString().trim();
+    const stderr = result.stderr?.toString().trim();
+    throw new Error(
+      [
+        `Command failed with exit code ${result.status}: git ${args.join(" ")}`,
+        stdout ? `STDOUT:\n${stdout}` : "",
+        stderr ? `STDERR:\n${stderr}` : "",
+      ]
+        .filter(Boolean)
+        .join("\n\n")
+    );
   }
 }

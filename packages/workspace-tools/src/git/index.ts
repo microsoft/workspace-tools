@@ -1,4 +1,14 @@
-export * from "./git";
+export {
+  GitError,
+  GitObserver,
+  GitOptions,
+  GitProcessOutput,
+  addGitObserver,
+  clearGitObservers,
+  git,
+  gitFailFast,
+} from "./git";
+export { getConfigValue } from "./config";
 export * from "./getDefaultRemote";
 export * from "./getDefaultRemoteBranch";
 export * from "./gitUtilities";

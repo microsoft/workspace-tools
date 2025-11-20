@@ -46,6 +46,10 @@
     "tsdocMessageReporting": {
       "tsdoc-param-tag-missing-hyphen": {
         "logLevel": "none"
+      },
+      // @default isn't a built-in tsdoc tag, but is considered valid elsewhere
+      "tsdoc-undefined-tag": {
+        "logLevel": "none"
       }
     }
   }
