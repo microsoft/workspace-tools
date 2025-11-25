@@ -1,8 +1,20 @@
 # Change Log - workspace-tools
 
-<!-- This log was last generated on Fri, 14 Nov 2025 22:14:21 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 25 Nov 2025 01:51:29 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.40.0
+
+Tue, 25 Nov 2025 01:51:29 GMT
+
+### Minor changes
+
+- Convert most git helpers to use object param signatures with customizable error handling. (Old signatures are deprecated but still available.) (elcraig@microsoft.com)
+
+### Patches
+
+- Clarify getChangedPackages behavior (elcraig@microsoft.com)
 
 ## 0.38.6
 

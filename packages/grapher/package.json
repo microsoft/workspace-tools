@@ -1,6 +1,6 @@
 {
   "name": "@ws-tools/grapher",
-  "version": "0.2.12",
+  "version": "0.2.14",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "commander": "^11.1.0",
-    "workspace-tools": "^0.38.6"
+    "workspace-tools": "^0.40.0"
   },
   "devDependencies": {
     "@types/node": "^16.0.0",

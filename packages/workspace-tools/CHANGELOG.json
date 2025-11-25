@@ -2,6 +2,29 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Tue, 25 Nov 2025 01:51:29 GMT",
+      "version": "0.40.0",
+      "tag": "workspace-tools_v0.40.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "elcraig@microsoft.com",
+            "package": "workspace-tools",
+            "commit": "3a255572411b60973cfd6836b3327d90f2213f7d",
+            "comment": "Convert most git helpers to use object param signatures with customizable error handling. (Old signatures are deprecated but still available.)"
+          }
+        ],
+        "patch": [
+          {
+            "author": "elcraig@microsoft.com",
+            "package": "workspace-tools",
+            "commit": "3a255572411b60973cfd6836b3327d90f2213f7d",
+            "comment": "Clarify getChangedPackages behavior"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 14 Nov 2025 22:14:21 GMT",
       "version": "0.38.6",
       "tag": "workspace-tools_v0.38.6",
