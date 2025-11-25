@@ -37,6 +37,7 @@ export interface WorkspaceUtilities {
 
 /**
  * Get utility implementations for the workspace manager of `cwd`.
+ * It will search up from `cwd` to find a manager file and workspace root, with caching.
  * Returns undefined if the manager can't be determined.
  */
 export function getWorkspaceUtilities(cwd: string): WorkspaceUtilities | undefined {
