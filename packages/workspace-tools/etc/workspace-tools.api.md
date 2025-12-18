@@ -38,6 +38,11 @@ export interface Catalogs {
 }
 
 // @public
+export function catalogsToYaml(catalogs: Catalogs, options?: {
+    indent?: number | string;
+}): string;
+
+// @public
 export function clearGitObservers(): void;
 
 // Warning: (ae-forgotten-export) The symbol "GitCommitOptions" needs to be exported by the entry point index.d.ts

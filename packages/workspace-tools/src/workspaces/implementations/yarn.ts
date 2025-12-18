@@ -75,7 +75,12 @@ export function getYarnCatalogs(cwd: string): Catalogs | undefined {
         !Array.isArray(workspaceSettings) &&
         (workspaceSettings?.catalog || workspaceSettings?.catalogs)
       ) {
-        return { named: workspaceSettings.catalogs, default: workspaceSettings.catalog };
+        // This probably handles a catalog named "default" as the default catalog
+        const { default: namedDefaultCatalog, ...namedCatalogs } = workspaceSettings.catalogs || {};
+        return {
+          default: workspaceSettings.catalog || namedDefaultCatalog,
+          named: Object.keys(namedCatalogs).length ? namedCatalogs : undefined,
+        };
       }
     }
   } catch (err) {

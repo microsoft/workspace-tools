@@ -2610,6 +2610,11 @@ toposort@^2.0.2:
   resolved "https://registry.yarnpkg.com/toposort/-/toposort-2.0.2.tgz#ae21768175d1559d48bef35420b2f4962f09c330"
   integrity sha512-0a5EOkAUp8D4moMi2W8ZF8jcga7BgZd91O/yabJCFY8az+XSzeGyTKs0Aoo897iV1Nj6guFq8orWDS96z91oGg==
 
+ts-dedent@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/ts-dedent/-/ts-dedent-2.2.0.tgz#39e4bd297cd036292ae2394eb3412be63f563bb5"
+  integrity sha512-q5W7tVM71e2xjHZTlgfTDoPF/SmqKG5hddq9SzR49CH2hayqRKJtQ4mtRlSxKaJlR/+9rEM+mnBHf7I2/BQcpQ==
+
 ts-jest@^29.1.0:
   version "29.4.5"
   resolved "https://registry.yarnpkg.com/ts-jest/-/ts-jest-29.4.5.tgz#a6b0dc401e521515d5342234be87f1ca96390a6f"
@@ -2722,6 +2727,19 @@ wordwrap@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/wordwrap/-/wordwrap-1.0.0.tgz#27584810891456a4171c8d0226441ade90cbcaeb"
   integrity sha512-gvVzJFlPycKc5dZN4yPkP8w7Dc37BtP1yczEneOb4uq34pXZcvrtRTmWV8W+Ume+XCxKgbjM+nevkyFPMybd4Q==
+
+workspace-tools@^0.38.2:
+  version "0.38.6"
+  resolved "https://registry.yarnpkg.com/workspace-tools/-/workspace-tools-0.38.6.tgz#9fc3fe10b0dcde6b23bcc9c660bc4b8086626a53"
+  integrity sha512-mq2BoOFI64ZCN26Vz9pYgPf1aryi2mHCc5dDOdwnGgCcXEnAA1nxtaX6atHxageSQnSivL0LkZlq5CtSNwWDMw==
+  dependencies:
+    "@yarnpkg/lockfile" "^1.1.0"
+    fast-glob "^3.3.1"
+    git-url-parse "^16.0.0"
+    globby "^11.0.0"
+    jju "^1.4.0"
+    js-yaml "^4.1.0"
+    micromatch "^4.0.0"
 
 wrap-ansi@^7.0.0:
   version "7.0.0"
