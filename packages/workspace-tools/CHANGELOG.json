@@ -2,6 +2,21 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Thu, 18 Dec 2025 23:51:04 GMT",
+      "version": "0.40.2",
+      "tag": "workspace-tools_v0.40.2",
+      "comments": {
+        "patch": [
+          {
+            "author": "elcraig@microsoft.com",
+            "package": "workspace-tools",
+            "commit": "f26160661af50d3519bf1bcbd42da19c21547b39",
+            "comment": "Update handling of \"catalog:\" vs \"catalog:default\" and add catalogsToYaml utility"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 25 Nov 2025 01:51:29 GMT",
       "version": "0.40.0",
       "tag": "workspace-tools_v0.40.0",
