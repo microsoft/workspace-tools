@@ -23,11 +23,19 @@ export interface NamedCatalogs {
  */
 export interface Catalogs {
   /**
-   * The default catalog if present.
-   * (This can't be combined with the named catalogs because "default" could be a catalog name.)
+   * The default catalog (`catalog:`) if present.
+   *
+   * Whether this is equivalent to `catalogs.default` depends on the package manager:
+   * they're the same in pnpm, but different in yarn. If there was a pnpm catalog named "default",
+   * it will be stored under this property instead (but `getCatalogVersion` supports either syntax).
    */
   default?: Catalog;
 
-  /** Mapping from catalog name to catalog definition, if present */
+  /**
+   * Mapping from catalog name to catalog definition, if present.
+   *
+   * (For pnpm, if there was a catalog named "default", it will be under `Catalogs.default`
+   * and omitted here.)
+   */
   named?: NamedCatalogs;
 }

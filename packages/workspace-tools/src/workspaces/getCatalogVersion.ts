@@ -1,17 +1,4 @@
 import type { Catalogs } from "../types/Catalogs";
-import { getWorkspaceUtilities } from "./implementations";
-
-/**
- * Get version catalogs, if supported by the manager (only pnpm and yarn v4 as of writing).
- * Returns undefined if no catalogs are present or the manager doesn't support them.
- * @see https://pnpm.io/catalogs
- * @see https://yarnpkg.com/features/catalogs
- * @param cwd - Current working directory. It will search up from here to find the root, with caching.
- */
-export function getCatalogs(cwd: string): Catalogs | undefined {
-  const utils = getWorkspaceUtilities(cwd);
-  return utils?.getCatalogs?.(cwd);
-}
 
 const catalogPrefix = "catalog:";
 
@@ -54,9 +41,17 @@ export function getCatalogVersion(params: {
   }
 
   const catalogName = version.slice(catalogPrefix.length);
-  // If there's no name specified after "catalog:", use the default catalog.
-  // Otherwise use the named catalog.
-  const checkCatalog = catalogName ? catalogs.named?.[catalogName] : catalogs.default;
+  const checkCatalog =
+    // Explicit catalog:default refers to the default catalog in pnpm, or a catalog named "default"
+    // in yarn... Check for the yarn case first or fall back to .default. (getCatalogs should have
+    // removed the named "default" catalog from namedCatalogs in managers where they're the same,
+    // and yarn install would have errored if a named catalog "default" was referenced but not defined.)
+    catalogName === "default"
+      ? catalogs.named?.default || catalogs.default
+      : // Otherwise use either the given named catalog, or the default if no name was specified
+        catalogName
+        ? catalogs.named?.[catalogName]
+        : catalogs.default;
   const catalogNameStr = catalogName ? `catalogs.${catalogName}` : "the default catalog";
 
   if (!checkCatalog) {

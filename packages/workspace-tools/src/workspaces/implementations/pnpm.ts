@@ -81,9 +81,12 @@ export function getPnpmCatalogs(cwd: string): Catalogs | undefined {
     if (!workspaceYaml.catalog && !workspaceYaml.catalogs) {
       return undefined;
     }
+    // pnpm treats catalog: and catalog:default as the same (and errors if both are defined),
+    // so treat the catalog named "default" as the default if present.
+    const { default: namedDefaultCatalog, ...namedCatalogs } = workspaceYaml.catalogs || {};
     return {
-      default: workspaceYaml.catalog,
-      named: workspaceYaml.catalogs,
+      default: workspaceYaml.catalog || namedDefaultCatalog,
+      named: Object.keys(namedCatalogs).length ? namedCatalogs : undefined,
     };
   } catch (err) {
     logVerboseWarning(`Error getting pnpm catalogs for ${cwd}`, err);

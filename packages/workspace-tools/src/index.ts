@@ -22,4 +22,6 @@ export { getChangedPackages, getChangedPackagesBetweenRefs } from "./workspaces/
 export { getPackagesByFiles } from "./workspaces/getPackagesByFiles";
 export { listOfWorkspacePackageNames } from "./workspaces/listOfWorkspacePackageNames";
 export { getAllPackageJsonFiles, getAllPackageJsonFilesAsync } from "./workspaces/getAllPackageJsonFiles";
-export { getCatalogs, getCatalogVersion, isCatalogVersion } from "./workspaces/catalogs";
+export { catalogsToYaml } from "./workspaces/catalogsToYaml";
+export { getCatalogVersion, isCatalogVersion } from "./workspaces/getCatalogVersion";
+export { getCatalogs } from "./workspaces/getCatalogs";

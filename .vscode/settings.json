@@ -15,5 +15,9 @@
     "*.json5": "jsonc",
     "api-extractor*.json": "jsonc"
   },
-  "typescript.tsdk": "node_modules/typescript/lib"
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "jest.runMode": "on-demand",
+  "jest.jestCommandLine": "yarn test",
+  // For now, only support tests in workspace-tools package
+  "jest.rootPath": "packages/workspace-tools"
 }
