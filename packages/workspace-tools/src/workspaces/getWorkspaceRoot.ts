@@ -2,10 +2,10 @@ import { WorkspaceManager } from "./WorkspaceManager";
 import { getWorkspaceManagerAndRoot } from "./implementations";
 
 /**
- * Get the root directory of a monorepo, defined as the directory where the workspace manager
- * config file is located.
+ * Get the root directory of a monorepo, defined as the directory where the workspace/monorepo manager
+ * config file is located. (Does not rely in any way on git, and the result is cached by `cwd`.)
  *
- * NOTE: "Workspace" here refers to the entire project, not an individual package the way it does
+ * NOTE: "Workspace" here refers to the entire project/monorepo, not an individual package the way it does
  * in e.g. npm/yarn/pnpm "workspaces."
  *
  * @param cwd Start searching from here
@@ -20,11 +20,12 @@ export function getWorkspaceRoot(cwd: string, preferredManager?: WorkspaceManage
 }
 
 /**
- * Get the root directory of a monorepo, defined as the directory where the workspace manager
- * config file is located.
+ * Get the root directory of a monorepo, defined as the directory where the workspace/monorepo manager
+ * config file is located. (Does not rely in any way on git, and the result is cached by `cwd`.)
  *
  * @param cwd Start searching from here
  * @param preferredManager Search for only this manager's config file
+ * @returns Workspace manager root directory, or undefined if not found
  */
 export function getWorkspaceManagerRoot(cwd: string, preferredManager?: WorkspaceManager): string | undefined {
   return getWorkspaceManagerAndRoot(cwd, undefined, preferredManager)?.root;

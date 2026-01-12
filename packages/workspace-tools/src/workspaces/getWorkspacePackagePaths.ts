@@ -1,7 +1,7 @@
 import { getWorkspaceManagerAndRoot, getWorkspaceUtilities } from "./implementations";
 
 /**
- * Get a list of package folder paths in the workspace. The list of included packages is based on
+ * Get a list of package folder paths in the monorepo. The list of included packages is based on
  * the manager's config file and matching package folders (which must contain package.json) on disk.
  */
 export function getWorkspacePackagePaths(cwd: string): string[] {
@@ -10,7 +10,7 @@ export function getWorkspacePackagePaths(cwd: string): string[] {
 }
 
 /**
- * Get a list of package folder paths in the workspace. The list of included packages is based on
+ * Get a list of package folder paths in the monorepo. The list of included packages is based on
  * the manager's config file and matching package folders (which must contain package.json) on disk.
  */
 export async function getWorkspacePackagePathsAsync(cwd: string): Promise<string[]> {

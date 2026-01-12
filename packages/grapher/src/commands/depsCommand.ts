@@ -13,7 +13,7 @@ export function depsCommand(options: DepsCommandOptions): void {
   const root = getWorkspaceManagerRoot(process.cwd());
 
   if (!root) {
-    throw new Error("Could not find workspace root");
+    throw new Error("Could not find workspace manager root");
   }
 
   const packageInfos = getPackageInfos(root);
