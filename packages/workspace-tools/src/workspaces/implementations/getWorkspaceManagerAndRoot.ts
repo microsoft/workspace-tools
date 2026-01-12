@@ -4,15 +4,15 @@ import { WorkspaceManager } from "../WorkspaceManager";
 import { isCachingEnabled } from "../../isCachingEnabled";
 
 export interface WorkspaceManagerAndRoot {
-  /** Workspace manager name */
+  /** Workspace/monorepo manager name */
   manager: WorkspaceManager;
-  /** Workspace root, where the manager configuration file is located */
+  /** Monorepo root, where the manager configuration file is located */
   root: string;
 }
 const workspaceCache = new Map<string, WorkspaceManagerAndRoot | undefined>();
 
 /**
- * Files indicating the workspace root for each manager.
+ * Files indicating the monorepo root for each manager.
  *
  * DO NOT REORDER! The order of keys determines the precedence of the files, which is
  * important for cases like lerna where lerna.json and e.g. yarn.lock may both exist.
@@ -27,7 +27,7 @@ const managerFiles = {
 };
 
 /**
- * Get the preferred workspace manager based on `process.env.PREFERRED_WORKSPACE_MANAGER`
+ * Get the preferred workspace/monorepo manager based on `process.env.PREFERRED_WORKSPACE_MANAGER`
  * (if valid).
  */
 export function getPreferredWorkspaceManager(): WorkspaceManager | undefined {
@@ -36,13 +36,13 @@ export function getPreferredWorkspaceManager(): WorkspaceManager | undefined {
 }
 
 /**
- * Get the workspace manager name and workspace root directory for `cwd`, with caching.
+ * Get the workspace/monorepo manager name and root directory for `cwd`, with caching.
  * Also respects the `process.env.PREFERRED_WORKSPACE_MANAGER` override, provided the relevant
  * manager file exists.
  * @param cwd Directory to search up from
  * @param cache Optional override cache for testing
  * @param preferredManager Optional override manager (if provided, only searches for this manager's file)
- * @returns Workspace manager and root, or undefined if it can't be determined
+ * @returns Workspace/monorepo manager and root, or undefined if it can't be determined
  */
 export function getWorkspaceManagerAndRoot(
   cwd: string,

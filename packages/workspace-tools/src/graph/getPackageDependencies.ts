@@ -26,7 +26,7 @@ function isValidDependency(info: PackageInfo, dep: string): boolean {
 }
 
 /**
- * Gets the workspace package dependencies for a given package (excluding `file:` or `npm:` versions).
+ * Gets the monorepo package dependencies for a given package (excluding `file:` or `npm:` versions).
  * It only considers `dependencies` unless options specify otherwise.
  *
  * @param info - The package information containing dependencies

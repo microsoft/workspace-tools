@@ -1,6 +1,6 @@
 # @ws-tools/grapher
 
-## Generates a list of dependents and dependencies (internal to the workspace) for a package or packages
+**Generates a list of dependents and dependencies (internal to the monorepo) for a package or packages.**
 
 For one package
 

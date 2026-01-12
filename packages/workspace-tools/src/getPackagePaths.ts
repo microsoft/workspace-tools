@@ -10,7 +10,7 @@ const globOptions: GlobOptions = {
 };
 
 /**
- * Given package folder globs (such as those from package.json `workspaces`) and a workspace root
+ * Given package folder globs (such as those from package.json `workspaces`) and a monorepo root
  * directory, get absolute paths to actual package folders.
  */
 export function getPackagePaths(root: string, packageGlobs: string[]): string[] {
@@ -26,7 +26,7 @@ export function getPackagePaths(root: string, packageGlobs: string[]): string[] 
 }
 
 /**
- * Given package folder globs (such as those from package.json `workspaces`) and a workspace root
+ * Given package folder globs (such as those from package.json `workspaces`) and a monorepo root
  * directory, get absolute paths to actual package folders.
  */
 export async function getPackagePathsAsync(root: string, packageGlobs: string[]): Promise<string[]> {

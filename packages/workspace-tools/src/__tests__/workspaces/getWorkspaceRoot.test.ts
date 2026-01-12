@@ -6,27 +6,27 @@ describe("getWorkspaceManagerRoot", () => {
     cleanupFixtures();
   });
 
-  it("handles yarn workspace", () => {
+  it("handles yarn monorepo", () => {
     const repoRoot = setupFixture("monorepo");
     expect(getWorkspaceManagerRoot(repoRoot)).toBe(repoRoot);
   });
 
-  it("handles pnpm workspace", () => {
+  it("handles pnpm monorepo", () => {
     const repoRoot = setupFixture("monorepo-pnpm");
     expect(getWorkspaceManagerRoot(repoRoot)).toBe(repoRoot);
   });
 
-  it("handles rush workspace", () => {
+  it("handles rush monorepo", () => {
     const repoRoot = setupFixture("monorepo-rush-pnpm");
     expect(getWorkspaceManagerRoot(repoRoot)).toBe(repoRoot);
   });
 
-  it("handles npm workspace", () => {
+  it("handles npm monorepo", () => {
     const repoRoot = setupFixture("monorepo-npm");
     expect(getWorkspaceManagerRoot(repoRoot)).toBe(repoRoot);
   });
 
-  it("handles lerna workspace", () => {
+  it("handles lerna monorepo", () => {
     const repoRoot = setupFixture("monorepo-lerna-npm");
     expect(getWorkspaceManagerRoot(repoRoot)).toBe(repoRoot);
   });

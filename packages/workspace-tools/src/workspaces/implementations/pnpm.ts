@@ -15,7 +15,7 @@ type PnpmWorkspaceYaml = {
   catalogs?: NamedCatalogs;
 };
 
-function getPnpmWorkspaceRootAndYaml(cwd: string) {
+function getPnpmRootAndYaml(cwd: string) {
   const root = getPnpmWorkspaceRoot(cwd);
   const pnpmWorkspacesFile = path.join(root, "pnpm-workspace.yaml");
   return { root, workspaceYaml: readYaml<PnpmWorkspaceYaml>(pnpmWorkspacesFile) };
@@ -25,15 +25,18 @@ function getPnpmWorkspaceRootAndYaml(cwd: string) {
 export function getPnpmWorkspaceRoot(cwd: string): string {
   const root = getWorkspaceManagerAndRoot(cwd, undefined, "pnpm")?.root;
   if (!root) {
-    throw new Error("Could not find pnpm workspace root from " + cwd);
+    throw new Error("Could not find pnpm root from " + cwd);
   }
   return root;
 }
 
-/** Get paths for each package ("workspace") in a pnpm monorepo. */
+/**
+ * Get paths for each package ("workspace") in a pnpm monorepo.
+ * @returns Array of monorepo package paths, or an empty array on error
+ */
 export function getWorkspacePackagePaths(cwd: string): string[] {
   try {
-    const { root, workspaceYaml } = getPnpmWorkspaceRootAndYaml(cwd);
+    const { root, workspaceYaml } = getPnpmRootAndYaml(cwd);
 
     return getPackagePaths(root, workspaceYaml.packages);
   } catch (err) {
@@ -45,13 +48,14 @@ export function getWorkspacePackagePaths(cwd: string): string[] {
 /**
  * Get an array with names, paths, and package.json contents for each package ("workspace")
  * in a pnpm monorepo.
+ * @returns Array of monorepo package infos, or an empty array on error
  */
 export function getPnpmWorkspaces(cwd: string): WorkspaceInfos {
   try {
     const packagePaths = getWorkspacePackagePaths(cwd);
     return getWorkspacePackageInfo(packagePaths);
   } catch (err) {
-    logVerboseWarning(`Error getting pnpm workspaces for ${cwd}`, err);
+    logVerboseWarning(`Error getting pnpm workspace package infos for ${cwd}`, err);
     return [];
   }
 }
@@ -59,13 +63,14 @@ export function getPnpmWorkspaces(cwd: string): WorkspaceInfos {
 /**
  * Get an array with names, paths, and package.json contents for each package ("workspace")
  * in a pnpm monorepo.
+ * @returns Array of monorepo package infos, or an empty array on error
  */
 export async function getPnpmWorkspacesAsync(cwd: string): Promise<WorkspaceInfos> {
   try {
     const packagePaths = getWorkspacePackagePaths(cwd);
     return getWorkspacePackageInfoAsync(packagePaths);
   } catch (err) {
-    logVerboseWarning(`Error getting pnpm workspaces for ${cwd}`, err);
+    logVerboseWarning(`Error getting pnpm workspace package infos for ${cwd}`, err);
     return [];
   }
 }
@@ -77,7 +82,7 @@ export async function getPnpmWorkspacesAsync(cwd: string): Promise<WorkspaceInfo
  */
 export function getPnpmCatalogs(cwd: string): Catalogs | undefined {
   try {
-    const { workspaceYaml } = getPnpmWorkspaceRootAndYaml(cwd);
+    const { workspaceYaml } = getPnpmRootAndYaml(cwd);
     if (!workspaceYaml.catalog && !workspaceYaml.catalogs) {
       return undefined;
     }

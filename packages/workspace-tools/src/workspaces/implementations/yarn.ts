@@ -17,39 +17,47 @@ import { readYaml } from "../../lockfile/readYaml";
 export function getYarnWorkspaceRoot(cwd: string): string {
   const root = getWorkspaceManagerAndRoot(cwd, undefined, "yarn")?.root;
   if (!root) {
-    throw new Error("Could not find yarn workspace root from " + cwd);
+    throw new Error("Could not find yarn root from " + cwd);
   }
   return root;
 }
 
-/** Get paths for each package ("workspace") in a yarn monorepo. */
+/**
+ * Get paths for each package ("workspace") in a yarn monorepo.
+ * @returns Array of monorepo package paths, or an empty array on error
+ */
 export function getWorkspacePackagePaths(cwd: string): string[] {
-  const yarnWorkspacesRoot = getYarnWorkspaceRoot(cwd);
-  return getPackagePathsFromWorkspaceRoot(yarnWorkspacesRoot);
+  const root = getYarnWorkspaceRoot(cwd);
+  return getPackagePathsFromWorkspaceRoot(root);
 }
 
-/** Get paths for each package ("workspace") in a yarn monorepo. */
+/**
+ * Get paths for each package ("workspace") in a yarn monorepo.
+ * @returns Array of monorepo package paths, or an empty array on error
+ */
 export function getWorkspacePackagePathsAsync(cwd: string): Promise<string[]> {
-  const yarnWorkspacesRoot = getYarnWorkspaceRoot(cwd);
-  return getPackagePathsFromWorkspaceRootAsync(yarnWorkspacesRoot);
+  const root = getYarnWorkspaceRoot(cwd);
+  return getPackagePathsFromWorkspaceRootAsync(root);
 }
 
 /**
  * Get an array with names, paths, and package.json contents for each package ("workspace")
  * in a yarn monorepo.
+ * @returns Array of monorepo package infos, or an empty array on error
  */
 export function getYarnWorkspaces(cwd: string): WorkspaceInfos {
-  const yarnWorkspacesRoot = getYarnWorkspaceRoot(cwd);
-  return getWorkspaceInfoFromWorkspaceRoot(yarnWorkspacesRoot);
+  const root = getYarnWorkspaceRoot(cwd);
+  return getWorkspaceInfoFromWorkspaceRoot(root);
 }
 
 /**
  * Get an array with names, paths, and package.json contents for each package ("workspace")
  * in a yarn monorepo.
+ * @returns Array of monorepo package infos, or an empty array on error
  */
 export function getYarnWorkspacesAsync(cwd: string): Promise<WorkspaceInfos> {
-  const yarnWorkspacesRoot = getYarnWorkspaceRoot(cwd);
-  return getWorkspaceInfoFromWorkspaceRootAsync(yarnWorkspacesRoot);
+  const root = getYarnWorkspaceRoot(cwd);
+  return getWorkspaceInfoFromWorkspaceRootAsync(root);
 }
 
 /**

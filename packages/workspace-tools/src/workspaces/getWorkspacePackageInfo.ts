@@ -13,7 +13,7 @@ import { getPackageInfo } from "../getPackageInfo";
  * This is an internal helper used by `getWorkspaces` implementations for different managers.
  *
  * @param packagePaths Paths to packages within a monorepo
- * @returns Array of workspace package infos
+ * @returns Array of monorepo package infos
  * @internal
  */
 export function getWorkspacePackageInfo(packagePaths: string[]): WorkspaceInfos {
@@ -47,7 +47,7 @@ export function getWorkspacePackageInfo(packagePaths: string[]): WorkspaceInfos 
  * This is an internal helper used by `getWorkspaces` implementations for different managers.
  *
  * @param packagePaths Paths to packages within a monorepo
- * @returns Array of workspace package infos
+ * @returns Array of monorepo package infos
  * @internal
  */
 export async function getWorkspacePackageInfoAsync(packagePaths: string[]): Promise<WorkspaceInfos> {
@@ -66,7 +66,7 @@ export async function getWorkspacePackageInfoAsync(packagePaths: string[]): Prom
         packageJson: infoFromPackageJson(packageJson, packageJsonPath),
       };
     } catch (err) {
-      logVerboseWarning(`Error reading or parsing ${packageJsonPath} while getting workspace package info`, err);
+      logVerboseWarning(`Error reading or parsing ${packageJsonPath} while getting monorepo package info`, err);
       return null;
     }
   });

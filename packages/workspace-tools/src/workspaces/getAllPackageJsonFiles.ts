@@ -5,7 +5,7 @@ import { isCachingEnabled } from "../isCachingEnabled";
 const cache = new Map<string, string[]>();
 
 /**
- * Get paths to every package.json in the workspace, given a cwd.
+ * Get paths to every package.json in the monorepo, given a cwd.
  */
 export function getAllPackageJsonFiles(cwd: string): string[] {
   if (isCachingEnabled() && cache.has(cwd)) {
@@ -24,7 +24,7 @@ export function _resetPackageJsonFilesCache() {
 }
 
 /**
- * Get paths to every package.json in the workspace, given a cwd.
+ * Get paths to every package.json in the monorepo, given a cwd.
  */
 export async function getAllPackageJsonFilesAsync(cwd: string): Promise<string[]> {
   if (isCachingEnabled() && cache.has(cwd)) {
