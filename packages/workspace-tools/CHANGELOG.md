@@ -1,8 +1,16 @@
 # Change Log - workspace-tools
 
-<!-- This log was last generated on Thu, 18 Dec 2025 23:51:04 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 13 Jan 2026 00:02:46 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.40.3
+
+Tue, 13 Jan 2026 00:02:46 GMT
+
+### Patches
+
+- Clarify "workspace" terminology (elcraig@microsoft.com)
 
 ## 0.40.2
 
