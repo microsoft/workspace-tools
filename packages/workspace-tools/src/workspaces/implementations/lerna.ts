@@ -1,65 +1,56 @@
 import fs from "fs";
 import jju from "jju";
 import path from "path";
-import { getPackagePaths } from "../../getPackagePaths";
-import type { WorkspaceInfos } from "../../types/WorkspaceInfo";
-import { getWorkspacePackageInfo, getWorkspacePackageInfoAsync } from "../getWorkspacePackageInfo";
-import { logVerboseWarning } from "../../logging";
-import { getWorkspaceManagerAndRoot } from "./getWorkspaceManagerAndRoot";
+import { isCachingEnabled } from "../../isCachingEnabled";
+import { managerFiles } from "./getWorkspaceManagerAndRoot";
+import { getWorkspaceUtilitiesBase } from "./getWorkspaceUtilitiesBase";
+import type { WorkspaceUtilities } from "./WorkspaceUtilities";
 
-function getLernaRoot(cwd: string): string {
-  const root = getWorkspaceManagerAndRoot(cwd, undefined, "lerna")?.root;
-  if (!root) {
-    throw new Error("Could not find lerna root from " + cwd);
-  }
-  return root;
-}
+export const lernaUtilities: WorkspaceUtilities = {
+  getWorkspacePatterns: ({ root }) => {
+    const lernaJsonPath = path.join(root, managerFiles.lerna);
+    const lernaConfig = jju.parse(fs.readFileSync(lernaJsonPath, "utf-8")) as { packages?: string[] };
+    if (lernaConfig.packages) {
+      return { patterns: lernaConfig.packages, type: "pattern" };
+    }
 
-/**
- * Get paths for each package ("workspace") in a lerna monorepo.
- * @returns Array of monorepo package paths, or an empty array on error
- */
-export function getWorkspacePackagePaths(cwd: string): string[] {
-  try {
-    const root = getLernaRoot(cwd);
-    const lernaJsonPath = path.join(root, "lerna.json");
-    const lernaConfig = jju.parse(fs.readFileSync(lernaJsonPath, "utf-8"));
-    return getPackagePaths(root, lernaConfig.packages);
-  } catch (err) {
-    logVerboseWarning(`Error getting lerna workspace package paths for ${cwd}`, err);
-    return [];
-  }
-}
+    // Newer lerna versions also pick up workspaces from the package manager.
+    const actualManager = getActualManager({ root });
+    if (!actualManager) {
+      throw new Error(`${lernaJsonPath} does not define "packages", and no known package manager was found.`);
+    }
 
-/**
- * Get an array with names, paths, and package.json contents for each package ("workspace")
- * in a lerna monorepo.
- * @returns Array of monorepo package infos, or an empty array on error
- */
-export function getLernaWorkspaces(cwd: string): WorkspaceInfos {
-  try {
-    const packagePaths = getWorkspacePackagePaths(cwd);
-    return getWorkspacePackageInfo(packagePaths);
-  } catch (err) {
-    logVerboseWarning(`Error getting lerna workspace package infos for ${cwd}`, err);
-    return [];
-  }
-}
+    const managerUtils = getWorkspaceUtilitiesBase(actualManager);
+    return managerUtils.getWorkspacePatterns({ root });
+  },
+
+  // lerna could theoretically use yarn or pnpm catalogs
+  getCatalogs: ({ root }) => {
+    const actualManager = getActualManager({ root });
+    return actualManager && getWorkspaceUtilitiesBase(actualManager).getCatalogs?.({ root });
+  },
+};
+
+/** Mapping from lerna repo root to actual package manager */
+const managerCache = new Map<string, "yarn" | "pnpm" | "npm" | undefined>();
 
 /**
- * Get an array with names, paths, and package.json contents for each package ("workspace")
- * in a lerna monorepo.
- * @returns Array of monorepo package infos, or an empty array on error
+ * Get the actual package manager used by a lerna monorepo (with caching).
  */
-export async function getLernaWorkspacesAsync(cwd: string): Promise<WorkspaceInfos> {
-  try {
-    const packagePaths = getWorkspacePackagePaths(cwd);
-    return getWorkspacePackageInfoAsync(packagePaths);
-  } catch (err) {
-    logVerboseWarning(`Error getting lerna workspace package infos for ${cwd}`, err);
-    return [];
+function getActualManager(params: { root: string }): "yarn" | "pnpm" | "npm" | undefined {
+  const { root } = params;
+  if (isCachingEnabled() && managerCache.has(root)) {
+    return managerCache.get(root);
   }
-}
 
-export { getLernaWorkspaces as getWorkspaces };
-export { getLernaWorkspacesAsync as getWorkspacesAsync };
+  for (const manager of ["npm", "yarn", "pnpm"] as const) {
+    const managerPath = path.join(root, managerFiles[manager]);
+    if (fs.existsSync(managerPath)) {
+      managerCache.set(root, manager);
+      return manager;
+    }
+  }
+
+  managerCache.set(root, undefined);
+  return undefined;
+}

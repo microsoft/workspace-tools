@@ -9,23 +9,17 @@ export { getScopedPackages } from "./scope";
 export type { Catalog, Catalogs, NamedCatalogs } from "./types/Catalogs";
 export type { PackageDependency, PackageGraph } from "./types/PackageGraph";
 export type { PackageInfo, PackageInfos } from "./types/PackageInfo";
-export type { WorkspacePackageInfo, WorkspaceInfos, WorkspaceInfo } from "./types/WorkspaceInfo";
+export type { WorkspacePackageInfo, WorkspaceInfos } from "./types/WorkspaceInfo";
 export { findWorkspacePath } from "./workspaces/findWorkspacePath";
-export {
-  getWorkspaces,
-  getWorkspacesAsync,
-  getWorkspaceInfos,
-  getWorkspaceInfosAsync,
-} from "./workspaces/getWorkspaces";
+export { getWorkspaceInfos, getWorkspaceInfosAsync } from "./workspaces/getWorkspaceInfos";
 export { getWorkspacePackagePaths, getWorkspacePackagePathsAsync } from "./workspaces/getWorkspacePackagePaths";
-export { getWorkspaceManagerRoot, getWorkspaceRoot } from "./workspaces/getWorkspaceRoot";
+export { getWorkspacePatterns } from "./workspaces/getWorkspacePatterns";
+export { getWorkspaceManagerAndRoot } from "./workspaces/implementations/getWorkspaceManagerAndRoot";
+export { getWorkspaceManagerRoot } from "./workspaces/getWorkspaceManagerRoot";
+export type { WorkspaceManager } from "./types/WorkspaceManager";
 export { getPackageInfo, getPackageInfoAsync } from "./getPackageInfo";
-export { getPnpmWorkspaceRoot, getPnpmWorkspaces } from "./workspaces/implementations/pnpm";
-export { getRushWorkspaceRoot, getRushWorkspaces } from "./workspaces/implementations/rush";
-export { getYarnWorkspaceRoot, getYarnWorkspaces } from "./workspaces/implementations/yarn";
 export { getChangedPackages, getChangedPackagesBetweenRefs } from "./workspaces/getChangedPackages";
 export { getPackagesByFiles } from "./workspaces/getPackagesByFiles";
-export { listOfWorkspacePackageNames } from "./workspaces/listOfWorkspacePackageNames";
 export { getAllPackageJsonFiles, getAllPackageJsonFilesAsync } from "./workspaces/getAllPackageJsonFiles";
 export { catalogsToYaml } from "./workspaces/catalogsToYaml";
 export { getCatalogVersion, isCatalogVersion } from "./workspaces/getCatalogVersion";

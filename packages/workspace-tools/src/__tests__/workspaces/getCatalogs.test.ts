@@ -1,12 +1,12 @@
+import { cleanupFixtures, setupFixture } from "@ws-tools/scripts/jest/setupFixture";
 import fs from "fs";
 import path from "path";
-import { cleanupFixtures, setupFixture } from "@ws-tools/scripts/jest/setupFixture";
-import type { Catalogs } from "../../types/Catalogs";
-import type { WorkspaceManager } from "../../workspaces/WorkspaceManager";
-import { getWorkspaceManagerAndRoot } from "../../workspaces/implementations";
 import { getPackageInfo } from "../../getPackageInfo";
-import { getCatalogs } from "../../workspaces/getCatalogs";
+import type { Catalogs } from "../../types/Catalogs";
+import type { WorkspaceManager } from "../../types/WorkspaceManager";
 import { catalogsToYaml } from "../../workspaces/catalogsToYaml";
+import { getCatalogs } from "../../workspaces/getCatalogs";
+import { getWorkspaceManagerAndRoot } from "../../workspaces/implementations";
 
 // Samples from https://yarnpkg.com/features/catalogs
 const defaultCatalogs: Required<Pick<Catalogs, "default">> = {

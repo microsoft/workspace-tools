@@ -1,66 +1,27 @@
-import type { Catalogs } from "../../types/Catalogs";
-import type { WorkspaceInfos } from "../../types/WorkspaceInfo";
-import { getWorkspaceManagerAndRoot } from "./getWorkspaceManagerAndRoot";
-// These must be type imports to avoid parsing the additional deps at runtime
-import type * as LernaUtilities from "./lerna";
-import type * as NpmUtilities from "./npm";
-import type * as PnpmUtilities from "./pnpm";
-import type * as RushUtilities from "./rush";
-import type * as YarnUtilities from "./yarn";
+import type { WorkspaceManager } from "../../types/WorkspaceManager";
+import { getWorkspaceUtilitiesBase } from "./getWorkspaceUtilitiesBase";
+import type { WorkspaceUtilities } from "./WorkspaceUtilities";
 
-export interface WorkspaceUtilities {
-  /**
-   * Get an array of paths to packages ("workspaces") in the monorepo, based on the
-   * manager's config file.
-   * @returns Array of monorepo package paths, or an empty array on error
-   */
-  getWorkspacePackagePaths: (cwd: string) => string[];
-  /**
-   * Get an array of paths to packages ("workspaces") in the monorepo, based on the
-   * manager's config file.
-   * @returns Array of monorepo package paths, or an empty array on error
-   */
-  getWorkspacePackagePathsAsync?: (cwd: string) => Promise<string[]>;
-  /**
-   * Get an array with names, paths, and package.json contents for each package ("workspace")
-   * in a monorepo.
-   * @returns Array of monorepo package infos, or an empty array on error
-   */
-  getWorkspaces: (cwd: string) => WorkspaceInfos;
-  /**
-   * Get an array with names, paths, and package.json contents for each package ("workspace")
-   * in a monorepo.
-   * @returns Array of monorepo package infos, or an empty array on error
-   */
-  getWorkspacesAsync: (cwd: string) => Promise<WorkspaceInfos>;
-  /**
-   * Get version catalogs, if supported by the manager (only pnpm and yarn v4 as of writing).
-   */
-  getCatalogs?: (cwd: string) => Catalogs | undefined;
-}
+const utils: Partial<Record<WorkspaceManager, WorkspaceUtilities>> = {};
 
 /**
- * Get utility implementations for the workspace/monorepo manager of `cwd`.
- * It will search up from `cwd` to find a manager file and monorepo root, with caching.
- * Returns undefined if the manager can't be determined.
+ * Get utility implementations for the given workspace/monorepo manager.
+ * Returns undefined if `manager` has no custom utilities.
  */
-export function getWorkspaceUtilities(cwd: string): WorkspaceUtilities | undefined {
-  const manager = getWorkspaceManagerAndRoot(cwd)?.manager;
-
+export function getWorkspaceUtilities(manager: WorkspaceManager): WorkspaceUtilities {
   switch (manager) {
+    case "npm":
     case "yarn":
-      return require("./yarn") as typeof YarnUtilities;
-
     case "pnpm":
-      return require("./pnpm") as typeof PnpmUtilities;
+      utils[manager] ??= getWorkspaceUtilitiesBase(manager);
+      return utils[manager]!;
 
     case "rush":
-      return require("./rush") as typeof RushUtilities;
-
-    case "npm":
-      return require("./npm") as typeof NpmUtilities;
+      utils.rush ??= (require("./rush") as typeof import("./rush")).rushUtilities;
+      return utils.rush;
 
     case "lerna":
-      return require("./lerna") as typeof LernaUtilities;
+      utils.lerna ??= (require("./lerna") as typeof import("./lerna")).lernaUtilities;
+      return utils.lerna;
   }
 }

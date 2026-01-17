@@ -16,6 +16,19 @@
       "sourceMaps": true,
       "outputCapture": "std",
       "console": "integratedTerminal"
+    },
+    {
+      // If there's an issue with running a beachball command, it's very likely due to using the
+      // local version of workspace-tools if it has breaking changes...
+      "type": "node",
+      "request": "launch",
+      "name": "Debug beachball",
+      "runtimeExecutable": "npm",
+      "cwd": "${workspaceFolder}",
+      "runtimeArgs": ["run-script", "checkchange"],
+      "sourceMaps": true,
+      "outputCapture": "std",
+      "console": "integratedTerminal"
     }
   ]
 }
