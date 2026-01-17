@@ -17,14 +17,14 @@ const workspaceCache = new Map<string, WorkspaceManagerAndRoot | undefined>();
  * DO NOT REORDER! The order of keys determines the precedence of the files, which is
  * important for cases like lerna where lerna.json and e.g. yarn.lock may both exist.
  */
-const managerFiles = {
+export const managerFiles = {
   // DO NOT REORDER! (see above)
   lerna: "lerna.json",
   rush: "rush.json",
   yarn: "yarn.lock",
   pnpm: "pnpm-workspace.yaml",
   npm: "package-lock.json",
-};
+} as const;
 
 /**
  * Get the preferred workspace/monorepo manager based on `process.env.PREFERRED_WORKSPACE_MANAGER`
@@ -74,4 +74,16 @@ export function getWorkspaceManagerAndRoot(
   }
 
   return cache.get(cwd);
+}
+
+/**
+ * Get the root directory of a monorepo, defined as the directory where the workspace/monorepo manager
+ * config file is located. (Does not rely in any way on git, and the result is cached by `cwd`.)
+ *
+ * @param cwd Start searching from here
+ * @param manager Search for only this manager's config file
+ * @returns Workspace manager root directory, or undefined if not found
+ */
+export function getWorkspaceManagerRoot(cwd: string, manager?: WorkspaceManager): string | undefined {
+  return getWorkspaceManagerAndRoot(cwd, undefined, manager)?.root;
 }

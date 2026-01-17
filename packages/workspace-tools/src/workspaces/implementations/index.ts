@@ -1,2 +1,2 @@
 export { getWorkspaceManagerAndRoot, type WorkspaceManagerAndRoot } from "./getWorkspaceManagerAndRoot";
-export { getWorkspaceUtilities, type WorkspaceUtilities } from "./getWorkspaceUtilities";
+export { getWorkspaceUtilities } from "./getWorkspaceUtilities";
