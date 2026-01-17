@@ -4,17 +4,14 @@ import path from "path";
 import { isCachingEnabled } from "../../isCachingEnabled";
 import { managerFiles } from "./getWorkspaceManagerAndRoot";
 import { getWorkspaceUtilitiesBase } from "./getWorkspaceUtilitiesBase";
-import { makeWorkspaceUtilities } from "./makeWorkspaceUtilities";
+import type { WorkspaceUtilities } from "./WorkspaceUtilities";
 
-/**
- * Utilities for lerna workspaces. Use these if the manager is known to be lerna.
- */
-export const lernaUtilities = makeWorkspaceUtilities("lerna", {
+export const lernaUtilities: WorkspaceUtilities = {
   getWorkspacePatterns: ({ root }) => {
     const lernaJsonPath = path.join(root, managerFiles.lerna);
     const lernaConfig = jju.parse(fs.readFileSync(lernaJsonPath, "utf-8")) as { packages?: string[] };
     if (lernaConfig.packages) {
-      return lernaConfig.packages;
+      return { patterns: lernaConfig.packages, type: "pattern" };
     }
 
     // Newer lerna versions also pick up workspaces from the package manager.
@@ -24,18 +21,15 @@ export const lernaUtilities = makeWorkspaceUtilities("lerna", {
     }
 
     const managerUtils = getWorkspaceUtilitiesBase(actualManager);
-    return managerUtils.getWorkspacePatterns(root);
+    return managerUtils.getWorkspacePatterns({ root });
   },
 
   // lerna could theoretically use yarn or pnpm catalogs
   getCatalogs: ({ root }) => {
     const actualManager = getActualManager({ root });
-    if (actualManager) {
-      return getWorkspaceUtilitiesBase(actualManager).getCatalogs(root);
-    }
-    return undefined;
+    return actualManager && getWorkspaceUtilitiesBase(actualManager).getCatalogs?.({ root });
   },
-});
+};
 
 /** Mapping from lerna repo root to actual package manager */
 const managerCache = new Map<string, "yarn" | "pnpm" | "npm" | undefined>();

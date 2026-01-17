@@ -1,7 +1,7 @@
 import path from "path";
-import { searchUp } from "../../paths";
-import { WorkspaceManager } from "../WorkspaceManager";
 import { isCachingEnabled } from "../../isCachingEnabled";
+import { searchUp } from "../../paths";
+import { WorkspaceManager } from "../../types/WorkspaceManager";
 
 export interface WorkspaceManagerAndRoot {
   /** Workspace/monorepo manager name */
@@ -9,6 +9,7 @@ export interface WorkspaceManagerAndRoot {
   /** Monorepo root, where the manager configuration file is located */
   root: string;
 }
+
 const workspaceCache = new Map<string, WorkspaceManagerAndRoot | undefined>();
 
 /**
@@ -37,35 +38,34 @@ export function getPreferredWorkspaceManager(): WorkspaceManager | undefined {
 
 /**
  * Get the workspace/monorepo manager name and root directory for `cwd`, with caching.
- * Also respects the `process.env.PREFERRED_WORKSPACE_MANAGER` override, provided the relevant
- * manager file exists.
+ *
  * @param cwd Directory to search up from
  * @param cache Optional override cache for testing
- * @param preferredManager Optional override manager (if provided, only searches for this manager's file)
+ * @param managerOverride Optional override manager (if provided, only searches for this manager's file).
+ * Also respects `process.env.PREFERRED_WORKSPACE_MANAGER`.
+ *
  * @returns Workspace/monorepo manager and root, or undefined if it can't be determined
  */
 export function getWorkspaceManagerAndRoot(
   cwd: string,
   cache?: Map<string, WorkspaceManagerAndRoot | undefined>,
-  preferredManager?: WorkspaceManager
+  managerOverride?: WorkspaceManager
 ): WorkspaceManagerAndRoot | undefined {
   cache = cache || workspaceCache;
   if (isCachingEnabled() && cache.has(cwd)) {
     return cache.get(cwd);
   }
 
-  preferredManager = preferredManager || getPreferredWorkspaceManager();
-  const managerFile = searchUp(
-    (preferredManager && managerFiles[preferredManager]) || Object.values(managerFiles),
-    cwd
-  );
+  managerOverride ??= getPreferredWorkspaceManager();
+  const filesToSearch = managerOverride ? managerFiles[managerOverride] : Object.values(managerFiles);
+  const managerFile = searchUp(filesToSearch, cwd);
 
   if (managerFile) {
     const managerFileName = path.basename(managerFile);
     cache.set(cwd, {
-      manager: (Object.keys(managerFiles) as WorkspaceManager[]).find(
-        (name) => managerFiles[name] === managerFileName
-      )!,
+      manager:
+        managerOverride ||
+        (Object.keys(managerFiles) as WorkspaceManager[]).find((name) => managerFiles[name] === managerFileName)!,
       root: path.dirname(managerFile),
     });
   } else {
@@ -74,16 +74,4 @@ export function getWorkspaceManagerAndRoot(
   }
 
   return cache.get(cwd);
-}
-
-/**
- * Get the root directory of a monorepo, defined as the directory where the workspace/monorepo manager
- * config file is located. (Does not rely in any way on git, and the result is cached by `cwd`.)
- *
- * @param cwd Start searching from here
- * @param manager Search for only this manager's config file
- * @returns Workspace manager root directory, or undefined if not found
- */
-export function getWorkspaceManagerRoot(cwd: string, manager?: WorkspaceManager): string | undefined {
-  return getWorkspaceManagerAndRoot(cwd, undefined, manager)?.root;
 }

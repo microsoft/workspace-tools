@@ -1,4 +1,5 @@
-import { makeWorkspaceUtilities } from "./makeWorkspaceUtilities";
+import { defaultUtilities } from "./default";
+import type { WorkspaceUtilities } from "./WorkspaceUtilities";
 
-// npm uses all the default implementations and doesn't support catalogs
-export const npmUtilities = makeWorkspaceUtilities("npm");
+/** npm has no overrides of the default behaviors */
+export const npmUtilities: WorkspaceUtilities = { ...defaultUtilities };

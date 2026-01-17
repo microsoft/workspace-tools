@@ -3,12 +3,12 @@ import path from "path";
 import { getPackageInfo } from "../../getPackageInfo";
 import type { Catalog, NamedCatalogs } from "../../types/Catalogs";
 import { readYaml } from "../../lockfile/readYaml";
-import { makeWorkspaceUtilities } from "./makeWorkspaceUtilities";
+import type { WorkspaceUtilities } from "./WorkspaceUtilities";
+import { defaultUtilities } from "./default";
 
-/**
- * Utilities for yarn workspaces. Use these if the manager is known to be yarn.
- */
-export const yarnUtilities = makeWorkspaceUtilities("yarn", {
+export const yarnUtilities: WorkspaceUtilities = {
+  getWorkspacePatterns: defaultUtilities.getWorkspacePatterns,
+
   // See https://yarnpkg.com/features/catalogs
   getCatalogs: ({ root }) => {
     const yarnrcYmlPath = path.join(root, ".yarnrc.yml");
@@ -36,4 +36,4 @@ export const yarnUtilities = makeWorkspaceUtilities("yarn", {
     }
     return undefined;
   },
-});
+};
