@@ -1,6 +1,7 @@
 import type { Catalogs } from "../types/Catalogs";
-import { getWorkspaceManagerAndRoot, getWorkspaceUtilities } from "./implementations";
-import type { WorkspaceManager } from "./WorkspaceManager";
+import type { WorkspaceManager } from "../types/WorkspaceManager";
+import { getWorkspaceUtilities } from "./implementations";
+import { wrapWorkspaceUtility } from "./wrapWorkspaceUtility";
 
 /**
  * Get version catalogs, if supported by the manager (only pnpm and yarn v4 as of writing).
@@ -9,12 +10,19 @@ import type { WorkspaceManager } from "./WorkspaceManager";
  * @see https://yarnpkg.com/features/catalogs
  *
  * @param cwd - Current working directory. It will search up from here to find the root, with caching.
- * @param manager Workspace/monorepo manager to use instead of auto-detecting
+ * @param managerOverride Workspace/monorepo manager to use instead of auto-detecting
  *
  * @returns Catalogs if defined, or undefined if not available
  * (logs verbose warnings instead of throwing on error)
  */
-export function getCatalogs(cwd: string, manager?: WorkspaceManager): Catalogs | undefined {
-  manager ??= getWorkspaceManagerAndRoot(cwd)?.manager;
-  return manager && getWorkspaceUtilities(cwd, manager).getCatalogs(cwd);
+export function getCatalogs(cwd: string, managerOverride?: WorkspaceManager): Catalogs | undefined {
+  return wrapWorkspaceUtility({
+    cwd,
+    managerOverride,
+    description: "catalogs",
+    impl: ({ manager, root }) => {
+      // There is no default implementation for catalogs, since not all managers support it
+      return getWorkspaceUtilities(manager).getCatalogs?.({ root });
+    },
+  });
 }

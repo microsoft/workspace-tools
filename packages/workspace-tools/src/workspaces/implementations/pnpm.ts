@@ -1,8 +1,8 @@
 import path from "path";
 import { readYaml } from "../../lockfile/readYaml";
 import type { Catalog, NamedCatalogs } from "../../types/Catalogs";
-import { makeWorkspaceUtilities } from "./makeWorkspaceUtilities";
 import { managerFiles } from "./getWorkspaceManagerAndRoot";
+import type { WorkspaceUtilities } from "./WorkspaceUtilities";
 
 type PnpmWorkspaceYaml = {
   packages: string[];
@@ -16,15 +16,15 @@ function getPnpmWorkspaceYaml(params: { root: string }) {
   return readYaml<PnpmWorkspaceYaml>(pnpmWorkspacesFile);
 }
 
-export const pnpmUtilities = makeWorkspaceUtilities("pnpm", {
-  getWorkspacePatterns: ({ root }) => {
-    const workspaceYaml = getPnpmWorkspaceYaml({ root });
-    return workspaceYaml.packages || [];
+export const pnpmUtilities: WorkspaceUtilities = {
+  getWorkspacePatterns: (params) => {
+    const { packages } = getPnpmWorkspaceYaml(params);
+    return packages ? { patterns: packages, type: "pattern" } : undefined;
   },
 
   // See https://pnpm.io/catalogs
-  getCatalogs: ({ root }) => {
-    const workspaceYaml = getPnpmWorkspaceYaml({ root });
+  getCatalogs: (params) => {
+    const workspaceYaml = getPnpmWorkspaceYaml(params);
     if (!workspaceYaml.catalog && !workspaceYaml.catalogs) {
       return undefined;
     }
@@ -36,4 +36,4 @@ export const pnpmUtilities = makeWorkspaceUtilities("pnpm", {
       named: Object.keys(namedCatalogs).length ? namedCatalogs : undefined,
     };
   },
-});
+};

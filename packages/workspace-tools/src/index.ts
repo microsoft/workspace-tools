@@ -11,17 +11,12 @@ export type { PackageDependency, PackageGraph } from "./types/PackageGraph";
 export type { PackageInfo, PackageInfos } from "./types/PackageInfo";
 export type { WorkspacePackageInfo, WorkspaceInfos } from "./types/WorkspaceInfo";
 export { findWorkspacePath } from "./workspaces/findWorkspacePath";
-export { getWorkspaces, getWorkspacesAsync } from "./workspaces/getWorkspaces";
-export {
-  getWorkspacePackagePaths,
-  getWorkspacePackagePathsAsync,
-  getWorkspacePatterns,
-} from "./workspaces/getWorkspacePackagePaths";
-export {
-  getWorkspaceManagerRoot,
-  getWorkspaceManagerAndRoot,
-} from "./workspaces/implementations/getWorkspaceManagerAndRoot";
-export type { WorkspaceManager } from "./workspaces/WorkspaceManager";
+export { getWorkspaceInfos, getWorkspaceInfosAsync } from "./workspaces/getWorkspaceInfos";
+export { getWorkspacePackagePaths, getWorkspacePackagePathsAsync } from "./workspaces/getWorkspacePackagePaths";
+export { getWorkspacePatterns } from "./workspaces/getWorkspacePatterns";
+export { getWorkspaceManagerAndRoot } from "./workspaces/implementations/getWorkspaceManagerAndRoot";
+export { getWorkspaceManagerRoot } from "./workspaces/getWorkspaceManagerRoot";
+export type { WorkspaceManager } from "./types/WorkspaceManager";
 export { getPackageInfo, getPackageInfoAsync } from "./getPackageInfo";
 export { getChangedPackages, getChangedPackagesBetweenRefs } from "./workspaces/getChangedPackages";
 export { getPackagesByFiles } from "./workspaces/getPackagesByFiles";

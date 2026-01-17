@@ -1,4 +1,4 @@
-import type { WorkspaceUtilities } from "../../types/WorkspaceUtilities";
+import type { WorkspaceUtilities } from "./WorkspaceUtilities";
 
 const utils: Partial<Record<"npm" | "yarn" | "pnpm", WorkspaceUtilities>> = {};
 

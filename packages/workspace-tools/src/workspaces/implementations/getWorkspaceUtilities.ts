@@ -1,27 +1,20 @@
-import type { WorkspaceUtilities } from "../../types/WorkspaceUtilities";
-import type { WorkspaceManager } from "../WorkspaceManager";
-import { getWorkspaceManagerAndRoot } from "./getWorkspaceManagerAndRoot";
+import type { WorkspaceManager } from "../../types/WorkspaceManager";
 import { getWorkspaceUtilitiesBase } from "./getWorkspaceUtilitiesBase";
+import type { WorkspaceUtilities } from "./WorkspaceUtilities";
 
 const utils: Partial<Record<WorkspaceManager, WorkspaceUtilities>> = {};
 
 /**
- * Get utility implementations for the workspace/monorepo manager of `cwd`, or for `manager` if set.
- *
- * If `manager` is not provided, it will search up from `cwd` to find a manager file and monorepo root
- * (with caching). Returns undefined if the manager isn't set and can't be determined.
+ * Get utility implementations for the given workspace/monorepo manager.
+ * Returns undefined if `manager` has no custom utilities.
  */
-export function getWorkspaceUtilities(cwd: string): WorkspaceUtilities | undefined;
-export function getWorkspaceUtilities(cwd: string, manager: WorkspaceManager): WorkspaceUtilities;
-export function getWorkspaceUtilities(cwd: string, manager?: WorkspaceManager): WorkspaceUtilities | undefined {
-  manager ??= getWorkspaceManagerAndRoot(cwd)?.manager;
-
+export function getWorkspaceUtilities(manager: WorkspaceManager): WorkspaceUtilities {
   switch (manager) {
     case "npm":
     case "yarn":
     case "pnpm":
       utils[manager] ??= getWorkspaceUtilitiesBase(manager);
-      return utils[manager];
+      return utils[manager]!;
 
     case "rush":
       utils.rush ??= (require("./rush") as typeof import("./rush")).rushUtilities;

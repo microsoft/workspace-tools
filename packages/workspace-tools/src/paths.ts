@@ -1,9 +1,9 @@
 import path from "path";
 import fs from "fs";
-import { getWorkspaceManagerRoot } from "./workspaces/implementations/getWorkspaceManagerAndRoot";
+import { getWorkspaceManagerRoot } from "./workspaces/getWorkspaceManagerRoot";
 import { git } from "./git";
 import { logVerboseWarning } from "./logging";
-import type { WorkspaceManager } from "./workspaces/WorkspaceManager";
+import type { WorkspaceManager } from "./types/WorkspaceManager";
 
 /**
  * Starting from `cwd`, searches up the directory hierarchy for `filePath`.

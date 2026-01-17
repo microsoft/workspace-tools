@@ -1,11 +1,10 @@
-import path from "path";
-
 import { cleanupFixtures, setupFixture } from "@ws-tools/scripts/jest/setupFixture";
+import path from "path";
+import type { WorkspaceManager } from "../../types/WorkspaceManager";
+import { getWorkspaceInfos, getWorkspaceInfosAsync } from "../../workspaces/getWorkspaceInfos";
 import { getWorkspaceManagerAndRoot } from "../../workspaces/implementations";
-import type { WorkspaceManager } from "../../workspaces/WorkspaceManager";
-import { getWorkspaces, getWorkspacesAsync } from "../../workspaces/getWorkspaces";
 
-describe("getWorkspaces", () => {
+describe("getWorkspaceInfos", () => {
   afterAll(() => {
     cleanupFixtures();
   });
@@ -23,7 +22,7 @@ describe("getWorkspaces", () => {
     { manager: "lerna", desc: "lerna + npm", fixtureName: "monorepo-lerna-npm" },
   ])("$desc", ({ manager, fixtureName }) => {
     it.each(["sync", "async"] as const)("gets workspace info (%s)", async (syncAsync) => {
-      const getInfo = syncAsync === "sync" ? getWorkspaces : getWorkspacesAsync;
+      const getInfo = syncAsync === "sync" ? getWorkspaceInfos : getWorkspaceInfosAsync;
 
       const root = setupFixture(fixtureName);
       expect(getWorkspaceManagerAndRoot(root, new Map())).toEqual({ manager, root });
