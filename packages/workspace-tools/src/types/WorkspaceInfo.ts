@@ -20,6 +20,3 @@ export interface WorkspacePackageInfo {
  * npm/yarn/pnpm terms) within a monorepo.
  */
 export type WorkspaceInfos = WorkspacePackageInfo[];
-
-/** @deprecated Use `WorkspaceInfos` */
-export type WorkspaceInfo = WorkspaceInfos;

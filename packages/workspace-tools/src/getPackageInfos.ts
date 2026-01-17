@@ -11,7 +11,7 @@ export function getPackageInfos(cwd: string): PackageInfos {
   const packageInfos: PackageInfos = {};
   const workspacePackages = getWorkspaces(cwd);
 
-  if (workspacePackages.length) {
+  if (workspacePackages?.length) {
     for (const pkg of workspacePackages) {
       packageInfos[pkg.name] = pkg.packageJson;
     }
@@ -38,7 +38,7 @@ export async function getPackageInfosAsync(cwd: string): Promise<PackageInfos> {
   const packageInfos: PackageInfos = {};
   const workspacePackages = await getWorkspacesAsync(cwd);
 
-  if (workspacePackages.length) {
+  if (workspacePackages?.length) {
     for (const pkg of workspacePackages) {
       packageInfos[pkg.name] = pkg.packageJson;
     }

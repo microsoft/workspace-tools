@@ -40,7 +40,7 @@ export function getPackagesByFiles(
     ({ root, files, ignoreGlobs, returnAllPackagesOnNoMatch } = cwdOrOptions);
   }
 
-  const workspaces = getWorkspaces(root);
+  const workspaces = getWorkspaces(root) || [];
   const ignoreSet = new Set(ignoreGlobs?.length ? micromatch(files, ignoreGlobs) : []);
 
   const filteredFiles = files.filter((change) => !ignoreSet.has(change));
