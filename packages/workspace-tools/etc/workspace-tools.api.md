@@ -340,6 +340,12 @@ export function getUserEmail(options: GitCommonOptions): string | null;
 // @public @deprecated (undocumented)
 export function getUserEmail(cwd: string): string | null;
 
+// @public
+export function getWorkspaceInfos(cwd: string): WorkspaceInfos;
+
+// @public
+export function getWorkspaceInfosAsync(cwd: string): Promise<WorkspaceInfos>;
+
 // Warning: (ae-forgotten-export) The symbol "WorkspaceManager" needs to be exported by the entry point index.d.ts
 //
 // @public
@@ -354,11 +360,11 @@ export function getWorkspacePackagePathsAsync(cwd: string): Promise<string[]>;
 // @public @deprecated
 export function getWorkspaceRoot(cwd: string, preferredManager?: WorkspaceManager): string | undefined;
 
-// @public
-export function getWorkspaces(cwd: string): WorkspaceInfos;
+// @public @deprecated (undocumented)
+export const getWorkspaces: typeof getWorkspaceInfos;
 
-// @public
-export function getWorkspacesAsync(cwd: string): Promise<WorkspaceInfos>;
+// @public @deprecated (undocumented)
+export const getWorkspacesAsync: typeof getWorkspaceInfosAsync;
 
 // @public @deprecated (undocumented)
 export function getYarnWorkspaceRoot(cwd: string): string;

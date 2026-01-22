@@ -11,7 +11,12 @@ export type { PackageDependency, PackageGraph } from "./types/PackageGraph";
 export type { PackageInfo, PackageInfos } from "./types/PackageInfo";
 export type { WorkspacePackageInfo, WorkspaceInfos, WorkspaceInfo } from "./types/WorkspaceInfo";
 export { findWorkspacePath } from "./workspaces/findWorkspacePath";
-export { getWorkspaces, getWorkspacesAsync } from "./workspaces/getWorkspaces";
+export {
+  getWorkspaces,
+  getWorkspacesAsync,
+  getWorkspaceInfos,
+  getWorkspaceInfosAsync,
+} from "./workspaces/getWorkspaces";
 export { getWorkspacePackagePaths, getWorkspacePackagePathsAsync } from "./workspaces/getWorkspacePackagePaths";
 export { getWorkspaceManagerRoot, getWorkspaceRoot } from "./workspaces/getWorkspaceRoot";
 export { getPackageInfo, getPackageInfoAsync } from "./getPackageInfo";
