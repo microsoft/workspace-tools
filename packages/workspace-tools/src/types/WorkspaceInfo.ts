@@ -3,8 +3,8 @@ import { PackageInfo } from "./PackageInfo";
 /**
  * Info about a single package ("workspace" in npm/yarn/pnpm terms) within a monorepo.
  *
- * Ideally this should be called just `WorkspaceInfo`, but that name was previously used for the
- * aggregate type.
+ * (Ideally this should be called just `WorkspaceInfo`, since "workspace" and "package" mean
+ * the same thing, but that name was previously used for the aggregate type.)
  */
 export interface WorkspacePackageInfo {
   /** Package name */
@@ -20,6 +20,3 @@ export interface WorkspacePackageInfo {
  * npm/yarn/pnpm terms) within a monorepo.
  */
 export type WorkspaceInfos = WorkspacePackageInfo[];
-
-/** @deprecated Use `WorkspaceInfos` */
-export type WorkspaceInfo = WorkspaceInfos;

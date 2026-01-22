@@ -1,6 +1,6 @@
 import micromatch from "micromatch";
 import path from "path";
-import { getWorkspaces } from "./getWorkspaces";
+import { getWorkspaceInfos } from "./getWorkspaceInfos";
 
 interface GetPackagesByFilesOptions {
   /** Monorepo root directory */
@@ -40,7 +40,7 @@ export function getPackagesByFiles(
     ({ root, files, ignoreGlobs, returnAllPackagesOnNoMatch } = cwdOrOptions);
   }
 
-  const workspaces = getWorkspaces(root);
+  const workspaces = getWorkspaceInfos(root) || [];
   const ignoreSet = new Set(ignoreGlobs?.length ? micromatch(files, ignoreGlobs) : []);
 
   const filteredFiles = files.filter((change) => !ignoreSet.has(change));
