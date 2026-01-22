@@ -1,8 +1,16 @@
 # Change Log - workspace-tools
 
-<!-- This log was last generated on Tue, 13 Jan 2026 00:02:46 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 22 Jan 2026 02:01:03 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.40.4
+
+Thu, 22 Jan 2026 02:01:03 GMT
+
+### Patches
+
+- Deprecate `getWorkspaces` and rename to `getWorkspaceInfos` (same with async version) (elcraig@microsoft.com)
 
 ## 0.40.3
 

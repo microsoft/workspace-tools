@@ -2,6 +2,21 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Thu, 22 Jan 2026 02:01:03 GMT",
+      "version": "0.40.4",
+      "tag": "workspace-tools_v0.40.4",
+      "comments": {
+        "patch": [
+          {
+            "author": "elcraig@microsoft.com",
+            "package": "workspace-tools",
+            "commit": "416b3532d8aab9f3ee041e57d431bb20187fda0c",
+            "comment": "Deprecate `getWorkspaces` and rename to `getWorkspaceInfos` (same with async version)"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 13 Jan 2026 00:02:46 GMT",
       "version": "0.40.3",
       "tag": "workspace-tools_v0.40.3",
