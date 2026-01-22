@@ -11,3 +11,4 @@ temp/
 install-state.gz
 /package-lock.json
 !**/__fixtures__/**/package-lock.json
+.claude/settings.local.json

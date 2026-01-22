@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "type": "patch",
+      "comment": "Deprecate `getWorkspaces` and rename to `getWorkspaceInfos` (same with async version)",
+      "packageName": "workspace-tools",
+      "email": "elcraig@microsoft.com",
+      "dependentChangeType": "patch"
+    }
+  ]
+}

@@ -6,10 +6,13 @@ import type { WorkspaceInfos } from "../types/WorkspaceInfo";
  * npm/yarn/pnpm terms) within a monorepo. The list of included packages is based on the
  * workspace/monorepo manager's config file.
  */
-export function getWorkspaces(cwd: string): WorkspaceInfos {
+export function getWorkspaceInfos(cwd: string): WorkspaceInfos {
   const utils = getWorkspaceUtilities(cwd);
   return utils?.getWorkspaces(cwd) || [];
 }
+
+/** @deprecated Use `getWorkspaceInfos` */
+export const getWorkspaces = getWorkspaceInfos;
 
 /**
  * Get an array with names, paths, and package.json contents for each package ("workspace" in
@@ -19,7 +22,7 @@ export function getWorkspaces(cwd: string): WorkspaceInfos {
  * NOTE: As of writing, this will start promises to read all package.json files in parallel,
  * without direct concurrency control.
  */
-export async function getWorkspacesAsync(cwd: string): Promise<WorkspaceInfos> {
+export async function getWorkspaceInfosAsync(cwd: string): Promise<WorkspaceInfos> {
   const utils = getWorkspaceUtilities(cwd);
 
   if (!utils) {
@@ -33,3 +36,6 @@ export async function getWorkspacesAsync(cwd: string): Promise<WorkspaceInfos> {
 
   return utils.getWorkspacesAsync(cwd);
 }
+
+/** @deprecated Use `getWorkspaceInfosAsync` */
+export const getWorkspacesAsync = getWorkspaceInfosAsync;
