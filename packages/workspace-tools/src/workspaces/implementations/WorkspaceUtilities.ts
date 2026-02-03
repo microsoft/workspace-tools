@@ -1,9 +1,12 @@
 import type { Catalogs } from "../../types/Catalogs";
 
+/**
+ * Manager-specific implementations used internally by other workspace/monorepo utilities.
+ */
 export interface WorkspaceUtilities {
   /**
    * Get the original glob patterns or package paths from the manager's workspaces config.
-   * This is only needed if the workspaces aren't defined in package.json `workspaces`.
+   * (If workspaces are defined in package.json `workspaces`, use `getPackageJsonWorkspacePatterns`.)
    *
    * @returns Object with the patterns, or undefined if not available (or it can throw
    * if the patterns aren't available or there's an error)

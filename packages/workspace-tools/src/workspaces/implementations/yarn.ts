@@ -4,10 +4,10 @@ import { getPackageInfo } from "../../getPackageInfo";
 import type { Catalog, NamedCatalogs } from "../../types/Catalogs";
 import { readYaml } from "../../lockfile/readYaml";
 import type { WorkspaceUtilities } from "./WorkspaceUtilities";
-import { defaultUtilities } from "./default";
+import { getPackageJsonWorkspacePatterns } from "./getPackageJsonWorkspacePatterns";
 
 export const yarnUtilities: WorkspaceUtilities = {
-  getWorkspacePatterns: defaultUtilities.getWorkspacePatterns,
+  getWorkspacePatterns: getPackageJsonWorkspacePatterns,
 
   // See https://yarnpkg.com/features/catalogs
   getCatalogs: ({ root }) => {
