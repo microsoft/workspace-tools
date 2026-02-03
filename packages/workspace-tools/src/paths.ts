@@ -1,8 +1,9 @@
 import path from "path";
 import fs from "fs";
-import { getWorkspaceManagerRoot } from "./workspaces/getWorkspaceRoot";
+import { getWorkspaceManagerRoot } from "./workspaces/getWorkspaceManagerRoot";
 import { git } from "./git";
 import { logVerboseWarning } from "./logging";
+import type { WorkspaceManager } from "./types/WorkspaceManager";
 
 /**
  * Starting from `cwd`, searches up the directory hierarchy for `filePath`.
@@ -58,11 +59,13 @@ export function findPackageRoot(cwd: string) {
  * To skip the git root fallback, use `getWorkspaceManagerRoot`. Usually the monorepo manager root
  * is the same as the git root, but this may not be the case with multiple "monorepos" in a single
  * git repo, or in project structures with multiple languages where the JS is not at the root.
+ *
+ * @param manager Optional workspace/monorepo manager to look for specifically
  */
-export function findProjectRoot(cwd: string) {
+export function findProjectRoot(cwd: string, manager?: WorkspaceManager) {
   let workspaceRoot: string | undefined;
   try {
-    workspaceRoot = getWorkspaceManagerRoot(cwd);
+    workspaceRoot = getWorkspaceManagerRoot(cwd, manager);
     if (!workspaceRoot) {
       logVerboseWarning(`Could not find workspace manager root for ${cwd}. Falling back to git root.`);
     }

@@ -2,13 +2,13 @@ import fs from "fs";
 import fsPromises from "fs/promises";
 import path from "path";
 import type { PackageInfo } from "./types/PackageInfo";
-import { infoFromPackageJson } from "./infoFromPackageJson";
 import { logVerboseWarning } from "./logging";
 
 /**
  * Read package.json from the given path if it exists.
- * Logs a warning if it doesn't exist, or there's an error reading or parsing it.
- * @returns The package info, or undefined if it doesn't exist or can't be read
+ *
+ * @returns The package info, or undefined if it doesn't exist or can't be read.
+ * (Logs verbose warnings instead of throwing on error.)
  */
 export function getPackageInfo(cwd: string): PackageInfo | undefined {
   const packageJsonPath = path.join(cwd, "package.json");
@@ -19,7 +19,7 @@ export function getPackageInfo(cwd: string): PackageInfo | undefined {
     }
 
     const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, "utf-8"));
-    return infoFromPackageJson(packageJson, packageJsonPath);
+    return { ...packageJson, packageJsonPath };
   } catch (e) {
     logVerboseWarning(`Error reading or parsing ${packageJsonPath}: ${(e as Error)?.message || e}`);
   }
@@ -27,8 +27,9 @@ export function getPackageInfo(cwd: string): PackageInfo | undefined {
 
 /**
  * Read package.json from the given path if it exists.
- * Logs a warning if it doesn't exist, or there's an error reading or parsing it.
- * @returns The package info, or undefined if it doesn't exist or can't be read
+ *
+ * @returns The package info, or undefined if it doesn't exist or can't be read.
+ * (Logs verbose warnings instead of throwing on error.)
  */
 export async function getPackageInfoAsync(cwd: string): Promise<PackageInfo | undefined> {
   const packageJsonPath = path.join(cwd, "package.json");
@@ -39,7 +40,7 @@ export async function getPackageInfoAsync(cwd: string): Promise<PackageInfo | un
     }
 
     const packageJson = JSON.parse(await fsPromises.readFile(packageJsonPath, "utf-8"));
-    return infoFromPackageJson(packageJson, packageJsonPath);
+    return { ...packageJson, packageJsonPath };
   } catch (e) {
     logVerboseWarning(`Error reading or parsing ${packageJsonPath}: ${(e as Error)?.message || e}`);
   }

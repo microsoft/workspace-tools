@@ -45,5 +45,13 @@
     "ts-jest": "^29.1.0",
     "typedoc": "^0.25.2",
     "typescript": "~5.2.2"
+  },
+  "resolutions": {
+    "**/beachball/workspace-tools": "0.40.2"
+  },
+  "rationale": {
+    "resolutions": {
+      "**/beachball/workspace-tools": "Explicitly install an older version to avoid issues with local breaking changes"
+    }
   }
 }
