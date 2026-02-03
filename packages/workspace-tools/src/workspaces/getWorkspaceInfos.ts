@@ -31,7 +31,7 @@ export function getWorkspaceInfos(cwd: string, managerOverride?: WorkspaceManage
           const packageJson = getPackageInfo(packagePath);
           return packageJson && { name: packageJson.name, path: packagePath, packageJson };
         })
-        .filter(Boolean) as WorkspaceInfos;
+        .filter(Boolean) as WorkspaceInfos | undefined;
     },
   });
 }

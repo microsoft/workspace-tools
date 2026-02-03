@@ -3,7 +3,6 @@ import jju from "jju";
 import path from "path";
 import { isCachingEnabled } from "../../isCachingEnabled";
 import { managerFiles } from "./getWorkspaceManagerAndRoot";
-import { getWorkspaceUtilitiesBase } from "./getWorkspaceUtilitiesBase";
 import type { WorkspaceUtilities } from "./WorkspaceUtilities";
 
 export const lernaUtilities: WorkspaceUtilities = {
@@ -20,14 +19,14 @@ export const lernaUtilities: WorkspaceUtilities = {
       throw new Error(`${lernaJsonPath} does not define "packages", and no known package manager was found.`);
     }
 
-    const managerUtils = getWorkspaceUtilitiesBase(actualManager);
+    const managerUtils = getManagerUtils(actualManager);
     return managerUtils.getWorkspacePatterns({ root });
   },
 
   // lerna could theoretically use yarn or pnpm catalogs
   getCatalogs: ({ root }) => {
     const actualManager = getActualManager({ root });
-    return actualManager && getWorkspaceUtilitiesBase(actualManager).getCatalogs?.({ root });
+    return actualManager && getManagerUtils(actualManager).getCatalogs?.({ root });
   },
 };
 
@@ -53,4 +52,15 @@ function getActualManager(params: { root: string }): "yarn" | "pnpm" | "npm" | u
 
   managerCache.set(root, undefined);
   return undefined;
+}
+
+function getManagerUtils(manager: "npm" | "yarn" | "pnpm"): WorkspaceUtilities {
+  switch (manager) {
+    case "npm":
+      return (require("./npm") as typeof import("./npm")).npmUtilities;
+    case "yarn":
+      return (require("./yarn") as typeof import("./yarn")).yarnUtilities;
+    case "pnpm":
+      return (require("./pnpm") as typeof import("./pnpm")).pnpmUtilities;
+  }
 }
