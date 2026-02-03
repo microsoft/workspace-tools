@@ -10,7 +10,39 @@ Tue, 03 Feb 2026 19:35:32 GMT
 
 ### Minor changes
 
-- BREAKING: Various breaking changes to workspace package utilities. See readme for details. (elcraig@microsoft.com)
+**BREAKING:** Various breaking changes to workspace package utilities ([#388](https://github.com/microsoft/workspace-tools/pull/388)):
+
+The following APIs have been renamed for clarity, removed entirely, or consolidated:
+
+| Old (removed)                 | New                                    |
+| ----------------------------- | -------------------------------------- |
+| `getWorkspaces`               | `getWorkspaceInfos`                    |
+| `getWorkspacesAsync`          | `getWorkspaceInfosAsync`               |
+| `WorkspaceInfo`               | `WorkspaceInfos`                       |
+| `getWorkspaceRoot`            | `getWorkspaceManagerRoot`              |
+| `listOfWorkspacePackageNames` | `workspaces.map(w => w.name)`          |
+| `getPnpmWorkspaceRoot`        | `getWorkspaceManagerRoot(cwd, 'pnpm')` |
+| `getRushWorkspaceRoot`        | `getWorkspaceManagerRoot(cwd, 'rush')` |
+| `getYarnWorkspaceRoot`        | `getWorkspaceManagerRoot(cwd, 'yarn')` |
+| `getPnpmWorkspaces`           | `getWorkspaceInfos(cwd, 'pnpm')`       |
+| `getRushWorkspaces`           | `getWorkspaceInfos(cwd, 'rush')`       |
+| `getYarnWorkspaces`           | `getWorkspaceInfos(cwd, 'yarn')`       |
+
+Other changes:
+
+- Several functions now return `string[] | undefined` instead of returning an empty array on error:
+  - `getAllPackageJsonFiles`, `getAllPackageJsonFilesAsync`
+  - `getWorkspacePackagePaths`, `getWorkspacePackagePathsAsync`
+  - `getWorkspaceInfos`, `getWorkspaceInfosAsync`
+- `getWorkspaceManagerAndRoot` is now exported if you want to know the manager as well as the root
+- Several functions now have a `manager` param to force using a specific manager:
+  - `getWorkspaceManagerRoot`
+  - `findProjectRoot` (falls back to the git root and throws if neither is found)
+  - `getWorkspacePackagePaths`, `getWorkspacePackagePathsAsync`
+  - `getWorkspacePatterns` (new)
+  - `getWorkspaceInfos`, `getWorkspaceInfosAsync`
+  - `getCatalogs`
+- Some related files have been moved or renamed internally, so deep imports may be broken. Please check the current top-level API to see if the utility you were deep-importing is now exported, and file an issue if not.
 
 ### Patches
 
