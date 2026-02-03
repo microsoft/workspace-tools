@@ -6,28 +6,11 @@ export interface PackageDependenciesOptions {
   withOptionalDependencies?: boolean;
 }
 
-/**
- * Verify that `dep`'s version is not specified with `npm:` or `file:` protocol.
- */
-function isValidDependency(info: PackageInfo, dep: string): boolean {
-  // check if the dependency range is specified by an external package like npm: or file:
-  const range =
-    info.dependencies?.[dep] ||
-    info.devDependencies?.[dep] ||
-    info.peerDependencies?.[dep] ||
-    info.optionalDependencies?.[dep];
-
-  // this case should not happen by this point, but we will handle it anyway
-  if (!range) {
-    return false;
-  }
-
-  return !range.startsWith("npm:") && !range.startsWith("file:");
-}
+type DependencyType = "dependencies" | "devDependencies" | "peerDependencies" | "optionalDependencies";
 
 /**
  * Gets the monorepo package dependencies for a given package (excluding `file:` or `npm:` versions).
- * It only considers `dependencies` unless options specify otherwise.
+ * It only considers `dependencies` and `devDependencies` unless options specify otherwise.
  *
  * @param info - The package information containing dependencies
  * @param internalPackages - Set of in-repo package names to consider.
@@ -39,41 +22,25 @@ export function getPackageDependencies(
   internalPackages: Set<string>,
   options: PackageDependenciesOptions = { withDevDependencies: true }
 ): string[] {
+  const depTypes: DependencyType[] = ["dependencies"];
+  options.withDevDependencies && depTypes.push("devDependencies");
+  options.withPeerDependencies && depTypes.push("peerDependencies");
+  options.withOptionalDependencies && depTypes.push("optionalDependencies");
+
   const deps: string[] = [];
 
-  if (info.dependencies) {
-    for (const dep of Object.keys(info.dependencies)) {
-      if (dep !== info.name && internalPackages.has(dep)) {
+  for (const depType of depTypes) {
+    const dependencies = info[depType];
+    if (!dependencies) {
+      continue;
+    }
+
+    for (const [dep, range] of Object.entries(dependencies)) {
+      if (dep !== info.name && internalPackages.has(dep) && !range.startsWith("npm:") && !range.startsWith("file:")) {
         deps.push(dep);
       }
     }
   }
 
-  if (info.devDependencies && options.withDevDependencies) {
-    for (const dep of Object.keys(info.devDependencies)) {
-      if (dep !== info.name && internalPackages.has(dep)) {
-        deps.push(dep);
-      }
-    }
-  }
-
-  if (info.peerDependencies && options.withPeerDependencies) {
-    for (const dep of Object.keys(info.peerDependencies)) {
-      if (dep !== info.name && internalPackages.has(dep)) {
-        deps.push(dep);
-      }
-    }
-  }
-
-  if (info.optionalDependencies && options.withOptionalDependencies) {
-    for (const dep of Object.keys(info.optionalDependencies)) {
-      if (dep !== info.name && internalPackages.has(dep)) {
-        deps.push(dep);
-      }
-    }
-  }
-
-  const filteredDeps = deps.filter((dep) => isValidDependency(info, dep));
-
-  return filteredDeps;
+  return deps;
 }

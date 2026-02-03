@@ -53,10 +53,10 @@ export function commit(options: GitCommitOptions): void;
 // @public @deprecated (undocumented)
 export function commit(message: string, cwd: string, options?: string[]): void;
 
-// @public (undocumented)
+// @public
 export function createDependencyMap(packages: PackageInfos, options?: PackageDependenciesOptions): DependencyMap;
 
-// @public (undocumented)
+// @public
 export function createPackageGraph(packages: PackageInfos, filters?: PackageGraphFilter[] | PackageGraphFilter): PackageGraph;
 
 // @public (undocumented)
@@ -66,9 +66,7 @@ export type Dependencies = {
 
 // @public (undocumented)
 export interface DependencyMap {
-    // (undocumented)
     dependencies: Map<string, Set<string>>;
-    // (undocumented)
     dependents: Map<string, Set<string>>;
 }
 
@@ -525,34 +523,24 @@ export interface PackageDependenciesOptions {
 
 // @public
 export interface PackageDependency {
-    // (undocumented)
     dependency: string;
-    // (undocumented)
     name: string;
 }
 
 // @public
 export interface PackageGraph {
-    // (undocumented)
     dependencies: PackageDependency[];
-    // (undocumented)
     packages: string[];
 }
 
-// @public (undocumented)
-export interface PackageGraphFilter {
+// @public
+export interface PackageGraphFilter extends PackageDependenciesOptions {
     // (undocumented)
     includeDependencies?: boolean;
     // (undocumented)
     includeDependents?: boolean;
     // (undocumented)
     namePatterns: string[];
-    // (undocumented)
-    withDevDependencies?: boolean;
-    // (undocumented)
-    withOptionalDependencies?: boolean;
-    // (undocumented)
-    withPeerDependencies?: boolean;
 }
 
 // @public
