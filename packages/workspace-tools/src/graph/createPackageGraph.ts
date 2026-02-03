@@ -1,18 +1,17 @@
+import micromatch from "micromatch";
+import type { PackageGraph } from "../types/PackageGraph";
 import type { PackageInfos } from "../types/PackageInfo";
 import type { DependencyMap } from "./createDependencyMap";
-import type { PackageGraph } from "../types/PackageGraph";
-
 import { createDependencyMap } from "./createDependencyMap";
-import micromatch from "micromatch";
+import type { PackageDependenciesOptions } from "./getPackageDependencies";
 
-// Reference: https://github.com/pnpm/pnpm/blob/597047fc056dd25b83638a9ab3df0df1c555ee49/packages/filter-workspace-packages/src/parsePackageSelector.ts
-export interface PackageGraphFilter {
+/**
+ * Reference: https://github.com/pnpm/pnpm/blob/597047fc056dd25b83638a9ab3df0df1c555ee49/packages/filter-workspace-packages/src/parsePackageSelector.ts
+ */
+export interface PackageGraphFilter extends PackageDependenciesOptions {
   namePatterns: string[];
   includeDependencies?: boolean;
   includeDependents?: boolean;
-  withDevDependencies?: boolean;
-  withPeerDependencies?: boolean;
-  withOptionalDependencies?: boolean;
 }
 
 /** Package graph visitor is called as it visits every package in dependency order */
@@ -20,6 +19,9 @@ interface PackageGraphVisitor {
   (pkg: string, dependencies: string[], dependents: string[]): void;
 }
 
+/**
+ * Create a package graph for the given packages, optionally filtered by the provided filters.
+ */
 export function createPackageGraph(
   packages: PackageInfos,
   filters?: PackageGraphFilter[] | PackageGraphFilter

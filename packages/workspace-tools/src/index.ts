@@ -1,6 +1,12 @@
-export * from "./dependencies/index";
+export {
+  getTransitiveDependencies,
+  getTransitiveDependents,
+  getInternalDeps,
+  getTransitiveConsumers,
+  getTransitiveProviders,
+} from "./dependencies/index";
 export { getPackageInfos, getPackageInfosAsync } from "./getPackageInfos";
-export * from "./git";
+export * from "./git/index";
 export * from "./graph/index";
 export { setCachingEnabled } from "./isCachingEnabled";
 export * from "./lockfile";

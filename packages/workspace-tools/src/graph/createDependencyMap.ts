@@ -2,17 +2,27 @@ import { getPackageDependencies, PackageDependenciesOptions } from "./getPackage
 import type { PackageInfos } from "../types/PackageInfo";
 
 export interface DependencyMap {
+  /** Mapping from package names to their dependencies */
   dependencies: Map<string, Set<string>>;
+  /** Mapping from package names to their dependents */
   dependents: Map<string, Set<string>>;
 }
 
+/**
+ * Creates a dependency map for the packages in a monorepo.
+ *
+ * @param packages - Information about all packages in the monorepo
+ * @param options - Which dependency types to include. `dependencies` are always included, and it
+ * defaults to also including `devDependencies`.
+ * @returns A map of package dependencies and dependents
+ */
 export function createDependencyMap(
   packages: PackageInfos,
   options: PackageDependenciesOptions = { withDevDependencies: true, withPeerDependencies: false }
 ): DependencyMap {
-  const map = {
-    dependencies: new Map<string, Set<string>>(),
-    dependents: new Map<string, Set<string>>(),
+  const map: DependencyMap = {
+    dependencies: new Map(),
+    dependents: new Map(),
   };
 
   const internalPackages = new Set(Object.keys(packages));
