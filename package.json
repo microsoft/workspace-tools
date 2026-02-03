@@ -34,7 +34,7 @@
     "@types/node": "^16.0.0",
     "@types/tmp": "^0.2.3",
     "@types/yarnpkg__lockfile": "^1.1.5",
-    "beachball": "^2.51.0",
+    "beachball": "^2.63.0",
     "cross-env": "^7.0.3",
     "fs-extra": "^11.0.0",
     "jest": "^29.5.0",
