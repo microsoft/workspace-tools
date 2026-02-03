@@ -20,7 +20,7 @@ Override the `maxBuffer` value for git processes, for example if the repo is ver
 
 ### PREFERRED_WORKSPACE_MANAGER
 
-Sometimes if multiple workspace/monorepo manager files are checked in, it's necessary to hint which manager is used: `npm`, `yarn`, `pnpm`, `rush`, or `lerna`.
+Sometimes if multiple workspace/monorepo manager files are checked in, it's necessary to hint which manager is used: `npm`, `yarn`, `pnpm`, `rush`, or `lerna`. Some APIs also accept a `manager` parameter, which is now the preferred method when available.
 
 ### VERBOSE
 
@@ -32,18 +32,34 @@ For details of changes in all versions, see the [changelog](https://github.com/m
 
 ### 0.41.0
 
-- `getWorkspaces`/`getWorkspaceAsync` has been renamed to `getWorkspaceInfos`/`getWorkspaceInfosAsync`, and the deprecated `WorkspaceInfo` type has been removed (use `WorkspaceInfos`).
-- `getWorkspaceRoot` has been renamed to `getWorkspaceManagerRoot`. (`getWorkspaceManagerAndRoot` is now exported too, if you also want to know the manager.)
+The following APIs have been renamed for clarity, removed entirely, or consolidated:
+
+| Old (removed)                 | New                                    |
+| ----------------------------- | -------------------------------------- |
+| `getWorkspaces`               | `getWorkspaceInfos`                    |
+| `getWorkspacesAsync`          | `getWorkspaceInfosAsync`               |
+| `WorkspaceInfo`               | `WorkspaceInfos`                       |
+| `getWorkspaceRoot`            | `getWorkspaceManagerRoot`              |
+| `listOfWorkspacePackageNames` | `workspaces.map(w => w.name)`          |
+| `getPnpmWorkspaceRoot`        | `getWorkspaceManagerRoot(cwd, 'pnpm')` |
+| `getRushWorkspaceRoot`        | `getWorkspaceManagerRoot(cwd, 'rush')` |
+| `getYarnWorkspaceRoot`        | `getWorkspaceManagerRoot(cwd, 'yarn')` |
+| `getPnpmWorkspaces`           | `getWorkspaceInfos(cwd, 'pnpm')`       |
+| `getRushWorkspaces`           | `getWorkspaceInfos(cwd, 'rush')`       |
+| `getYarnWorkspaces`           | `getWorkspaceInfos(cwd, 'yarn')`       |
+
+Other changes:
+
 - Several functions now return `string[] | undefined` instead of returning an empty array on error:
-  - `getAllPackageJsonFiles`/`getAllPackageJsonFilesAsync`
-  - `getWorkspacePackagePaths`/`getWorkspacePackagePathsAsync`
-  - `getWorkspaceInfos`/`getWorkspaceInfosAsync`
-- Several functions now have a `manager` param to force using a specific manager. Manager-specific `get___WorkspaceRoot` and `get___Workspaces` have been removed.
+  - `getAllPackageJsonFiles`, `getAllPackageJsonFilesAsync`
+  - `getWorkspacePackagePaths`, `getWorkspacePackagePathsAsync`
+  - `getWorkspaceInfos`, `getWorkspaceInfosAsync`
+- `getWorkspaceManagerAndRoot` is now exported if you want to know the manager as well as the root
+- Several functions now have a `manager` param to force using a specific manager:
   - `getWorkspaceManagerRoot`
   - `findProjectRoot` (falls back to the git root and throws if neither is found)
-  - `getWorkspacePackagePaths`/`getWorkspacePackagePathsAsync`
+  - `getWorkspacePackagePaths`, `getWorkspacePackagePathsAsync`
   - `getWorkspacePatterns` (new)
-  - `getWorkspaceInfos`/`getWorkspaceInfosAsync`
+  - `getWorkspaceInfos`, `getWorkspaceInfosAsync`
   - `getCatalogs`
-- `listOfWorkspacePackageNames` is removed since it's trivially replaced by `workspaces.map(w => w.name)`.
-- Some related files have been moved or renamed internally, so deep imports may be broken. Please check the current top-level API to see if the utility you were deep-importing is now exported.
+- Some related files have been moved or renamed internally, so deep imports may be broken. Please check the current top-level API to see if the utility you were deep-importing is now exported, and file an issue if not.
