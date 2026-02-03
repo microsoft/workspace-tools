@@ -18,8 +18,6 @@
     "github>microsoft/m365-renovate-config:keepFresh",
     // Group various related updates
     "github>microsoft/m365-renovate-config:groupMore",
-    // Group @types updates
-    "github>microsoft/m365-renovate-config:groupTypes",
     // Don't update beyond Node 16
     "github>microsoft/m365-renovate-config:restrictNode(16)"
   ],
@@ -52,12 +50,6 @@
       // disabled due to > pinned version requiring node 18
       "matchPackageNames": ["@microsoft/api-extractor"],
       "enabled": false
-    },
-    {
-      "matchManagers": ["github-actions"],
-      "matchUpdateTypes": ["major", "minor", "patch", "digest"],
-      "groupName": "GitHub actions",
-      "dependencyDashboardApproval": false
     }
   ]
 }
