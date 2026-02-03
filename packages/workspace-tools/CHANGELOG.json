@@ -2,6 +2,29 @@
   "name": "workspace-tools",
   "entries": [
     {
+      "date": "Tue, 03 Feb 2026 19:35:32 GMT",
+      "version": "0.41.0",
+      "tag": "workspace-tools_v0.41.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "elcraig@microsoft.com",
+            "package": "workspace-tools",
+            "commit": "f43fd10560f449e8995fba169fe5a702ebf6909a",
+            "comment": "Cleanup and docs for graph APIs"
+          }
+        ],
+        "minor": [
+          {
+            "author": "elcraig@microsoft.com",
+            "package": "workspace-tools",
+            "commit": "f43fd10560f449e8995fba169fe5a702ebf6909a",
+            "comment": "BREAKING: Various breaking changes to workspace package utilities. See readme for details."
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 22 Jan 2026 02:01:03 GMT",
       "version": "0.40.4",
       "tag": "workspace-tools_v0.40.4",

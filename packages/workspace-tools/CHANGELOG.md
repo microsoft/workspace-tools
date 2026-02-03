@@ -1,8 +1,20 @@
 # Change Log - workspace-tools
 
-<!-- This log was last generated on Thu, 22 Jan 2026 02:01:03 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 03 Feb 2026 19:35:32 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.41.0
+
+Tue, 03 Feb 2026 19:35:32 GMT
+
+### Minor changes
+
+- BREAKING: Various breaking changes to workspace package utilities. See readme for details. (elcraig@microsoft.com)
+
+### Patches
+
+- Cleanup and docs for graph APIs (elcraig@microsoft.com)
 
 ## 0.40.4
 
