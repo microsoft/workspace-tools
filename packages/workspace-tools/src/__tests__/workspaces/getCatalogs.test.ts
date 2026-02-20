@@ -86,13 +86,19 @@ describe("getCatalogs", () => {
       baseFixture: "monorepo",
       writeCatalogs: (root, catalogs) => {
         const { packageJsonPath, ...packageJson } = getPackageInfo(root)!;
-        packageJson.workspaces = Array.isArray(packageJson.workspaces)
-          ? { packages: packageJson.workspaces }
-          : packageJson.workspaces || { packages: [] };
+        const workspacePackages = Array.isArray(packageJson.workspaces)
+          ? packageJson.workspaces
+          : packageJson.workspaces?.packages || [];
+        packageJson.workspaces = { packages: workspacePackages };
         const { named, default: defaultCatalog } = catalogs;
         defaultCatalog && (packageJson.workspaces.catalog = defaultCatalog);
         named && (packageJson.workspaces.catalogs = named);
         fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2));
+
+        // Also write a lerna.json to verify it falls back to the actual yarn catalogs
+        // (this was an issue with old versions in the actual repo that uses MYS)
+        const lernaJsonPath = path.join(root, "lerna.json");
+        fs.writeFileSync(lernaJsonPath, JSON.stringify({ packages: workspacePackages, npmClient: "yarn" }));
       },
     },
   ])("$name", ({ name, manager, baseFixture, writeCatalogs }) => {

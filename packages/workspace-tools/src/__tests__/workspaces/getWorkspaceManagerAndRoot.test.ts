@@ -38,8 +38,16 @@ describe("getWorkspaceManagerAndRoot", () => {
     });
   });
 
-  it("handles lerna monorepo", () => {
+  it("handles lerna+npm monorepo", () => {
     const repoRoot = setupFixture("monorepo-lerna-npm");
+    expect(getWorkspaceManagerAndRoot(repoRoot)).toEqual({
+      root: repoRoot,
+      manager: "lerna",
+    });
+  });
+
+  it("handles lerna+yarn monorepo", () => {
+    const repoRoot = setupFixture("monorepo-lerna-yarn");
     expect(getWorkspaceManagerAndRoot(repoRoot)).toEqual({
       root: repoRoot,
       manager: "lerna",

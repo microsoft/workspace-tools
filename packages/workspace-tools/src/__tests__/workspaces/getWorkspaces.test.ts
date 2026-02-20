@@ -20,6 +20,7 @@ describe("getWorkspaceInfos", () => {
     { manager: "rush", desc: "rush + yarn", fixtureName: "monorepo-rush-yarn" },
     { manager: "npm", desc: "npm", fixtureName: "monorepo-npm" },
     { manager: "lerna", desc: "lerna + npm", fixtureName: "monorepo-lerna-npm" },
+    { manager: "lerna", desc: "lerna + yarn", fixtureName: "monorepo-lerna-yarn" },
   ])("$desc", ({ manager, fixtureName }) => {
     it.each(["sync", "async"] as const)("gets workspace info (%s)", async (syncAsync) => {
       const getInfo = syncAsync === "sync" ? getWorkspaceInfos : getWorkspaceInfosAsync;

@@ -1,0 +1,15 @@
+{
+  "name": "monorepo",
+  "license": "MIT",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": {
+    "packages": [
+      "individual",
+      "packages/*"
+    ]
+  },
+  "devDependencies": {
+    "is-number": "^7.0.0"
+  }
+}
