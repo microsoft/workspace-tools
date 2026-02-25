@@ -5,7 +5,6 @@ const config = {
   access: "public",
   disallowedChangeTypes: ["major"],
   groupChanges: true,
-  scope: ["!**/__fixtures__/**"],
-  ignorePatterns: ["**/jest.config.js", "**/src/__fixtures__/**", "**/src/__tests__/**"],
+  ignorePatterns: ["**/jest.config.js", "**/src/__tests__/**"],
 };
 module.exports = config;
