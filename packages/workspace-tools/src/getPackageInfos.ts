@@ -13,6 +13,8 @@ import { findPackageRoot } from "./paths";
  * - The workspace manager, root, and list of package paths for `cwd` are cached internally,
  *   but the package contents are not.
  * - To get an array listing package names, paths, and contents, use `getWorkspaceInfos` instead.
+ * - If no workspace config is found, it will return info for the root package.json if one exists.
+ *   (This is different than `getWorkspaceInfos`.)
  *
  * @param cwd Start looking for the manager config from here
  * @param managerOverride Workspace/monorepo manager to use instead of auto-detecting

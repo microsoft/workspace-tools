@@ -1,7 +1,7 @@
 import fs from "fs-extra";
 import path from "path";
 import { setupFixture } from "@ws-tools/scripts/jest/setupFixture";
-import { parseLockFile } from "../../lockfile/index";
+import { parseLockFile } from "../../lockfile/parseLockFile";
 import { getPackageInfo } from "../../getPackageInfo";
 
 const ERROR_MESSAGES = {
@@ -21,7 +21,7 @@ describe("parseLockFile()", () => {
 
   describe("NPM", () => {
     it("parses package-lock.json file when it is found", async () => {
-      const packageRoot = setupFixture("monorepo-npm");
+      const packageRoot = setupFixture("monorepo-basic-npm");
       const parsedLockFile = await parseLockFile(packageRoot);
 
       expect(parsedLockFile).toHaveProperty("type", "success");
@@ -35,19 +35,17 @@ describe("parseLockFile()", () => {
   });
 
   describe.each([1, "berry"] as const)("yarn %s", (yarnVersion) => {
-    const updatePath = (path: string) => `${path}-${yarnVersion}`;
-
     it("parses yarn.lock file when it is found", async () => {
-      const packageRoot = setupFixture(updatePath("basic-yarn"));
+      const packageRoot = setupFixture(`basic-yarn-${yarnVersion}`);
       const parsedLockFile = await parseLockFile(packageRoot);
 
       expect(parsedLockFile).toHaveProperty("type", "success");
     });
 
     it("parses combined ranges in yarn.lock", async () => {
-      const packageRoot = setupFixture(updatePath("lage-yarn"));
+      const packageRoot = setupFixture(`extra-yarn-${yarnVersion}`);
 
-      // Verify that __fixtures__/lage-yarn-* still follows these assumptions:
+      // Verify that __fixtures__/extra-yarn-* still follows these assumptions:
       // - "execa" is listed as a dep in package.json
       // - "@types/execa" is also listed as a dep, and internally has a dep on "execa@*"
       const depName = "execa";

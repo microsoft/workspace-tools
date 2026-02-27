@@ -9,7 +9,19 @@ export { getPackageInfos, getPackageInfosAsync } from "./getPackageInfos";
 export * from "./git/index";
 export * from "./graph/index";
 export { setCachingEnabled } from "./isCachingEnabled";
-export * from "./lockfile";
+export { nameAtVersion } from "./lockfile/nameAtVersion";
+export { parseLockFile } from "./lockfile/parseLockFile";
+export { queryLockFile } from "./lockfile/queryLockFile";
+export type {
+  BerryLockFile,
+  Dependencies,
+  LockDependency,
+  NpmLockFile,
+  NpmSymlinkInfo,
+  NpmWorkspacesInfo,
+  ParsedLock,
+  PnpmLockFile,
+} from "./lockfile/types";
 export { findGitRoot, findPackageRoot, findProjectRoot, isChildOf, searchUp } from "./paths";
 export { getScopedPackages } from "./scope";
 export type { Catalog, Catalogs, NamedCatalogs } from "./types/Catalogs";

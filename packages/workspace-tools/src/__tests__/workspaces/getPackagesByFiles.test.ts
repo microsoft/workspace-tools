@@ -9,7 +9,7 @@ describe("getPackagesByFiles", () => {
   });
 
   it("can find all packages that contain the files in a monorepo", () => {
-    const root = setupFixture("monorepo");
+    const root = setupFixture("monorepo-basic-yarn-1");
 
     const newFile = path.join(root, "packages/package-a/footest.txt");
     fs.writeFileSync(newFile, "hello foo test");
@@ -20,7 +20,7 @@ describe("getPackagesByFiles", () => {
   });
 
   it("can find can ignore changes in a glob pattern", () => {
-    const root = setupFixture("monorepo");
+    const root = setupFixture("monorepo-basic-yarn-1");
 
     const newFileA = path.join(root, "packages/package-a/footest.txt");
     fs.writeFileSync(newFileA, "hello foo test");
@@ -37,7 +37,7 @@ describe("getPackagesByFiles", () => {
   });
 
   it("can find can handle empty files", () => {
-    const root = setupFixture("monorepo");
+    const root = setupFixture("monorepo-basic-yarn-1");
 
     const packages = getPackagesByFiles({ root, files: [] });
 
@@ -45,7 +45,7 @@ describe("getPackagesByFiles", () => {
   });
 
   it("can find can handle unrelated files", () => {
-    const root = setupFixture("monorepo");
+    const root = setupFixture("monorepo-basic-yarn-1");
 
     const packages = getPackagesByFiles({ root, files: ["package.json"] });
 

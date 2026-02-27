@@ -6,9 +6,11 @@ temp/
 **/common/scripts/
 .DS_Store
 *.log*
-**/__fixtures__/*/node_modules/
-**/__fixtures__/*/.yarn/cache/
+/scripts/jest/__fixtures__/*/node_modules/
+/scripts/jest/__fixtures__/**/.yarn/
+/scripts/jest/__fixtures__/monorepo-base/__managers__/*/individual/
+/scripts/jest/__fixtures__/monorepo-base/__managers__/*/packages/
 install-state.gz
 /package-lock.json
-!**/__fixtures__/**/package-lock.json
+!/scripts/jest/__fixtures__/**/package-lock.json
 .claude/settings.local.json

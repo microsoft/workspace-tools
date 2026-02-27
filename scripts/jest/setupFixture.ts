@@ -11,7 +11,33 @@ tmp.setGracefulCleanup();
 let tempRoot: tmp.DirResult | undefined;
 let tempNumber = 0;
 
-const fixturesRoot = path.join(__dirname, "__fixtures__");
+/** Full fixture folders under `__fixtures__` */
+type RealFixtureName =
+  | "basic-pnpm"
+  | "basic-without-lock-file"
+  | "basic-yarn-1"
+  | "basic-yarn-berry"
+  | "extra-yarn-1"
+  | "extra-yarn-berry"
+  | "monorepo-basic-npm"
+  | "monorepo-basic-pnpm"
+  | "monorepo-basic-yarn-1"
+  | "monorepo-basic-yarn-berry"
+  | "monorepo-nested"
+  | "monorepo-npm-unsupported"
+  | "monorepo-rush-pnpm"
+  | "monorepo-rush-yarn";
+
+/** Virtual fixtures that add a `lerna.json` to `monorepo-basic-*` */
+type LernaFixtureName =
+  | "monorepo-basic-lerna-npm"
+  | "monorepo-basic-lerna-pnpm"
+  | "monorepo-basic-lerna-yarn-1"
+  | "monorepo-basic-lerna-yarn-berry";
+
+export type TestFixtureName = RealFixtureName | LernaFixtureName;
+
+export const fixturesRoot = path.join(__dirname, "__fixtures__");
 
 /**
  * Create a temp directory, optionally containing the fixture files from `fixtureName`,
@@ -21,7 +47,7 @@ const fixturesRoot = path.join(__dirname, "__fixtures__");
  * Be sure to call `cleanupFixtures()` after all tests to clean up temp directories.
  */
 export function setupFixture(
-  fixtureName?: string,
+  fixtureName?: TestFixtureName,
   options?: {
     /** Whether to set up a git repo */
     git?: boolean;
@@ -30,10 +56,11 @@ export function setupFixture(
   const useGit = !!options?.git;
 
   let fixturePath: string | undefined;
-  if (fixtureName) {
-    fixturePath = path.join(fixturesRoot, fixtureName);
+  const realFixtureName = fixtureName?.replace("-lerna-", "-") as RealFixtureName | undefined;
+  if (realFixtureName) {
+    fixturePath = path.join(fixturesRoot, realFixtureName);
     if (!fs.existsSync(fixturePath)) {
-      throw new Error(`Couldn't find fixture "${fixtureName}" under "${fixturesRoot}"`);
+      throw new Error(`Couldn't find fixture "${realFixtureName}" under "${fixturesRoot}"`);
     }
   }
 
@@ -66,6 +93,14 @@ export function setupFixture(
   // Copy and commit the fixture if requested
   if (fixturePath) {
     fs.copySync(fixturePath, cwd, { filter: (src) => !/[/\\](node_modules|temp|.rush)([/\\]|$)/.test(src) });
+
+    const lernaManagerMatch = fixtureName?.match(/^monorepo-basic-lerna-(\w+)/);
+    if (lernaManagerMatch) {
+      // Make a lerna.json with the appropriate npmClient
+      const lernaBase = require(path.join(fixturesRoot, "lerna.base.json"));
+      fs.writeFileSync(path.join(cwd, "lerna.json"), JSON.stringify({ ...lernaBase, npmClient: lernaManagerMatch[1] }));
+    }
+
     if (useGit) {
       basicGit(["add", "."], { cwd });
       basicGit(["commit", "-m", "test"], { cwd });
@@ -102,7 +137,7 @@ export function setupPackageJson(cwd: string, packageJson: Record<string, any> =
  * Create a separate local git repo and configure it as a remote for `cwd`.
  * @returns The path to the remote repo directory.
  */
-export function setupLocalRemote(params: { cwd: string; remoteName: string; fixtureName?: string }) {
+export function setupLocalRemote(params: { cwd: string; remoteName: string; fixtureName?: TestFixtureName }) {
   const { cwd, remoteName, fixtureName } = params;
 
   // Create a separate repo and configure it as a remote

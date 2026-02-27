@@ -6,6 +6,7 @@ import type { WorkspaceInfos } from "../types/WorkspaceInfo";
  * @param workspaces Array of info about packages within a monorepo
  * @param packageName Package name to find
  * @returns Package path if found, or undefined
+ * @deprecated Just write `workspaces.find(({ name }) => name === packageName)?.path` instead
  */
 export function findWorkspacePath(workspaces: WorkspaceInfos, packageName: string): string | undefined {
   return workspaces.find(({ name }) => name === packageName)?.path;
