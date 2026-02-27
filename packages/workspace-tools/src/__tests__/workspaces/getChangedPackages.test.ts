@@ -13,7 +13,7 @@ describe("getChangedPackages", () => {
   });
 
   it("can detect changes inside an untracked file", () => {
-    const root = setupFixture("monorepo", { git: true });
+    const root = setupFixture("monorepo-basic-yarn-1", { git: true });
 
     const newFile = path.join(root, "packages/package-a/footest.txt");
     fs.writeFileSync(newFile, "hello foo test");
@@ -35,7 +35,7 @@ describe("getChangedPackages", () => {
   });
 
   it("returns all packages by default when a root level monorepo file is changed", () => {
-    const root = setupFixture("monorepo", { git: true });
+    const root = setupFixture("monorepo-basic-yarn-1", { git: true });
 
     fs.writeFileSync(path.join(root, "lage.config.json"), "hello foo test");
 
@@ -43,7 +43,7 @@ describe("getChangedPackages", () => {
   });
 
   it("returns nothing when a root level monorepo file is changed and returnAllPackagesOnNoMatch is false", () => {
-    const root = setupFixture("monorepo", { git: true });
+    const root = setupFixture("monorepo-basic-yarn-1", { git: true });
 
     fs.writeFileSync(path.join(root, "lage.config.json"), "hello foo test");
 
@@ -79,7 +79,7 @@ describe("getChangedPackages", () => {
   });
 
   it("can detect changes inside an unstaged file", () => {
-    const root = setupFixture("monorepo", { git: true });
+    const root = setupFixture("monorepo-basic-yarn-1", { git: true });
 
     const newFile = path.join(root, "packages/package-a/index.ts");
     fs.writeFileSync(newFile, "hello foo test");
@@ -101,7 +101,7 @@ describe("getChangedPackages", () => {
   });
 
   it("can detect changes inside a staged file", () => {
-    const root = setupFixture("monorepo", { git: true });
+    const root = setupFixture("monorepo-basic-yarn-1", { git: true });
 
     const newFile = path.join(root, "packages/package-a/footest.txt");
     fs.writeFileSync(newFile, "hello foo test");
@@ -125,7 +125,7 @@ describe("getChangedPackages", () => {
   });
 
   it("can detect changes inside a file that has been committed in a different branch", () => {
-    const root = setupFixture("monorepo", { git: true });
+    const root = setupFixture("monorepo-basic-yarn-1", { git: true });
 
     const newFile = path.join(root, "packages/package-a/footest.txt");
     fs.writeFileSync(newFile, "hello foo test");
@@ -151,7 +151,7 @@ describe("getChangedPackages", () => {
   });
 
   it("can detect changes inside a file that has been committed in a different branch using default remote", () => {
-    const root = setupFixture("monorepo", { git: true });
+    const root = setupFixture("monorepo-basic-yarn-1", { git: true });
     setupLocalRemote({ cwd: root, remoteName: "origin", fixtureName: "basic-yarn-1" });
 
     const newFile = path.join(root, "packages/package-a/footest.txt");
@@ -165,7 +165,7 @@ describe("getChangedPackages", () => {
   });
 
   it("can ignore glob patterns in detecting changes", () => {
-    const root = setupFixture("monorepo", { git: true });
+    const root = setupFixture("monorepo-basic-yarn-1", { git: true });
 
     const newFile = path.join(root, "packages/package-a/footest.txt");
     fs.writeFileSync(newFile, "hello foo test");
@@ -178,7 +178,7 @@ describe("getChangedPackages", () => {
 
   describe("getChangedPackagesBetweenRefs", () => {
     it("returns all packages as changed if a top level file changes", () => {
-      const root = setupFixture("monorepo", { git: true });
+      const root = setupFixture("monorepo-basic-yarn-1", { git: true });
 
       fs.writeFileSync(path.join(root, "footest.txt"), "hello foo test");
       stageAndCommit({ patterns: ["."], message: "test commit", cwd: root });
@@ -189,7 +189,7 @@ describe("getChangedPackages", () => {
     });
 
     it("can detect changed packages between two refs", () => {
-      const root = setupFixture("monorepo", { git: true });
+      const root = setupFixture("monorepo-basic-yarn-1", { git: true });
 
       const newFile = path.join(root, "packages/package-a/footest.txt");
       fs.writeFileSync(newFile, "hello foo test");

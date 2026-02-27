@@ -1,4 +1,4 @@
-import { cleanupFixtures, setupFixture } from "@ws-tools/scripts/jest/setupFixture";
+import { cleanupFixtures, setupFixture, fixturesRoot, type TestFixtureName } from "@ws-tools/scripts/jest/setupFixture";
 import fs from "fs";
 import path from "path";
 import { getPackageInfo } from "../../getPackageInfo";
@@ -7,6 +7,7 @@ import type { WorkspaceManager } from "../../types/WorkspaceManager";
 import { catalogsToYaml } from "../../workspaces/catalogsToYaml";
 import { getCatalogs } from "../../workspaces/getCatalogs";
 import { getWorkspaceManagerAndRoot } from "../../workspaces/implementations";
+import { managerFiles } from "../../workspaces/implementations/getWorkspaceManagerAndRoot";
 
 // Samples from https://yarnpkg.com/features/catalogs
 const defaultCatalogs: Required<Pick<Catalogs, "default">> = {
@@ -32,6 +33,8 @@ const namedCatalogs: Required<Catalogs> = {
   },
 };
 
+const lernaJson = require(path.join(fixturesRoot, "lerna.base.json"));
+
 describe("getCatalogs", () => {
   afterAll(() => {
     cleanupFixtures();
@@ -39,8 +42,8 @@ describe("getCatalogs", () => {
 
   describe("unsupported managers", () => {
     // Test unsupported managers first
-    it.each<{ manager: string; fixtureName: string }>([
-      { manager: "npm", fixtureName: "monorepo-npm" },
+    it.each<{ manager: string; fixtureName: TestFixtureName }>([
+      { manager: "npm", fixtureName: "monorepo-basic-npm" },
       { manager: "rush", fixtureName: "monorepo-rush-pnpm" },
     ])("returns undefined for $manager monorepo", ({ manager, fixtureName }) => {
       const fixturePath = setupFixture(fixtureName);
@@ -56,24 +59,24 @@ describe("getCatalogs", () => {
     name: string;
     manager: WorkspaceManager;
     // The repo and catalog file format is different per manager, but the other test logic is reused
-    baseFixture: string;
+    baseFixture: TestFixtureName;
     /** Write the catalogs to disk in manager-specific format */
     writeCatalogs: (root: string, catalogs: Catalogs) => void;
   }>([
     {
       name: "pnpm",
       manager: "pnpm",
-      baseFixture: "monorepo-pnpm",
+      baseFixture: "monorepo-basic-pnpm",
       writeCatalogs: (root, catalogs) => {
         // https://pnpm.io/catalogs
-        const pnpmWorkspacePath = path.join(root, "pnpm-workspace.yaml");
+        const pnpmWorkspacePath = path.join(root, managerFiles.pnpm);
         fs.appendFileSync(pnpmWorkspacePath, `\n${catalogsToYaml(catalogs)}\n`);
       },
     },
     {
       name: "yarn v4",
       manager: "yarn",
-      baseFixture: "monorepo-yarn-berry",
+      baseFixture: "monorepo-basic-yarn-berry",
       writeCatalogs: (root, catalogs) => {
         // https://yarnpkg.com/features/catalogs
         const yarnrcPath = path.join(root, ".yarnrc.yml");
@@ -83,7 +86,7 @@ describe("getCatalogs", () => {
     {
       name: "midgard-yarn-strict",
       manager: "yarn",
-      baseFixture: "monorepo",
+      baseFixture: "monorepo-basic-yarn-1",
       writeCatalogs: (root, catalogs) => {
         const { packageJsonPath, ...packageJson } = getPackageInfo(root)!;
         const workspacePackages = Array.isArray(packageJson.workspaces)
@@ -94,19 +97,21 @@ describe("getCatalogs", () => {
         defaultCatalog && (packageJson.workspaces.catalog = defaultCatalog);
         named && (packageJson.workspaces.catalogs = named);
         fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2));
-
-        // Also write a lerna.json to verify it falls back to the actual yarn catalogs
-        // (this was an issue with old versions in the actual repo that uses MYS)
-        const lernaJsonPath = path.join(root, "lerna.json");
-        fs.writeFileSync(lernaJsonPath, JSON.stringify({ packages: workspacePackages, npmClient: "yarn" }));
       },
     },
   ])("$name", ({ name, manager, baseFixture, writeCatalogs }) => {
     let fixturePath = "";
+    let lernaFixturePath = "";
 
     beforeEach(() => {
       fixturePath = setupFixture(baseFixture);
       expect(getWorkspaceManagerAndRoot(fixturePath)).toEqual({ manager, root: fixturePath });
+
+      lernaFixturePath = setupFixture(baseFixture);
+      fs.writeFileSync(
+        path.join(lernaFixturePath, managerFiles.lerna),
+        JSON.stringify({ ...lernaJson, npmClient: manager })
+      );
     });
 
     it("returns undefined if no catalogs", () => {
@@ -154,6 +159,16 @@ describe("getCatalogs", () => {
           default: { lodash: "^4.17.21" },
         });
       }
+    });
+
+    // The manager will be detected as lerna, so the lerna implementation must have logic to
+    // fall back to the actual manager implementation to read catalogs.
+    it("returns catalogs in a monorepo with lerna", () => {
+      writeCatalogs(lernaFixturePath, defaultCatalogs);
+      expect(getWorkspaceManagerAndRoot(lernaFixturePath)).toEqual({ manager: "lerna", root: lernaFixturePath });
+
+      const catalogs = getCatalogs(lernaFixturePath);
+      expect(catalogs).toEqual(defaultCatalogs);
     });
   });
 });

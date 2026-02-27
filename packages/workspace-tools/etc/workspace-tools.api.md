@@ -90,7 +90,7 @@ export function findPackageRoot(cwd: string): string | undefined;
 // @public
 export function findProjectRoot(cwd: string, manager?: WorkspaceManager): string;
 
-// @public
+// @public @deprecated
 export function findWorkspacePath(workspaces: WorkspaceInfos, packageName: string): string | undefined;
 
 // @public
